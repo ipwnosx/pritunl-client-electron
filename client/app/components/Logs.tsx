@@ -20,6 +20,8 @@ interface State {
 	disabled: boolean
 }
 
+let lastView = "service"
+
 const css = {
 	message: {
 		margin: '0 0 6px 0',
@@ -70,7 +72,7 @@ export default class Logs extends React.Component<Props, State> {
 		this.state = {
 			profiles: ProfilesStore.profiles,
 			curProfile: null,
-			view: "service",
+			view: lastView,
 			log: "",
 			disabled: false,
 		};
@@ -80,10 +82,11 @@ export default class Logs extends React.Component<Props, State> {
 		Constants.addChangeListener(this.onChange)
 		ProfilesStore.addChangeListener(this.onChange);
 		ProfileActions.sync();
-		this.onChange()
+		this.onChangeView(this.state.view)
 	}
 
 	componentWillUnmount(): void {
+		lastView = this.state.view
 		Constants.removeChangeListener(this.onChange)
 		ProfilesStore.removeChangeListener(this.onChange);
 	}
@@ -137,6 +140,10 @@ export default class Logs extends React.Component<Props, State> {
 			})
 		} else {
 			let prfl = ProfilesStore.profile(view)
+			if (!prfl) {
+				this.onChangeView("service")
+				return
+			}
 
 			prfl.readLog().then((data: string) => {
 				this.setState({

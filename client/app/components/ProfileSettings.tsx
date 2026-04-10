@@ -497,6 +497,15 @@ export default class ProfileSettings extends React.Component<Props, State> {
 						}}
 					/>
 					<PageSwitch
+						label="Debug Output"
+						help="Enable debug output logging for this profile."
+						hidden={profile.restrict_client}
+						checked={!!profile.debug_output}
+						onToggle={(): void => {
+							this.set("debug_output", !profile.debug_output)
+						}}
+					/>
+					<PageSwitch
 						label="Force DNS configuration"
 						help="Configure only one DNS server to correct issues with macOS DNS server priority. This is not recommended unless required and will cause networking compatibility issues."
 						hidden={

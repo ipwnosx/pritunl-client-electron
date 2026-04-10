@@ -15,7 +15,7 @@ interface State {
 const css = {
 	progress: {
 		width: '100%',
-		height: '4px',
+		height: '2px',
 		borderRadius: 0,
 	} as React.CSSProperties,
 	progressBar: {

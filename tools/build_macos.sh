@@ -11,6 +11,7 @@ node -e "fs=require('fs');f='client/package.json';c=fs.readFileSync(f,'utf8');fs
 export APP_VER="$(cat client/package.json | grep version | cut -d '"' -f 4)"
 
 # Service
+go clean -cache
 cd service
 go get
 GOOS=darwin GOARCH=amd64 go build -v -o service_x86_64

@@ -161,6 +161,11 @@ class Main {
 			}
 		}
 
+		if (process.platform === "darwin") {
+			frameless = false
+			titleBarStyle = "hiddenInset"
+		}
+
 		if (Config.window_width && Config.window_height) {
 			width = Config.window_width
 			if (width < minWidth) {

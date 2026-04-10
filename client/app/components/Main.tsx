@@ -406,7 +406,7 @@ export default class Main extends React.Component<{}, State> {
 			<Blueprint.MenuItem
 				text={frameLabel}
 				icon="application"
-				hidden={Constants.platform === "win32"}
+				hidden={Constants.platform !== "linux"}
 				onKeyDown={(evt): void => {
 					if (evt.key === "Enter") {
 						this.onWindowFrame()

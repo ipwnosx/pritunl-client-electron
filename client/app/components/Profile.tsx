@@ -49,7 +49,7 @@ const css = {
 	} as React.CSSProperties,
 	card: {
 		position: "relative",
-		margin: '8px',
+		margin: '0 8px 8px 0',
 		paddingRight: 0,
 	} as React.CSSProperties,
 	progress: {

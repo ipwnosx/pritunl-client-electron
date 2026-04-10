@@ -35,7 +35,7 @@ const css = {
 		overflowX: 'auto',
 		overflowY: 'auto',
 		userSelect: 'none',
-		height: 'auto',
+		height: '38px',
 		padding: '0 4px 0 8px',
 	} as React.CSSProperties,
 	navTitle: {
@@ -49,6 +49,7 @@ const css = {
 	} as React.CSSProperties,
 	link: {
 		padding: '0 7px',
+		marginLeft: '3px',
 	} as React.CSSProperties,
 	sub: {
 		color: 'inherit',
@@ -68,6 +69,7 @@ const css = {
 	} as React.CSSProperties,
 	loading: {
 		position: 'absolute',
+		top: '36px',
 		width: '100%',
 		zIndex: '100',
 	} as React.CSSProperties,

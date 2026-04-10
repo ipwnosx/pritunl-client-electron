@@ -512,7 +512,12 @@ export default class Main extends React.Component<{}, State> {
 			/>
 		</Blueprint.Menu>
 
-		return <div style={css.container} className="layout vertical">
+		return <div
+			style={css.container}
+			className={"layout vertical" + (
+				(process.platform === "linux" && Constants.frameless) ?
+				" container-border" : "")}
+		>
 			<LoadingBar intent="primary" style={css.loading}/>
 			<nav
 				className="bp5-navbar layout horizontal"

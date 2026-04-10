@@ -194,6 +194,8 @@ export function New(self: Profile): Profile {
 				return "Connected"
 			case "connecting":
 				return "Connecting"
+			case "disconnected":
+				return "Disconnected"
 			case "authenticating":
 				return "Authenticating"
 			case "reconnecting":

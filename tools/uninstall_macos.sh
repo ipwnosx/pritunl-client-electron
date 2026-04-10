@@ -43,9 +43,10 @@ sudo rm -f /Library/LaunchDaemons/net.sf.tuntaposx.tun.plist
 sudo rm -rf /usr/local/bin/pritunl-openvpn
 sudo rm -rf /usr/local/bin/pritunl-service
 
-read -r -p "Clear Pritunl Client Secure Enclave Key? [y/N] " response
+read -r -p "Clear Pritunl Client Configuration? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
+    rm -rf ~/Library/Application\ Support/Pritunl
     sudo rm -rf /Library/Application\ Support/Pritunl
 fi
 

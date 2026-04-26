@@ -706,7 +706,7 @@ func (o *Ovpn) writeUp(ovpn27 bool) (pth string, err error) {
 			if resolvData != nil {
 				resolvDataStr := string(resolvData)
 				if !strings.Contains(resolvDataStr, "systemd-resolved") &&
-					!strings.Contains(resolvDataStr, "127.0.0.53") {
+					!strings.Contains(resolvDataStr, "nameserver 127.0.0.53") {
 
 					resolved = false
 				}

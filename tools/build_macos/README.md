@@ -35,8 +35,9 @@ cd ./lzo-2.10
 sh ../build_lzo.sh
 cd ../
 
-tar xf openssl-3.3.6.tar.gz
-cd ./openssl-3.3.6
+curl -LO https://github.com/openssl/openssl/releases/download/openssl-3.5.6/openssl-3.5.6.tar.gz
+echo "deae7c80cba99c4b4f940ecadb3c3338b13cb77418409238e57d7f31f2a3b736  openssl-3.5.6.tar.gz" | shasum -a 256 -c - && tar xf openssl-3.5.6.tar.gz
+cd ./openssl-3.5.6
 sh ../build_openssl.sh
 cd ../
 
@@ -45,8 +46,9 @@ cd ./pkcs11-helper-1.31.0
 sh ../build_pkcs11h.sh
 cd ../
 
-tar xf openvpn-2.7.0.tar.gz
-cd ./openvpn-2.7.0
+curl -LO https://swupdate.openvpn.org/community/releases/openvpn-2.7.4.tar.gz
+echo "18db05f3d5eee3663db1914590044e5f96ff5cd47b6e7846c6a350806c23dbce  openvpn-2.7.4.tar.gz" | shasum -a 256 -c - && tar xf openvpn-2.7.4.tar.gz
+cd ./openvpn-2.7.4
 sh ../build_openvpn.sh
 cd ../
 

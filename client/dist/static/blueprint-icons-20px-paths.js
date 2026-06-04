@@ -1,8 +1,8 @@
 "use strict";
 (global["webpackChunkpritunl"] = global["webpackChunkpritunl"] || []).push([[783],{
 
-/***/ 824:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 824
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
@@ -3400,7 +3400,7 @@ var p = [];
 
 
 
-/***/ })
+/***/ }
 
 }]);
 //# sourceMappingURL=blueprint-icons-20px-paths.js.map

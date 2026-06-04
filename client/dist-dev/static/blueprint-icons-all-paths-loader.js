@@ -1,11 +1,11 @@
 "use strict";
 (global["webpackChunkpritunl"] = global["webpackChunkpritunl"] || []).push([["blueprint-icons-all-paths-loader"],{
 
-/***/ "./node_modules/@blueprintjs/icons/lib/esm/paths-loaders/allPathsLoader.js":
+/***/ "./node_modules/@blueprintjs/icons/lib/esm/paths-loaders/allPathsLoader.js"
 /*!*********************************************************************************!*\
   !*** ./node_modules/@blueprintjs/icons/lib/esm/paths-loaders/allPathsLoader.js ***!
   \*********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -44,7 +44,7 @@ var allPathsLoader = function (name, size) { return (0,tslib__WEBPACK_IMPORTED_M
 }); };
 
 
-/***/ })
+/***/ }
 
 }]);
 //# sourceMappingURL=blueprint-icons-all-paths-loader.js.map

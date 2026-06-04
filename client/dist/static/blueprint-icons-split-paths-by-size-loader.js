@@ -1,8 +1,8 @@
 "use strict";
 (global["webpackChunkpritunl"] = global["webpackChunkpritunl"] || []).push([[231],{
 
-/***/ 745:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 745
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -53,7 +53,7 @@ var splitPathsBySizeLoader = function (name, size) { return (0,tslib__WEBPACK_IM
 }); };
 
 
-/***/ })
+/***/ }
 
 }]);
 //# sourceMappingURL=blueprint-icons-split-paths-by-size-loader.js.map

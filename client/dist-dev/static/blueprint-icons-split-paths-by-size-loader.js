@@ -1,11 +1,11 @@
 "use strict";
 (global["webpackChunkpritunl"] = global["webpackChunkpritunl"] || []).push([["blueprint-icons-split-paths-by-size-loader"],{
 
-/***/ "./node_modules/@blueprintjs/icons/lib/esm/paths-loaders/splitPathsBySizeLoader.js":
+/***/ "./node_modules/@blueprintjs/icons/lib/esm/paths-loaders/splitPathsBySizeLoader.js"
 /*!*****************************************************************************************!*\
   !*** ./node_modules/@blueprintjs/icons/lib/esm/paths-loaders/splitPathsBySizeLoader.js ***!
   \*****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -56,7 +56,7 @@ var splitPathsBySizeLoader = function (name, size) { return (0,tslib__WEBPACK_IM
 }); };
 
 
-/***/ })
+/***/ }
 
 }]);
 //# sourceMappingURL=blueprint-icons-split-paths-by-size-loader.js.map

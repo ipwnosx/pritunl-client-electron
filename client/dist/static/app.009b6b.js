@@ -1,8 +1,164 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 45:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ 772
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   l: () => (/* binding */ IconSize)
+/* harmony export */ });
+/*
+ * Copyright 2022 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var IconSize;
+(function (IconSize) {
+    IconSize[IconSize["STANDARD"] = 16] = "STANDARD";
+    IconSize[IconSize["LARGE"] = 20] = "LARGE";
+})(IconSize || (IconSize = {}));
+
+
+/***/ },
+
+/***/ 780
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  W: () => (/* binding */ noCase)
+});
+
+;// ./node_modules/lower-case/dist.es2015/index.js
+/**
+ * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
+ */
+var SUPPORTED_LOCALE = (/* unused pure expression or super */ null && ({
+    tr: {
+        regexp: /\u0130|\u0049|\u0049\u0307/g,
+        map: {
+            İ: "\u0069",
+            I: "\u0131",
+            İ: "\u0069",
+        },
+    },
+    az: {
+        regexp: /\u0130/g,
+        map: {
+            İ: "\u0069",
+            I: "\u0131",
+            İ: "\u0069",
+        },
+    },
+    lt: {
+        regexp: /\u0049|\u004A|\u012E|\u00CC|\u00CD|\u0128/g,
+        map: {
+            I: "\u0069\u0307",
+            J: "\u006A\u0307",
+            Į: "\u012F\u0307",
+            Ì: "\u0069\u0307\u0300",
+            Í: "\u0069\u0307\u0301",
+            Ĩ: "\u0069\u0307\u0303",
+        },
+    },
+}));
+/**
+ * Localized lower case.
+ */
+function localeLowerCase(str, locale) {
+    var lang = SUPPORTED_LOCALE[locale.toLowerCase()];
+    if (lang)
+        return lowerCase(str.replace(lang.regexp, function (m) { return lang.map[m]; }));
+    return lowerCase(str);
+}
+/**
+ * Lower case as a function.
+ */
+function lowerCase(str) {
+    return str.toLowerCase();
+}
+
+;// ./node_modules/no-case/dist.es2015/index.js
+
+// Support camel case ("camelCase" -> "camel Case" and "CAMELCase" -> "CAMEL Case").
+var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
+// Remove all non-word characters.
+var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
+/**
+ * Normalize the string into something other libraries can manipulate easier.
+ */
+function noCase(input, options) {
+    if (options === void 0) { options = {}; }
+    var _a = options.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options.transform, transform = _c === void 0 ? lowerCase : _c, _d = options.delimiter, delimiter = _d === void 0 ? " " : _d;
+    var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
+    var start = 0;
+    var end = result.length;
+    // Trim the delimiter from around the output string.
+    while (result.charAt(start) === "\0")
+        start++;
+    while (result.charAt(end - 1) === "\0")
+        end--;
+    // Transform each token independently.
+    return result.slice(start, end).split("\0").map(transform).join(delimiter);
+}
+/**
+ * Replace `re` in the input string with the replacement value.
+ */
+function replace(input, re, value) {
+    if (re instanceof RegExp)
+        return input.replace(re, value);
+    return re.reduce(function (input, re) { return input.replace(re, value); }, input);
+}
+
+
+/***/ },
+
+/***/ 287
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   fL: () => (/* binding */ pascalCase)
+/* harmony export */ });
+/* unused harmony exports pascalCaseTransform, pascalCaseTransformMerge */
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(635);
+/* harmony import */ var no_case__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(780);
+
+
+function pascalCaseTransform(input, index) {
+    var firstChar = input.charAt(0);
+    var lowerChars = input.substr(1).toLowerCase();
+    if (index > 0 && firstChar >= "0" && firstChar <= "9") {
+        return "_" + firstChar + lowerChars;
+    }
+    return "" + firstChar.toUpperCase() + lowerChars;
+}
+function pascalCaseTransformMerge(input) {
+    return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+}
+function pascalCase(input, options) {
+    if (options === void 0) { options = {}; }
+    return (0,no_case__WEBPACK_IMPORTED_MODULE_1__/* .noCase */ .W)(input, (0,tslib__WEBPACK_IMPORTED_MODULE_0__/* .__assign */ .Cl)({ delimiter: "", transform: pascalCaseTransform }, options));
+}
+
+
+/***/ },
+
+/***/ 45
+(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 /**
@@ -329,646 +485,47 @@ e);return new ml(b)};exports.render=function(a,b,c){if(!ol(b))throw Error(p(200)
 exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!ol(c))throw Error(p(200));if(null==a||void 0===a._reactInternals)throw Error(p(38));return rl(a,b,c,!1,d)};exports.version="18.3.1-next-f1338f8080-20240426";
 
 
-/***/ }),
+/***/ },
 
-/***/ 61:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 483
+(module, __unused_webpack_exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
+"use strict";
 
-/**
- * This is a helper function for getting values from parameter/options
- * objects.
- *
- * @param args The object we are extracting values from
- * @param name The name of the property we are getting.
- * @param defaultValue An optional value to return if the property is missing
- * from the object. If this is not specified and the property is missing, an
- * error will be thrown.
- */
-function getArg(aArgs, aName, aDefaultValue) {
-  if (aName in aArgs) {
-    return aArgs[aName];
-  } else if (arguments.length === 3) {
-    return aDefaultValue;
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
   }
-    throw new Error('"' + aName + '" is a required argument.');
-
-}
-exports.getArg = getArg;
-
-const urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.-]*)(?::(\d+))?(.*)$/;
-const dataUrlRegexp = /^data:.+\,.+$/;
-
-function urlParse(aUrl) {
-  const match = aUrl.match(urlRegexp);
-  if (!match) {
-    return null;
+  if (false) // removed by dead control flow
+{}
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
   }
-  return {
-    scheme: match[1],
-    auth: match[2],
-    host: match[3],
-    port: match[4],
-    path: match[5]
-  };
-}
-exports.urlParse = urlParse;
-
-function urlGenerate(aParsedUrl) {
-  let url = "";
-  if (aParsedUrl.scheme) {
-    url += aParsedUrl.scheme + ":";
-  }
-  url += "//";
-  if (aParsedUrl.auth) {
-    url += aParsedUrl.auth + "@";
-  }
-  if (aParsedUrl.host) {
-    url += aParsedUrl.host;
-  }
-  if (aParsedUrl.port) {
-    url += ":" + aParsedUrl.port;
-  }
-  if (aParsedUrl.path) {
-    url += aParsedUrl.path;
-  }
-  return url;
-}
-exports.urlGenerate = urlGenerate;
-
-const MAX_CACHED_INPUTS = 32;
-
-/**
- * Takes some function `f(input) -> result` and returns a memoized version of
- * `f`.
- *
- * We keep at most `MAX_CACHED_INPUTS` memoized results of `f` alive. The
- * memoization is a dumb-simple, linear least-recently-used cache.
- */
-function lruMemoize(f) {
-  const cache = [];
-
-  return function(input) {
-    for (let i = 0; i < cache.length; i++) {
-      if (cache[i].input === input) {
-        const temp = cache[0];
-        cache[0] = cache[i];
-        cache[i] = temp;
-        return cache[0].result;
-      }
-    }
-
-    const result = f(input);
-
-    cache.unshift({
-      input,
-      result,
-    });
-
-    if (cache.length > MAX_CACHED_INPUTS) {
-      cache.pop();
-    }
-
-    return result;
-  };
 }
 
-/**
- * Normalizes a path, or the path portion of a URL:
- *
- * - Replaces consecutive slashes with one slash.
- * - Removes unnecessary '.' parts.
- * - Removes unnecessary '<dir>/..' parts.
- *
- * Based on code in the Node.js 'path' core module.
- *
- * @param aPath The path or url to normalize.
- */
-const normalize = lruMemoize(function normalize(aPath) {
-  let path = aPath;
-  const url = urlParse(aPath);
-  if (url) {
-    if (!url.path) {
-      return aPath;
-    }
-    path = url.path;
-  }
-  const isAbsolute = exports.isAbsolute(path);
-
-  // Split the path into parts between `/` characters. This is much faster than
-  // using `.split(/\/+/g)`.
-  const parts = [];
-  let start = 0;
-  let i = 0;
-  while (true) {
-    start = i;
-    i = path.indexOf("/", start);
-    if (i === -1) {
-      parts.push(path.slice(start));
-      break;
-    } else {
-      parts.push(path.slice(start, i));
-      while (i < path.length && path[i] === "/") {
-        i++;
-      }
-    }
-  }
-
-  let up = 0;
-  for (i = parts.length - 1; i >= 0; i--) {
-    const part = parts[i];
-    if (part === ".") {
-      parts.splice(i, 1);
-    } else if (part === "..") {
-      up++;
-    } else if (up > 0) {
-      if (part === "") {
-        // The first part is blank if the path is absolute. Trying to go
-        // above the root is a no-op. Therefore we can remove all '..' parts
-        // directly after the root.
-        parts.splice(i + 1, up);
-        up = 0;
-      } else {
-        parts.splice(i, 2);
-        up--;
-      }
-    }
-  }
-  path = parts.join("/");
-
-  if (path === "") {
-    path = isAbsolute ? "/" : ".";
-  }
-
-  if (url) {
-    url.path = path;
-    return urlGenerate(url);
-  }
-  return path;
-});
-exports.normalize = normalize;
-
-/**
- * Joins two paths/URLs.
- *
- * @param aRoot The root path or URL.
- * @param aPath The path or URL to be joined with the root.
- *
- * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
- *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
- *   first.
- * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
- *   is updated with the result and aRoot is returned. Otherwise the result
- *   is returned.
- *   - If aPath is absolute, the result is aPath.
- *   - Otherwise the two paths are joined with a slash.
- * - Joining for example 'http://' and 'www.example.com' is also supported.
- */
-function join(aRoot, aPath) {
-  if (aRoot === "") {
-    aRoot = ".";
-  }
-  if (aPath === "") {
-    aPath = ".";
-  }
-  const aPathUrl = urlParse(aPath);
-  const aRootUrl = urlParse(aRoot);
-  if (aRootUrl) {
-    aRoot = aRootUrl.path || "/";
-  }
-
-  // `join(foo, '//www.example.org')`
-  if (aPathUrl && !aPathUrl.scheme) {
-    if (aRootUrl) {
-      aPathUrl.scheme = aRootUrl.scheme;
-    }
-    return urlGenerate(aPathUrl);
-  }
-
-  if (aPathUrl || aPath.match(dataUrlRegexp)) {
-    return aPath;
-  }
-
-  // `join('http://', 'www.example.com')`
-  if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
-    aRootUrl.host = aPath;
-    return urlGenerate(aRootUrl);
-  }
-
-  const joined = aPath.charAt(0) === "/"
-    ? aPath
-    : normalize(aRoot.replace(/\/+$/, "") + "/" + aPath);
-
-  if (aRootUrl) {
-    aRootUrl.path = joined;
-    return urlGenerate(aRootUrl);
-  }
-  return joined;
-}
-exports.join = join;
-
-exports.isAbsolute = function(aPath) {
-  return aPath.charAt(0) === "/" || urlRegexp.test(aPath);
-};
-
-/**
- * Make a path relative to a URL or another path.
- *
- * @param aRoot The root path or URL.
- * @param aPath The path or URL to be made relative to aRoot.
- */
-function relative(aRoot, aPath) {
-  if (aRoot === "") {
-    aRoot = ".";
-  }
-
-  aRoot = aRoot.replace(/\/$/, "");
-
-  // It is possible for the path to be above the root. In this case, simply
-  // checking whether the root is a prefix of the path won't work. Instead, we
-  // need to remove components from the root one by one, until either we find
-  // a prefix that fits, or we run out of components to remove.
-  let level = 0;
-  while (aPath.indexOf(aRoot + "/") !== 0) {
-    const index = aRoot.lastIndexOf("/");
-    if (index < 0) {
-      return aPath;
-    }
-
-    // If the only part of the root that is left is the scheme (i.e. http://,
-    // file:///, etc.), one or more slashes (/), or simply nothing at all, we
-    // have exhausted all components, so the path is not relative to the root.
-    aRoot = aRoot.slice(0, index);
-    if (aRoot.match(/^([^\/]+:\/)?\/*$/)) {
-      return aPath;
-    }
-
-    ++level;
-  }
-
-  // Make sure we add a "../" for each component we removed from the root.
-  return Array(level + 1).join("../") + aPath.substr(aRoot.length + 1);
-}
-exports.relative = relative;
-
-const supportsNullProto = (function() {
-  const obj = Object.create(null);
-  return !("__proto__" in obj);
-}());
-
-function identity(s) {
-  return s;
-}
-
-/**
- * Because behavior goes wacky when you set `__proto__` on objects, we
- * have to prefix all the strings in our set with an arbitrary character.
- *
- * See https://github.com/mozilla/source-map/pull/31 and
- * https://github.com/mozilla/source-map/issues/30
- *
- * @param String aStr
- */
-function toSetString(aStr) {
-  if (isProtoString(aStr)) {
-    return "$" + aStr;
-  }
-
-  return aStr;
-}
-exports.toSetString = supportsNullProto ? identity : toSetString;
-
-function fromSetString(aStr) {
-  if (isProtoString(aStr)) {
-    return aStr.slice(1);
-  }
-
-  return aStr;
-}
-exports.fromSetString = supportsNullProto ? identity : fromSetString;
-
-function isProtoString(s) {
-  if (!s) {
-    return false;
-  }
-
-  const length = s.length;
-
-  if (length < 9 /* "__proto__".length */) {
-    return false;
-  }
-
-  /* eslint-disable no-multi-spaces */
-  if (s.charCodeAt(length - 1) !== 95  /* '_' */ ||
-      s.charCodeAt(length - 2) !== 95  /* '_' */ ||
-      s.charCodeAt(length - 3) !== 111 /* 'o' */ ||
-      s.charCodeAt(length - 4) !== 116 /* 't' */ ||
-      s.charCodeAt(length - 5) !== 111 /* 'o' */ ||
-      s.charCodeAt(length - 6) !== 114 /* 'r' */ ||
-      s.charCodeAt(length - 7) !== 112 /* 'p' */ ||
-      s.charCodeAt(length - 8) !== 95  /* '_' */ ||
-      s.charCodeAt(length - 9) !== 95  /* '_' */) {
-    return false;
-  }
-  /* eslint-enable no-multi-spaces */
-
-  for (let i = length - 10; i >= 0; i--) {
-    if (s.charCodeAt(i) !== 36 /* '$' */) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-/**
- * Comparator between two mappings where the original positions are compared.
- *
- * Optionally pass in `true` as `onlyCompareGenerated` to consider two
- * mappings with the same original source/line/column, but different generated
- * line and column the same. Useful when searching for a mapping with a
- * stubbed out mapping.
- */
-function compareByOriginalPositions(mappingA, mappingB, onlyCompareOriginal) {
-  let cmp = strcmp(mappingA.source, mappingB.source);
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.originalLine - mappingB.originalLine;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.originalColumn - mappingB.originalColumn;
-  if (cmp !== 0 || onlyCompareOriginal) {
-    return cmp;
-  }
-
-  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.generatedLine - mappingB.generatedLine;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  return strcmp(mappingA.name, mappingB.name);
-}
-exports.compareByOriginalPositions = compareByOriginalPositions;
-
-/**
- * Comparator between two mappings with deflated source and name indices where
- * the generated positions are compared.
- *
- * Optionally pass in `true` as `onlyCompareGenerated` to consider two
- * mappings with the same generated line and column, but different
- * source/name/original line and column the same. Useful when searching for a
- * mapping with a stubbed out mapping.
- */
-function compareByGeneratedPositionsDeflated(mappingA, mappingB, onlyCompareGenerated) {
-  let cmp = mappingA.generatedLine - mappingB.generatedLine;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
-  if (cmp !== 0 || onlyCompareGenerated) {
-    return cmp;
-  }
-
-  cmp = strcmp(mappingA.source, mappingB.source);
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.originalLine - mappingB.originalLine;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.originalColumn - mappingB.originalColumn;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  return strcmp(mappingA.name, mappingB.name);
-}
-exports.compareByGeneratedPositionsDeflated = compareByGeneratedPositionsDeflated;
-
-function strcmp(aStr1, aStr2) {
-  if (aStr1 === aStr2) {
-    return 0;
-  }
-
-  if (aStr1 === null) {
-    return 1; // aStr2 !== null
-  }
-
-  if (aStr2 === null) {
-    return -1; // aStr1 !== null
-  }
-
-  if (aStr1 > aStr2) {
-    return 1;
-  }
-
-  return -1;
-}
-
-/**
- * Comparator between two mappings with inflated source and name strings where
- * the generated positions are compared.
- */
-function compareByGeneratedPositionsInflated(mappingA, mappingB) {
-  let cmp = mappingA.generatedLine - mappingB.generatedLine;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = strcmp(mappingA.source, mappingB.source);
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.originalLine - mappingB.originalLine;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  cmp = mappingA.originalColumn - mappingB.originalColumn;
-  if (cmp !== 0) {
-    return cmp;
-  }
-
-  return strcmp(mappingA.name, mappingB.name);
-}
-exports.compareByGeneratedPositionsInflated = compareByGeneratedPositionsInflated;
-
-/**
- * Strip any JSON XSSI avoidance prefix from the string (as documented
- * in the source maps specification), and then parse the string as
- * JSON.
- */
-function parseSourceMapInput(str) {
-  return JSON.parse(str.replace(/^\)]}'[^\n]*\n/, ""));
-}
-exports.parseSourceMapInput = parseSourceMapInput;
-
-/**
- * Compute the URL of a source given the the source root, the source's
- * URL, and the source map's URL.
- */
-function computeSourceURL(sourceRoot, sourceURL, sourceMapURL) {
-  sourceURL = sourceURL || "";
-
-  if (sourceRoot) {
-    // This follows what Chrome does.
-    if (sourceRoot[sourceRoot.length - 1] !== "/" && sourceURL[0] !== "/") {
-      sourceRoot += "/";
-    }
-    // The spec says:
-    //   Line 4: An optional source root, useful for relocating source
-    //   files on a server or removing repeated values in the
-    //   “sources” entry.  This value is prepended to the individual
-    //   entries in the “source” field.
-    sourceURL = sourceRoot + sourceURL;
-  }
-
-  // Historically, SourceMapConsumer did not take the sourceMapURL as
-  // a parameter.  This mode is still somewhat supported, which is why
-  // this code block is conditional.  However, it's preferable to pass
-  // the source map URL to SourceMapConsumer, so that this function
-  // can implement the source URL resolution algorithm as outlined in
-  // the spec.  This block is basically the equivalent of:
-  //    new URL(sourceURL, sourceMapURL).toString()
-  // ... except it avoids using URL, which wasn't available in the
-  // older releases of node still supported by this library.
-  //
-  // The spec says:
-  //   If the sources are not absolute URLs after prepending of the
-  //   “sourceRoot”, the sources are resolved relative to the
-  //   SourceMap (like resolving script src in a html document).
-  if (sourceMapURL) {
-    const parsed = urlParse(sourceMapURL);
-    if (!parsed) {
-      throw new Error("sourceMapURL could not be parsed");
-    }
-    if (parsed.path) {
-      // Strip the last path component, but keep the "/".
-      const index = parsed.path.lastIndexOf("/");
-      if (index >= 0) {
-        parsed.path = parsed.path.substring(0, index + 1);
-      }
-    }
-    sourceURL = join(urlGenerate(parsed), sourceURL);
-  }
-
-  return normalize(sourceURL);
-}
-exports.computeSourceURL = computeSourceURL;
-
-
-/***/ }),
-
-/***/ 122:
-/***/ ((module, exports) => {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	Copyright (c) 2018 Jed Watson.
-	Licensed under the MIT License (MIT), see
-	http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = '';
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (arg) {
-				classes = appendClass(classes, parseValue(arg));
-			}
-		}
-
-		return classes;
-	}
-
-	function parseValue (arg) {
-		if (typeof arg === 'string' || typeof arg === 'number') {
-			return arg;
-		}
-
-		if (typeof arg !== 'object') {
-			return '';
-		}
-
-		if (Array.isArray(arg)) {
-			return classNames.apply(null, arg);
-		}
-
-		if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
-			return arg.toString();
-		}
-
-		var classes = '';
-
-		for (var key in arg) {
-			if (hasOwn.call(arg, key) && arg[key]) {
-				classes = appendClass(classes, key);
-			}
-		}
-
-		return classes;
-	}
-
-	function appendClass (value, newClass) {
-		if (!newClass) {
-			return value;
-		}
-	
-		if (value) {
-			return value + ' ' + newClass;
-		}
-	
-		return value + newClass;
-	}
-
-	if ( true && module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else if (true) {
-		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-			return classNames;
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
-}());
-
-
-/***/ }),
-
-/***/ 169:
-/***/ ((module) => {
+if (true) {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(45);
+} else // removed by dead control flow
+{}
+
+
+/***/ },
+
+/***/ 169
+(module) {
 
 /* global Map:readonly, Set:readonly, ArrayBuffer:readonly */
 
@@ -1111,25 +668,606 @@ module.exports = function isEqual(a, b) {
 };
 
 
-/***/ }),
+/***/ },
 
-/***/ 219:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ 677
+(__unused_webpack_module, exports) {
 
+"use strict";
+/**
+ * @license React
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var l=Symbol.for("react.element"),n=Symbol.for("react.portal"),p=Symbol.for("react.fragment"),q=Symbol.for("react.strict_mode"),r=Symbol.for("react.profiler"),t=Symbol.for("react.provider"),u=Symbol.for("react.context"),v=Symbol.for("react.forward_ref"),w=Symbol.for("react.suspense"),x=Symbol.for("react.memo"),y=Symbol.for("react.lazy"),z=Symbol.iterator;function A(a){if(null===a||"object"!==typeof a)return null;a=z&&a[z]||a["@@iterator"];return"function"===typeof a?a:null}
+var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C=Object.assign,D={};function E(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}E.prototype.isReactComponent={};
+E.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,a,b,"setState")};E.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function F(){}F.prototype=E.prototype;function G(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}var H=G.prototype=new F;
+H.constructor=G;C(H,E.prototype);H.isPureReactComponent=!0;var I=Array.isArray,J=Object.prototype.hasOwnProperty,K={current:null},L={key:!0,ref:!0,__self:!0,__source:!0};
+function M(a,b,e){var d,c={},k=null,h=null;if(null!=b)for(d in void 0!==b.ref&&(h=b.ref),void 0!==b.key&&(k=""+b.key),b)J.call(b,d)&&!L.hasOwnProperty(d)&&(c[d]=b[d]);var g=arguments.length-2;if(1===g)c.children=e;else if(1<g){for(var f=Array(g),m=0;m<g;m++)f[m]=arguments[m+2];c.children=f}if(a&&a.defaultProps)for(d in g=a.defaultProps,g)void 0===c[d]&&(c[d]=g[d]);return{$$typeof:l,type:a,key:k,ref:h,props:c,_owner:K.current}}
+function N(a,b){return{$$typeof:l,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}}function O(a){return"object"===typeof a&&null!==a&&a.$$typeof===l}function escape(a){var b={"=":"=0",":":"=2"};return"$"+a.replace(/[=:]/g,function(a){return b[a]})}var P=/\/+/g;function Q(a,b){return"object"===typeof a&&null!==a&&null!=a.key?escape(""+a.key):b.toString(36)}
+function R(a,b,e,d,c){var k=typeof a;if("undefined"===k||"boolean"===k)a=null;var h=!1;if(null===a)h=!0;else switch(k){case "string":case "number":h=!0;break;case "object":switch(a.$$typeof){case l:case n:h=!0}}if(h)return h=a,c=c(h),a=""===d?"."+Q(h,0):d,I(c)?(e="",null!=a&&(e=a.replace(P,"$&/")+"/"),R(c,b,e,"",function(a){return a})):null!=c&&(O(c)&&(c=N(c,e+(!c.key||h&&h.key===c.key?"":(""+c.key).replace(P,"$&/")+"/")+a)),b.push(c)),1;h=0;d=""===d?".":d+":";if(I(a))for(var g=0;g<a.length;g++){k=
+a[g];var f=d+Q(k,g);h+=R(k,b,e,f,c)}else if(f=A(a),"function"===typeof f)for(a=f.call(a),g=0;!(k=a.next()).done;)k=k.value,f=d+Q(k,g++),h+=R(k,b,e,f,c);else if("object"===k)throw b=String(a),Error("Objects are not valid as a React child (found: "+("[object Object]"===b?"object with keys {"+Object.keys(a).join(", ")+"}":b)+"). If you meant to render a collection of children, use an array instead.");return h}
+function S(a,b,e){if(null==a)return a;var d=[],c=0;R(a,d,"","",function(a){return b.call(e,a,c++)});return d}function T(a){if(-1===a._status){var b=a._result;b=b();b.then(function(b){if(0===a._status||-1===a._status)a._status=1,a._result=b},function(b){if(0===a._status||-1===a._status)a._status=2,a._result=b});-1===a._status&&(a._status=0,a._result=b)}if(1===a._status)return a._result.default;throw a._result;}
+var U={current:null},V={transition:null},W={ReactCurrentDispatcher:U,ReactCurrentBatchConfig:V,ReactCurrentOwner:K};function X(){throw Error("act(...) is not supported in production builds of React.");}
+exports.Children={map:S,forEach:function(a,b,e){S(a,function(){b.apply(this,arguments)},e)},count:function(a){var b=0;S(a,function(){b++});return b},toArray:function(a){return S(a,function(a){return a})||[]},only:function(a){if(!O(a))throw Error("React.Children.only expected to receive a single React element child.");return a}};exports.Component=E;exports.Fragment=p;exports.Profiler=r;exports.PureComponent=G;exports.StrictMode=q;exports.Suspense=w;
+exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=W;exports.act=X;
+exports.cloneElement=function(a,b,e){if(null===a||void 0===a)throw Error("React.cloneElement(...): The argument must be a React element, but you passed "+a+".");var d=C({},a.props),c=a.key,k=a.ref,h=a._owner;if(null!=b){void 0!==b.ref&&(k=b.ref,h=K.current);void 0!==b.key&&(c=""+b.key);if(a.type&&a.type.defaultProps)var g=a.type.defaultProps;for(f in b)J.call(b,f)&&!L.hasOwnProperty(f)&&(d[f]=void 0===b[f]&&void 0!==g?g[f]:b[f])}var f=arguments.length-2;if(1===f)d.children=e;else if(1<f){g=Array(f);
+for(var m=0;m<f;m++)g[m]=arguments[m+2];d.children=g}return{$$typeof:l,type:a.type,key:c,ref:k,props:d,_owner:h}};exports.createContext=function(a){a={$$typeof:u,_currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null,_defaultValue:null,_globalName:null};a.Provider={$$typeof:t,_context:a};return a.Consumer=a};exports.createElement=M;exports.createFactory=function(a){var b=M.bind(null,a);b.type=a;return b};exports.createRef=function(){return{current:null}};
+exports.forwardRef=function(a){return{$$typeof:v,render:a}};exports.isValidElement=O;exports.lazy=function(a){return{$$typeof:y,_payload:{_status:-1,_result:a},_init:T}};exports.memo=function(a,b){return{$$typeof:x,type:a,compare:void 0===b?null:b}};exports.startTransition=function(a){var b=V.transition;V.transition={};try{a()}finally{V.transition=b}};exports.unstable_act=X;exports.useCallback=function(a,b){return U.current.useCallback(a,b)};exports.useContext=function(a){return U.current.useContext(a)};
+exports.useDebugValue=function(){};exports.useDeferredValue=function(a){return U.current.useDeferredValue(a)};exports.useEffect=function(a,b){return U.current.useEffect(a,b)};exports.useId=function(){return U.current.useId()};exports.useImperativeHandle=function(a,b,e){return U.current.useImperativeHandle(a,b,e)};exports.useInsertionEffect=function(a,b){return U.current.useInsertionEffect(a,b)};exports.useLayoutEffect=function(a,b){return U.current.useLayoutEffect(a,b)};
+exports.useMemo=function(a,b){return U.current.useMemo(a,b)};exports.useReducer=function(a,b,e){return U.current.useReducer(a,b,e)};exports.useRef=function(a){return U.current.useRef(a)};exports.useState=function(a){return U.current.useState(a)};exports.useSyncExternalStore=function(a,b,e){return U.current.useSyncExternalStore(a,b,e)};exports.useTransition=function(){return U.current.useTransition()};exports.version="18.3.1";
+
+
+/***/ },
+
+/***/ 810
+(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__(677);
+} else // removed by dead control flow
+{}
+
+
+/***/ },
+
+/***/ 613
+(__unused_webpack_module, exports) {
+
+"use strict";
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+function f(a,b){var c=a.length;a.push(b);a:for(;0<c;){var d=c-1>>>1,e=a[d];if(0<g(e,b))a[d]=b,a[c]=e,c=d;else break a}}function h(a){return 0===a.length?null:a[0]}function k(a){if(0===a.length)return null;var b=a[0],c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length,w=e>>>1;d<w;){var m=2*(d+1)-1,C=a[m],n=m+1,x=a[n];if(0>g(C,c))n<e&&0>g(x,C)?(a[d]=x,a[n]=c,d=n):(a[d]=C,a[m]=c,d=m);else if(n<e&&0>g(x,c))a[d]=x,a[n]=c,d=n;else break a}}return b}
+function g(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}if("object"===typeof performance&&"function"===typeof performance.now){var l=performance;exports.unstable_now=function(){return l.now()}}else{var p=Date,q=p.now();exports.unstable_now=function(){return p.now()-q}}var r=[],t=[],u=1,v=null,y=3,z=!1,A=!1,B=!1,D="function"===typeof setTimeout?setTimeout:null,E="function"===typeof clearTimeout?clearTimeout:null,F="undefined"!==typeof setImmediate?setImmediate:null;
+"undefined"!==typeof navigator&&void 0!==navigator.scheduling&&void 0!==navigator.scheduling.isInputPending&&navigator.scheduling.isInputPending.bind(navigator.scheduling);function G(a){for(var b=h(t);null!==b;){if(null===b.callback)k(t);else if(b.startTime<=a)k(t),b.sortIndex=b.expirationTime,f(r,b);else break;b=h(t)}}function H(a){B=!1;G(a);if(!A)if(null!==h(r))A=!0,I(J);else{var b=h(t);null!==b&&K(H,b.startTime-a)}}
+function J(a,b){A=!1;B&&(B=!1,E(L),L=-1);z=!0;var c=y;try{G(b);for(v=h(r);null!==v&&(!(v.expirationTime>b)||a&&!M());){var d=v.callback;if("function"===typeof d){v.callback=null;y=v.priorityLevel;var e=d(v.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?v.callback=e:v===h(r)&&k(r);G(b)}else k(r);v=h(r)}if(null!==v)var w=!0;else{var m=h(t);null!==m&&K(H,m.startTime-b);w=!1}return w}finally{v=null,y=c,z=!1}}var N=!1,O=null,L=-1,P=5,Q=-1;
+function M(){return exports.unstable_now()-Q<P?!1:!0}function R(){if(null!==O){var a=exports.unstable_now();Q=a;var b=!0;try{b=O(!0,a)}finally{b?S():(N=!1,O=null)}}else N=!1}var S;if("function"===typeof F)S=function(){F(R)};else if("undefined"!==typeof MessageChannel){var T=new MessageChannel,U=T.port2;T.port1.onmessage=R;S=function(){U.postMessage(null)}}else S=function(){D(R,0)};function I(a){O=a;N||(N=!0,S())}function K(a,b){L=D(function(){a(exports.unstable_now())},b)}
+exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){A||z||(A=!0,I(J))};
+exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):P=0<a?Math.floor(1E3/a):5};exports.unstable_getCurrentPriorityLevel=function(){return y};exports.unstable_getFirstCallbackNode=function(){return h(r)};exports.unstable_next=function(a){switch(y){case 1:case 2:case 3:var b=3;break;default:b=y}var c=y;y=b;try{return a()}finally{y=c}};exports.unstable_pauseExecution=function(){};
+exports.unstable_requestPaint=function(){};exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=y;y=a;try{return b()}finally{y=c}};
+exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"object"===typeof c&&null!==c?(c=c.delay,c="number"===typeof c&&0<c?d+c:d):c=d;switch(a){case 1:var e=-1;break;case 2:e=250;break;case 5:e=1073741823;break;case 4:e=1E4;break;default:e=5E3}e=c+e;a={id:u++,callback:b,priorityLevel:a,startTime:c,expirationTime:e,sortIndex:-1};c>d?(a.sortIndex=c,f(t,a),null===h(r)&&a===h(t)&&(B?(E(L),L=-1):B=!0,K(H,c-d))):(a.sortIndex=e,f(r,a),A||z||(A=!0,I(J)));return a};
+exports.unstable_shouldYield=M;exports.unstable_wrapCallback=function(a){var b=y;return function(){var c=y;y=b;try{return a.apply(this,arguments)}finally{y=c}}};
+
+
+/***/ },
+
+/***/ 328
+(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__(613);
+} else // removed by dead control flow
+{}
+
+
+/***/ },
+
+/***/ 793
+(__unused_webpack_module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
 /*
- * Copyright 2009-2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE.txt or:
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
-/* unused reexport */ __webpack_require__(991)/* .SourceMapGenerator */ .x;
-exports.SourceMapConsumer = __webpack_require__(272).SourceMapConsumer;
-/* unused reexport */ __webpack_require__(537);
+
+/**
+ * A data structure which is a combination of an array and a set. Adding a new
+ * member is O(1), testing for membership is O(1), and finding the index of an
+ * element is O(1). Removing elements from the set is not supported. Only
+ * strings are supported for membership.
+ */
+class ArraySet {
+  constructor() {
+    this._array = [];
+    this._set = new Map();
+  }
+
+  /**
+   * Static method for creating ArraySet instances from an existing array.
+   */
+  static fromArray(aArray, aAllowDuplicates) {
+    const set = new ArraySet();
+    for (let i = 0, len = aArray.length; i < len; i++) {
+      set.add(aArray[i], aAllowDuplicates);
+    }
+    return set;
+  }
+
+  /**
+   * Return how many unique items are in this ArraySet. If duplicates have been
+   * added, than those do not count towards the size.
+   *
+   * @returns Number
+   */
+  size() {
+    return this._set.size;
+  }
+
+  /**
+   * Add the given string to this set.
+   *
+   * @param String aStr
+   */
+  add(aStr, aAllowDuplicates) {
+    const isDuplicate = this.has(aStr);
+    const idx = this._array.length;
+    if (!isDuplicate || aAllowDuplicates) {
+      this._array.push(aStr);
+    }
+    if (!isDuplicate) {
+      this._set.set(aStr, idx);
+    }
+  }
+
+  /**
+   * Is the given string a member of this set?
+   *
+   * @param String aStr
+   */
+  has(aStr) {
+      return this._set.has(aStr);
+  }
+
+  /**
+   * What is the index of the given string in the array?
+   *
+   * @param String aStr
+   */
+  indexOf(aStr) {
+    const idx = this._set.get(aStr);
+    if (idx >= 0) {
+        return idx;
+    }
+    throw new Error('"' + aStr + '" is not in the set.');
+  }
+
+  /**
+   * What is the element at the given index?
+   *
+   * @param Number aIdx
+   */
+  at(aIdx) {
+    if (aIdx >= 0 && aIdx < this._array.length) {
+      return this._array[aIdx];
+    }
+    throw new Error("No element indexed by " + aIdx);
+  }
+
+  /**
+   * Returns the array representation of this set (which has the proper indices
+   * indicated by indexOf). Note that this is a copy of the internal array used
+   * for storing the members so that no one can mess with internal state.
+   */
+  toArray() {
+    return this._array.slice();
+  }
+}
+exports.C = ArraySet;
 
 
-/***/ }),
+/***/ },
 
-/***/ 272:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ 286
+(__unused_webpack_module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ *
+ * Based on the Base 64 VLQ implementation in Closure Compiler:
+ * https://code.google.com/p/closure-compiler/source/browse/trunk/src/com/google/debugging/sourcemap/Base64VLQ.java
+ *
+ * Copyright 2011 The Closure Compiler Authors. All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above
+ *    copyright notice, this list of conditions and the following
+ *    disclaimer in the documentation and/or other materials provided
+ *    with the distribution.
+ *  * Neither the name of Google Inc. nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+const base64 = __webpack_require__(890);
+
+// A single base 64 digit can contain 6 bits of data. For the base 64 variable
+// length quantities we use in the source map spec, the first bit is the sign,
+// the next four bits are the actual value, and the 6th bit is the
+// continuation bit. The continuation bit tells us whether there are more
+// digits in this value following this digit.
+//
+//   Continuation
+//   |    Sign
+//   |    |
+//   V    V
+//   101011
+
+const VLQ_BASE_SHIFT = 5;
+
+// binary: 100000
+const VLQ_BASE = 1 << VLQ_BASE_SHIFT;
+
+// binary: 011111
+const VLQ_BASE_MASK = VLQ_BASE - 1;
+
+// binary: 100000
+const VLQ_CONTINUATION_BIT = VLQ_BASE;
+
+/**
+ * Converts from a two-complement value to a value where the sign bit is
+ * placed in the least significant bit.  For example, as decimals:
+ *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
+ *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
+ */
+function toVLQSigned(aValue) {
+  return aValue < 0
+    ? ((-aValue) << 1) + 1
+    : (aValue << 1) + 0;
+}
+
+/**
+ * Converts to a two-complement value from a value where the sign bit is
+ * placed in the least significant bit.  For example, as decimals:
+ *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
+ *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
+ */
+// eslint-disable-next-line no-unused-vars
+function fromVLQSigned(aValue) {
+  const isNegative = (aValue & 1) === 1;
+  const shifted = aValue >> 1;
+  return isNegative
+    ? -shifted
+    : shifted;
+}
+
+/**
+ * Returns the base 64 VLQ encoded value.
+ */
+exports.encode = function base64VLQ_encode(aValue) {
+  let encoded = "";
+  let digit;
+
+  let vlq = toVLQSigned(aValue);
+
+  do {
+    digit = vlq & VLQ_BASE_MASK;
+    vlq >>>= VLQ_BASE_SHIFT;
+    if (vlq > 0) {
+      // There are still more digits in this value, so we must make sure the
+      // continuation bit is marked.
+      digit |= VLQ_CONTINUATION_BIT;
+    }
+    encoded += base64.encode(digit);
+  } while (vlq > 0);
+
+  return encoded;
+};
+
+
+/***/ },
+
+/***/ 890
+(__unused_webpack_module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+const intToCharMap = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".split("");
+
+/**
+ * Encode an integer in the range of 0 to 63 to a single base 64 digit.
+ */
+exports.encode = function(number) {
+  if (0 <= number && number < intToCharMap.length) {
+    return intToCharMap[number];
+  }
+  throw new TypeError("Must be between 0 and 63: " + number);
+};
+
+
+/***/ },
+
+/***/ 297
+(__unused_webpack_module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+exports.R = 1;
+exports.LEAST_UPPER_BOUND = 2;
+
+/**
+ * Recursive implementation of binary search.
+ *
+ * @param aLow Indices here and lower do not contain the needle.
+ * @param aHigh Indices here and higher do not contain the needle.
+ * @param aNeedle The element being searched for.
+ * @param aHaystack The non-empty array being searched.
+ * @param aCompare Function which takes two elements and returns -1, 0, or 1.
+ * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
+ *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
+ *     closest element that is smaller than or greater than the one we are
+ *     searching for, respectively, if the exact element cannot be found.
+ */
+function recursiveSearch(aLow, aHigh, aNeedle, aHaystack, aCompare, aBias) {
+  // This function terminates when one of the following is true:
+  //
+  //   1. We find the exact element we are looking for.
+  //
+  //   2. We did not find the exact element, but we can return the index of
+  //      the next-closest element.
+  //
+  //   3. We did not find the exact element, and there is no next-closest
+  //      element than the one we are searching for, so we return -1.
+  const mid = Math.floor((aHigh - aLow) / 2) + aLow;
+  const cmp = aCompare(aNeedle, aHaystack[mid], true);
+  if (cmp === 0) {
+    // Found the element we are looking for.
+    return mid;
+  } else if (cmp > 0) {
+    // Our needle is greater than aHaystack[mid].
+    if (aHigh - mid > 1) {
+      // The element is in the upper half.
+      return recursiveSearch(mid, aHigh, aNeedle, aHaystack, aCompare, aBias);
+    }
+
+    // The exact needle element was not found in this haystack. Determine if
+    // we are in termination case (3) or (2) and return the appropriate thing.
+    if (aBias == exports.LEAST_UPPER_BOUND) {
+      return aHigh < aHaystack.length ? aHigh : -1;
+    }
+    return mid;
+  }
+
+  // Our needle is less than aHaystack[mid].
+  if (mid - aLow > 1) {
+    // The element is in the lower half.
+    return recursiveSearch(aLow, mid, aNeedle, aHaystack, aCompare, aBias);
+  }
+
+  // we are in termination case (3) or (2) and return the appropriate thing.
+  if (aBias == exports.LEAST_UPPER_BOUND) {
+    return mid;
+  }
+  return aLow < 0 ? -1 : aLow;
+}
+
+/**
+ * This is an implementation of binary search which will always try and return
+ * the index of the closest element if there is no exact hit. This is because
+ * mappings between original and generated line/col pairs are single points,
+ * and there is an implicit region between each of them, so a miss just means
+ * that you aren't on the very start of a region.
+ *
+ * @param aNeedle The element you are looking for.
+ * @param aHaystack The array that is being searched.
+ * @param aCompare A function which takes the needle and an element in the
+ *     array and returns -1, 0, or 1 depending on whether the needle is less
+ *     than, equal to, or greater than the element, respectively.
+ * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
+ *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
+ *     closest element that is smaller than or greater than the one we are
+ *     searching for, respectively, if the exact element cannot be found.
+ *     Defaults to 'binarySearch.GREATEST_LOWER_BOUND'.
+ */
+exports.search = function search(aNeedle, aHaystack, aCompare, aBias) {
+  if (aHaystack.length === 0) {
+    return -1;
+  }
+
+  let index = recursiveSearch(-1, aHaystack.length, aNeedle, aHaystack,
+                              aCompare, aBias || exports.R);
+  if (index < 0) {
+    return -1;
+  }
+
+  // We have found either the exact element, or the next-closest element than
+  // the one we are searching for. However, there may be more than one such
+  // element. Make sure we always return the smallest of these.
+  while (index - 1 >= 0) {
+    if (aCompare(aHaystack[index], aHaystack[index - 1], true) !== 0) {
+      break;
+    }
+    --index;
+  }
+
+  return index;
+};
+
+
+/***/ },
+
+/***/ 700
+(__unused_webpack_module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2014 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+const util = __webpack_require__(61);
+
+/**
+ * Determine whether mappingB is after mappingA with respect to generated
+ * position.
+ */
+function generatedPositionAfter(mappingA, mappingB) {
+  // Optimized for most common case
+  const lineA = mappingA.generatedLine;
+  const lineB = mappingB.generatedLine;
+  const columnA = mappingA.generatedColumn;
+  const columnB = mappingB.generatedColumn;
+  return lineB > lineA || lineB == lineA && columnB >= columnA ||
+         util.compareByGeneratedPositionsInflated(mappingA, mappingB) <= 0;
+}
+
+/**
+ * A data structure to provide a sorted view of accumulated mappings in a
+ * performance conscious manner. It trades a negligible overhead in general
+ * case for a large speedup in case of mappings being added in order.
+ */
+class MappingList {
+  constructor() {
+    this._array = [];
+    this._sorted = true;
+    // Serves as infimum
+    this._last = {generatedLine: -1, generatedColumn: 0};
+  }
+
+  /**
+   * Iterate through internal items. This method takes the same arguments that
+   * `Array.prototype.forEach` takes.
+   *
+   * NOTE: The order of the mappings is NOT guaranteed.
+   */
+  unsortedForEach(aCallback, aThisArg) {
+    this._array.forEach(aCallback, aThisArg);
+  }
+
+  /**
+   * Add the given source mapping.
+   *
+   * @param Object aMapping
+   */
+  add(aMapping) {
+    if (generatedPositionAfter(this._last, aMapping)) {
+      this._last = aMapping;
+      this._array.push(aMapping);
+    } else {
+      this._sorted = false;
+      this._array.push(aMapping);
+    }
+  }
+
+  /**
+   * Returns the flat, sorted array of mappings. The mappings are sorted by
+   * generated position.
+   *
+   * WARNING: This method returns internal data without copying, for
+   * performance. The return value must NOT be mutated, and should be treated as
+   * an immutable borrow. If you want to take ownership, you must make your own
+   * copy.
+   */
+  toArray() {
+    if (!this._sorted) {
+      this._array.sort(util.compareByGeneratedPositionsInflated);
+      this._sorted = true;
+    }
+    return this._array;
+  }
+}
+
+exports.P = MappingList;
+
+
+/***/ },
+
+/***/ 874
+(module, __unused_webpack_exports, __webpack_require__) {
+
+/* Determine browser vs node environment by testing the default top level context. Solution courtesy of: https://stackoverflow.com/questions/17575790/environment-detection-node-js-or-browser */
+const isBrowserEnvironment = (function() {
+    // eslint-disable-next-line no-undef
+    return (typeof window !== "undefined") && (this === window);
+}).call();
+
+if (isBrowserEnvironment) {
+  // Web version of reading a wasm file into an array buffer.
+
+  let mappingsWasm = null;
+
+  module.exports = function readWasm() {
+    if (typeof mappingsWasm === "string") {
+      return fetch(mappingsWasm)
+        .then(response => response.arrayBuffer());
+    }
+    if (mappingsWasm instanceof ArrayBuffer) {
+      return Promise.resolve(mappingsWasm);
+    }
+    throw new Error("You must provide the string URL or ArrayBuffer contents " +
+                    "of lib/mappings.wasm by calling " +
+                    "SourceMapConsumer.initialize({ 'lib/mappings.wasm': ... }) " +
+                    "before using SourceMapConsumer");
+  };
+
+  module.exports.initialize = input => mappingsWasm = input;
+} else {
+  // Node version of reading a wasm file into an array buffer.
+  const fs = __webpack_require__(896);
+  const path = __webpack_require__(928);
+
+  module.exports = function readWasm() {
+    return new Promise((resolve, reject) => {
+      const wasmPath = path.join(__dirname, "mappings.wasm");
+      fs.readFile(wasmPath, null, (error, data) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        resolve(data.buffer);
+      });
+    });
+  };
+
+  module.exports.initialize = _ => {
+    console.debug("SourceMapConsumer.initialize is a no-op when running in node.js");
+  };
+}
+
+
+/***/ },
+
+/***/ 272
+(__unused_webpack_module, exports, __webpack_require__) {
 
 var __webpack_unused_export__;
 /* -*- Mode: js; js-indent-level: 2; -*- */
@@ -2371,1829 +2509,10 @@ function _factoryBSM(aSourceMap, aSourceMapURL) {
 }
 
 
-/***/ }),
+/***/ },
 
-/***/ 286:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- *
- * Based on the Base 64 VLQ implementation in Closure Compiler:
- * https://code.google.com/p/closure-compiler/source/browse/trunk/src/com/google/debugging/sourcemap/Base64VLQ.java
- *
- * Copyright 2011 The Closure Compiler Authors. All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *
- *  * Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  * Redistributions in binary form must reproduce the above
- *    copyright notice, this list of conditions and the following
- *    disclaimer in the documentation and/or other materials provided
- *    with the distribution.
- *  * Neither the name of Google Inc. nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-const base64 = __webpack_require__(890);
-
-// A single base 64 digit can contain 6 bits of data. For the base 64 variable
-// length quantities we use in the source map spec, the first bit is the sign,
-// the next four bits are the actual value, and the 6th bit is the
-// continuation bit. The continuation bit tells us whether there are more
-// digits in this value following this digit.
-//
-//   Continuation
-//   |    Sign
-//   |    |
-//   V    V
-//   101011
-
-const VLQ_BASE_SHIFT = 5;
-
-// binary: 100000
-const VLQ_BASE = 1 << VLQ_BASE_SHIFT;
-
-// binary: 011111
-const VLQ_BASE_MASK = VLQ_BASE - 1;
-
-// binary: 100000
-const VLQ_CONTINUATION_BIT = VLQ_BASE;
-
-/**
- * Converts from a two-complement value to a value where the sign bit is
- * placed in the least significant bit.  For example, as decimals:
- *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
- *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
- */
-function toVLQSigned(aValue) {
-  return aValue < 0
-    ? ((-aValue) << 1) + 1
-    : (aValue << 1) + 0;
-}
-
-/**
- * Converts to a two-complement value from a value where the sign bit is
- * placed in the least significant bit.  For example, as decimals:
- *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
- *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
- */
-// eslint-disable-next-line no-unused-vars
-function fromVLQSigned(aValue) {
-  const isNegative = (aValue & 1) === 1;
-  const shifted = aValue >> 1;
-  return isNegative
-    ? -shifted
-    : shifted;
-}
-
-/**
- * Returns the base 64 VLQ encoded value.
- */
-exports.encode = function base64VLQ_encode(aValue) {
-  let encoded = "";
-  let digit;
-
-  let vlq = toVLQSigned(aValue);
-
-  do {
-    digit = vlq & VLQ_BASE_MASK;
-    vlq >>>= VLQ_BASE_SHIFT;
-    if (vlq > 0) {
-      // There are still more digits in this value, so we must make sure the
-      // continuation bit is marked.
-      digit |= VLQ_CONTINUATION_BIT;
-    }
-    encoded += base64.encode(digit);
-  } while (vlq > 0);
-
-  return encoded;
-};
-
-
-/***/ }),
-
-/***/ 287:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fL: () => (/* binding */ pascalCase)
-/* harmony export */ });
-/* unused harmony exports pascalCaseTransform, pascalCaseTransformMerge */
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(635);
-/* harmony import */ var no_case__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(780);
-
-
-function pascalCaseTransform(input, index) {
-    var firstChar = input.charAt(0);
-    var lowerChars = input.substr(1).toLowerCase();
-    if (index > 0 && firstChar >= "0" && firstChar <= "9") {
-        return "_" + firstChar + lowerChars;
-    }
-    return "" + firstChar.toUpperCase() + lowerChars;
-}
-function pascalCaseTransformMerge(input) {
-    return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-}
-function pascalCase(input, options) {
-    if (options === void 0) { options = {}; }
-    return (0,no_case__WEBPACK_IMPORTED_MODULE_0__/* .noCase */ .W)(input, (0,tslib__WEBPACK_IMPORTED_MODULE_1__/* .__assign */ .Cl)({ delimiter: "", transform: pascalCaseTransform }, options));
-}
-
-
-/***/ }),
-
-/***/ 297:
-/***/ ((__unused_webpack_module, exports) => {
-
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
-
-exports.GREATEST_LOWER_BOUND = 1;
-exports.LEAST_UPPER_BOUND = 2;
-
-/**
- * Recursive implementation of binary search.
- *
- * @param aLow Indices here and lower do not contain the needle.
- * @param aHigh Indices here and higher do not contain the needle.
- * @param aNeedle The element being searched for.
- * @param aHaystack The non-empty array being searched.
- * @param aCompare Function which takes two elements and returns -1, 0, or 1.
- * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
- *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
- *     closest element that is smaller than or greater than the one we are
- *     searching for, respectively, if the exact element cannot be found.
- */
-function recursiveSearch(aLow, aHigh, aNeedle, aHaystack, aCompare, aBias) {
-  // This function terminates when one of the following is true:
-  //
-  //   1. We find the exact element we are looking for.
-  //
-  //   2. We did not find the exact element, but we can return the index of
-  //      the next-closest element.
-  //
-  //   3. We did not find the exact element, and there is no next-closest
-  //      element than the one we are searching for, so we return -1.
-  const mid = Math.floor((aHigh - aLow) / 2) + aLow;
-  const cmp = aCompare(aNeedle, aHaystack[mid], true);
-  if (cmp === 0) {
-    // Found the element we are looking for.
-    return mid;
-  } else if (cmp > 0) {
-    // Our needle is greater than aHaystack[mid].
-    if (aHigh - mid > 1) {
-      // The element is in the upper half.
-      return recursiveSearch(mid, aHigh, aNeedle, aHaystack, aCompare, aBias);
-    }
-
-    // The exact needle element was not found in this haystack. Determine if
-    // we are in termination case (3) or (2) and return the appropriate thing.
-    if (aBias == exports.LEAST_UPPER_BOUND) {
-      return aHigh < aHaystack.length ? aHigh : -1;
-    }
-    return mid;
-  }
-
-  // Our needle is less than aHaystack[mid].
-  if (mid - aLow > 1) {
-    // The element is in the lower half.
-    return recursiveSearch(aLow, mid, aNeedle, aHaystack, aCompare, aBias);
-  }
-
-  // we are in termination case (3) or (2) and return the appropriate thing.
-  if (aBias == exports.LEAST_UPPER_BOUND) {
-    return mid;
-  }
-  return aLow < 0 ? -1 : aLow;
-}
-
-/**
- * This is an implementation of binary search which will always try and return
- * the index of the closest element if there is no exact hit. This is because
- * mappings between original and generated line/col pairs are single points,
- * and there is an implicit region between each of them, so a miss just means
- * that you aren't on the very start of a region.
- *
- * @param aNeedle The element you are looking for.
- * @param aHaystack The array that is being searched.
- * @param aCompare A function which takes the needle and an element in the
- *     array and returns -1, 0, or 1 depending on whether the needle is less
- *     than, equal to, or greater than the element, respectively.
- * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
- *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
- *     closest element that is smaller than or greater than the one we are
- *     searching for, respectively, if the exact element cannot be found.
- *     Defaults to 'binarySearch.GREATEST_LOWER_BOUND'.
- */
-exports.search = function search(aNeedle, aHaystack, aCompare, aBias) {
-  if (aHaystack.length === 0) {
-    return -1;
-  }
-
-  let index = recursiveSearch(-1, aHaystack.length, aNeedle, aHaystack,
-                              aCompare, aBias || exports.GREATEST_LOWER_BOUND);
-  if (index < 0) {
-    return -1;
-  }
-
-  // We have found either the exact element, or the next-closest element than
-  // the one we are searching for. However, there may be more than one such
-  // element. Make sure we always return the smallest of these.
-  while (index - 1 >= 0) {
-    if (aCompare(aHaystack[index], aHaystack[index - 1], true) !== 0) {
-      break;
-    }
-    --index;
-  }
-
-  return index;
-};
-
-
-/***/ }),
-
-/***/ 328:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__(613);
-} else {}
-
-
-/***/ }),
-
-/***/ 365:
-/***/ ((module) => {
-
-"use strict";
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var __DEV__ = "production" !== 'production';
-
-var warning = function() {};
-
-if (__DEV__) {
-  var printWarning = function printWarning(format, args) {
-    var len = arguments.length;
-    args = new Array(len > 1 ? len - 1 : 0);
-    for (var key = 1; key < len; key++) {
-      args[key - 1] = arguments[key];
-    }
-    var argIndex = 0;
-    var message = 'Warning: ' +
-      format.replace(/%s/g, function() {
-        return args[argIndex++];
-      });
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  }
-
-  warning = function(condition, format, args) {
-    var len = arguments.length;
-    args = new Array(len > 2 ? len - 2 : 0);
-    for (var key = 2; key < len; key++) {
-      args[key - 2] = arguments[key];
-    }
-    if (format === undefined) {
-      throw new Error(
-          '`warning(condition, format, ...args)` requires a warning ' +
-          'message argument'
-      );
-    }
-    if (!condition) {
-      printWarning.apply(null, [format].concat(args));
-    }
-  };
-}
-
-module.exports = warning;
-
-
-/***/ }),
-
-/***/ 401:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const readWasm = __webpack_require__(874);
-
-/**
- * Provide the JIT with a nice shape / hidden class.
- */
-function Mapping() {
-  this.generatedLine = 0;
-  this.generatedColumn = 0;
-  this.lastGeneratedColumn = null;
-  this.source = null;
-  this.originalLine = null;
-  this.originalColumn = null;
-  this.name = null;
-}
-
-let cachedWasm = null;
-
-module.exports = function wasm() {
-  if (cachedWasm) {
-    return cachedWasm;
-  }
-
-  const callbackStack = [];
-
-  cachedWasm = readWasm().then(buffer => {
-      return WebAssembly.instantiate(buffer, {
-        env: {
-          mapping_callback(
-            generatedLine,
-            generatedColumn,
-
-            hasLastGeneratedColumn,
-            lastGeneratedColumn,
-
-            hasOriginal,
-            source,
-            originalLine,
-            originalColumn,
-
-            hasName,
-            name
-          ) {
-            const mapping = new Mapping();
-            // JS uses 1-based line numbers, wasm uses 0-based.
-            mapping.generatedLine = generatedLine + 1;
-            mapping.generatedColumn = generatedColumn;
-
-            if (hasLastGeneratedColumn) {
-              // JS uses inclusive last generated column, wasm uses exclusive.
-              mapping.lastGeneratedColumn = lastGeneratedColumn - 1;
-            }
-
-            if (hasOriginal) {
-              mapping.source = source;
-              // JS uses 1-based line numbers, wasm uses 0-based.
-              mapping.originalLine = originalLine + 1;
-              mapping.originalColumn = originalColumn;
-
-              if (hasName) {
-                mapping.name = name;
-              }
-            }
-
-            callbackStack[callbackStack.length - 1](mapping);
-          },
-
-          start_all_generated_locations_for() { console.time("all_generated_locations_for"); },
-          end_all_generated_locations_for() { console.timeEnd("all_generated_locations_for"); },
-
-          start_compute_column_spans() { console.time("compute_column_spans"); },
-          end_compute_column_spans() { console.timeEnd("compute_column_spans"); },
-
-          start_generated_location_for() { console.time("generated_location_for"); },
-          end_generated_location_for() { console.timeEnd("generated_location_for"); },
-
-          start_original_location_for() { console.time("original_location_for"); },
-          end_original_location_for() { console.timeEnd("original_location_for"); },
-
-          start_parse_mappings() { console.time("parse_mappings"); },
-          end_parse_mappings() { console.timeEnd("parse_mappings"); },
-
-          start_sort_by_generated_location() { console.time("sort_by_generated_location"); },
-          end_sort_by_generated_location() { console.timeEnd("sort_by_generated_location"); },
-
-          start_sort_by_original_location() { console.time("sort_by_original_location"); },
-          end_sort_by_original_location() { console.timeEnd("sort_by_original_location"); },
-        }
-      });
-  }).then(Wasm => {
-    return {
-      exports: Wasm.instance.exports,
-      withMappingCallback: (mappingCallback, f) => {
-        callbackStack.push(mappingCallback);
-        try {
-          f();
-        } finally {
-          callbackStack.pop();
-        }
-      }
-    };
-  }).then(null, e => {
-    cachedWasm = null;
-    throw e;
-  });
-
-  return cachedWasm;
-};
-
-
-/***/ }),
-
-/***/ 422:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__(477);
-} else {}
-
-
-/***/ }),
-
-/***/ 477:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-/**
- * @license React
- * use-sync-external-store-shim.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var e=__webpack_require__(810);function h(a,b){return a===b&&(0!==a||1/a===1/b)||a!==a&&b!==b}var k="function"===typeof Object.is?Object.is:h,l=e.useState,m=e.useEffect,n=e.useLayoutEffect,p=e.useDebugValue;function q(a,b){var d=b(),f=l({inst:{value:d,getSnapshot:b}}),c=f[0].inst,g=f[1];n(function(){c.value=d;c.getSnapshot=b;r(c)&&g({inst:c})},[a,d,b]);m(function(){r(c)&&g({inst:c});return a(function(){r(c)&&g({inst:c})})},[a]);p(d);return d}
-function r(a){var b=a.getSnapshot;a=a.value;try{var d=b();return!k(a,d)}catch(f){return!0}}function t(a,b){return b()}var u="undefined"===typeof window||"undefined"===typeof window.document||"undefined"===typeof window.document.createElement?t:q;exports.useSyncExternalStore=void 0!==e.useSyncExternalStore?e.useSyncExternalStore:u;
-
-
-/***/ }),
-
-/***/ 483:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (false) {}
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (true) {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(45);
-} else {}
-
-
-/***/ }),
-
-/***/ 537:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-var __webpack_unused_export__;
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
-
-const SourceMapGenerator = (__webpack_require__(991)/* .SourceMapGenerator */ .x);
-const util = __webpack_require__(61);
-
-// Matches a Windows-style `\r\n` newline or a `\n` newline used by all other
-// operating systems these days (capturing the result).
-const REGEX_NEWLINE = /(\r?\n)/;
-
-// Newline character code for charCodeAt() comparisons
-const NEWLINE_CODE = 10;
-
-// Private symbol for identifying `SourceNode`s when multiple versions of
-// the source-map library are loaded. This MUST NOT CHANGE across
-// versions!
-const isSourceNode = "$$$isSourceNode$$$";
-
-/**
- * SourceNodes provide a way to abstract over interpolating/concatenating
- * snippets of generated JavaScript source code while maintaining the line and
- * column information associated with the original source code.
- *
- * @param aLine The original line number.
- * @param aColumn The original column number.
- * @param aSource The original source's filename.
- * @param aChunks Optional. An array of strings which are snippets of
- *        generated JS, or other SourceNodes.
- * @param aName The original identifier.
- */
-class SourceNode {
-  constructor(aLine, aColumn, aSource, aChunks, aName) {
-    this.children = [];
-    this.sourceContents = {};
-    this.line = aLine == null ? null : aLine;
-    this.column = aColumn == null ? null : aColumn;
-    this.source = aSource == null ? null : aSource;
-    this.name = aName == null ? null : aName;
-    this[isSourceNode] = true;
-    if (aChunks != null) this.add(aChunks);
-  }
-
-  /**
-   * Creates a SourceNode from generated code and a SourceMapConsumer.
-   *
-   * @param aGeneratedCode The generated code
-   * @param aSourceMapConsumer The SourceMap for the generated code
-   * @param aRelativePath Optional. The path that relative sources in the
-   *        SourceMapConsumer should be relative to.
-   */
-  static fromStringWithSourceMap(aGeneratedCode, aSourceMapConsumer, aRelativePath) {
-    // The SourceNode we want to fill with the generated code
-    // and the SourceMap
-    const node = new SourceNode();
-
-    // All even indices of this array are one line of the generated code,
-    // while all odd indices are the newlines between two adjacent lines
-    // (since `REGEX_NEWLINE` captures its match).
-    // Processed fragments are accessed by calling `shiftNextLine`.
-    const remainingLines = aGeneratedCode.split(REGEX_NEWLINE);
-    let remainingLinesIndex = 0;
-    const shiftNextLine = function() {
-      const lineContents = getNextLine();
-      // The last line of a file might not have a newline.
-      const newLine = getNextLine() || "";
-      return lineContents + newLine;
-
-      function getNextLine() {
-        return remainingLinesIndex < remainingLines.length ?
-            remainingLines[remainingLinesIndex++] : undefined;
-      }
-    };
-
-    // We need to remember the position of "remainingLines"
-    let lastGeneratedLine = 1, lastGeneratedColumn = 0;
-
-    // The generate SourceNodes we need a code range.
-    // To extract it current and last mapping is used.
-    // Here we store the last mapping.
-    let lastMapping = null;
-    let nextLine;
-
-    aSourceMapConsumer.eachMapping(function(mapping) {
-      if (lastMapping !== null) {
-        // We add the code from "lastMapping" to "mapping":
-        // First check if there is a new line in between.
-        if (lastGeneratedLine < mapping.generatedLine) {
-          // Associate first line with "lastMapping"
-          addMappingWithCode(lastMapping, shiftNextLine());
-          lastGeneratedLine++;
-          lastGeneratedColumn = 0;
-          // The remaining code is added without mapping
-        } else {
-          // There is no new line in between.
-          // Associate the code between "lastGeneratedColumn" and
-          // "mapping.generatedColumn" with "lastMapping"
-          nextLine = remainingLines[remainingLinesIndex] || "";
-          const code = nextLine.substr(0, mapping.generatedColumn -
-                                        lastGeneratedColumn);
-          remainingLines[remainingLinesIndex] = nextLine.substr(mapping.generatedColumn -
-                                              lastGeneratedColumn);
-          lastGeneratedColumn = mapping.generatedColumn;
-          addMappingWithCode(lastMapping, code);
-          // No more remaining code, continue
-          lastMapping = mapping;
-          return;
-        }
-      }
-      // We add the generated code until the first mapping
-      // to the SourceNode without any mapping.
-      // Each line is added as separate string.
-      while (lastGeneratedLine < mapping.generatedLine) {
-        node.add(shiftNextLine());
-        lastGeneratedLine++;
-      }
-      if (lastGeneratedColumn < mapping.generatedColumn) {
-        nextLine = remainingLines[remainingLinesIndex] || "";
-        node.add(nextLine.substr(0, mapping.generatedColumn));
-        remainingLines[remainingLinesIndex] = nextLine.substr(mapping.generatedColumn);
-        lastGeneratedColumn = mapping.generatedColumn;
-      }
-      lastMapping = mapping;
-    }, this);
-    // We have processed all mappings.
-    if (remainingLinesIndex < remainingLines.length) {
-      if (lastMapping) {
-        // Associate the remaining code in the current line with "lastMapping"
-        addMappingWithCode(lastMapping, shiftNextLine());
-      }
-      // and add the remaining lines without any mapping
-      node.add(remainingLines.splice(remainingLinesIndex).join(""));
-    }
-
-    // Copy sourcesContent into SourceNode
-    aSourceMapConsumer.sources.forEach(function(sourceFile) {
-      const content = aSourceMapConsumer.sourceContentFor(sourceFile);
-      if (content != null) {
-        if (aRelativePath != null) {
-          sourceFile = util.join(aRelativePath, sourceFile);
-        }
-        node.setSourceContent(sourceFile, content);
-      }
-    });
-
-    return node;
-
-    function addMappingWithCode(mapping, code) {
-      if (mapping === null || mapping.source === undefined) {
-        node.add(code);
-      } else {
-        const source = aRelativePath
-          ? util.join(aRelativePath, mapping.source)
-          : mapping.source;
-        node.add(new SourceNode(mapping.originalLine,
-                                mapping.originalColumn,
-                                source,
-                                code,
-                                mapping.name));
-      }
-    }
-  }
-
-  /**
-   * Add a chunk of generated JS to this source node.
-   *
-   * @param aChunk A string snippet of generated JS code, another instance of
-   *        SourceNode, or an array where each member is one of those things.
-   */
-  add(aChunk) {
-    if (Array.isArray(aChunk)) {
-      aChunk.forEach(function(chunk) {
-        this.add(chunk);
-      }, this);
-    } else if (aChunk[isSourceNode] || typeof aChunk === "string") {
-      if (aChunk) {
-        this.children.push(aChunk);
-      }
-    } else {
-      throw new TypeError(
-        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
-      );
-    }
-    return this;
-  }
-
-  /**
-   * Add a chunk of generated JS to the beginning of this source node.
-   *
-   * @param aChunk A string snippet of generated JS code, another instance of
-   *        SourceNode, or an array where each member is one of those things.
-   */
-  prepend(aChunk) {
-    if (Array.isArray(aChunk)) {
-      for (let i = aChunk.length - 1; i >= 0; i--) {
-        this.prepend(aChunk[i]);
-      }
-    } else if (aChunk[isSourceNode] || typeof aChunk === "string") {
-      this.children.unshift(aChunk);
-    } else {
-      throw new TypeError(
-        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
-      );
-    }
-    return this;
-  }
-
-  /**
-   * Walk over the tree of JS snippets in this node and its children. The
-   * walking function is called once for each snippet of JS and is passed that
-   * snippet and the its original associated source's line/column location.
-   *
-   * @param aFn The traversal function.
-   */
-  walk(aFn) {
-    let chunk;
-    for (let i = 0, len = this.children.length; i < len; i++) {
-      chunk = this.children[i];
-      if (chunk[isSourceNode]) {
-        chunk.walk(aFn);
-      } else if (chunk !== "") {
-        aFn(chunk, { source: this.source,
-                      line: this.line,
-                      column: this.column,
-                      name: this.name });
-      }
-    }
-  }
-
-  /**
-   * Like `String.prototype.join` except for SourceNodes. Inserts `aStr` between
-   * each of `this.children`.
-   *
-   * @param aSep The separator.
-   */
-  join(aSep) {
-    let newChildren;
-    let i;
-    const len = this.children.length;
-    if (len > 0) {
-      newChildren = [];
-      for (i = 0; i < len - 1; i++) {
-        newChildren.push(this.children[i]);
-        newChildren.push(aSep);
-      }
-      newChildren.push(this.children[i]);
-      this.children = newChildren;
-    }
-    return this;
-  }
-
-  /**
-   * Call String.prototype.replace on the very right-most source snippet. Useful
-   * for trimming whitespace from the end of a source node, etc.
-   *
-   * @param aPattern The pattern to replace.
-   * @param aReplacement The thing to replace the pattern with.
-   */
-  replaceRight(aPattern, aReplacement) {
-    const lastChild = this.children[this.children.length - 1];
-    if (lastChild[isSourceNode]) {
-      lastChild.replaceRight(aPattern, aReplacement);
-    } else if (typeof lastChild === "string") {
-      this.children[this.children.length - 1] = lastChild.replace(aPattern, aReplacement);
-    } else {
-      this.children.push("".replace(aPattern, aReplacement));
-    }
-    return this;
-  }
-
-  /**
-   * Set the source content for a source file. This will be added to the SourceMapGenerator
-   * in the sourcesContent field.
-   *
-   * @param aSourceFile The filename of the source file
-   * @param aSourceContent The content of the source file
-   */
-  setSourceContent(aSourceFile, aSourceContent) {
-    this.sourceContents[util.toSetString(aSourceFile)] = aSourceContent;
-  }
-
-  /**
-   * Walk over the tree of SourceNodes. The walking function is called for each
-   * source file content and is passed the filename and source content.
-   *
-   * @param aFn The traversal function.
-   */
-  walkSourceContents(aFn) {
-    for (let i = 0, len = this.children.length; i < len; i++) {
-      if (this.children[i][isSourceNode]) {
-        this.children[i].walkSourceContents(aFn);
-      }
-    }
-
-    const sources = Object.keys(this.sourceContents);
-    for (let i = 0, len = sources.length; i < len; i++) {
-      aFn(util.fromSetString(sources[i]), this.sourceContents[sources[i]]);
-    }
-  }
-
-  /**
-   * Return the string representation of this source node. Walks over the tree
-   * and concatenates all the various snippets together to one string.
-   */
-  toString() {
-    let str = "";
-    this.walk(function(chunk) {
-      str += chunk;
-    });
-    return str;
-  }
-
-  /**
-   * Returns the string representation of this source node along with a source
-   * map.
-   */
-  toStringWithSourceMap(aArgs) {
-    const generated = {
-      code: "",
-      line: 1,
-      column: 0
-    };
-    const map = new SourceMapGenerator(aArgs);
-    let sourceMappingActive = false;
-    let lastOriginalSource = null;
-    let lastOriginalLine = null;
-    let lastOriginalColumn = null;
-    let lastOriginalName = null;
-    this.walk(function(chunk, original) {
-      generated.code += chunk;
-      if (original.source !== null
-          && original.line !== null
-          && original.column !== null) {
-        if (lastOriginalSource !== original.source
-          || lastOriginalLine !== original.line
-          || lastOriginalColumn !== original.column
-          || lastOriginalName !== original.name) {
-          map.addMapping({
-            source: original.source,
-            original: {
-              line: original.line,
-              column: original.column
-            },
-            generated: {
-              line: generated.line,
-              column: generated.column
-            },
-            name: original.name
-          });
-        }
-        lastOriginalSource = original.source;
-        lastOriginalLine = original.line;
-        lastOriginalColumn = original.column;
-        lastOriginalName = original.name;
-        sourceMappingActive = true;
-      } else if (sourceMappingActive) {
-        map.addMapping({
-          generated: {
-            line: generated.line,
-            column: generated.column
-          }
-        });
-        lastOriginalSource = null;
-        sourceMappingActive = false;
-      }
-      for (let idx = 0, length = chunk.length; idx < length; idx++) {
-        if (chunk.charCodeAt(idx) === NEWLINE_CODE) {
-          generated.line++;
-          generated.column = 0;
-          // Mappings end at eol
-          if (idx + 1 === length) {
-            lastOriginalSource = null;
-            sourceMappingActive = false;
-          } else if (sourceMappingActive) {
-            map.addMapping({
-              source: original.source,
-              original: {
-                line: original.line,
-                column: original.column
-              },
-              generated: {
-                line: generated.line,
-                column: generated.column
-              },
-              name: original.name
-            });
-          }
-        } else {
-          generated.column++;
-        }
-      }
-    });
-    this.walkSourceContents(function(sourceFile, sourceContent) {
-      map.setSourceContent(sourceFile, sourceContent);
-    });
-
-    return { code: generated.code, map };
-  }
-}
-
-__webpack_unused_export__ = SourceNode;
-
-
-/***/ }),
-
-/***/ 613:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-/**
- * @license React
- * scheduler.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-function f(a,b){var c=a.length;a.push(b);a:for(;0<c;){var d=c-1>>>1,e=a[d];if(0<g(e,b))a[d]=b,a[c]=e,c=d;else break a}}function h(a){return 0===a.length?null:a[0]}function k(a){if(0===a.length)return null;var b=a[0],c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length,w=e>>>1;d<w;){var m=2*(d+1)-1,C=a[m],n=m+1,x=a[n];if(0>g(C,c))n<e&&0>g(x,C)?(a[d]=x,a[n]=c,d=n):(a[d]=C,a[m]=c,d=m);else if(n<e&&0>g(x,c))a[d]=x,a[n]=c,d=n;else break a}}return b}
-function g(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}if("object"===typeof performance&&"function"===typeof performance.now){var l=performance;exports.unstable_now=function(){return l.now()}}else{var p=Date,q=p.now();exports.unstable_now=function(){return p.now()-q}}var r=[],t=[],u=1,v=null,y=3,z=!1,A=!1,B=!1,D="function"===typeof setTimeout?setTimeout:null,E="function"===typeof clearTimeout?clearTimeout:null,F="undefined"!==typeof setImmediate?setImmediate:null;
-"undefined"!==typeof navigator&&void 0!==navigator.scheduling&&void 0!==navigator.scheduling.isInputPending&&navigator.scheduling.isInputPending.bind(navigator.scheduling);function G(a){for(var b=h(t);null!==b;){if(null===b.callback)k(t);else if(b.startTime<=a)k(t),b.sortIndex=b.expirationTime,f(r,b);else break;b=h(t)}}function H(a){B=!1;G(a);if(!A)if(null!==h(r))A=!0,I(J);else{var b=h(t);null!==b&&K(H,b.startTime-a)}}
-function J(a,b){A=!1;B&&(B=!1,E(L),L=-1);z=!0;var c=y;try{G(b);for(v=h(r);null!==v&&(!(v.expirationTime>b)||a&&!M());){var d=v.callback;if("function"===typeof d){v.callback=null;y=v.priorityLevel;var e=d(v.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?v.callback=e:v===h(r)&&k(r);G(b)}else k(r);v=h(r)}if(null!==v)var w=!0;else{var m=h(t);null!==m&&K(H,m.startTime-b);w=!1}return w}finally{v=null,y=c,z=!1}}var N=!1,O=null,L=-1,P=5,Q=-1;
-function M(){return exports.unstable_now()-Q<P?!1:!0}function R(){if(null!==O){var a=exports.unstable_now();Q=a;var b=!0;try{b=O(!0,a)}finally{b?S():(N=!1,O=null)}}else N=!1}var S;if("function"===typeof F)S=function(){F(R)};else if("undefined"!==typeof MessageChannel){var T=new MessageChannel,U=T.port2;T.port1.onmessage=R;S=function(){U.postMessage(null)}}else S=function(){D(R,0)};function I(a){O=a;N||(N=!0,S())}function K(a,b){L=D(function(){a(exports.unstable_now())},b)}
-exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){A||z||(A=!0,I(J))};
-exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):P=0<a?Math.floor(1E3/a):5};exports.unstable_getCurrentPriorityLevel=function(){return y};exports.unstable_getFirstCallbackNode=function(){return h(r)};exports.unstable_next=function(a){switch(y){case 1:case 2:case 3:var b=3;break;default:b=y}var c=y;y=b;try{return a()}finally{y=c}};exports.unstable_pauseExecution=function(){};
-exports.unstable_requestPaint=function(){};exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=y;y=a;try{return b()}finally{y=c}};
-exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"object"===typeof c&&null!==c?(c=c.delay,c="number"===typeof c&&0<c?d+c:d):c=d;switch(a){case 1:var e=-1;break;case 2:e=250;break;case 5:e=1073741823;break;case 4:e=1E4;break;default:e=5E3}e=c+e;a={id:u++,callback:b,priorityLevel:a,startTime:c,expirationTime:e,sortIndex:-1};c>d?(a.sortIndex=c,f(t,a),null===h(r)&&a===h(t)&&(B?(E(L),L=-1):B=!0,K(H,c-d))):(a.sortIndex=e,f(r,a),A||z||(A=!0,I(J)));return a};
-exports.unstable_shouldYield=M;exports.unstable_wrapCallback=function(a){var b=y;return function(){var c=y;y=b;try{return a.apply(this,arguments)}finally{y=c}}};
-
-
-/***/ }),
-
-/***/ 635:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   C6: () => (/* binding */ __extends),
-/* harmony export */   Cl: () => (/* binding */ __assign),
-/* harmony export */   Tt: () => (/* binding */ __rest),
-/* harmony export */   YH: () => (/* binding */ __generator),
-/* harmony export */   fX: () => (/* binding */ __spreadArray),
-/* harmony export */   sH: () => (/* binding */ __awaiter)
-/* harmony export */ });
-/* unused harmony exports __decorate, __param, __esDecorate, __runInitializers, __propKey, __setFunctionName, __metadata, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet, __classPrivateFieldIn, __addDisposableResource, __disposeResources */
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
-
-var extendStatics = function(d, b) {
-  extendStatics = Object.setPrototypeOf ||
-      ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-      function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-  return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-  if (typeof b !== "function" && b !== null)
-      throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-  extendStatics(d, b);
-  function __() { this.constructor = d; }
-  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-
-var __assign = function() {
-  __assign = Object.assign || function __assign(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-      return t;
-  }
-  return __assign.apply(this, arguments);
-}
-
-function __rest(s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-      t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function")
-      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-          if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-              t[p[i]] = s[p[i]];
-      }
-  return t;
-}
-
-function __decorate(decorators, target, key, desc) {
-  var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-  else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-  return c > 3 && r && Object.defineProperty(target, key, r), r;
-}
-
-function __param(paramIndex, decorator) {
-  return function (target, key) { decorator(target, key, paramIndex); }
-}
-
-function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
-  function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
-  var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
-  var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
-  var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
-  var _, done = false;
-  for (var i = decorators.length - 1; i >= 0; i--) {
-      var context = {};
-      for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
-      for (var p in contextIn.access) context.access[p] = contextIn.access[p];
-      context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
-      var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
-      if (kind === "accessor") {
-          if (result === void 0) continue;
-          if (result === null || typeof result !== "object") throw new TypeError("Object expected");
-          if (_ = accept(result.get)) descriptor.get = _;
-          if (_ = accept(result.set)) descriptor.set = _;
-          if (_ = accept(result.init)) initializers.unshift(_);
-      }
-      else if (_ = accept(result)) {
-          if (kind === "field") initializers.unshift(_);
-          else descriptor[key] = _;
-      }
-  }
-  if (target) Object.defineProperty(target, contextIn.name, descriptor);
-  done = true;
-};
-
-function __runInitializers(thisArg, initializers, value) {
-  var useValue = arguments.length > 2;
-  for (var i = 0; i < initializers.length; i++) {
-      value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
-  }
-  return useValue ? value : void 0;
-};
-
-function __propKey(x) {
-  return typeof x === "symbol" ? x : "".concat(x);
-};
-
-function __setFunctionName(f, name, prefix) {
-  if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
-  return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
-};
-
-function __metadata(metadataKey, metadataValue) {
-  if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-}
-
-function __awaiter(thisArg, _arguments, P, generator) {
-  function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-  return new (P || (P = Promise))(function (resolve, reject) {
-      function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-      function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-      function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-      step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-}
-
-function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-  function verb(n) { return function (v) { return step([n, v]); }; }
-  function step(op) {
-      if (f) throw new TypeError("Generator is already executing.");
-      while (g && (g = 0, op[0] && (_ = 0)), _) try {
-          if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-          if (y = 0, t) op = [op[0] & 2, t.value];
-          switch (op[0]) {
-              case 0: case 1: t = op; break;
-              case 4: _.label++; return { value: op[1], done: false };
-              case 5: _.label++; y = op[1]; op = [0]; continue;
-              case 7: op = _.ops.pop(); _.trys.pop(); continue;
-              default:
-                  if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                  if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                  if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                  if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                  if (t[2]) _.ops.pop();
-                  _.trys.pop(); continue;
-          }
-          op = body.call(thisArg, _);
-      } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-      if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-  }
-}
-
-var __createBinding = Object.create ? (function(o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  var desc = Object.getOwnPropertyDescriptor(m, k);
-  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-  }
-  Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-function __exportStar(m, o) {
-  for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
-}
-
-function __values(o) {
-  var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-  if (m) return m.call(o);
-  if (o && typeof o.length === "number") return {
-      next: function () {
-          if (o && i >= o.length) o = void 0;
-          return { value: o && o[i++], done: !o };
-      }
-  };
-  throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-}
-
-function __read(o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m) return o;
-  var i = m.call(o), r, ar = [], e;
-  try {
-      while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-  }
-  catch (error) { e = { error: error }; }
-  finally {
-      try {
-          if (r && !r.done && (m = i["return"])) m.call(i);
-      }
-      finally { if (e) throw e.error; }
-  }
-  return ar;
-}
-
-/** @deprecated */
-function __spread() {
-  for (var ar = [], i = 0; i < arguments.length; i++)
-      ar = ar.concat(__read(arguments[i]));
-  return ar;
-}
-
-/** @deprecated */
-function __spreadArrays() {
-  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-  for (var r = Array(s), k = 0, i = 0; i < il; i++)
-      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-          r[k] = a[j];
-  return r;
-}
-
-function __spreadArray(to, from, pack) {
-  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-          ar[i] = from[i];
-      }
-  }
-  return to.concat(ar || Array.prototype.slice.call(from));
-}
-
-function __await(v) {
-  return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-  var g = generator.apply(thisArg, _arguments || []), i, q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
-  function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
-  function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
-  function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-  function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
-  function fulfill(value) { resume("next", value); }
-  function reject(value) { resume("throw", value); }
-  function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-}
-
-function __asyncDelegator(o) {
-  var i, p;
-  return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-  function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v; } : f; }
-}
-
-function __asyncValues(o) {
-  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-  var m = o[Symbol.asyncIterator], i;
-  return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-  function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-  function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-}
-
-function __makeTemplateObject(cooked, raw) {
-  if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-  return cooked;
-};
-
-var __setModuleDefault = Object.create ? (function(o, v) {
-  Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-  o["default"] = v;
-};
-
-function __importStar(mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-  __setModuleDefault(result, mod);
-  return result;
-}
-
-function __importDefault(mod) {
-  return (mod && mod.__esModule) ? mod : { default: mod };
-}
-
-function __classPrivateFieldGet(receiver, state, kind, f) {
-  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-}
-
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
-  if (kind === "m") throw new TypeError("Private method is not writable");
-  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-  return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-}
-
-function __classPrivateFieldIn(state, receiver) {
-  if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
-  return typeof state === "function" ? receiver === state : state.has(receiver);
-}
-
-function __addDisposableResource(env, value, async) {
-  if (value !== null && value !== void 0) {
-    if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
-    var dispose, inner;
-    if (async) {
-      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
-      dispose = value[Symbol.asyncDispose];
-    }
-    if (dispose === void 0) {
-      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
-      dispose = value[Symbol.dispose];
-      if (async) inner = dispose;
-    }
-    if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
-    if (inner) dispose = function() { try { inner.call(this); } catch (e) { return Promise.reject(e); } };
-    env.stack.push({ value: value, dispose: dispose, async: async });
-  }
-  else if (async) {
-    env.stack.push({ async: true });
-  }
-  return value;
-}
-
-var _SuppressedError = typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-  var e = new Error(message);
-  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
-function __disposeResources(env) {
-  function fail(e) {
-    env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
-    env.hasError = true;
-  }
-  function next() {
-    while (env.stack.length) {
-      var rec = env.stack.pop();
-      try {
-        var result = rec.dispose && rec.dispose.call(rec.value);
-        if (rec.async) return Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
-      }
-      catch (e) {
-          fail(e);
-      }
-    }
-    if (env.hasError) throw env.error;
-  }
-  return next();
-}
-
-/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ({
-  __extends,
-  __assign,
-  __rest,
-  __decorate,
-  __param,
-  __metadata,
-  __awaiter,
-  __generator,
-  __createBinding,
-  __exportStar,
-  __values,
-  __read,
-  __spread,
-  __spreadArrays,
-  __spreadArray,
-  __await,
-  __asyncGenerator,
-  __asyncDelegator,
-  __asyncValues,
-  __makeTemplateObject,
-  __importStar,
-  __importDefault,
-  __classPrivateFieldGet,
-  __classPrivateFieldSet,
-  __classPrivateFieldIn,
-  __addDisposableResource,
-  __disposeResources,
-});
-
-
-/***/ }),
-
-/***/ 677:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-/**
- * @license React
- * react.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var l=Symbol.for("react.element"),n=Symbol.for("react.portal"),p=Symbol.for("react.fragment"),q=Symbol.for("react.strict_mode"),r=Symbol.for("react.profiler"),t=Symbol.for("react.provider"),u=Symbol.for("react.context"),v=Symbol.for("react.forward_ref"),w=Symbol.for("react.suspense"),x=Symbol.for("react.memo"),y=Symbol.for("react.lazy"),z=Symbol.iterator;function A(a){if(null===a||"object"!==typeof a)return null;a=z&&a[z]||a["@@iterator"];return"function"===typeof a?a:null}
-var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C=Object.assign,D={};function E(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}E.prototype.isReactComponent={};
-E.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,a,b,"setState")};E.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function F(){}F.prototype=E.prototype;function G(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}var H=G.prototype=new F;
-H.constructor=G;C(H,E.prototype);H.isPureReactComponent=!0;var I=Array.isArray,J=Object.prototype.hasOwnProperty,K={current:null},L={key:!0,ref:!0,__self:!0,__source:!0};
-function M(a,b,e){var d,c={},k=null,h=null;if(null!=b)for(d in void 0!==b.ref&&(h=b.ref),void 0!==b.key&&(k=""+b.key),b)J.call(b,d)&&!L.hasOwnProperty(d)&&(c[d]=b[d]);var g=arguments.length-2;if(1===g)c.children=e;else if(1<g){for(var f=Array(g),m=0;m<g;m++)f[m]=arguments[m+2];c.children=f}if(a&&a.defaultProps)for(d in g=a.defaultProps,g)void 0===c[d]&&(c[d]=g[d]);return{$$typeof:l,type:a,key:k,ref:h,props:c,_owner:K.current}}
-function N(a,b){return{$$typeof:l,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}}function O(a){return"object"===typeof a&&null!==a&&a.$$typeof===l}function escape(a){var b={"=":"=0",":":"=2"};return"$"+a.replace(/[=:]/g,function(a){return b[a]})}var P=/\/+/g;function Q(a,b){return"object"===typeof a&&null!==a&&null!=a.key?escape(""+a.key):b.toString(36)}
-function R(a,b,e,d,c){var k=typeof a;if("undefined"===k||"boolean"===k)a=null;var h=!1;if(null===a)h=!0;else switch(k){case "string":case "number":h=!0;break;case "object":switch(a.$$typeof){case l:case n:h=!0}}if(h)return h=a,c=c(h),a=""===d?"."+Q(h,0):d,I(c)?(e="",null!=a&&(e=a.replace(P,"$&/")+"/"),R(c,b,e,"",function(a){return a})):null!=c&&(O(c)&&(c=N(c,e+(!c.key||h&&h.key===c.key?"":(""+c.key).replace(P,"$&/")+"/")+a)),b.push(c)),1;h=0;d=""===d?".":d+":";if(I(a))for(var g=0;g<a.length;g++){k=
-a[g];var f=d+Q(k,g);h+=R(k,b,e,f,c)}else if(f=A(a),"function"===typeof f)for(a=f.call(a),g=0;!(k=a.next()).done;)k=k.value,f=d+Q(k,g++),h+=R(k,b,e,f,c);else if("object"===k)throw b=String(a),Error("Objects are not valid as a React child (found: "+("[object Object]"===b?"object with keys {"+Object.keys(a).join(", ")+"}":b)+"). If you meant to render a collection of children, use an array instead.");return h}
-function S(a,b,e){if(null==a)return a;var d=[],c=0;R(a,d,"","",function(a){return b.call(e,a,c++)});return d}function T(a){if(-1===a._status){var b=a._result;b=b();b.then(function(b){if(0===a._status||-1===a._status)a._status=1,a._result=b},function(b){if(0===a._status||-1===a._status)a._status=2,a._result=b});-1===a._status&&(a._status=0,a._result=b)}if(1===a._status)return a._result.default;throw a._result;}
-var U={current:null},V={transition:null},W={ReactCurrentDispatcher:U,ReactCurrentBatchConfig:V,ReactCurrentOwner:K};function X(){throw Error("act(...) is not supported in production builds of React.");}
-exports.Children={map:S,forEach:function(a,b,e){S(a,function(){b.apply(this,arguments)},e)},count:function(a){var b=0;S(a,function(){b++});return b},toArray:function(a){return S(a,function(a){return a})||[]},only:function(a){if(!O(a))throw Error("React.Children.only expected to receive a single React element child.");return a}};exports.Component=E;exports.Fragment=p;exports.Profiler=r;exports.PureComponent=G;exports.StrictMode=q;exports.Suspense=w;
-exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=W;exports.act=X;
-exports.cloneElement=function(a,b,e){if(null===a||void 0===a)throw Error("React.cloneElement(...): The argument must be a React element, but you passed "+a+".");var d=C({},a.props),c=a.key,k=a.ref,h=a._owner;if(null!=b){void 0!==b.ref&&(k=b.ref,h=K.current);void 0!==b.key&&(c=""+b.key);if(a.type&&a.type.defaultProps)var g=a.type.defaultProps;for(f in b)J.call(b,f)&&!L.hasOwnProperty(f)&&(d[f]=void 0===b[f]&&void 0!==g?g[f]:b[f])}var f=arguments.length-2;if(1===f)d.children=e;else if(1<f){g=Array(f);
-for(var m=0;m<f;m++)g[m]=arguments[m+2];d.children=g}return{$$typeof:l,type:a.type,key:c,ref:k,props:d,_owner:h}};exports.createContext=function(a){a={$$typeof:u,_currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null,_defaultValue:null,_globalName:null};a.Provider={$$typeof:t,_context:a};return a.Consumer=a};exports.createElement=M;exports.createFactory=function(a){var b=M.bind(null,a);b.type=a;return b};exports.createRef=function(){return{current:null}};
-exports.forwardRef=function(a){return{$$typeof:v,render:a}};exports.isValidElement=O;exports.lazy=function(a){return{$$typeof:y,_payload:{_status:-1,_result:a},_init:T}};exports.memo=function(a,b){return{$$typeof:x,type:a,compare:void 0===b?null:b}};exports.startTransition=function(a){var b=V.transition;V.transition={};try{a()}finally{V.transition=b}};exports.unstable_act=X;exports.useCallback=function(a,b){return U.current.useCallback(a,b)};exports.useContext=function(a){return U.current.useContext(a)};
-exports.useDebugValue=function(){};exports.useDeferredValue=function(a){return U.current.useDeferredValue(a)};exports.useEffect=function(a,b){return U.current.useEffect(a,b)};exports.useId=function(){return U.current.useId()};exports.useImperativeHandle=function(a,b,e){return U.current.useImperativeHandle(a,b,e)};exports.useInsertionEffect=function(a,b){return U.current.useInsertionEffect(a,b)};exports.useLayoutEffect=function(a,b){return U.current.useLayoutEffect(a,b)};
-exports.useMemo=function(a,b){return U.current.useMemo(a,b)};exports.useReducer=function(a,b,e){return U.current.useReducer(a,b,e)};exports.useRef=function(a){return U.current.useRef(a)};exports.useState=function(a){return U.current.useState(a)};exports.useSyncExternalStore=function(a,b,e){return U.current.useSyncExternalStore(a,b,e)};exports.useTransition=function(){return U.current.useTransition()};exports.version="18.3.1";
-
-
-/***/ }),
-
-/***/ 700:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2014 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
-
-const util = __webpack_require__(61);
-
-/**
- * Determine whether mappingB is after mappingA with respect to generated
- * position.
- */
-function generatedPositionAfter(mappingA, mappingB) {
-  // Optimized for most common case
-  const lineA = mappingA.generatedLine;
-  const lineB = mappingB.generatedLine;
-  const columnA = mappingA.generatedColumn;
-  const columnB = mappingB.generatedColumn;
-  return lineB > lineA || lineB == lineA && columnB >= columnA ||
-         util.compareByGeneratedPositionsInflated(mappingA, mappingB) <= 0;
-}
-
-/**
- * A data structure to provide a sorted view of accumulated mappings in a
- * performance conscious manner. It trades a negligible overhead in general
- * case for a large speedup in case of mappings being added in order.
- */
-class MappingList {
-  constructor() {
-    this._array = [];
-    this._sorted = true;
-    // Serves as infimum
-    this._last = {generatedLine: -1, generatedColumn: 0};
-  }
-
-  /**
-   * Iterate through internal items. This method takes the same arguments that
-   * `Array.prototype.forEach` takes.
-   *
-   * NOTE: The order of the mappings is NOT guaranteed.
-   */
-  unsortedForEach(aCallback, aThisArg) {
-    this._array.forEach(aCallback, aThisArg);
-  }
-
-  /**
-   * Add the given source mapping.
-   *
-   * @param Object aMapping
-   */
-  add(aMapping) {
-    if (generatedPositionAfter(this._last, aMapping)) {
-      this._last = aMapping;
-      this._array.push(aMapping);
-    } else {
-      this._sorted = false;
-      this._array.push(aMapping);
-    }
-  }
-
-  /**
-   * Returns the flat, sorted array of mappings. The mappings are sorted by
-   * generated position.
-   *
-   * WARNING: This method returns internal data without copying, for
-   * performance. The return value must NOT be mutated, and should be treated as
-   * an immutable borrow. If you want to take ownership, you must make your own
-   * copy.
-   */
-  toArray() {
-    if (!this._sorted) {
-      this._array.sort(util.compareByGeneratedPositionsInflated);
-      this._sorted = true;
-    }
-    return this._array;
-  }
-}
-
-exports.P = MappingList;
-
-
-/***/ }),
-
-/***/ 772:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   l: () => (/* binding */ IconSize)
-/* harmony export */ });
-/*
- * Copyright 2022 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var IconSize;
-(function (IconSize) {
-    IconSize[IconSize["STANDARD"] = 16] = "STANDARD";
-    IconSize[IconSize["LARGE"] = 20] = "LARGE";
-})(IconSize || (IconSize = {}));
-
-
-/***/ }),
-
-/***/ 780:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  W: () => (/* binding */ noCase)
-});
-
-;// ./node_modules/lower-case/dist.es2015/index.js
-/**
- * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
- */
-var SUPPORTED_LOCALE = {
-    tr: {
-        regexp: /\u0130|\u0049|\u0049\u0307/g,
-        map: {
-            İ: "\u0069",
-            I: "\u0131",
-            İ: "\u0069",
-        },
-    },
-    az: {
-        regexp: /\u0130/g,
-        map: {
-            İ: "\u0069",
-            I: "\u0131",
-            İ: "\u0069",
-        },
-    },
-    lt: {
-        regexp: /\u0049|\u004A|\u012E|\u00CC|\u00CD|\u0128/g,
-        map: {
-            I: "\u0069\u0307",
-            J: "\u006A\u0307",
-            Į: "\u012F\u0307",
-            Ì: "\u0069\u0307\u0300",
-            Í: "\u0069\u0307\u0301",
-            Ĩ: "\u0069\u0307\u0303",
-        },
-    },
-};
-/**
- * Localized lower case.
- */
-function localeLowerCase(str, locale) {
-    var lang = SUPPORTED_LOCALE[locale.toLowerCase()];
-    if (lang)
-        return lowerCase(str.replace(lang.regexp, function (m) { return lang.map[m]; }));
-    return lowerCase(str);
-}
-/**
- * Lower case as a function.
- */
-function lowerCase(str) {
-    return str.toLowerCase();
-}
-
-;// ./node_modules/no-case/dist.es2015/index.js
-
-// Support camel case ("camelCase" -> "camel Case" and "CAMELCase" -> "CAMEL Case").
-var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
-// Remove all non-word characters.
-var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
-/**
- * Normalize the string into something other libraries can manipulate easier.
- */
-function noCase(input, options) {
-    if (options === void 0) { options = {}; }
-    var _a = options.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options.transform, transform = _c === void 0 ? lowerCase : _c, _d = options.delimiter, delimiter = _d === void 0 ? " " : _d;
-    var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
-    var start = 0;
-    var end = result.length;
-    // Trim the delimiter from around the output string.
-    while (result.charAt(start) === "\0")
-        start++;
-    while (result.charAt(end - 1) === "\0")
-        end--;
-    // Transform each token independently.
-    return result.slice(start, end).split("\0").map(transform).join(delimiter);
-}
-/**
- * Replace `re` in the input string with the replacement value.
- */
-function replace(input, re, value) {
-    if (re instanceof RegExp)
-        return input.replace(re, value);
-    return re.reduce(function (input, re) { return input.replace(re, value); }, input);
-}
-
-
-/***/ }),
-
-/***/ 793:
-/***/ ((__unused_webpack_module, exports) => {
-
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
-
-/**
- * A data structure which is a combination of an array and a set. Adding a new
- * member is O(1), testing for membership is O(1), and finding the index of an
- * element is O(1). Removing elements from the set is not supported. Only
- * strings are supported for membership.
- */
-class ArraySet {
-  constructor() {
-    this._array = [];
-    this._set = new Map();
-  }
-
-  /**
-   * Static method for creating ArraySet instances from an existing array.
-   */
-  static fromArray(aArray, aAllowDuplicates) {
-    const set = new ArraySet();
-    for (let i = 0, len = aArray.length; i < len; i++) {
-      set.add(aArray[i], aAllowDuplicates);
-    }
-    return set;
-  }
-
-  /**
-   * Return how many unique items are in this ArraySet. If duplicates have been
-   * added, than those do not count towards the size.
-   *
-   * @returns Number
-   */
-  size() {
-    return this._set.size;
-  }
-
-  /**
-   * Add the given string to this set.
-   *
-   * @param String aStr
-   */
-  add(aStr, aAllowDuplicates) {
-    const isDuplicate = this.has(aStr);
-    const idx = this._array.length;
-    if (!isDuplicate || aAllowDuplicates) {
-      this._array.push(aStr);
-    }
-    if (!isDuplicate) {
-      this._set.set(aStr, idx);
-    }
-  }
-
-  /**
-   * Is the given string a member of this set?
-   *
-   * @param String aStr
-   */
-  has(aStr) {
-      return this._set.has(aStr);
-  }
-
-  /**
-   * What is the index of the given string in the array?
-   *
-   * @param String aStr
-   */
-  indexOf(aStr) {
-    const idx = this._set.get(aStr);
-    if (idx >= 0) {
-        return idx;
-    }
-    throw new Error('"' + aStr + '" is not in the set.');
-  }
-
-  /**
-   * What is the element at the given index?
-   *
-   * @param Number aIdx
-   */
-  at(aIdx) {
-    if (aIdx >= 0 && aIdx < this._array.length) {
-      return this._array[aIdx];
-    }
-    throw new Error("No element indexed by " + aIdx);
-  }
-
-  /**
-   * Returns the array representation of this set (which has the proper indices
-   * indicated by indexOf). Note that this is a copy of the internal array used
-   * for storing the members so that no one can mess with internal state.
-   */
-  toArray() {
-    return this._array.slice();
-  }
-}
-exports.C = ArraySet;
-
-
-/***/ }),
-
-/***/ 810:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__(677);
-} else {}
-
-
-/***/ }),
-
-/***/ 874:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-/* Determine browser vs node environment by testing the default top level context. Solution courtesy of: https://stackoverflow.com/questions/17575790/environment-detection-node-js-or-browser */
-const isBrowserEnvironment = (function() {
-    // eslint-disable-next-line no-undef
-    return (typeof window !== "undefined") && (this === window);
-}).call();
-
-if (isBrowserEnvironment) {
-  // Web version of reading a wasm file into an array buffer.
-
-  let mappingsWasm = null;
-
-  module.exports = function readWasm() {
-    if (typeof mappingsWasm === "string") {
-      return fetch(mappingsWasm)
-        .then(response => response.arrayBuffer());
-    }
-    if (mappingsWasm instanceof ArrayBuffer) {
-      return Promise.resolve(mappingsWasm);
-    }
-    throw new Error("You must provide the string URL or ArrayBuffer contents " +
-                    "of lib/mappings.wasm by calling " +
-                    "SourceMapConsumer.initialize({ 'lib/mappings.wasm': ... }) " +
-                    "before using SourceMapConsumer");
-  };
-
-  module.exports.initialize = input => mappingsWasm = input;
-} else {
-  // Node version of reading a wasm file into an array buffer.
-  const fs = __webpack_require__(896);
-  const path = __webpack_require__(928);
-
-  module.exports = function readWasm() {
-    return new Promise((resolve, reject) => {
-      const wasmPath = path.join(__dirname, "mappings.wasm");
-      fs.readFile(wasmPath, null, (error, data) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-
-        resolve(data.buffer);
-      });
-    });
-  };
-
-  module.exports.initialize = _ => {
-    console.debug("SourceMapConsumer.initialize is a no-op when running in node.js");
-  };
-}
-
-
-/***/ }),
-
-/***/ 890:
-/***/ ((__unused_webpack_module, exports) => {
-
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
-
-const intToCharMap = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".split("");
-
-/**
- * Encode an integer in the range of 0 to 63 to a single base 64 digit.
- */
-exports.encode = function(number) {
-  if (0 <= number && number < intToCharMap.length) {
-    return intToCharMap[number];
-  }
-  throw new TypeError("Must be between 0 and 63: " + number);
-};
-
-
-/***/ }),
-
-/***/ 896:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs");
-
-/***/ }),
-
-/***/ 928:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("path");
-
-/***/ }),
-
-/***/ 991:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ 991
+(__unused_webpack_module, exports, __webpack_require__) {
 
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
@@ -4610,7 +2929,1694 @@ SourceMapGenerator.prototype._version = 3;
 exports.x = SourceMapGenerator;
 
 
-/***/ })
+/***/ },
+
+/***/ 537
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+const SourceMapGenerator = (__webpack_require__(991)/* .SourceMapGenerator */ .x);
+const util = __webpack_require__(61);
+
+// Matches a Windows-style `\r\n` newline or a `\n` newline used by all other
+// operating systems these days (capturing the result).
+const REGEX_NEWLINE = /(\r?\n)/;
+
+// Newline character code for charCodeAt() comparisons
+const NEWLINE_CODE = 10;
+
+// Private symbol for identifying `SourceNode`s when multiple versions of
+// the source-map library are loaded. This MUST NOT CHANGE across
+// versions!
+const isSourceNode = "$$$isSourceNode$$$";
+
+/**
+ * SourceNodes provide a way to abstract over interpolating/concatenating
+ * snippets of generated JavaScript source code while maintaining the line and
+ * column information associated with the original source code.
+ *
+ * @param aLine The original line number.
+ * @param aColumn The original column number.
+ * @param aSource The original source's filename.
+ * @param aChunks Optional. An array of strings which are snippets of
+ *        generated JS, or other SourceNodes.
+ * @param aName The original identifier.
+ */
+class SourceNode {
+  constructor(aLine, aColumn, aSource, aChunks, aName) {
+    this.children = [];
+    this.sourceContents = {};
+    this.line = aLine == null ? null : aLine;
+    this.column = aColumn == null ? null : aColumn;
+    this.source = aSource == null ? null : aSource;
+    this.name = aName == null ? null : aName;
+    this[isSourceNode] = true;
+    if (aChunks != null) this.add(aChunks);
+  }
+
+  /**
+   * Creates a SourceNode from generated code and a SourceMapConsumer.
+   *
+   * @param aGeneratedCode The generated code
+   * @param aSourceMapConsumer The SourceMap for the generated code
+   * @param aRelativePath Optional. The path that relative sources in the
+   *        SourceMapConsumer should be relative to.
+   */
+  static fromStringWithSourceMap(aGeneratedCode, aSourceMapConsumer, aRelativePath) {
+    // The SourceNode we want to fill with the generated code
+    // and the SourceMap
+    const node = new SourceNode();
+
+    // All even indices of this array are one line of the generated code,
+    // while all odd indices are the newlines between two adjacent lines
+    // (since `REGEX_NEWLINE` captures its match).
+    // Processed fragments are accessed by calling `shiftNextLine`.
+    const remainingLines = aGeneratedCode.split(REGEX_NEWLINE);
+    let remainingLinesIndex = 0;
+    const shiftNextLine = function() {
+      const lineContents = getNextLine();
+      // The last line of a file might not have a newline.
+      const newLine = getNextLine() || "";
+      return lineContents + newLine;
+
+      function getNextLine() {
+        return remainingLinesIndex < remainingLines.length ?
+            remainingLines[remainingLinesIndex++] : undefined;
+      }
+    };
+
+    // We need to remember the position of "remainingLines"
+    let lastGeneratedLine = 1, lastGeneratedColumn = 0;
+
+    // The generate SourceNodes we need a code range.
+    // To extract it current and last mapping is used.
+    // Here we store the last mapping.
+    let lastMapping = null;
+    let nextLine;
+
+    aSourceMapConsumer.eachMapping(function(mapping) {
+      if (lastMapping !== null) {
+        // We add the code from "lastMapping" to "mapping":
+        // First check if there is a new line in between.
+        if (lastGeneratedLine < mapping.generatedLine) {
+          // Associate first line with "lastMapping"
+          addMappingWithCode(lastMapping, shiftNextLine());
+          lastGeneratedLine++;
+          lastGeneratedColumn = 0;
+          // The remaining code is added without mapping
+        } else {
+          // There is no new line in between.
+          // Associate the code between "lastGeneratedColumn" and
+          // "mapping.generatedColumn" with "lastMapping"
+          nextLine = remainingLines[remainingLinesIndex] || "";
+          const code = nextLine.substr(0, mapping.generatedColumn -
+                                        lastGeneratedColumn);
+          remainingLines[remainingLinesIndex] = nextLine.substr(mapping.generatedColumn -
+                                              lastGeneratedColumn);
+          lastGeneratedColumn = mapping.generatedColumn;
+          addMappingWithCode(lastMapping, code);
+          // No more remaining code, continue
+          lastMapping = mapping;
+          return;
+        }
+      }
+      // We add the generated code until the first mapping
+      // to the SourceNode without any mapping.
+      // Each line is added as separate string.
+      while (lastGeneratedLine < mapping.generatedLine) {
+        node.add(shiftNextLine());
+        lastGeneratedLine++;
+      }
+      if (lastGeneratedColumn < mapping.generatedColumn) {
+        nextLine = remainingLines[remainingLinesIndex] || "";
+        node.add(nextLine.substr(0, mapping.generatedColumn));
+        remainingLines[remainingLinesIndex] = nextLine.substr(mapping.generatedColumn);
+        lastGeneratedColumn = mapping.generatedColumn;
+      }
+      lastMapping = mapping;
+    }, this);
+    // We have processed all mappings.
+    if (remainingLinesIndex < remainingLines.length) {
+      if (lastMapping) {
+        // Associate the remaining code in the current line with "lastMapping"
+        addMappingWithCode(lastMapping, shiftNextLine());
+      }
+      // and add the remaining lines without any mapping
+      node.add(remainingLines.splice(remainingLinesIndex).join(""));
+    }
+
+    // Copy sourcesContent into SourceNode
+    aSourceMapConsumer.sources.forEach(function(sourceFile) {
+      const content = aSourceMapConsumer.sourceContentFor(sourceFile);
+      if (content != null) {
+        if (aRelativePath != null) {
+          sourceFile = util.join(aRelativePath, sourceFile);
+        }
+        node.setSourceContent(sourceFile, content);
+      }
+    });
+
+    return node;
+
+    function addMappingWithCode(mapping, code) {
+      if (mapping === null || mapping.source === undefined) {
+        node.add(code);
+      } else {
+        const source = aRelativePath
+          ? util.join(aRelativePath, mapping.source)
+          : mapping.source;
+        node.add(new SourceNode(mapping.originalLine,
+                                mapping.originalColumn,
+                                source,
+                                code,
+                                mapping.name));
+      }
+    }
+  }
+
+  /**
+   * Add a chunk of generated JS to this source node.
+   *
+   * @param aChunk A string snippet of generated JS code, another instance of
+   *        SourceNode, or an array where each member is one of those things.
+   */
+  add(aChunk) {
+    if (Array.isArray(aChunk)) {
+      aChunk.forEach(function(chunk) {
+        this.add(chunk);
+      }, this);
+    } else if (aChunk[isSourceNode] || typeof aChunk === "string") {
+      if (aChunk) {
+        this.children.push(aChunk);
+      }
+    } else {
+      throw new TypeError(
+        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
+      );
+    }
+    return this;
+  }
+
+  /**
+   * Add a chunk of generated JS to the beginning of this source node.
+   *
+   * @param aChunk A string snippet of generated JS code, another instance of
+   *        SourceNode, or an array where each member is one of those things.
+   */
+  prepend(aChunk) {
+    if (Array.isArray(aChunk)) {
+      for (let i = aChunk.length - 1; i >= 0; i--) {
+        this.prepend(aChunk[i]);
+      }
+    } else if (aChunk[isSourceNode] || typeof aChunk === "string") {
+      this.children.unshift(aChunk);
+    } else {
+      throw new TypeError(
+        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
+      );
+    }
+    return this;
+  }
+
+  /**
+   * Walk over the tree of JS snippets in this node and its children. The
+   * walking function is called once for each snippet of JS and is passed that
+   * snippet and the its original associated source's line/column location.
+   *
+   * @param aFn The traversal function.
+   */
+  walk(aFn) {
+    let chunk;
+    for (let i = 0, len = this.children.length; i < len; i++) {
+      chunk = this.children[i];
+      if (chunk[isSourceNode]) {
+        chunk.walk(aFn);
+      } else if (chunk !== "") {
+        aFn(chunk, { source: this.source,
+                      line: this.line,
+                      column: this.column,
+                      name: this.name });
+      }
+    }
+  }
+
+  /**
+   * Like `String.prototype.join` except for SourceNodes. Inserts `aStr` between
+   * each of `this.children`.
+   *
+   * @param aSep The separator.
+   */
+  join(aSep) {
+    let newChildren;
+    let i;
+    const len = this.children.length;
+    if (len > 0) {
+      newChildren = [];
+      for (i = 0; i < len - 1; i++) {
+        newChildren.push(this.children[i]);
+        newChildren.push(aSep);
+      }
+      newChildren.push(this.children[i]);
+      this.children = newChildren;
+    }
+    return this;
+  }
+
+  /**
+   * Call String.prototype.replace on the very right-most source snippet. Useful
+   * for trimming whitespace from the end of a source node, etc.
+   *
+   * @param aPattern The pattern to replace.
+   * @param aReplacement The thing to replace the pattern with.
+   */
+  replaceRight(aPattern, aReplacement) {
+    const lastChild = this.children[this.children.length - 1];
+    if (lastChild[isSourceNode]) {
+      lastChild.replaceRight(aPattern, aReplacement);
+    } else if (typeof lastChild === "string") {
+      this.children[this.children.length - 1] = lastChild.replace(aPattern, aReplacement);
+    } else {
+      this.children.push("".replace(aPattern, aReplacement));
+    }
+    return this;
+  }
+
+  /**
+   * Set the source content for a source file. This will be added to the SourceMapGenerator
+   * in the sourcesContent field.
+   *
+   * @param aSourceFile The filename of the source file
+   * @param aSourceContent The content of the source file
+   */
+  setSourceContent(aSourceFile, aSourceContent) {
+    this.sourceContents[util.toSetString(aSourceFile)] = aSourceContent;
+  }
+
+  /**
+   * Walk over the tree of SourceNodes. The walking function is called for each
+   * source file content and is passed the filename and source content.
+   *
+   * @param aFn The traversal function.
+   */
+  walkSourceContents(aFn) {
+    for (let i = 0, len = this.children.length; i < len; i++) {
+      if (this.children[i][isSourceNode]) {
+        this.children[i].walkSourceContents(aFn);
+      }
+    }
+
+    const sources = Object.keys(this.sourceContents);
+    for (let i = 0, len = sources.length; i < len; i++) {
+      aFn(util.fromSetString(sources[i]), this.sourceContents[sources[i]]);
+    }
+  }
+
+  /**
+   * Return the string representation of this source node. Walks over the tree
+   * and concatenates all the various snippets together to one string.
+   */
+  toString() {
+    let str = "";
+    this.walk(function(chunk) {
+      str += chunk;
+    });
+    return str;
+  }
+
+  /**
+   * Returns the string representation of this source node along with a source
+   * map.
+   */
+  toStringWithSourceMap(aArgs) {
+    const generated = {
+      code: "",
+      line: 1,
+      column: 0
+    };
+    const map = new SourceMapGenerator(aArgs);
+    let sourceMappingActive = false;
+    let lastOriginalSource = null;
+    let lastOriginalLine = null;
+    let lastOriginalColumn = null;
+    let lastOriginalName = null;
+    this.walk(function(chunk, original) {
+      generated.code += chunk;
+      if (original.source !== null
+          && original.line !== null
+          && original.column !== null) {
+        if (lastOriginalSource !== original.source
+          || lastOriginalLine !== original.line
+          || lastOriginalColumn !== original.column
+          || lastOriginalName !== original.name) {
+          map.addMapping({
+            source: original.source,
+            original: {
+              line: original.line,
+              column: original.column
+            },
+            generated: {
+              line: generated.line,
+              column: generated.column
+            },
+            name: original.name
+          });
+        }
+        lastOriginalSource = original.source;
+        lastOriginalLine = original.line;
+        lastOriginalColumn = original.column;
+        lastOriginalName = original.name;
+        sourceMappingActive = true;
+      } else if (sourceMappingActive) {
+        map.addMapping({
+          generated: {
+            line: generated.line,
+            column: generated.column
+          }
+        });
+        lastOriginalSource = null;
+        sourceMappingActive = false;
+      }
+      for (let idx = 0, length = chunk.length; idx < length; idx++) {
+        if (chunk.charCodeAt(idx) === NEWLINE_CODE) {
+          generated.line++;
+          generated.column = 0;
+          // Mappings end at eol
+          if (idx + 1 === length) {
+            lastOriginalSource = null;
+            sourceMappingActive = false;
+          } else if (sourceMappingActive) {
+            map.addMapping({
+              source: original.source,
+              original: {
+                line: original.line,
+                column: original.column
+              },
+              generated: {
+                line: generated.line,
+                column: generated.column
+              },
+              name: original.name
+            });
+          }
+        } else {
+          generated.column++;
+        }
+      }
+    });
+    this.walkSourceContents(function(sourceFile, sourceContent) {
+      map.setSourceContent(sourceFile, sourceContent);
+    });
+
+    return { code: generated.code, map };
+  }
+}
+
+__webpack_unused_export__ = SourceNode;
+
+
+/***/ },
+
+/***/ 61
+(__unused_webpack_module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+/**
+ * This is a helper function for getting values from parameter/options
+ * objects.
+ *
+ * @param args The object we are extracting values from
+ * @param name The name of the property we are getting.
+ * @param defaultValue An optional value to return if the property is missing
+ * from the object. If this is not specified and the property is missing, an
+ * error will be thrown.
+ */
+function getArg(aArgs, aName, aDefaultValue) {
+  if (aName in aArgs) {
+    return aArgs[aName];
+  } else if (arguments.length === 3) {
+    return aDefaultValue;
+  }
+    throw new Error('"' + aName + '" is a required argument.');
+
+}
+exports.getArg = getArg;
+
+const urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.-]*)(?::(\d+))?(.*)$/;
+const dataUrlRegexp = /^data:.+\,.+$/;
+
+function urlParse(aUrl) {
+  const match = aUrl.match(urlRegexp);
+  if (!match) {
+    return null;
+  }
+  return {
+    scheme: match[1],
+    auth: match[2],
+    host: match[3],
+    port: match[4],
+    path: match[5]
+  };
+}
+exports.urlParse = urlParse;
+
+function urlGenerate(aParsedUrl) {
+  let url = "";
+  if (aParsedUrl.scheme) {
+    url += aParsedUrl.scheme + ":";
+  }
+  url += "//";
+  if (aParsedUrl.auth) {
+    url += aParsedUrl.auth + "@";
+  }
+  if (aParsedUrl.host) {
+    url += aParsedUrl.host;
+  }
+  if (aParsedUrl.port) {
+    url += ":" + aParsedUrl.port;
+  }
+  if (aParsedUrl.path) {
+    url += aParsedUrl.path;
+  }
+  return url;
+}
+exports.urlGenerate = urlGenerate;
+
+const MAX_CACHED_INPUTS = 32;
+
+/**
+ * Takes some function `f(input) -> result` and returns a memoized version of
+ * `f`.
+ *
+ * We keep at most `MAX_CACHED_INPUTS` memoized results of `f` alive. The
+ * memoization is a dumb-simple, linear least-recently-used cache.
+ */
+function lruMemoize(f) {
+  const cache = [];
+
+  return function(input) {
+    for (let i = 0; i < cache.length; i++) {
+      if (cache[i].input === input) {
+        const temp = cache[0];
+        cache[0] = cache[i];
+        cache[i] = temp;
+        return cache[0].result;
+      }
+    }
+
+    const result = f(input);
+
+    cache.unshift({
+      input,
+      result,
+    });
+
+    if (cache.length > MAX_CACHED_INPUTS) {
+      cache.pop();
+    }
+
+    return result;
+  };
+}
+
+/**
+ * Normalizes a path, or the path portion of a URL:
+ *
+ * - Replaces consecutive slashes with one slash.
+ * - Removes unnecessary '.' parts.
+ * - Removes unnecessary '<dir>/..' parts.
+ *
+ * Based on code in the Node.js 'path' core module.
+ *
+ * @param aPath The path or url to normalize.
+ */
+const normalize = lruMemoize(function normalize(aPath) {
+  let path = aPath;
+  const url = urlParse(aPath);
+  if (url) {
+    if (!url.path) {
+      return aPath;
+    }
+    path = url.path;
+  }
+  const isAbsolute = exports.isAbsolute(path);
+
+  // Split the path into parts between `/` characters. This is much faster than
+  // using `.split(/\/+/g)`.
+  const parts = [];
+  let start = 0;
+  let i = 0;
+  while (true) {
+    start = i;
+    i = path.indexOf("/", start);
+    if (i === -1) {
+      parts.push(path.slice(start));
+      break;
+    } else {
+      parts.push(path.slice(start, i));
+      while (i < path.length && path[i] === "/") {
+        i++;
+      }
+    }
+  }
+
+  let up = 0;
+  for (i = parts.length - 1; i >= 0; i--) {
+    const part = parts[i];
+    if (part === ".") {
+      parts.splice(i, 1);
+    } else if (part === "..") {
+      up++;
+    } else if (up > 0) {
+      if (part === "") {
+        // The first part is blank if the path is absolute. Trying to go
+        // above the root is a no-op. Therefore we can remove all '..' parts
+        // directly after the root.
+        parts.splice(i + 1, up);
+        up = 0;
+      } else {
+        parts.splice(i, 2);
+        up--;
+      }
+    }
+  }
+  path = parts.join("/");
+
+  if (path === "") {
+    path = isAbsolute ? "/" : ".";
+  }
+
+  if (url) {
+    url.path = path;
+    return urlGenerate(url);
+  }
+  return path;
+});
+exports.normalize = normalize;
+
+/**
+ * Joins two paths/URLs.
+ *
+ * @param aRoot The root path or URL.
+ * @param aPath The path or URL to be joined with the root.
+ *
+ * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
+ *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
+ *   first.
+ * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
+ *   is updated with the result and aRoot is returned. Otherwise the result
+ *   is returned.
+ *   - If aPath is absolute, the result is aPath.
+ *   - Otherwise the two paths are joined with a slash.
+ * - Joining for example 'http://' and 'www.example.com' is also supported.
+ */
+function join(aRoot, aPath) {
+  if (aRoot === "") {
+    aRoot = ".";
+  }
+  if (aPath === "") {
+    aPath = ".";
+  }
+  const aPathUrl = urlParse(aPath);
+  const aRootUrl = urlParse(aRoot);
+  if (aRootUrl) {
+    aRoot = aRootUrl.path || "/";
+  }
+
+  // `join(foo, '//www.example.org')`
+  if (aPathUrl && !aPathUrl.scheme) {
+    if (aRootUrl) {
+      aPathUrl.scheme = aRootUrl.scheme;
+    }
+    return urlGenerate(aPathUrl);
+  }
+
+  if (aPathUrl || aPath.match(dataUrlRegexp)) {
+    return aPath;
+  }
+
+  // `join('http://', 'www.example.com')`
+  if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
+    aRootUrl.host = aPath;
+    return urlGenerate(aRootUrl);
+  }
+
+  const joined = aPath.charAt(0) === "/"
+    ? aPath
+    : normalize(aRoot.replace(/\/+$/, "") + "/" + aPath);
+
+  if (aRootUrl) {
+    aRootUrl.path = joined;
+    return urlGenerate(aRootUrl);
+  }
+  return joined;
+}
+exports.join = join;
+
+exports.isAbsolute = function(aPath) {
+  return aPath.charAt(0) === "/" || urlRegexp.test(aPath);
+};
+
+/**
+ * Make a path relative to a URL or another path.
+ *
+ * @param aRoot The root path or URL.
+ * @param aPath The path or URL to be made relative to aRoot.
+ */
+function relative(aRoot, aPath) {
+  if (aRoot === "") {
+    aRoot = ".";
+  }
+
+  aRoot = aRoot.replace(/\/$/, "");
+
+  // It is possible for the path to be above the root. In this case, simply
+  // checking whether the root is a prefix of the path won't work. Instead, we
+  // need to remove components from the root one by one, until either we find
+  // a prefix that fits, or we run out of components to remove.
+  let level = 0;
+  while (aPath.indexOf(aRoot + "/") !== 0) {
+    const index = aRoot.lastIndexOf("/");
+    if (index < 0) {
+      return aPath;
+    }
+
+    // If the only part of the root that is left is the scheme (i.e. http://,
+    // file:///, etc.), one or more slashes (/), or simply nothing at all, we
+    // have exhausted all components, so the path is not relative to the root.
+    aRoot = aRoot.slice(0, index);
+    if (aRoot.match(/^([^\/]+:\/)?\/*$/)) {
+      return aPath;
+    }
+
+    ++level;
+  }
+
+  // Make sure we add a "../" for each component we removed from the root.
+  return Array(level + 1).join("../") + aPath.substr(aRoot.length + 1);
+}
+exports.relative = relative;
+
+const supportsNullProto = (function() {
+  const obj = Object.create(null);
+  return !("__proto__" in obj);
+}());
+
+function identity(s) {
+  return s;
+}
+
+/**
+ * Because behavior goes wacky when you set `__proto__` on objects, we
+ * have to prefix all the strings in our set with an arbitrary character.
+ *
+ * See https://github.com/mozilla/source-map/pull/31 and
+ * https://github.com/mozilla/source-map/issues/30
+ *
+ * @param String aStr
+ */
+function toSetString(aStr) {
+  if (isProtoString(aStr)) {
+    return "$" + aStr;
+  }
+
+  return aStr;
+}
+exports.toSetString = supportsNullProto ? identity : toSetString;
+
+function fromSetString(aStr) {
+  if (isProtoString(aStr)) {
+    return aStr.slice(1);
+  }
+
+  return aStr;
+}
+exports.fromSetString = supportsNullProto ? identity : fromSetString;
+
+function isProtoString(s) {
+  if (!s) {
+    return false;
+  }
+
+  const length = s.length;
+
+  if (length < 9 /* "__proto__".length */) {
+    return false;
+  }
+
+  /* eslint-disable no-multi-spaces */
+  if (s.charCodeAt(length - 1) !== 95  /* '_' */ ||
+      s.charCodeAt(length - 2) !== 95  /* '_' */ ||
+      s.charCodeAt(length - 3) !== 111 /* 'o' */ ||
+      s.charCodeAt(length - 4) !== 116 /* 't' */ ||
+      s.charCodeAt(length - 5) !== 111 /* 'o' */ ||
+      s.charCodeAt(length - 6) !== 114 /* 'r' */ ||
+      s.charCodeAt(length - 7) !== 112 /* 'p' */ ||
+      s.charCodeAt(length - 8) !== 95  /* '_' */ ||
+      s.charCodeAt(length - 9) !== 95  /* '_' */) {
+    return false;
+  }
+  /* eslint-enable no-multi-spaces */
+
+  for (let i = length - 10; i >= 0; i--) {
+    if (s.charCodeAt(i) !== 36 /* '$' */) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Comparator between two mappings where the original positions are compared.
+ *
+ * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+ * mappings with the same original source/line/column, but different generated
+ * line and column the same. Useful when searching for a mapping with a
+ * stubbed out mapping.
+ */
+function compareByOriginalPositions(mappingA, mappingB, onlyCompareOriginal) {
+  let cmp = strcmp(mappingA.source, mappingB.source);
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalLine - mappingB.originalLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalColumn - mappingB.originalColumn;
+  if (cmp !== 0 || onlyCompareOriginal) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedLine - mappingB.generatedLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  return strcmp(mappingA.name, mappingB.name);
+}
+exports.compareByOriginalPositions = compareByOriginalPositions;
+
+/**
+ * Comparator between two mappings with deflated source and name indices where
+ * the generated positions are compared.
+ *
+ * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+ * mappings with the same generated line and column, but different
+ * source/name/original line and column the same. Useful when searching for a
+ * mapping with a stubbed out mapping.
+ */
+function compareByGeneratedPositionsDeflated(mappingA, mappingB, onlyCompareGenerated) {
+  let cmp = mappingA.generatedLine - mappingB.generatedLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+  if (cmp !== 0 || onlyCompareGenerated) {
+    return cmp;
+  }
+
+  cmp = strcmp(mappingA.source, mappingB.source);
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalLine - mappingB.originalLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalColumn - mappingB.originalColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  return strcmp(mappingA.name, mappingB.name);
+}
+exports.compareByGeneratedPositionsDeflated = compareByGeneratedPositionsDeflated;
+
+function strcmp(aStr1, aStr2) {
+  if (aStr1 === aStr2) {
+    return 0;
+  }
+
+  if (aStr1 === null) {
+    return 1; // aStr2 !== null
+  }
+
+  if (aStr2 === null) {
+    return -1; // aStr1 !== null
+  }
+
+  if (aStr1 > aStr2) {
+    return 1;
+  }
+
+  return -1;
+}
+
+/**
+ * Comparator between two mappings with inflated source and name strings where
+ * the generated positions are compared.
+ */
+function compareByGeneratedPositionsInflated(mappingA, mappingB) {
+  let cmp = mappingA.generatedLine - mappingB.generatedLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = strcmp(mappingA.source, mappingB.source);
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalLine - mappingB.originalLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalColumn - mappingB.originalColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  return strcmp(mappingA.name, mappingB.name);
+}
+exports.compareByGeneratedPositionsInflated = compareByGeneratedPositionsInflated;
+
+/**
+ * Strip any JSON XSSI avoidance prefix from the string (as documented
+ * in the source maps specification), and then parse the string as
+ * JSON.
+ */
+function parseSourceMapInput(str) {
+  return JSON.parse(str.replace(/^\)]}'[^\n]*\n/, ""));
+}
+exports.parseSourceMapInput = parseSourceMapInput;
+
+/**
+ * Compute the URL of a source given the the source root, the source's
+ * URL, and the source map's URL.
+ */
+function computeSourceURL(sourceRoot, sourceURL, sourceMapURL) {
+  sourceURL = sourceURL || "";
+
+  if (sourceRoot) {
+    // This follows what Chrome does.
+    if (sourceRoot[sourceRoot.length - 1] !== "/" && sourceURL[0] !== "/") {
+      sourceRoot += "/";
+    }
+    // The spec says:
+    //   Line 4: An optional source root, useful for relocating source
+    //   files on a server or removing repeated values in the
+    //   “sources” entry.  This value is prepended to the individual
+    //   entries in the “source” field.
+    sourceURL = sourceRoot + sourceURL;
+  }
+
+  // Historically, SourceMapConsumer did not take the sourceMapURL as
+  // a parameter.  This mode is still somewhat supported, which is why
+  // this code block is conditional.  However, it's preferable to pass
+  // the source map URL to SourceMapConsumer, so that this function
+  // can implement the source URL resolution algorithm as outlined in
+  // the spec.  This block is basically the equivalent of:
+  //    new URL(sourceURL, sourceMapURL).toString()
+  // ... except it avoids using URL, which wasn't available in the
+  // older releases of node still supported by this library.
+  //
+  // The spec says:
+  //   If the sources are not absolute URLs after prepending of the
+  //   “sourceRoot”, the sources are resolved relative to the
+  //   SourceMap (like resolving script src in a html document).
+  if (sourceMapURL) {
+    const parsed = urlParse(sourceMapURL);
+    if (!parsed) {
+      throw new Error("sourceMapURL could not be parsed");
+    }
+    if (parsed.path) {
+      // Strip the last path component, but keep the "/".
+      const index = parsed.path.lastIndexOf("/");
+      if (index >= 0) {
+        parsed.path = parsed.path.substring(0, index + 1);
+      }
+    }
+    sourceURL = join(urlGenerate(parsed), sourceURL);
+  }
+
+  return normalize(sourceURL);
+}
+exports.computeSourceURL = computeSourceURL;
+
+
+/***/ },
+
+/***/ 401
+(module, __unused_webpack_exports, __webpack_require__) {
+
+const readWasm = __webpack_require__(874);
+
+/**
+ * Provide the JIT with a nice shape / hidden class.
+ */
+function Mapping() {
+  this.generatedLine = 0;
+  this.generatedColumn = 0;
+  this.lastGeneratedColumn = null;
+  this.source = null;
+  this.originalLine = null;
+  this.originalColumn = null;
+  this.name = null;
+}
+
+let cachedWasm = null;
+
+module.exports = function wasm() {
+  if (cachedWasm) {
+    return cachedWasm;
+  }
+
+  const callbackStack = [];
+
+  cachedWasm = readWasm().then(buffer => {
+      return WebAssembly.instantiate(buffer, {
+        env: {
+          mapping_callback(
+            generatedLine,
+            generatedColumn,
+
+            hasLastGeneratedColumn,
+            lastGeneratedColumn,
+
+            hasOriginal,
+            source,
+            originalLine,
+            originalColumn,
+
+            hasName,
+            name
+          ) {
+            const mapping = new Mapping();
+            // JS uses 1-based line numbers, wasm uses 0-based.
+            mapping.generatedLine = generatedLine + 1;
+            mapping.generatedColumn = generatedColumn;
+
+            if (hasLastGeneratedColumn) {
+              // JS uses inclusive last generated column, wasm uses exclusive.
+              mapping.lastGeneratedColumn = lastGeneratedColumn - 1;
+            }
+
+            if (hasOriginal) {
+              mapping.source = source;
+              // JS uses 1-based line numbers, wasm uses 0-based.
+              mapping.originalLine = originalLine + 1;
+              mapping.originalColumn = originalColumn;
+
+              if (hasName) {
+                mapping.name = name;
+              }
+            }
+
+            callbackStack[callbackStack.length - 1](mapping);
+          },
+
+          start_all_generated_locations_for() { console.time("all_generated_locations_for"); },
+          end_all_generated_locations_for() { console.timeEnd("all_generated_locations_for"); },
+
+          start_compute_column_spans() { console.time("compute_column_spans"); },
+          end_compute_column_spans() { console.timeEnd("compute_column_spans"); },
+
+          start_generated_location_for() { console.time("generated_location_for"); },
+          end_generated_location_for() { console.timeEnd("generated_location_for"); },
+
+          start_original_location_for() { console.time("original_location_for"); },
+          end_original_location_for() { console.timeEnd("original_location_for"); },
+
+          start_parse_mappings() { console.time("parse_mappings"); },
+          end_parse_mappings() { console.timeEnd("parse_mappings"); },
+
+          start_sort_by_generated_location() { console.time("sort_by_generated_location"); },
+          end_sort_by_generated_location() { console.timeEnd("sort_by_generated_location"); },
+
+          start_sort_by_original_location() { console.time("sort_by_original_location"); },
+          end_sort_by_original_location() { console.timeEnd("sort_by_original_location"); },
+        }
+      });
+  }).then(Wasm => {
+    return {
+      exports: Wasm.instance.exports,
+      withMappingCallback: (mappingCallback, f) => {
+        callbackStack.push(mappingCallback);
+        try {
+          f();
+        } finally {
+          callbackStack.pop();
+        }
+      }
+    };
+  }).then(null, e => {
+    cachedWasm = null;
+    throw e;
+  });
+
+  return cachedWasm;
+};
+
+
+/***/ },
+
+/***/ 219
+(__unused_webpack_module, exports, __webpack_require__) {
+
+/*
+ * Copyright 2009-2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE.txt or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+/* unused reexport */ __webpack_require__(991)/* .SourceMapGenerator */ .x;
+exports.SourceMapConsumer = __webpack_require__(272).SourceMapConsumer;
+/* unused reexport */ __webpack_require__(537);
+
+
+/***/ },
+
+/***/ 477
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * @license React
+ * use-sync-external-store-shim.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var e=__webpack_require__(810);function h(a,b){return a===b&&(0!==a||1/a===1/b)||a!==a&&b!==b}var k="function"===typeof Object.is?Object.is:h,l=e.useState,m=e.useEffect,n=e.useLayoutEffect,p=e.useDebugValue;function q(a,b){var d=b(),f=l({inst:{value:d,getSnapshot:b}}),c=f[0].inst,g=f[1];n(function(){c.value=d;c.getSnapshot=b;r(c)&&g({inst:c})},[a,d,b]);m(function(){r(c)&&g({inst:c});return a(function(){r(c)&&g({inst:c})})},[a]);p(d);return d}
+function r(a){var b=a.getSnapshot;a=a.value;try{var d=b();return!k(a,d)}catch(f){return!0}}function t(a,b){return b()}var u="undefined"===typeof window||"undefined"===typeof window.document||"undefined"===typeof window.document.createElement?t:q;exports.useSyncExternalStore=void 0!==e.useSyncExternalStore?e.useSyncExternalStore:u;
+
+
+/***/ },
+
+/***/ 422
+(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__(477);
+} else // removed by dead control flow
+{}
+
+
+/***/ },
+
+/***/ 365
+(module) {
+
+"use strict";
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var __DEV__ = "production" !== 'production';
+
+var warning = function() {};
+
+if (__DEV__) {
+  var printWarning = function printWarning(format, args) {
+    var len = arguments.length;
+    args = new Array(len > 1 ? len - 1 : 0);
+    for (var key = 1; key < len; key++) {
+      args[key - 1] = arguments[key];
+    }
+    var argIndex = 0;
+    var message = 'Warning: ' +
+      format.replace(/%s/g, function() {
+        return args[argIndex++];
+      });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  }
+
+  warning = function(condition, format, args) {
+    var len = arguments.length;
+    args = new Array(len > 2 ? len - 2 : 0);
+    for (var key = 2; key < len; key++) {
+      args[key - 2] = arguments[key];
+    }
+    if (format === undefined) {
+      throw new Error(
+          '`warning(condition, format, ...args)` requires a warning ' +
+          'message argument'
+      );
+    }
+    if (!condition) {
+      printWarning.apply(null, [format].concat(args));
+    }
+  };
+}
+
+module.exports = warning;
+
+
+/***/ },
+
+/***/ 896
+(module) {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ },
+
+/***/ 928
+(module) {
+
+"use strict";
+module.exports = require("path");
+
+/***/ },
+
+/***/ 122
+(module, exports) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = '';
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (arg) {
+				classes = appendClass(classes, parseValue(arg));
+			}
+		}
+
+		return classes;
+	}
+
+	function parseValue (arg) {
+		if (typeof arg === 'string' || typeof arg === 'number') {
+			return arg;
+		}
+
+		if (typeof arg !== 'object') {
+			return '';
+		}
+
+		if (Array.isArray(arg)) {
+			return classNames.apply(null, arg);
+		}
+
+		if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
+			return arg.toString();
+		}
+
+		var classes = '';
+
+		for (var key in arg) {
+			if (hasOwn.call(arg, key) && arg[key]) {
+				classes = appendClass(classes, key);
+			}
+		}
+
+		return classes;
+	}
+
+	function appendClass (value, newClass) {
+		if (!newClass) {
+			return value;
+		}
+	
+		if (value) {
+			return value + ' ' + newClass;
+		}
+	
+		return value + newClass;
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else // removed by dead control flow
+{}
+}());
+
+
+/***/ },
+
+/***/ 635
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   C6: () => (/* binding */ __extends),
+/* harmony export */   Cl: () => (/* binding */ __assign),
+/* harmony export */   Tt: () => (/* binding */ __rest),
+/* harmony export */   YH: () => (/* binding */ __generator),
+/* harmony export */   fX: () => (/* binding */ __spreadArray),
+/* harmony export */   sH: () => (/* binding */ __awaiter)
+/* harmony export */ });
+/* unused harmony exports __decorate, __param, __esDecorate, __runInitializers, __propKey, __setFunctionName, __metadata, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet, __classPrivateFieldIn, __addDisposableResource, __disposeResources */
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol */
+
+var extendStatics = function(d, b) {
+  extendStatics = Object.setPrototypeOf ||
+      ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+      function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+  return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+  if (typeof b !== "function" && b !== null)
+      throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+  extendStatics(d, b);
+  function __() { this.constructor = d; }
+  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+  __assign = Object.assign || function __assign(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+      return t;
+  }
+  return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+  var t = {};
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+      t[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function")
+      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+          if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+              t[p[i]] = s[p[i]];
+      }
+  return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+  var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+  else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+  return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+  function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+  var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+  var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+  var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+  var _, done = false;
+  for (var i = decorators.length - 1; i >= 0; i--) {
+      var context = {};
+      for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+      for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+      context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+      var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+      if (kind === "accessor") {
+          if (result === void 0) continue;
+          if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+          if (_ = accept(result.get)) descriptor.get = _;
+          if (_ = accept(result.set)) descriptor.set = _;
+          if (_ = accept(result.init)) initializers.unshift(_);
+      }
+      else if (_ = accept(result)) {
+          if (kind === "field") initializers.unshift(_);
+          else descriptor[key] = _;
+      }
+  }
+  if (target) Object.defineProperty(target, contextIn.name, descriptor);
+  done = true;
+};
+
+function __runInitializers(thisArg, initializers, value) {
+  var useValue = arguments.length > 2;
+  for (var i = 0; i < initializers.length; i++) {
+      value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+  }
+  return useValue ? value : void 0;
+};
+
+function __propKey(x) {
+  return typeof x === "symbol" ? x : "".concat(x);
+};
+
+function __setFunctionName(f, name, prefix) {
+  if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+  return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+function __metadata(metadataKey, metadataValue) {
+  if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+  function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+  return new (P || (P = Promise))(function (resolve, reject) {
+      function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+      function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+      function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+}
+
+function __generator(thisArg, body) {
+  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+  function verb(n) { return function (v) { return step([n, v]); }; }
+  function step(op) {
+      if (f) throw new TypeError("Generator is already executing.");
+      while (g && (g = 0, op[0] && (_ = 0)), _) try {
+          if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+          if (y = 0, t) op = [op[0] & 2, t.value];
+          switch (op[0]) {
+              case 0: case 1: t = op; break;
+              case 4: _.label++; return { value: op[1], done: false };
+              case 5: _.label++; y = op[1]; op = [0]; continue;
+              case 7: op = _.ops.pop(); _.trys.pop(); continue;
+              default:
+                  if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                  if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                  if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                  if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                  if (t[2]) _.ops.pop();
+                  _.trys.pop(); continue;
+          }
+          op = body.call(thisArg, _);
+      } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+      if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+  }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+  }
+  Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+function __exportStar(m, o) {
+  for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+  var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+  if (m) return m.call(o);
+  if (o && typeof o.length === "number") return {
+      next: function () {
+          if (o && i >= o.length) o = void 0;
+          return { value: o && o[i++], done: !o };
+      }
+  };
+  throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o), r, ar = [], e;
+  try {
+      while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  }
+  catch (error) { e = { error: error }; }
+  finally {
+      try {
+          if (r && !r.done && (m = i["return"])) m.call(i);
+      }
+      finally { if (e) throw e.error; }
+  }
+  return ar;
+}
+
+/** @deprecated */
+function __spread() {
+  for (var ar = [], i = 0; i < arguments.length; i++)
+      ar = ar.concat(__read(arguments[i]));
+  return ar;
+}
+
+/** @deprecated */
+function __spreadArrays() {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+  for (var r = Array(s), k = 0, i = 0; i < il; i++)
+      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+          r[k] = a[j];
+  return r;
+}
+
+function __spreadArray(to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+          ar[i] = from[i];
+      }
+  }
+  return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function __await(v) {
+  return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+  var g = generator.apply(thisArg, _arguments || []), i, q = [];
+  return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
+  function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
+  function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
+  function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+  function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+  function fulfill(value) { resume("next", value); }
+  function reject(value) { resume("throw", value); }
+  function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+  var i, p;
+  return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+  function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+  var m = o[Symbol.asyncIterator], i;
+  return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+  function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+  function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+  if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+  return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+  Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+  o["default"] = v;
+};
+
+function __importStar(mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  __setModuleDefault(result, mod);
+  return result;
+}
+
+function __importDefault(mod) {
+  return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+  if (kind === "m") throw new TypeError("Private method is not writable");
+  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+  return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+}
+
+function __classPrivateFieldIn(state, receiver) {
+  if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+  return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+
+function __addDisposableResource(env, value, async) {
+  if (value !== null && value !== void 0) {
+    if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
+    var dispose, inner;
+    if (async) {
+      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+      dispose = value[Symbol.asyncDispose];
+    }
+    if (dispose === void 0) {
+      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+      dispose = value[Symbol.dispose];
+      if (async) inner = dispose;
+    }
+    if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+    if (inner) dispose = function() { try { inner.call(this); } catch (e) { return Promise.reject(e); } };
+    env.stack.push({ value: value, dispose: dispose, async: async });
+  }
+  else if (async) {
+    env.stack.push({ async: true });
+  }
+  return value;
+}
+
+var _SuppressedError = (/* unused pure expression or super */ null && (typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+  var e = new Error(message);
+  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+}));
+
+function __disposeResources(env) {
+  function fail(e) {
+    env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
+    env.hasError = true;
+  }
+  function next() {
+    while (env.stack.length) {
+      var rec = env.stack.pop();
+      try {
+        var result = rec.dispose && rec.dispose.call(rec.value);
+        if (rec.async) return Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+      }
+      catch (e) {
+          fail(e);
+      }
+    }
+    if (env.hasError) throw env.error;
+  }
+  return next();
+}
+
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && ({
+  __extends,
+  __assign,
+  __rest,
+  __decorate,
+  __param,
+  __metadata,
+  __awaiter,
+  __generator,
+  __createBinding,
+  __exportStar,
+  __values,
+  __read,
+  __spread,
+  __spreadArrays,
+  __spreadArray,
+  __await,
+  __asyncGenerator,
+  __asyncDelegator,
+  __asyncValues,
+  __makeTemplateObject,
+  __importStar,
+  __importDefault,
+  __classPrivateFieldGet,
+  __classPrivateFieldSet,
+  __classPrivateFieldIn,
+  __addDisposableResource,
+  __disposeResources,
+})));
+
+
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -4675,7 +4681,7 @@ exports.x = SourceMapGenerator;
 /******/ 			__webpack_require__.r(ns);
 /******/ 			var def = {};
 /******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
-/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 			for(var current = mode & 2 && value; (typeof current == 'object' || typeof current == 'function') && !~leafPrototypes.indexOf(current); current = getProto(current)) {
 /******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
 /******/ 			}
 /******/ 			def['default'] = () => (value);
@@ -4743,7 +4749,6 @@ exports.x = SourceMapGenerator;
 /******/ 				script = document.createElement('script');
 /******/ 		
 /******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
 /******/ 				if (__webpack_require__.nc) {
 /******/ 					script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 				}
@@ -4917,11 +4922,11 @@ var Alignment = {
     RIGHT: "right",
     START: "start",
 };
-var TextAlignment = {
+var TextAlignment = (/* unused pure expression or super */ null && ({
     CENTER: "center",
     END: "end",
     START: "start",
-};
+}));
 
 ;// ./node_modules/@blueprintjs/core/lib/esm/common/elevation.js
 /*
@@ -7248,7 +7253,8 @@ var hooks_generateUID = function (context) {
     return { uid: uid, gen: gen };
 };
 var useUIDState = function () {
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     var context = (0,react.useContext)(source);
     var uid = (0,react.useState)(function () { return hooks_generateUID(context); })[0];
     return uid;
@@ -7523,6 +7529,7 @@ function getFocusableElements(element) {
 }
 
 ;// ./node_modules/@blueprintjs/core/lib/esm/context/overlays/overlaysProvider.js
+/* unused harmony import specifier */ var React;
 /*
  * Copyright 2024 Palantir Technologies, Inc. All rights reserved.
  *
@@ -7792,6 +7799,7 @@ function getKeyboardFocusableElements(container) {
 }
 
 ;// ./node_modules/@blueprintjs/core/lib/esm/context/portal/portalProvider.js
+/* unused harmony import specifier */ var portalProvider_React;
 /*
  * Copyright 2022 Palantir Technologies, Inc. All rights reserved.
  *
@@ -7820,11 +7828,11 @@ var PortalContext = react.createContext({});
  */
 var PortalProvider = function (_a) {
     var children = _a.children, portalClassName = _a.portalClassName, portalContainer = _a.portalContainer;
-    var contextOptions = React.useMemo(function () { return ({
+    var contextOptions = portalProvider_React.useMemo(function () { return ({
         portalClassName: portalClassName,
         portalContainer: portalContainer,
     }); }, [portalClassName, portalContainer]);
-    return React.createElement(PortalContext.Provider, { value: contextOptions }, children);
+    return portalProvider_React.createElement(PortalContext.Provider, { value: contextOptions }, children);
 };
 
 ;// ./node_modules/@blueprintjs/core/lib/esm/components/portal/portal.js
@@ -11267,6 +11275,7 @@ function deprecatedToasterCreate(props, container) {
 }
 
 ;// ./app/Alert.js
+/* unused harmony import specifier */ var Blueprint;
 
 const maxToasts = 3;
 let toaster;
@@ -11516,7 +11525,7 @@ class Response {
         return this.data;
     }
 }
-class Request_Request {
+class Request {
     constructor() {
         this.headers = new Map();
     }
@@ -11700,9 +11709,9 @@ const external_node_crypto_namespaceObject = require("node:crypto");
 ;// external "node:fs/promises"
 const promises_namespaceObject = require("node:fs/promises");
 ;// ./node_modules/tar/dist/esm/index.min.js
-var Dr=Object.defineProperty;var Ar=(s,t)=>{for(var e in t)Dr(s,e,{get:t[e],enumerable:!0})};var Ts=typeof process=="object"&&process?process:{stdout:null,stderr:null},Cr=s=>!!s&&typeof s=="object"&&(s instanceof A||s instanceof external_node_stream_namespaceObject||Fr(s)||kr(s)),Fr=s=>!!s&&typeof s=="object"&&s instanceof external_node_events_namespaceObject.EventEmitter&&typeof s.pipe=="function"&&s.pipe!==external_node_stream_namespaceObject.Writable.prototype.pipe,kr=s=>!!s&&typeof s=="object"&&s instanceof external_node_events_namespaceObject.EventEmitter&&typeof s.write=="function"&&typeof s.end=="function",q=Symbol("EOF"),j=Symbol("maybeEmitEnd"),rt=Symbol("emittedEnd"),xe=Symbol("emittingEnd"),jt=Symbol("emittedError"),Le=Symbol("closed"),xs=Symbol("read"),Ne=Symbol("flush"),Ls=Symbol("flushChunk"),z=Symbol("encoding"),Mt=Symbol("decoder"),b=Symbol("flowing"),Qt=Symbol("paused"),Bt=Symbol("resume"),g=Symbol("buffer"),D=Symbol("pipes"),_=Symbol("bufferLength"),Si=Symbol("bufferPush"),De=Symbol("bufferShift"),L=Symbol("objectMode"),w=Symbol("destroyed"),yi=Symbol("error"),Ri=Symbol("emitData"),Ns=Symbol("emitEnd"),bi=Symbol("emitEnd2"),Z=Symbol("async"),gi=Symbol("abort"),Ae=Symbol("aborted"),Jt=Symbol("signal"),yt=Symbol("dataListeners"),C=Symbol("discarded"),te=s=>Promise.resolve().then(s),vr=s=>s(),Mr=s=>s==="end"||s==="finish"||s==="prefinish",Br=s=>s instanceof ArrayBuffer||!!s&&typeof s=="object"&&s.constructor&&s.constructor.name==="ArrayBuffer"&&s.byteLength>=0,Pr=s=>!Buffer.isBuffer(s)&&ArrayBuffer.isView(s),index_min_Ie=class{src;dest;opts;ondrain;constructor(t,e,i){this.src=t,this.dest=e,this.opts=i,this.ondrain=()=>t[Bt](),this.dest.on("drain",this.ondrain)}unpipe(){this.dest.removeListener("drain",this.ondrain)}proxyErrors(t){}end(){this.unpipe(),this.opts.end&&this.dest.end()}},index_min_i=class extends index_min_Ie{unpipe(){this.src.removeListener("error",this.proxyErrors),super.unpipe()}constructor(t,e,i){super(t,e,i),this.proxyErrors=r=>this.dest.emit("error",r),t.on("error",this.proxyErrors)}},zr=s=>!!s.objectMode,Ur=s=>!s.objectMode&&!!s.encoding&&s.encoding!=="buffer",A=class extends external_node_events_namespaceObject.EventEmitter{[b]=!1;[Qt]=!1;[D]=[];[g]=[];[L];[z];[Z];[Mt];[q]=!1;[rt]=!1;[xe]=!1;[Le]=!1;[jt]=null;[_]=0;[w]=!1;[Jt];[Ae]=!1;[yt]=0;[C]=!1;writable=!0;readable=!0;constructor(...t){let e=t[0]||{};if(super(),e.objectMode&&typeof e.encoding=="string")throw new TypeError("Encoding and objectMode may not be used together");zr(e)?(this[L]=!0,this[z]=null):Ur(e)?(this[z]=e.encoding,this[L]=!1):(this[L]=!1,this[z]=null),this[Z]=!!e.async,this[Mt]=this[z]?new external_node_string_decoder_namespaceObject.StringDecoder(this[z]):null,e&&e.debugExposeBuffer===!0&&Object.defineProperty(this,"buffer",{get:()=>this[g]}),e&&e.debugExposePipes===!0&&Object.defineProperty(this,"pipes",{get:()=>this[D]});let{signal:i}=e;i&&(this[Jt]=i,i.aborted?this[gi]():i.addEventListener("abort",()=>this[gi]()))}get bufferLength(){return this[_]}get encoding(){return this[z]}set encoding(t){throw new Error("Encoding must be set at instantiation time")}setEncoding(t){throw new Error("Encoding must be set at instantiation time")}get objectMode(){return this[L]}set objectMode(t){throw new Error("objectMode must be set at instantiation time")}get async(){return this[Z]}set async(t){this[Z]=this[Z]||!!t}[gi](){this[Ae]=!0,this.emit("abort",this[Jt]?.reason),this.destroy(this[Jt]?.reason)}get aborted(){return this[Ae]}set aborted(t){}write(t,e,i){if(this[Ae])return!1;if(this[q])throw new Error("write after end");if(this[w])return this.emit("error",Object.assign(new Error("Cannot call write after a stream was destroyed"),{code:"ERR_STREAM_DESTROYED"})),!0;typeof e=="function"&&(i=e,e="utf8"),e||(e="utf8");let r=this[Z]?te:vr;if(!this[L]&&!Buffer.isBuffer(t)){if(Pr(t))t=Buffer.from(t.buffer,t.byteOffset,t.byteLength);else if(Br(t))t=Buffer.from(t);else if(typeof t!="string")throw new Error("Non-contiguous data written to non-objectMode stream")}return this[L]?(this[b]&&this[_]!==0&&this[Ne](!0),this[b]?this.emit("data",t):this[Si](t),this[_]!==0&&this.emit("readable"),i&&r(i),this[b]):t.length?(typeof t=="string"&&!(e===this[z]&&!this[Mt]?.lastNeed)&&(t=Buffer.from(t,e)),Buffer.isBuffer(t)&&this[z]&&(t=this[Mt].write(t)),this[b]&&this[_]!==0&&this[Ne](!0),this[b]?this.emit("data",t):this[Si](t),this[_]!==0&&this.emit("readable"),i&&r(i),this[b]):(this[_]!==0&&this.emit("readable"),i&&r(i),this[b])}read(t){if(this[w])return null;if(this[C]=!1,this[_]===0||t===0||t&&t>this[_])return this[j](),null;this[L]&&(t=null),this[g].length>1&&!this[L]&&(this[g]=[this[z]?this[g].join(""):Buffer.concat(this[g],this[_])]);let e=this[xs](t||null,this[g][0]);return this[j](),e}[xs](t,e){if(this[L])this[De]();else{let i=e;t===i.length||t===null?this[De]():typeof i=="string"?(this[g][0]=i.slice(t),e=i.slice(0,t),this[_]-=t):(this[g][0]=i.subarray(t),e=i.subarray(0,t),this[_]-=t)}return this.emit("data",e),!this[g].length&&!this[q]&&this.emit("drain"),e}end(t,e,i){return typeof t=="function"&&(i=t,t=void 0),typeof e=="function"&&(i=e,e="utf8"),t!==void 0&&this.write(t,e),i&&this.once("end",i),this[q]=!0,this.writable=!1,(this[b]||!this[Qt])&&this[j](),this}[Bt](){this[w]||(!this[yt]&&!this[D].length&&(this[C]=!0),this[Qt]=!1,this[b]=!0,this.emit("resume"),this[g].length?this[Ne]():this[q]?this[j]():this.emit("drain"))}resume(){return this[Bt]()}pause(){this[b]=!1,this[Qt]=!0,this[C]=!1}get destroyed(){return this[w]}get flowing(){return this[b]}get paused(){return this[Qt]}[Si](t){this[L]?this[_]+=1:this[_]+=t.length,this[g].push(t)}[De](){return this[L]?this[_]-=1:this[_]-=this[g][0].length,this[g].shift()}[Ne](t=!1){do;while(this[Ls](this[De]())&&this[g].length);!t&&!this[g].length&&!this[q]&&this.emit("drain")}[Ls](t){return this.emit("data",t),this[b]}pipe(t,e){if(this[w])return t;this[C]=!1;let i=this[rt];return e=e||{},t===Ts.stdout||t===Ts.stderr?e.end=!1:e.end=e.end!==!1,e.proxyErrors=!!e.proxyErrors,i?e.end&&t.end():(this[D].push(e.proxyErrors?new index_min_i(this,t,e):new index_min_Ie(this,t,e)),this[Z]?te(()=>this[Bt]()):this[Bt]()),t}unpipe(t){let e=this[D].find(i=>i.dest===t);e&&(this[D].length===1?(this[b]&&this[yt]===0&&(this[b]=!1),this[D]=[]):this[D].splice(this[D].indexOf(e),1),e.unpipe())}addListener(t,e){return this.on(t,e)}on(t,e){let i=super.on(t,e);if(t==="data")this[C]=!1,this[yt]++,!this[D].length&&!this[b]&&this[Bt]();else if(t==="readable"&&this[_]!==0)super.emit("readable");else if(Mr(t)&&this[rt])super.emit(t),this.removeAllListeners(t);else if(t==="error"&&this[jt]){let r=e;this[Z]?te(()=>r.call(this,this[jt])):r.call(this,this[jt])}return i}removeListener(t,e){return this.off(t,e)}off(t,e){let i=super.off(t,e);return t==="data"&&(this[yt]=this.listeners("data").length,this[yt]===0&&!this[C]&&!this[D].length&&(this[b]=!1)),i}removeAllListeners(t){let e=super.removeAllListeners(t);return(t==="data"||t===void 0)&&(this[yt]=0,!this[C]&&!this[D].length&&(this[b]=!1)),e}get emittedEnd(){return this[rt]}[j](){!this[xe]&&!this[rt]&&!this[w]&&this[g].length===0&&this[q]&&(this[xe]=!0,this.emit("end"),this.emit("prefinish"),this.emit("finish"),this[Le]&&this.emit("close"),this[xe]=!1)}emit(t,...e){let i=e[0];if(t!=="error"&&t!=="close"&&t!==w&&this[w])return!1;if(t==="data")return!this[L]&&!i?!1:this[Z]?(te(()=>this[Ri](i)),!0):this[Ri](i);if(t==="end")return this[Ns]();if(t==="close"){if(this[Le]=!0,!this[rt]&&!this[w])return!1;let n=super.emit("close");return this.removeAllListeners("close"),n}else if(t==="error"){this[jt]=i,super.emit(yi,i);let n=!this[Jt]||this.listeners("error").length?super.emit("error",i):!1;return this[j](),n}else if(t==="resume"){let n=super.emit("resume");return this[j](),n}else if(t==="finish"||t==="prefinish"){let n=super.emit(t);return this.removeAllListeners(t),n}let r=super.emit(t,...e);return this[j](),r}[Ri](t){for(let i of this[D])i.dest.write(t)===!1&&this.pause();let e=this[C]?!1:super.emit("data",t);return this[j](),e}[Ns](){return this[rt]?!1:(this[rt]=!0,this.readable=!1,this[Z]?(te(()=>this[bi]()),!0):this[bi]())}[bi](){if(this[Mt]){let e=this[Mt].end();if(e){for(let i of this[D])i.dest.write(e);this[C]||super.emit("data",e)}}for(let e of this[D])e.end();let t=super.emit("end");return this.removeAllListeners("end"),t}async collect(){let t=Object.assign([],{dataLength:0});this[L]||(t.dataLength=0);let e=this.promise();return this.on("data",i=>{t.push(i),this[L]||(t.dataLength+=i.length)}),await e,t}async concat(){if(this[L])throw new Error("cannot concat in objectMode");let t=await this.collect();return this[z]?t.join(""):Buffer.concat(t,t.dataLength)}async promise(){return new Promise((t,e)=>{this.on(w,()=>e(new Error("stream destroyed"))),this.on("error",i=>e(i)),this.on("end",()=>t())})}[Symbol.asyncIterator](){this[C]=!1;let t=!1,e=async()=>(this.pause(),t=!0,{value:void 0,done:!0});return{next:()=>{if(t)return e();let r=this.read();if(r!==null)return Promise.resolve({done:!1,value:r});if(this[q])return e();let n,o,h=d=>{this.off("data",a),this.off("end",l),this.off(w,c),e(),o(d)},a=d=>{this.off("error",h),this.off("end",l),this.off(w,c),this.pause(),n({value:d,done:!!this[q]})},l=()=>{this.off("error",h),this.off("data",a),this.off(w,c),e(),n({done:!0,value:void 0})},c=()=>h(new Error("stream destroyed"));return new Promise((d,S)=>{o=S,n=d,this.once(w,c),this.once("error",h),this.once("end",l),this.once("data",a)})},throw:e,return:e,[Symbol.asyncIterator](){return this},[Symbol.asyncDispose]:async()=>{}}}[Symbol.iterator](){this[C]=!1;let t=!1,e=()=>(this.pause(),this.off(yi,e),this.off(w,e),this.off("end",e),t=!0,{done:!0,value:void 0}),i=()=>{if(t)return e();let r=this.read();return r===null?e():{done:!1,value:r}};return this.once("end",e),this.once(yi,e),this.once(w,e),{next:i,throw:e,return:e,[Symbol.iterator](){return this},[Symbol.dispose]:()=>{}}}destroy(t){if(this[w])return t?this.emit("error",t):this.emit(w),this;this[w]=!0,this[C]=!0,this[g].length=0,this[_]=0;let e=this;return typeof e.close=="function"&&!this[Le]&&e.close(),t?this.emit("error",t):this.emit(w),this}static get isStream(){return Cr}};var Wr=external_fs_.writev,ot=Symbol("_autoClose"),H=Symbol("_close"),ee=Symbol("_ended"),m=Symbol("_fd"),Ti=Symbol("_finished"),J=Symbol("_flags"),xi=Symbol("_flush"),Ai=Symbol("_handleChunk"),Ii=Symbol("_makeBuf"),se=Symbol("_mode"),Ce=Symbol("_needDrain"),Ut=Symbol("_onerror"),Ht=Symbol("_onopen"),Li=Symbol("_onread"),Pt=Symbol("_onwrite"),ht=Symbol("_open"),U=Symbol("_path"),nt=Symbol("_pos"),Y=Symbol("_queue"),zt=Symbol("_read"),Ni=Symbol("_readSize"),Q=Symbol("_reading"),ie=Symbol("_remain"),Di=Symbol("_size"),Fe=Symbol("_write"),Rt=Symbol("_writing"),ke=Symbol("_defaultFlag"),bt=Symbol("_errored"),gt=class extends A{[bt]=!1;[m];[U];[Ni];[Q]=!1;[Di];[ie];[ot];constructor(t,e){if(e=e||{},super(e),this.readable=!0,this.writable=!1,typeof t!="string")throw new TypeError("path must be a string");this[bt]=!1,this[m]=typeof e.fd=="number"?e.fd:void 0,this[U]=t,this[Ni]=e.readSize||16*1024*1024,this[Q]=!1,this[Di]=typeof e.size=="number"?e.size:1/0,this[ie]=this[Di],this[ot]=typeof e.autoClose=="boolean"?e.autoClose:!0,typeof this[m]=="number"?this[zt]():this[ht]()}get fd(){return this[m]}get path(){return this[U]}write(){throw new TypeError("this is a readable stream")}end(){throw new TypeError("this is a readable stream")}[ht](){external_fs_.open(this[U],"r",(t,e)=>this[Ht](t,e))}[Ht](t,e){t?this[Ut](t):(this[m]=e,this.emit("open",e),this[zt]())}[Ii](){return Buffer.allocUnsafe(Math.min(this[Ni],this[ie]))}[zt](){if(!this[Q]){this[Q]=!0;let t=this[Ii]();if(t.length===0)return process.nextTick(()=>this[Li](null,0,t));external_fs_.read(this[m],t,0,t.length,null,(e,i,r)=>this[Li](e,i,r))}}[Li](t,e,i){this[Q]=!1,t?this[Ut](t):this[Ai](e,i)&&this[zt]()}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.close(t,e=>e?this.emit("error",e):this.emit("close"))}}[Ut](t){this[Q]=!0,this[H](),this.emit("error",t)}[Ai](t,e){let i=!1;return this[ie]-=t,t>0&&(i=super.write(t<e.length?e.subarray(0,t):e)),(t===0||this[ie]<=0)&&(i=!1,this[H](),super.end()),i}emit(t,...e){switch(t){case"prefinish":case"finish":return!1;case"drain":return typeof this[m]=="number"&&this[zt](),!1;case"error":return this[bt]?!1:(this[bt]=!0,super.emit(t,...e));default:return super.emit(t,...e)}}},ve=class extends gt{[ht](){let t=!0;try{this[Ht](null,external_fs_.openSync(this[U],"r")),t=!1}finally{t&&this[H]()}}[zt](){let t=!0;try{if(!this[Q]){this[Q]=!0;do{let e=this[Ii](),i=e.length===0?0:external_fs_.readSync(this[m],e,0,e.length,null);if(!this[Ai](i,e))break}while(!0);this[Q]=!1}t=!1}finally{t&&this[H]()}}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.closeSync(t),this.emit("close")}}},tt=class extends external_events_namespaceObject{readable=!1;writable=!0;[bt]=!1;[Rt]=!1;[ee]=!1;[Y]=[];[Ce]=!1;[U];[se];[ot];[m];[ke];[J];[Ti]=!1;[nt];constructor(t,e){e=e||{},super(e),this[U]=t,this[m]=typeof e.fd=="number"?e.fd:void 0,this[se]=e.mode===void 0?438:e.mode,this[nt]=typeof e.start=="number"?e.start:void 0,this[ot]=typeof e.autoClose=="boolean"?e.autoClose:!0;let i=this[nt]!==void 0?"r+":"w";this[ke]=e.flags===void 0,this[J]=e.flags===void 0?i:e.flags,this[m]===void 0&&this[ht]()}emit(t,...e){if(t==="error"){if(this[bt])return!1;this[bt]=!0}return super.emit(t,...e)}get fd(){return this[m]}get path(){return this[U]}[Ut](t){this[H](),this[Rt]=!0,this.emit("error",t)}[ht](){external_fs_.open(this[U],this[J],this[se],(t,e)=>this[Ht](t,e))}[Ht](t,e){this[ke]&&this[J]==="r+"&&t&&t.code==="ENOENT"?(this[J]="w",this[ht]()):t?this[Ut](t):(this[m]=e,this.emit("open",e),this[Rt]||this[xi]())}end(t,e){return t&&this.write(t,e),this[ee]=!0,!this[Rt]&&!this[Y].length&&typeof this[m]=="number"&&this[Pt](null,0),this}write(t,e){return typeof t=="string"&&(t=Buffer.from(t,e)),this[ee]?(this.emit("error",new Error("write() after end()")),!1):this[m]===void 0||this[Rt]||this[Y].length?(this[Y].push(t),this[Ce]=!0,!1):(this[Rt]=!0,this[Fe](t),!0)}[Fe](t){external_fs_.write(this[m],t,0,t.length,this[nt],(e,i)=>this[Pt](e,i))}[Pt](t,e){t?this[Ut](t):(this[nt]!==void 0&&typeof e=="number"&&(this[nt]+=e),this[Y].length?this[xi]():(this[Rt]=!1,this[ee]&&!this[Ti]?(this[Ti]=!0,this[H](),this.emit("finish")):this[Ce]&&(this[Ce]=!1,this.emit("drain"))))}[xi](){if(this[Y].length===0)this[ee]&&this[Pt](null,0);else if(this[Y].length===1)this[Fe](this[Y].pop());else{let t=this[Y];this[Y]=[],Wr(this[m],t,this[nt],(e,i)=>this[Pt](e,i))}}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.close(t,e=>e?this.emit("error",e):this.emit("close"))}}},Wt=class extends tt{[ht](){let t;if(this[ke]&&this[J]==="r+")try{t=external_fs_.openSync(this[U],this[J],this[se])}catch(e){if(e?.code==="ENOENT")return this[J]="w",this[ht]();throw e}else t=external_fs_.openSync(this[U],this[J],this[se]);this[Ht](null,t)}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.closeSync(t),this.emit("close")}}[Fe](t){let e=!0;try{this[Pt](null,external_fs_.writeSync(this[m],t,0,t.length,this[nt])),e=!1}finally{if(e)try{this[H]()}catch{}}}};var Gr=new Map([["C","cwd"],["f","file"],["z","gzip"],["P","preservePaths"],["U","unlink"],["strip-components","strip"],["stripComponents","strip"],["keep-newer","newer"],["keepNewer","newer"],["keep-newer-files","newer"],["keepNewerFiles","newer"],["k","keep"],["keep-existing","keep"],["keepExisting","keep"],["m","noMtime"],["no-mtime","noMtime"],["p","preserveOwner"],["L","follow"],["h","follow"],["onentry","onReadEntry"]]),As=s=>!!s.sync&&!!s.file,Is=s=>!s.sync&&!!s.file,Cs=s=>!!s.sync&&!s.file,Fs=s=>!s.sync&&!s.file;var ks=s=>!!s.file;var Zr=s=>{let t=Gr.get(s);return t||s},re=(s={})=>{if(!s)return{};let t={};for(let[e,i]of Object.entries(s)){let r=Zr(e);t[r]=i}return t.chmod===void 0&&t.noChmod===!1&&(t.chmod=!0),delete t.noChmod,t};var K=(s,t,e,i,r)=>Object.assign((n=[],o,h)=>{Array.isArray(n)&&(o=n,n={}),typeof o=="function"&&(h=o,o=void 0),o?o=Array.from(o):o=[];let a=re(n);if(r?.(a,o),As(a)){if(typeof h=="function")throw new TypeError("callback not supported for sync tar functions");return s(a,o)}else if(Is(a)){let l=t(a,o),c=h||void 0;return c?l.then(()=>c(),c):l}else if(Cs(a)){if(typeof h=="function")throw new TypeError("callback not supported for sync tar functions");return e(a,o)}else if(Fs(a)){if(typeof h=="function")throw new TypeError("callback only supported with file option");return i(a,o)}else throw new Error("impossible options??")},{syncFile:s,asyncFile:t,syncNoFile:e,asyncNoFile:i,validate:r});var Kr=external_zlib_namespaceObject.constants||{ZLIB_VERNUM:4736},M=Object.freeze(Object.assign(Object.create(null),{Z_NO_FLUSH:0,Z_PARTIAL_FLUSH:1,Z_SYNC_FLUSH:2,Z_FULL_FLUSH:3,Z_FINISH:4,Z_BLOCK:5,Z_OK:0,Z_STREAM_END:1,Z_NEED_DICT:2,Z_ERRNO:-1,Z_STREAM_ERROR:-2,Z_DATA_ERROR:-3,Z_MEM_ERROR:-4,Z_BUF_ERROR:-5,Z_VERSION_ERROR:-6,Z_NO_COMPRESSION:0,Z_BEST_SPEED:1,Z_BEST_COMPRESSION:9,Z_DEFAULT_COMPRESSION:-1,Z_FILTERED:1,Z_HUFFMAN_ONLY:2,Z_RLE:3,Z_FIXED:4,Z_DEFAULT_STRATEGY:0,DEFLATE:1,INFLATE:2,GZIP:3,GUNZIP:4,DEFLATERAW:5,INFLATERAW:6,UNZIP:7,BROTLI_DECODE:8,BROTLI_ENCODE:9,Z_MIN_WINDOWBITS:8,Z_MAX_WINDOWBITS:15,Z_DEFAULT_WINDOWBITS:15,Z_MIN_CHUNK:64,Z_MAX_CHUNK:1/0,Z_DEFAULT_CHUNK:16384,Z_MIN_MEMLEVEL:1,Z_MAX_MEMLEVEL:9,Z_DEFAULT_MEMLEVEL:8,Z_MIN_LEVEL:-1,Z_MAX_LEVEL:9,Z_DEFAULT_LEVEL:-1,BROTLI_OPERATION_PROCESS:0,BROTLI_OPERATION_FLUSH:1,BROTLI_OPERATION_FINISH:2,BROTLI_OPERATION_EMIT_METADATA:3,BROTLI_MODE_GENERIC:0,BROTLI_MODE_TEXT:1,BROTLI_MODE_FONT:2,BROTLI_DEFAULT_MODE:0,BROTLI_MIN_QUALITY:0,BROTLI_MAX_QUALITY:11,BROTLI_DEFAULT_QUALITY:11,BROTLI_MIN_WINDOW_BITS:10,BROTLI_MAX_WINDOW_BITS:24,BROTLI_LARGE_MAX_WINDOW_BITS:30,BROTLI_DEFAULT_WINDOW:22,BROTLI_MIN_INPUT_BLOCK_BITS:16,BROTLI_MAX_INPUT_BLOCK_BITS:24,BROTLI_PARAM_MODE:0,BROTLI_PARAM_QUALITY:1,BROTLI_PARAM_LGWIN:2,BROTLI_PARAM_LGBLOCK:3,BROTLI_PARAM_DISABLE_LITERAL_CONTEXT_MODELING:4,BROTLI_PARAM_SIZE_HINT:5,BROTLI_PARAM_LARGE_WINDOW:6,BROTLI_PARAM_NPOSTFIX:7,BROTLI_PARAM_NDIRECT:8,BROTLI_DECODER_RESULT_ERROR:0,BROTLI_DECODER_RESULT_SUCCESS:1,BROTLI_DECODER_RESULT_NEEDS_MORE_INPUT:2,BROTLI_DECODER_RESULT_NEEDS_MORE_OUTPUT:3,BROTLI_DECODER_PARAM_DISABLE_RING_BUFFER_REALLOCATION:0,BROTLI_DECODER_PARAM_LARGE_WINDOW:1,BROTLI_DECODER_NO_ERROR:0,BROTLI_DECODER_SUCCESS:1,BROTLI_DECODER_NEEDS_MORE_INPUT:2,BROTLI_DECODER_NEEDS_MORE_OUTPUT:3,BROTLI_DECODER_ERROR_FORMAT_EXUBERANT_NIBBLE:-1,BROTLI_DECODER_ERROR_FORMAT_RESERVED:-2,BROTLI_DECODER_ERROR_FORMAT_EXUBERANT_META_NIBBLE:-3,BROTLI_DECODER_ERROR_FORMAT_SIMPLE_HUFFMAN_ALPHABET:-4,BROTLI_DECODER_ERROR_FORMAT_SIMPLE_HUFFMAN_SAME:-5,BROTLI_DECODER_ERROR_FORMAT_CL_SPACE:-6,BROTLI_DECODER_ERROR_FORMAT_HUFFMAN_SPACE:-7,BROTLI_DECODER_ERROR_FORMAT_CONTEXT_MAP_REPEAT:-8,BROTLI_DECODER_ERROR_FORMAT_BLOCK_LENGTH_1:-9,BROTLI_DECODER_ERROR_FORMAT_BLOCK_LENGTH_2:-10,BROTLI_DECODER_ERROR_FORMAT_TRANSFORM:-11,BROTLI_DECODER_ERROR_FORMAT_DICTIONARY:-12,BROTLI_DECODER_ERROR_FORMAT_WINDOW_BITS:-13,BROTLI_DECODER_ERROR_FORMAT_PADDING_1:-14,BROTLI_DECODER_ERROR_FORMAT_PADDING_2:-15,BROTLI_DECODER_ERROR_FORMAT_DISTANCE:-16,BROTLI_DECODER_ERROR_DICTIONARY_NOT_SET:-19,BROTLI_DECODER_ERROR_INVALID_ARGUMENTS:-20,BROTLI_DECODER_ERROR_ALLOC_CONTEXT_MODES:-21,BROTLI_DECODER_ERROR_ALLOC_TREE_GROUPS:-22,BROTLI_DECODER_ERROR_ALLOC_CONTEXT_MAP:-25,BROTLI_DECODER_ERROR_ALLOC_RING_BUFFER_1:-26,BROTLI_DECODER_ERROR_ALLOC_RING_BUFFER_2:-27,BROTLI_DECODER_ERROR_ALLOC_BLOCK_TYPE_TREES:-30,BROTLI_DECODER_ERROR_UNREACHABLE:-31},Kr));var Vr=external_buffer_namespaceObject.Buffer.concat,Ms=Object.getOwnPropertyDescriptor(external_buffer_namespaceObject.Buffer,"concat"),$r=s=>s,Fi=Ms?.writable===!0||Ms?.set!==void 0?s=>{external_buffer_namespaceObject.Buffer.concat=s?$r:Vr}:s=>{},Ot=Symbol("_superWrite"),Gt=class extends Error{code;errno;constructor(t,e){super("zlib: "+t.message,{cause:t}),this.code=t.code,this.errno=t.errno,this.code||(this.code="ZLIB_ERROR"),this.message="zlib: "+t.message,Error.captureStackTrace(this,e??this.constructor)}get name(){return"ZlibError"}},ki=Symbol("flushFlag"),ne=class extends A{#t=!1;#i=!1;#s;#n;#r;#e;#o;get sawError(){return this.#t}get handle(){return this.#e}get flushFlag(){return this.#s}constructor(t,e){if(!t||typeof t!="object")throw new TypeError("invalid options for ZlibBase constructor");if(super(t),this.#s=t.flush??0,this.#n=t.finishFlush??0,this.#r=t.fullFlushFlag??0,typeof external_zlib_namespaceObject_0[e]!="function")throw new TypeError("Compression method not supported: "+e);try{this.#e=new external_zlib_namespaceObject_0[e](t)}catch(i){throw new Gt(i,this.constructor)}this.#o=i=>{this.#t||(this.#t=!0,this.close(),this.emit("error",i))},this.#e?.on("error",i=>this.#o(new Gt(i))),this.once("end",()=>this.close)}close(){this.#e&&(this.#e.close(),this.#e=void 0,this.emit("close"))}reset(){if(!this.#t)return external_assert_namespaceObject(this.#e,"zlib binding closed"),this.#e.reset?.()}flush(t){this.ended||(typeof t!="number"&&(t=this.#r),this.write(Object.assign(external_buffer_namespaceObject.Buffer.alloc(0),{[ki]:t})))}end(t,e,i){return typeof t=="function"&&(i=t,e=void 0,t=void 0),typeof e=="function"&&(i=e,e=void 0),t&&(e?this.write(t,e):this.write(t)),this.flush(this.#n),this.#i=!0,super.end(i)}get ended(){return this.#i}[Ot](t){return super.write(t)}write(t,e,i){if(typeof e=="function"&&(i=e,e="utf8"),typeof t=="string"&&(t=external_buffer_namespaceObject.Buffer.from(t,e)),this.#t)return;external_assert_namespaceObject(this.#e,"zlib binding closed");let r=this.#e._handle,n=r.close;r.close=()=>{};let o=this.#e.close;this.#e.close=()=>{},Fi(!0);let h;try{let l=typeof t[ki]=="number"?t[ki]:this.#s;h=this.#e._processChunk(t,l),Fi(!1)}catch(l){Fi(!1),this.#o(new Gt(l,this.write))}finally{this.#e&&(this.#e._handle=r,r.close=n,this.#e.close=o,this.#e.removeAllListeners("error"))}this.#e&&this.#e.on("error",l=>this.#o(new Gt(l,this.write)));let a;if(h)if(Array.isArray(h)&&h.length>0){let l=h[0];a=this[Ot](external_buffer_namespaceObject.Buffer.from(l));for(let c=1;c<h.length;c++)a=this[Ot](h[c])}else a=this[Ot](external_buffer_namespaceObject.Buffer.from(h));return i&&i(),a}},Me=class extends ne{#t;#i;constructor(t,e){t=t||{},t.flush=t.flush||M.Z_NO_FLUSH,t.finishFlush=t.finishFlush||M.Z_FINISH,t.fullFlushFlag=M.Z_FULL_FLUSH,super(t,e),this.#t=t.level,this.#i=t.strategy}params(t,e){if(!this.sawError){if(!this.handle)throw new Error("cannot switch params when binding is closed");if(!this.handle.params)throw new Error("not supported in this implementation");if(this.#t!==t||this.#i!==e){this.flush(M.Z_SYNC_FLUSH),external_assert_namespaceObject(this.handle,"zlib binding closed");let i=this.handle.flush;this.handle.flush=(r,n)=>{typeof r=="function"&&(n=r,r=this.flushFlag),this.flush(r),n?.()};try{this.handle.params(t,e)}finally{this.handle.flush=i}this.handle&&(this.#t=t,this.#i=e)}}}};var Be=class extends Me{#t;constructor(t){super(t,"Gzip"),this.#t=t&&!!t.portable}[Ot](t){return this.#t?(this.#t=!1,t[9]=255,super[Ot](t)):super[Ot](t)}};var Pe=class extends Me{constructor(t){super(t,"Unzip")}},ze=class extends ne{constructor(t,e){t=t||{},t.flush=t.flush||M.BROTLI_OPERATION_PROCESS,t.finishFlush=t.finishFlush||M.BROTLI_OPERATION_FINISH,t.fullFlushFlag=M.BROTLI_OPERATION_FLUSH,super(t,e)}},Ue=class extends ze{constructor(t){super(t,"BrotliCompress")}},He=class extends ze{constructor(t){super(t,"BrotliDecompress")}},We=class extends ne{constructor(t,e){t=t||{},t.flush=t.flush||M.ZSTD_e_continue,t.finishFlush=t.finishFlush||M.ZSTD_e_end,t.fullFlushFlag=M.ZSTD_e_flush,super(t,e)}},Ge=class extends We{constructor(t){super(t,"ZstdCompress")}},Ze=class extends We{constructor(t){super(t,"ZstdDecompress")}};var Bs=(s,t)=>{if(Number.isSafeInteger(s))s<0?jr(s,t):qr(s,t);else throw Error("cannot encode number outside of javascript safe integer range");return t},qr=(s,t)=>{t[0]=128;for(var e=t.length;e>1;e--)t[e-1]=s&255,s=Math.floor(s/256)},jr=(s,t)=>{t[0]=255;var e=!1;s=s*-1;for(var i=t.length;i>1;i--){var r=s&255;s=Math.floor(s/256),e?t[i-1]=zs(r):r===0?t[i-1]=0:(e=!0,t[i-1]=Us(r))}},Ps=s=>{let t=s[0],e=t===128?Jr(s.subarray(1,s.length)):t===255?Qr(s):null;if(e===null)throw Error("invalid base256 encoding");if(!Number.isSafeInteger(e))throw Error("parsed number outside of javascript safe integer range");return e},Qr=s=>{for(var t=s.length,e=0,i=!1,r=t-1;r>-1;r--){var n=Number(s[r]),o;i?o=zs(n):n===0?o=n:(i=!0,o=Us(n)),o!==0&&(e-=o*Math.pow(256,t-r-1))}return e},Jr=s=>{for(var t=s.length,e=0,i=t-1;i>-1;i--){var r=Number(s[i]);r!==0&&(e+=r*Math.pow(256,t-i-1))}return e},zs=s=>(255^s)&255,Us=s=>(255^s)+1&255;var Mi={};Ar(Mi,{code:()=>Ye,isCode:()=>oe,isName:()=>en,name:()=>he});var oe=s=>he.has(s),en=s=>Ye.has(s),he=new Map([["0","File"],["","OldFile"],["1","Link"],["2","SymbolicLink"],["3","CharacterDevice"],["4","BlockDevice"],["5","Directory"],["6","FIFO"],["7","ContiguousFile"],["g","GlobalExtendedHeader"],["x","ExtendedHeader"],["A","SolarisACL"],["D","GNUDumpDir"],["I","Inode"],["K","NextFileHasLongLinkpath"],["L","NextFileHasLongPath"],["M","ContinuationFile"],["N","OldGnuLongPath"],["S","SparseFile"],["V","TapeVolumeHeader"],["X","OldExtendedHeader"]]),Ye=new Map(Array.from(he).map(s=>[s[1],s[0]]));var F=class{cksumValid=!1;needPax=!1;nullBlock=!1;block;path;mode;uid;gid;size;cksum;#t="Unsupported";linkpath;uname;gname;devmaj=0;devmin=0;atime;ctime;mtime;charset;comment;constructor(t,e=0,i,r){Buffer.isBuffer(t)?this.decode(t,e||0,i,r):t&&this.#i(t)}decode(t,e,i,r){if(e||(e=0),!t||!(t.length>=e+512))throw new Error("need 512 bytes for header");this.path=i?.path??Tt(t,e,100),this.mode=i?.mode??r?.mode??at(t,e+100,8),this.uid=i?.uid??r?.uid??at(t,e+108,8),this.gid=i?.gid??r?.gid??at(t,e+116,8),this.size=i?.size??r?.size??at(t,e+124,12),this.mtime=i?.mtime??r?.mtime??Bi(t,e+136,12),this.cksum=at(t,e+148,12),r&&this.#i(r,!0),i&&this.#i(i);let n=Tt(t,e+156,1);if(oe(n)&&(this.#t=n||"0"),this.#t==="0"&&this.path.slice(-1)==="/"&&(this.#t="5"),this.#t==="5"&&(this.size=0),this.linkpath=Tt(t,e+157,100),t.subarray(e+257,e+265).toString()==="ustar\x0000")if(this.uname=i?.uname??r?.uname??Tt(t,e+265,32),this.gname=i?.gname??r?.gname??Tt(t,e+297,32),this.devmaj=i?.devmaj??r?.devmaj??at(t,e+329,8)??0,this.devmin=i?.devmin??r?.devmin??at(t,e+337,8)??0,t[e+475]!==0){let h=Tt(t,e+345,155);this.path=h+"/"+this.path}else{let h=Tt(t,e+345,130);h&&(this.path=h+"/"+this.path),this.atime=i?.atime??r?.atime??Bi(t,e+476,12),this.ctime=i?.ctime??r?.ctime??Bi(t,e+488,12)}let o=256;for(let h=e;h<e+148;h++)o+=t[h];for(let h=e+156;h<e+512;h++)o+=t[h];this.cksumValid=o===this.cksum,this.cksum===void 0&&o===256&&(this.nullBlock=!0)}#i(t,e=!1){Object.assign(this,Object.fromEntries(Object.entries(t).filter(([i,r])=>!(r==null||i==="path"&&e||i==="linkpath"&&e||i==="global"))))}encode(t,e=0){if(t||(t=this.block=Buffer.alloc(512)),this.#t==="Unsupported"&&(this.#t="0"),!(t.length>=e+512))throw new Error("need 512 bytes for header");let i=this.ctime||this.atime?130:155,r=sn(this.path||"",i),n=r[0],o=r[1];this.needPax=!!r[2],this.needPax=xt(t,e,100,n)||this.needPax,this.needPax=lt(t,e+100,8,this.mode)||this.needPax,this.needPax=lt(t,e+108,8,this.uid)||this.needPax,this.needPax=lt(t,e+116,8,this.gid)||this.needPax,this.needPax=lt(t,e+124,12,this.size)||this.needPax,this.needPax=Pi(t,e+136,12,this.mtime)||this.needPax,t[e+156]=this.#t.charCodeAt(0),this.needPax=xt(t,e+157,100,this.linkpath)||this.needPax,t.write("ustar\x0000",e+257,8),this.needPax=xt(t,e+265,32,this.uname)||this.needPax,this.needPax=xt(t,e+297,32,this.gname)||this.needPax,this.needPax=lt(t,e+329,8,this.devmaj)||this.needPax,this.needPax=lt(t,e+337,8,this.devmin)||this.needPax,this.needPax=xt(t,e+345,i,o)||this.needPax,t[e+475]!==0?this.needPax=xt(t,e+345,155,o)||this.needPax:(this.needPax=xt(t,e+345,130,o)||this.needPax,this.needPax=Pi(t,e+476,12,this.atime)||this.needPax,this.needPax=Pi(t,e+488,12,this.ctime)||this.needPax);let h=256;for(let a=e;a<e+148;a++)h+=t[a];for(let a=e+156;a<e+512;a++)h+=t[a];return this.cksum=h,lt(t,e+148,8,this.cksum),this.cksumValid=!0,this.needPax}get type(){return this.#t==="Unsupported"?this.#t:he.get(this.#t)}get typeKey(){return this.#t}set type(t){let e=String(Ye.get(t));if(oe(e)||e==="Unsupported")this.#t=e;else if(oe(t))this.#t=t;else throw new TypeError("invalid entry type: "+t)}},sn=(s,t)=>{let i=s,r="",n,o=external_node_path_namespaceObject.posix.parse(s).root||".";if(Buffer.byteLength(i)<100)n=[i,r,!1];else{r=external_node_path_namespaceObject.posix.dirname(i),i=external_node_path_namespaceObject.posix.basename(i);do Buffer.byteLength(i)<=100&&Buffer.byteLength(r)<=t?n=[i,r,!1]:Buffer.byteLength(i)>100&&Buffer.byteLength(r)<=t?n=[i.slice(0,99),r,!0]:(i=external_node_path_namespaceObject.posix.join(external_node_path_namespaceObject.posix.basename(r),i),r=external_node_path_namespaceObject.posix.dirname(r));while(r!==o&&n===void 0);n||(n=[s.slice(0,99),"",!0])}return n},Tt=(s,t,e)=>s.subarray(t,t+e).toString("utf8").replace(/\0.*/,""),Bi=(s,t,e)=>rn(at(s,t,e)),rn=s=>s===void 0?void 0:new Date(s*1e3),at=(s,t,e)=>Number(s[t])&128?Ps(s.subarray(t,t+e)):on(s,t,e),nn=s=>isNaN(s)?void 0:s,on=(s,t,e)=>nn(parseInt(s.subarray(t,t+e).toString("utf8").replace(/\0.*$/,"").trim(),8)),hn={12:8589934591,8:2097151},lt=(s,t,e,i)=>i===void 0?!1:i>hn[e]||i<0?(Bs(i,s.subarray(t,t+e)),!0):(an(s,t,e,i),!1),an=(s,t,e,i)=>s.write(ln(i,e),t,e,"ascii"),ln=(s,t)=>cn(Math.floor(s).toString(8),t),cn=(s,t)=>(s.length===t-1?s:new Array(t-s.length-1).join("0")+s+" ")+"\0",Pi=(s,t,e,i)=>i===void 0?!1:lt(s,t,e,i.getTime()/1e3),fn=new Array(156).join("\0"),xt=(s,t,e,i)=>i===void 0?!1:(s.write(i+fn,t,e,"utf8"),i.length!==Buffer.byteLength(i)||i.length>e);var ct=class s{atime;mtime;ctime;charset;comment;gid;uid;gname;uname;linkpath;dev;ino;nlink;path;size;mode;global;constructor(t,e=!1){this.atime=t.atime,this.charset=t.charset,this.comment=t.comment,this.ctime=t.ctime,this.dev=t.dev,this.gid=t.gid,this.global=e,this.gname=t.gname,this.ino=t.ino,this.linkpath=t.linkpath,this.mtime=t.mtime,this.nlink=t.nlink,this.path=t.path,this.size=t.size,this.uid=t.uid,this.uname=t.uname}encode(){let t=this.encodeBody();if(t==="")return Buffer.allocUnsafe(0);let e=Buffer.byteLength(t),i=512*Math.ceil(1+e/512),r=Buffer.allocUnsafe(i);for(let n=0;n<512;n++)r[n]=0;new F({path:("PaxHeader/"+(0,external_node_path_namespaceObject.basename)(this.path??"")).slice(0,99),mode:this.mode||420,uid:this.uid,gid:this.gid,size:e,mtime:this.mtime,type:this.global?"GlobalExtendedHeader":"ExtendedHeader",linkpath:"",uname:this.uname||"",gname:this.gname||"",devmaj:0,devmin:0,atime:this.atime,ctime:this.ctime}).encode(r),r.write(t,512,e,"utf8");for(let n=e+512;n<r.length;n++)r[n]=0;return r}encodeBody(){return this.encodeField("path")+this.encodeField("ctime")+this.encodeField("atime")+this.encodeField("dev")+this.encodeField("ino")+this.encodeField("nlink")+this.encodeField("charset")+this.encodeField("comment")+this.encodeField("gid")+this.encodeField("gname")+this.encodeField("linkpath")+this.encodeField("mtime")+this.encodeField("size")+this.encodeField("uid")+this.encodeField("uname")}encodeField(t){if(this[t]===void 0)return"";let e=this[t],i=e instanceof Date?e.getTime()/1e3:e,r=" "+(t==="dev"||t==="ino"||t==="nlink"?"SCHILY.":"")+t+"="+i+`
+var Dr=Object.defineProperty;var Ar=(s,t)=>{for(var e in t)Dr(s,e,{get:t[e],enumerable:!0})};var Ts=typeof process=="object"&&process?process:{stdout:null,stderr:null},Cr=s=>!!s&&typeof s=="object"&&(s instanceof A||s instanceof external_node_stream_namespaceObject||Fr(s)||kr(s)),Fr=s=>!!s&&typeof s=="object"&&s instanceof external_node_events_namespaceObject.EventEmitter&&typeof s.pipe=="function"&&s.pipe!==external_node_stream_namespaceObject.Writable.prototype.pipe,kr=s=>!!s&&typeof s=="object"&&s instanceof external_node_events_namespaceObject.EventEmitter&&typeof s.write=="function"&&typeof s.end=="function",q=Symbol("EOF"),j=Symbol("maybeEmitEnd"),rt=Symbol("emittedEnd"),xe=Symbol("emittingEnd"),jt=Symbol("emittedError"),Le=Symbol("closed"),xs=Symbol("read"),Ne=Symbol("flush"),Ls=Symbol("flushChunk"),z=Symbol("encoding"),Mt=Symbol("decoder"),b=Symbol("flowing"),Qt=Symbol("paused"),Bt=Symbol("resume"),g=Symbol("buffer"),D=Symbol("pipes"),_=Symbol("bufferLength"),Si=Symbol("bufferPush"),De=Symbol("bufferShift"),L=Symbol("objectMode"),w=Symbol("destroyed"),yi=Symbol("error"),Ri=Symbol("emitData"),Ns=Symbol("emitEnd"),bi=Symbol("emitEnd2"),Z=Symbol("async"),gi=Symbol("abort"),Ae=Symbol("aborted"),Jt=Symbol("signal"),yt=Symbol("dataListeners"),C=Symbol("discarded"),te=s=>Promise.resolve().then(s),vr=s=>s(),Mr=s=>s==="end"||s==="finish"||s==="prefinish",Br=s=>s instanceof ArrayBuffer||!!s&&typeof s=="object"&&s.constructor&&s.constructor.name==="ArrayBuffer"&&s.byteLength>=0,Pr=s=>!Buffer.isBuffer(s)&&ArrayBuffer.isView(s),Ie=class{src;dest;opts;ondrain;constructor(t,e,i){this.src=t,this.dest=e,this.opts=i,this.ondrain=()=>t[Bt](),this.dest.on("drain",this.ondrain)}unpipe(){this.dest.removeListener("drain",this.ondrain)}proxyErrors(t){}end(){this.unpipe(),this.opts.end&&this.dest.end()}},index_min_i=class extends Ie{unpipe(){this.src.removeListener("error",this.proxyErrors),super.unpipe()}constructor(t,e,i){super(t,e,i),this.proxyErrors=r=>this.dest.emit("error",r),t.on("error",this.proxyErrors)}},zr=s=>!!s.objectMode,Ur=s=>!s.objectMode&&!!s.encoding&&s.encoding!=="buffer",A=class extends external_node_events_namespaceObject.EventEmitter{[b]=!1;[Qt]=!1;[D]=[];[g]=[];[L];[z];[Z];[Mt];[q]=!1;[rt]=!1;[xe]=!1;[Le]=!1;[jt]=null;[_]=0;[w]=!1;[Jt];[Ae]=!1;[yt]=0;[C]=!1;writable=!0;readable=!0;constructor(...t){let e=t[0]||{};if(super(),e.objectMode&&typeof e.encoding=="string")throw new TypeError("Encoding and objectMode may not be used together");zr(e)?(this[L]=!0,this[z]=null):Ur(e)?(this[z]=e.encoding,this[L]=!1):(this[L]=!1,this[z]=null),this[Z]=!!e.async,this[Mt]=this[z]?new external_node_string_decoder_namespaceObject.StringDecoder(this[z]):null,e&&e.debugExposeBuffer===!0&&Object.defineProperty(this,"buffer",{get:()=>this[g]}),e&&e.debugExposePipes===!0&&Object.defineProperty(this,"pipes",{get:()=>this[D]});let{signal:i}=e;i&&(this[Jt]=i,i.aborted?this[gi]():i.addEventListener("abort",()=>this[gi]()))}get bufferLength(){return this[_]}get encoding(){return this[z]}set encoding(t){throw new Error("Encoding must be set at instantiation time")}setEncoding(t){throw new Error("Encoding must be set at instantiation time")}get objectMode(){return this[L]}set objectMode(t){throw new Error("objectMode must be set at instantiation time")}get async(){return this[Z]}set async(t){this[Z]=this[Z]||!!t}[gi](){this[Ae]=!0,this.emit("abort",this[Jt]?.reason),this.destroy(this[Jt]?.reason)}get aborted(){return this[Ae]}set aborted(t){}write(t,e,i){if(this[Ae])return!1;if(this[q])throw new Error("write after end");if(this[w])return this.emit("error",Object.assign(new Error("Cannot call write after a stream was destroyed"),{code:"ERR_STREAM_DESTROYED"})),!0;typeof e=="function"&&(i=e,e="utf8"),e||(e="utf8");let r=this[Z]?te:vr;if(!this[L]&&!Buffer.isBuffer(t)){if(Pr(t))t=Buffer.from(t.buffer,t.byteOffset,t.byteLength);else if(Br(t))t=Buffer.from(t);else if(typeof t!="string")throw new Error("Non-contiguous data written to non-objectMode stream")}return this[L]?(this[b]&&this[_]!==0&&this[Ne](!0),this[b]?this.emit("data",t):this[Si](t),this[_]!==0&&this.emit("readable"),i&&r(i),this[b]):t.length?(typeof t=="string"&&!(e===this[z]&&!this[Mt]?.lastNeed)&&(t=Buffer.from(t,e)),Buffer.isBuffer(t)&&this[z]&&(t=this[Mt].write(t)),this[b]&&this[_]!==0&&this[Ne](!0),this[b]?this.emit("data",t):this[Si](t),this[_]!==0&&this.emit("readable"),i&&r(i),this[b]):(this[_]!==0&&this.emit("readable"),i&&r(i),this[b])}read(t){if(this[w])return null;if(this[C]=!1,this[_]===0||t===0||t&&t>this[_])return this[j](),null;this[L]&&(t=null),this[g].length>1&&!this[L]&&(this[g]=[this[z]?this[g].join(""):Buffer.concat(this[g],this[_])]);let e=this[xs](t||null,this[g][0]);return this[j](),e}[xs](t,e){if(this[L])this[De]();else{let i=e;t===i.length||t===null?this[De]():typeof i=="string"?(this[g][0]=i.slice(t),e=i.slice(0,t),this[_]-=t):(this[g][0]=i.subarray(t),e=i.subarray(0,t),this[_]-=t)}return this.emit("data",e),!this[g].length&&!this[q]&&this.emit("drain"),e}end(t,e,i){return typeof t=="function"&&(i=t,t=void 0),typeof e=="function"&&(i=e,e="utf8"),t!==void 0&&this.write(t,e),i&&this.once("end",i),this[q]=!0,this.writable=!1,(this[b]||!this[Qt])&&this[j](),this}[Bt](){this[w]||(!this[yt]&&!this[D].length&&(this[C]=!0),this[Qt]=!1,this[b]=!0,this.emit("resume"),this[g].length?this[Ne]():this[q]?this[j]():this.emit("drain"))}resume(){return this[Bt]()}pause(){this[b]=!1,this[Qt]=!0,this[C]=!1}get destroyed(){return this[w]}get flowing(){return this[b]}get paused(){return this[Qt]}[Si](t){this[L]?this[_]+=1:this[_]+=t.length,this[g].push(t)}[De](){return this[L]?this[_]-=1:this[_]-=this[g][0].length,this[g].shift()}[Ne](t=!1){do;while(this[Ls](this[De]())&&this[g].length);!t&&!this[g].length&&!this[q]&&this.emit("drain")}[Ls](t){return this.emit("data",t),this[b]}pipe(t,e){if(this[w])return t;this[C]=!1;let i=this[rt];return e=e||{},t===Ts.stdout||t===Ts.stderr?e.end=!1:e.end=e.end!==!1,e.proxyErrors=!!e.proxyErrors,i?e.end&&t.end():(this[D].push(e.proxyErrors?new index_min_i(this,t,e):new Ie(this,t,e)),this[Z]?te(()=>this[Bt]()):this[Bt]()),t}unpipe(t){let e=this[D].find(i=>i.dest===t);e&&(this[D].length===1?(this[b]&&this[yt]===0&&(this[b]=!1),this[D]=[]):this[D].splice(this[D].indexOf(e),1),e.unpipe())}addListener(t,e){return this.on(t,e)}on(t,e){let i=super.on(t,e);if(t==="data")this[C]=!1,this[yt]++,!this[D].length&&!this[b]&&this[Bt]();else if(t==="readable"&&this[_]!==0)super.emit("readable");else if(Mr(t)&&this[rt])super.emit(t),this.removeAllListeners(t);else if(t==="error"&&this[jt]){let r=e;this[Z]?te(()=>r.call(this,this[jt])):r.call(this,this[jt])}return i}removeListener(t,e){return this.off(t,e)}off(t,e){let i=super.off(t,e);return t==="data"&&(this[yt]=this.listeners("data").length,this[yt]===0&&!this[C]&&!this[D].length&&(this[b]=!1)),i}removeAllListeners(t){let e=super.removeAllListeners(t);return(t==="data"||t===void 0)&&(this[yt]=0,!this[C]&&!this[D].length&&(this[b]=!1)),e}get emittedEnd(){return this[rt]}[j](){!this[xe]&&!this[rt]&&!this[w]&&this[g].length===0&&this[q]&&(this[xe]=!0,this.emit("end"),this.emit("prefinish"),this.emit("finish"),this[Le]&&this.emit("close"),this[xe]=!1)}emit(t,...e){let i=e[0];if(t!=="error"&&t!=="close"&&t!==w&&this[w])return!1;if(t==="data")return!this[L]&&!i?!1:this[Z]?(te(()=>this[Ri](i)),!0):this[Ri](i);if(t==="end")return this[Ns]();if(t==="close"){if(this[Le]=!0,!this[rt]&&!this[w])return!1;let n=super.emit("close");return this.removeAllListeners("close"),n}else if(t==="error"){this[jt]=i,super.emit(yi,i);let n=!this[Jt]||this.listeners("error").length?super.emit("error",i):!1;return this[j](),n}else if(t==="resume"){let n=super.emit("resume");return this[j](),n}else if(t==="finish"||t==="prefinish"){let n=super.emit(t);return this.removeAllListeners(t),n}let r=super.emit(t,...e);return this[j](),r}[Ri](t){for(let i of this[D])i.dest.write(t)===!1&&this.pause();let e=this[C]?!1:super.emit("data",t);return this[j](),e}[Ns](){return this[rt]?!1:(this[rt]=!0,this.readable=!1,this[Z]?(te(()=>this[bi]()),!0):this[bi]())}[bi](){if(this[Mt]){let e=this[Mt].end();if(e){for(let i of this[D])i.dest.write(e);this[C]||super.emit("data",e)}}for(let e of this[D])e.end();let t=super.emit("end");return this.removeAllListeners("end"),t}async collect(){let t=Object.assign([],{dataLength:0});this[L]||(t.dataLength=0);let e=this.promise();return this.on("data",i=>{t.push(i),this[L]||(t.dataLength+=i.length)}),await e,t}async concat(){if(this[L])throw new Error("cannot concat in objectMode");let t=await this.collect();return this[z]?t.join(""):Buffer.concat(t,t.dataLength)}async promise(){return new Promise((t,e)=>{this.on(w,()=>e(new Error("stream destroyed"))),this.on("error",i=>e(i)),this.on("end",()=>t())})}[Symbol.asyncIterator](){this[C]=!1;let t=!1,e=async()=>(this.pause(),t=!0,{value:void 0,done:!0});return{next:()=>{if(t)return e();let r=this.read();if(r!==null)return Promise.resolve({done:!1,value:r});if(this[q])return e();let n,o,h=d=>{this.off("data",a),this.off("end",l),this.off(w,c),e(),o(d)},a=d=>{this.off("error",h),this.off("end",l),this.off(w,c),this.pause(),n({value:d,done:!!this[q]})},l=()=>{this.off("error",h),this.off("data",a),this.off(w,c),e(),n({done:!0,value:void 0})},c=()=>h(new Error("stream destroyed"));return new Promise((d,S)=>{o=S,n=d,this.once(w,c),this.once("error",h),this.once("end",l),this.once("data",a)})},throw:e,return:e,[Symbol.asyncIterator](){return this},[Symbol.asyncDispose]:async()=>{}}}[Symbol.iterator](){this[C]=!1;let t=!1,e=()=>(this.pause(),this.off(yi,e),this.off(w,e),this.off("end",e),t=!0,{done:!0,value:void 0}),i=()=>{if(t)return e();let r=this.read();return r===null?e():{done:!1,value:r}};return this.once("end",e),this.once(yi,e),this.once(w,e),{next:i,throw:e,return:e,[Symbol.iterator](){return this},[Symbol.dispose]:()=>{}}}destroy(t){if(this[w])return t?this.emit("error",t):this.emit(w),this;this[w]=!0,this[C]=!0,this[g].length=0,this[_]=0;let e=this;return typeof e.close=="function"&&!this[Le]&&e.close(),t?this.emit("error",t):this.emit(w),this}static get isStream(){return Cr}};var Wr=external_fs_.writev,ot=Symbol("_autoClose"),H=Symbol("_close"),ee=Symbol("_ended"),m=Symbol("_fd"),Ti=Symbol("_finished"),J=Symbol("_flags"),xi=Symbol("_flush"),Ai=Symbol("_handleChunk"),Ii=Symbol("_makeBuf"),se=Symbol("_mode"),Ce=Symbol("_needDrain"),Ut=Symbol("_onerror"),Ht=Symbol("_onopen"),Li=Symbol("_onread"),Pt=Symbol("_onwrite"),ht=Symbol("_open"),U=Symbol("_path"),nt=Symbol("_pos"),Y=Symbol("_queue"),zt=Symbol("_read"),Ni=Symbol("_readSize"),Q=Symbol("_reading"),ie=Symbol("_remain"),Di=Symbol("_size"),Fe=Symbol("_write"),Rt=Symbol("_writing"),ke=Symbol("_defaultFlag"),bt=Symbol("_errored"),gt=class extends A{[bt]=!1;[m];[U];[Ni];[Q]=!1;[Di];[ie];[ot];constructor(t,e){if(e=e||{},super(e),this.readable=!0,this.writable=!1,typeof t!="string")throw new TypeError("path must be a string");this[bt]=!1,this[m]=typeof e.fd=="number"?e.fd:void 0,this[U]=t,this[Ni]=e.readSize||16*1024*1024,this[Q]=!1,this[Di]=typeof e.size=="number"?e.size:1/0,this[ie]=this[Di],this[ot]=typeof e.autoClose=="boolean"?e.autoClose:!0,typeof this[m]=="number"?this[zt]():this[ht]()}get fd(){return this[m]}get path(){return this[U]}write(){throw new TypeError("this is a readable stream")}end(){throw new TypeError("this is a readable stream")}[ht](){external_fs_.open(this[U],"r",(t,e)=>this[Ht](t,e))}[Ht](t,e){t?this[Ut](t):(this[m]=e,this.emit("open",e),this[zt]())}[Ii](){return Buffer.allocUnsafe(Math.min(this[Ni],this[ie]))}[zt](){if(!this[Q]){this[Q]=!0;let t=this[Ii]();if(t.length===0)return process.nextTick(()=>this[Li](null,0,t));external_fs_.read(this[m],t,0,t.length,null,(e,i,r)=>this[Li](e,i,r))}}[Li](t,e,i){this[Q]=!1,t?this[Ut](t):this[Ai](e,i)&&this[zt]()}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.close(t,e=>e?this.emit("error",e):this.emit("close"))}}[Ut](t){this[Q]=!0,this[H](),this.emit("error",t)}[Ai](t,e){let i=!1;return this[ie]-=t,t>0&&(i=super.write(t<e.length?e.subarray(0,t):e)),(t===0||this[ie]<=0)&&(i=!1,this[H](),super.end()),i}emit(t,...e){switch(t){case"prefinish":case"finish":return!1;case"drain":return typeof this[m]=="number"&&this[zt](),!1;case"error":return this[bt]?!1:(this[bt]=!0,super.emit(t,...e));default:return super.emit(t,...e)}}},ve=class extends gt{[ht](){let t=!0;try{this[Ht](null,external_fs_.openSync(this[U],"r")),t=!1}finally{t&&this[H]()}}[zt](){let t=!0;try{if(!this[Q]){this[Q]=!0;do{let e=this[Ii](),i=e.length===0?0:external_fs_.readSync(this[m],e,0,e.length,null);if(!this[Ai](i,e))break}while(!0);this[Q]=!1}t=!1}finally{t&&this[H]()}}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.closeSync(t),this.emit("close")}}},tt=class extends external_events_namespaceObject{readable=!1;writable=!0;[bt]=!1;[Rt]=!1;[ee]=!1;[Y]=[];[Ce]=!1;[U];[se];[ot];[m];[ke];[J];[Ti]=!1;[nt];constructor(t,e){e=e||{},super(e),this[U]=t,this[m]=typeof e.fd=="number"?e.fd:void 0,this[se]=e.mode===void 0?438:e.mode,this[nt]=typeof e.start=="number"?e.start:void 0,this[ot]=typeof e.autoClose=="boolean"?e.autoClose:!0;let i=this[nt]!==void 0?"r+":"w";this[ke]=e.flags===void 0,this[J]=e.flags===void 0?i:e.flags,this[m]===void 0&&this[ht]()}emit(t,...e){if(t==="error"){if(this[bt])return!1;this[bt]=!0}return super.emit(t,...e)}get fd(){return this[m]}get path(){return this[U]}[Ut](t){this[H](),this[Rt]=!0,this.emit("error",t)}[ht](){external_fs_.open(this[U],this[J],this[se],(t,e)=>this[Ht](t,e))}[Ht](t,e){this[ke]&&this[J]==="r+"&&t&&t.code==="ENOENT"?(this[J]="w",this[ht]()):t?this[Ut](t):(this[m]=e,this.emit("open",e),this[Rt]||this[xi]())}end(t,e){return t&&this.write(t,e),this[ee]=!0,!this[Rt]&&!this[Y].length&&typeof this[m]=="number"&&this[Pt](null,0),this}write(t,e){return typeof t=="string"&&(t=Buffer.from(t,e)),this[ee]?(this.emit("error",new Error("write() after end()")),!1):this[m]===void 0||this[Rt]||this[Y].length?(this[Y].push(t),this[Ce]=!0,!1):(this[Rt]=!0,this[Fe](t),!0)}[Fe](t){external_fs_.write(this[m],t,0,t.length,this[nt],(e,i)=>this[Pt](e,i))}[Pt](t,e){t?this[Ut](t):(this[nt]!==void 0&&typeof e=="number"&&(this[nt]+=e),this[Y].length?this[xi]():(this[Rt]=!1,this[ee]&&!this[Ti]?(this[Ti]=!0,this[H](),this.emit("finish")):this[Ce]&&(this[Ce]=!1,this.emit("drain"))))}[xi](){if(this[Y].length===0)this[ee]&&this[Pt](null,0);else if(this[Y].length===1)this[Fe](this[Y].pop());else{let t=this[Y];this[Y]=[],Wr(this[m],t,this[nt],(e,i)=>this[Pt](e,i))}}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.close(t,e=>e?this.emit("error",e):this.emit("close"))}}},Wt=class extends tt{[ht](){let t;if(this[ke]&&this[J]==="r+")try{t=external_fs_.openSync(this[U],this[J],this[se])}catch(e){if(e?.code==="ENOENT")return this[J]="w",this[ht]();throw e}else t=external_fs_.openSync(this[U],this[J],this[se]);this[Ht](null,t)}[H](){if(this[ot]&&typeof this[m]=="number"){let t=this[m];this[m]=void 0,external_fs_.closeSync(t),this.emit("close")}}[Fe](t){let e=!0;try{this[Pt](null,external_fs_.writeSync(this[m],t,0,t.length,this[nt])),e=!1}finally{if(e)try{this[H]()}catch{}}}};var Gr=new Map([["C","cwd"],["f","file"],["z","gzip"],["P","preservePaths"],["U","unlink"],["strip-components","strip"],["stripComponents","strip"],["keep-newer","newer"],["keepNewer","newer"],["keep-newer-files","newer"],["keepNewerFiles","newer"],["k","keep"],["keep-existing","keep"],["keepExisting","keep"],["m","noMtime"],["no-mtime","noMtime"],["p","preserveOwner"],["L","follow"],["h","follow"],["onentry","onReadEntry"]]),As=s=>!!s.sync&&!!s.file,Is=s=>!s.sync&&!!s.file,Cs=s=>!!s.sync&&!s.file,Fs=s=>!s.sync&&!s.file;var ks=s=>!!s.file;var Zr=s=>{let t=Gr.get(s);return t||s},re=(s={})=>{if(!s)return{};let t={};for(let[e,i]of Object.entries(s)){let r=Zr(e);t[r]=i}return t.chmod===void 0&&t.noChmod===!1&&(t.chmod=!0),delete t.noChmod,t};var K=(s,t,e,i,r)=>Object.assign((n=[],o,h)=>{Array.isArray(n)&&(o=n,n={}),typeof o=="function"&&(h=o,o=void 0),o?o=Array.from(o):o=[];let a=re(n);if(r?.(a,o),As(a)){if(typeof h=="function")throw new TypeError("callback not supported for sync tar functions");return s(a,o)}else if(Is(a)){let l=t(a,o),c=h||void 0;return c?l.then(()=>c(),c):l}else if(Cs(a)){if(typeof h=="function")throw new TypeError("callback not supported for sync tar functions");return e(a,o)}else if(Fs(a)){if(typeof h=="function")throw new TypeError("callback only supported with file option");return i(a,o)}else throw new Error("impossible options??")},{syncFile:s,asyncFile:t,syncNoFile:e,asyncNoFile:i,validate:r});var Kr=external_zlib_namespaceObject.constants||{ZLIB_VERNUM:4736},M=Object.freeze(Object.assign(Object.create(null),{Z_NO_FLUSH:0,Z_PARTIAL_FLUSH:1,Z_SYNC_FLUSH:2,Z_FULL_FLUSH:3,Z_FINISH:4,Z_BLOCK:5,Z_OK:0,Z_STREAM_END:1,Z_NEED_DICT:2,Z_ERRNO:-1,Z_STREAM_ERROR:-2,Z_DATA_ERROR:-3,Z_MEM_ERROR:-4,Z_BUF_ERROR:-5,Z_VERSION_ERROR:-6,Z_NO_COMPRESSION:0,Z_BEST_SPEED:1,Z_BEST_COMPRESSION:9,Z_DEFAULT_COMPRESSION:-1,Z_FILTERED:1,Z_HUFFMAN_ONLY:2,Z_RLE:3,Z_FIXED:4,Z_DEFAULT_STRATEGY:0,DEFLATE:1,INFLATE:2,GZIP:3,GUNZIP:4,DEFLATERAW:5,INFLATERAW:6,UNZIP:7,BROTLI_DECODE:8,BROTLI_ENCODE:9,Z_MIN_WINDOWBITS:8,Z_MAX_WINDOWBITS:15,Z_DEFAULT_WINDOWBITS:15,Z_MIN_CHUNK:64,Z_MAX_CHUNK:1/0,Z_DEFAULT_CHUNK:16384,Z_MIN_MEMLEVEL:1,Z_MAX_MEMLEVEL:9,Z_DEFAULT_MEMLEVEL:8,Z_MIN_LEVEL:-1,Z_MAX_LEVEL:9,Z_DEFAULT_LEVEL:-1,BROTLI_OPERATION_PROCESS:0,BROTLI_OPERATION_FLUSH:1,BROTLI_OPERATION_FINISH:2,BROTLI_OPERATION_EMIT_METADATA:3,BROTLI_MODE_GENERIC:0,BROTLI_MODE_TEXT:1,BROTLI_MODE_FONT:2,BROTLI_DEFAULT_MODE:0,BROTLI_MIN_QUALITY:0,BROTLI_MAX_QUALITY:11,BROTLI_DEFAULT_QUALITY:11,BROTLI_MIN_WINDOW_BITS:10,BROTLI_MAX_WINDOW_BITS:24,BROTLI_LARGE_MAX_WINDOW_BITS:30,BROTLI_DEFAULT_WINDOW:22,BROTLI_MIN_INPUT_BLOCK_BITS:16,BROTLI_MAX_INPUT_BLOCK_BITS:24,BROTLI_PARAM_MODE:0,BROTLI_PARAM_QUALITY:1,BROTLI_PARAM_LGWIN:2,BROTLI_PARAM_LGBLOCK:3,BROTLI_PARAM_DISABLE_LITERAL_CONTEXT_MODELING:4,BROTLI_PARAM_SIZE_HINT:5,BROTLI_PARAM_LARGE_WINDOW:6,BROTLI_PARAM_NPOSTFIX:7,BROTLI_PARAM_NDIRECT:8,BROTLI_DECODER_RESULT_ERROR:0,BROTLI_DECODER_RESULT_SUCCESS:1,BROTLI_DECODER_RESULT_NEEDS_MORE_INPUT:2,BROTLI_DECODER_RESULT_NEEDS_MORE_OUTPUT:3,BROTLI_DECODER_PARAM_DISABLE_RING_BUFFER_REALLOCATION:0,BROTLI_DECODER_PARAM_LARGE_WINDOW:1,BROTLI_DECODER_NO_ERROR:0,BROTLI_DECODER_SUCCESS:1,BROTLI_DECODER_NEEDS_MORE_INPUT:2,BROTLI_DECODER_NEEDS_MORE_OUTPUT:3,BROTLI_DECODER_ERROR_FORMAT_EXUBERANT_NIBBLE:-1,BROTLI_DECODER_ERROR_FORMAT_RESERVED:-2,BROTLI_DECODER_ERROR_FORMAT_EXUBERANT_META_NIBBLE:-3,BROTLI_DECODER_ERROR_FORMAT_SIMPLE_HUFFMAN_ALPHABET:-4,BROTLI_DECODER_ERROR_FORMAT_SIMPLE_HUFFMAN_SAME:-5,BROTLI_DECODER_ERROR_FORMAT_CL_SPACE:-6,BROTLI_DECODER_ERROR_FORMAT_HUFFMAN_SPACE:-7,BROTLI_DECODER_ERROR_FORMAT_CONTEXT_MAP_REPEAT:-8,BROTLI_DECODER_ERROR_FORMAT_BLOCK_LENGTH_1:-9,BROTLI_DECODER_ERROR_FORMAT_BLOCK_LENGTH_2:-10,BROTLI_DECODER_ERROR_FORMAT_TRANSFORM:-11,BROTLI_DECODER_ERROR_FORMAT_DICTIONARY:-12,BROTLI_DECODER_ERROR_FORMAT_WINDOW_BITS:-13,BROTLI_DECODER_ERROR_FORMAT_PADDING_1:-14,BROTLI_DECODER_ERROR_FORMAT_PADDING_2:-15,BROTLI_DECODER_ERROR_FORMAT_DISTANCE:-16,BROTLI_DECODER_ERROR_DICTIONARY_NOT_SET:-19,BROTLI_DECODER_ERROR_INVALID_ARGUMENTS:-20,BROTLI_DECODER_ERROR_ALLOC_CONTEXT_MODES:-21,BROTLI_DECODER_ERROR_ALLOC_TREE_GROUPS:-22,BROTLI_DECODER_ERROR_ALLOC_CONTEXT_MAP:-25,BROTLI_DECODER_ERROR_ALLOC_RING_BUFFER_1:-26,BROTLI_DECODER_ERROR_ALLOC_RING_BUFFER_2:-27,BROTLI_DECODER_ERROR_ALLOC_BLOCK_TYPE_TREES:-30,BROTLI_DECODER_ERROR_UNREACHABLE:-31},Kr));var Vr=external_buffer_namespaceObject.Buffer.concat,Ms=Object.getOwnPropertyDescriptor(external_buffer_namespaceObject.Buffer,"concat"),$r=s=>s,Fi=Ms?.writable===!0||Ms?.set!==void 0?s=>{external_buffer_namespaceObject.Buffer.concat=s?$r:Vr}:s=>{},Ot=Symbol("_superWrite"),Gt=class extends Error{code;errno;constructor(t,e){super("zlib: "+t.message,{cause:t}),this.code=t.code,this.errno=t.errno,this.code||(this.code="ZLIB_ERROR"),this.message="zlib: "+t.message,Error.captureStackTrace(this,e??this.constructor)}get name(){return"ZlibError"}},ki=Symbol("flushFlag"),ne=class extends A{#t=!1;#i=!1;#s;#n;#r;#e;#o;get sawError(){return this.#t}get handle(){return this.#e}get flushFlag(){return this.#s}constructor(t,e){if(!t||typeof t!="object")throw new TypeError("invalid options for ZlibBase constructor");if(super(t),this.#s=t.flush??0,this.#n=t.finishFlush??0,this.#r=t.fullFlushFlag??0,typeof external_zlib_namespaceObject_0[e]!="function")throw new TypeError("Compression method not supported: "+e);try{this.#e=new external_zlib_namespaceObject_0[e](t)}catch(i){throw new Gt(i,this.constructor)}this.#o=i=>{this.#t||(this.#t=!0,this.close(),this.emit("error",i))},this.#e?.on("error",i=>this.#o(new Gt(i))),this.once("end",()=>this.close)}close(){this.#e&&(this.#e.close(),this.#e=void 0,this.emit("close"))}reset(){if(!this.#t)return external_assert_namespaceObject(this.#e,"zlib binding closed"),this.#e.reset?.()}flush(t){this.ended||(typeof t!="number"&&(t=this.#r),this.write(Object.assign(external_buffer_namespaceObject.Buffer.alloc(0),{[ki]:t})))}end(t,e,i){return typeof t=="function"&&(i=t,e=void 0,t=void 0),typeof e=="function"&&(i=e,e=void 0),t&&(e?this.write(t,e):this.write(t)),this.flush(this.#n),this.#i=!0,super.end(i)}get ended(){return this.#i}[Ot](t){return super.write(t)}write(t,e,i){if(typeof e=="function"&&(i=e,e="utf8"),typeof t=="string"&&(t=external_buffer_namespaceObject.Buffer.from(t,e)),this.#t)return;external_assert_namespaceObject(this.#e,"zlib binding closed");let r=this.#e._handle,n=r.close;r.close=()=>{};let o=this.#e.close;this.#e.close=()=>{},Fi(!0);let h;try{let l=typeof t[ki]=="number"?t[ki]:this.#s;h=this.#e._processChunk(t,l),Fi(!1)}catch(l){Fi(!1),this.#o(new Gt(l,this.write))}finally{this.#e&&(this.#e._handle=r,r.close=n,this.#e.close=o,this.#e.removeAllListeners("error"))}this.#e&&this.#e.on("error",l=>this.#o(new Gt(l,this.write)));let a;if(h)if(Array.isArray(h)&&h.length>0){let l=h[0];a=this[Ot](external_buffer_namespaceObject.Buffer.from(l));for(let c=1;c<h.length;c++)a=this[Ot](h[c])}else a=this[Ot](external_buffer_namespaceObject.Buffer.from(h));return i&&i(),a}},Me=class extends ne{#t;#i;constructor(t,e){t=t||{},t.flush=t.flush||M.Z_NO_FLUSH,t.finishFlush=t.finishFlush||M.Z_FINISH,t.fullFlushFlag=M.Z_FULL_FLUSH,super(t,e),this.#t=t.level,this.#i=t.strategy}params(t,e){if(!this.sawError){if(!this.handle)throw new Error("cannot switch params when binding is closed");if(!this.handle.params)throw new Error("not supported in this implementation");if(this.#t!==t||this.#i!==e){this.flush(M.Z_SYNC_FLUSH),external_assert_namespaceObject(this.handle,"zlib binding closed");let i=this.handle.flush;this.handle.flush=(r,n)=>{typeof r=="function"&&(n=r,r=this.flushFlag),this.flush(r),n?.()};try{this.handle.params(t,e)}finally{this.handle.flush=i}this.handle&&(this.#t=t,this.#i=e)}}}};var Be=class extends Me{#t;constructor(t){super(t,"Gzip"),this.#t=t&&!!t.portable}[Ot](t){return this.#t?(this.#t=!1,t[9]=255,super[Ot](t)):super[Ot](t)}};var Pe=class extends Me{constructor(t){super(t,"Unzip")}},ze=class extends ne{constructor(t,e){t=t||{},t.flush=t.flush||M.BROTLI_OPERATION_PROCESS,t.finishFlush=t.finishFlush||M.BROTLI_OPERATION_FINISH,t.fullFlushFlag=M.BROTLI_OPERATION_FLUSH,super(t,e)}},Ue=class extends ze{constructor(t){super(t,"BrotliCompress")}},He=class extends ze{constructor(t){super(t,"BrotliDecompress")}},We=class extends ne{constructor(t,e){t=t||{},t.flush=t.flush||M.ZSTD_e_continue,t.finishFlush=t.finishFlush||M.ZSTD_e_end,t.fullFlushFlag=M.ZSTD_e_flush,super(t,e)}},Ge=class extends We{constructor(t){super(t,"ZstdCompress")}},Ze=class extends We{constructor(t){super(t,"ZstdDecompress")}};var Bs=(s,t)=>{if(Number.isSafeInteger(s))s<0?jr(s,t):qr(s,t);else throw Error("cannot encode number outside of javascript safe integer range");return t},qr=(s,t)=>{t[0]=128;for(var e=t.length;e>1;e--)t[e-1]=s&255,s=Math.floor(s/256)},jr=(s,t)=>{t[0]=255;var e=!1;s=s*-1;for(var i=t.length;i>1;i--){var r=s&255;s=Math.floor(s/256),e?t[i-1]=zs(r):r===0?t[i-1]=0:(e=!0,t[i-1]=Us(r))}},Ps=s=>{let t=s[0],e=t===128?Jr(s.subarray(1,s.length)):t===255?Qr(s):null;if(e===null)throw Error("invalid base256 encoding");if(!Number.isSafeInteger(e))throw Error("parsed number outside of javascript safe integer range");return e},Qr=s=>{for(var t=s.length,e=0,i=!1,r=t-1;r>-1;r--){var n=Number(s[r]),o;i?o=zs(n):n===0?o=n:(i=!0,o=Us(n)),o!==0&&(e-=o*Math.pow(256,t-r-1))}return e},Jr=s=>{for(var t=s.length,e=0,i=t-1;i>-1;i--){var r=Number(s[i]);r!==0&&(e+=r*Math.pow(256,t-i-1))}return e},zs=s=>(255^s)&255,Us=s=>(255^s)+1&255;var Mi={};Ar(Mi,{code:()=>Ye,isCode:()=>oe,isName:()=>en,name:()=>he});var oe=s=>he.has(s),en=s=>Ye.has(s),he=new Map([["0","File"],["","OldFile"],["1","Link"],["2","SymbolicLink"],["3","CharacterDevice"],["4","BlockDevice"],["5","Directory"],["6","FIFO"],["7","ContiguousFile"],["g","GlobalExtendedHeader"],["x","ExtendedHeader"],["A","SolarisACL"],["D","GNUDumpDir"],["I","Inode"],["K","NextFileHasLongLinkpath"],["L","NextFileHasLongPath"],["M","ContinuationFile"],["N","OldGnuLongPath"],["S","SparseFile"],["V","TapeVolumeHeader"],["X","OldExtendedHeader"]]),Ye=new Map(Array.from(he).map(s=>[s[1],s[0]]));var F=class{cksumValid=!1;needPax=!1;nullBlock=!1;block;path;mode;uid;gid;size;cksum;#t="Unsupported";linkpath;uname;gname;devmaj=0;devmin=0;atime;ctime;mtime;charset;comment;constructor(t,e=0,i,r){Buffer.isBuffer(t)?this.decode(t,e||0,i,r):t&&this.#i(t)}decode(t,e,i,r){if(e||(e=0),!t||!(t.length>=e+512))throw new Error("need 512 bytes for header");this.path=i?.path??Tt(t,e,100),this.mode=i?.mode??r?.mode??at(t,e+100,8),this.uid=i?.uid??r?.uid??at(t,e+108,8),this.gid=i?.gid??r?.gid??at(t,e+116,8),this.size=i?.size??r?.size??at(t,e+124,12),this.mtime=i?.mtime??r?.mtime??Bi(t,e+136,12),this.cksum=at(t,e+148,12),r&&this.#i(r,!0),i&&this.#i(i);let n=Tt(t,e+156,1);if(oe(n)&&(this.#t=n||"0"),this.#t==="0"&&this.path.slice(-1)==="/"&&(this.#t="5"),this.#t==="5"&&(this.size=0),this.linkpath=Tt(t,e+157,100),t.subarray(e+257,e+265).toString()==="ustar\x0000")if(this.uname=i?.uname??r?.uname??Tt(t,e+265,32),this.gname=i?.gname??r?.gname??Tt(t,e+297,32),this.devmaj=i?.devmaj??r?.devmaj??at(t,e+329,8)??0,this.devmin=i?.devmin??r?.devmin??at(t,e+337,8)??0,t[e+475]!==0){let h=Tt(t,e+345,155);this.path=h+"/"+this.path}else{let h=Tt(t,e+345,130);h&&(this.path=h+"/"+this.path),this.atime=i?.atime??r?.atime??Bi(t,e+476,12),this.ctime=i?.ctime??r?.ctime??Bi(t,e+488,12)}let o=256;for(let h=e;h<e+148;h++)o+=t[h];for(let h=e+156;h<e+512;h++)o+=t[h];this.cksumValid=o===this.cksum,this.cksum===void 0&&o===256&&(this.nullBlock=!0)}#i(t,e=!1){Object.assign(this,Object.fromEntries(Object.entries(t).filter(([i,r])=>!(r==null||i==="path"&&e||i==="linkpath"&&e||i==="global"))))}encode(t,e=0){if(t||(t=this.block=Buffer.alloc(512)),this.#t==="Unsupported"&&(this.#t="0"),!(t.length>=e+512))throw new Error("need 512 bytes for header");let i=this.ctime||this.atime?130:155,r=sn(this.path||"",i),n=r[0],o=r[1];this.needPax=!!r[2],this.needPax=xt(t,e,100,n)||this.needPax,this.needPax=lt(t,e+100,8,this.mode)||this.needPax,this.needPax=lt(t,e+108,8,this.uid)||this.needPax,this.needPax=lt(t,e+116,8,this.gid)||this.needPax,this.needPax=lt(t,e+124,12,this.size)||this.needPax,this.needPax=Pi(t,e+136,12,this.mtime)||this.needPax,t[e+156]=this.#t.charCodeAt(0),this.needPax=xt(t,e+157,100,this.linkpath)||this.needPax,t.write("ustar\x0000",e+257,8),this.needPax=xt(t,e+265,32,this.uname)||this.needPax,this.needPax=xt(t,e+297,32,this.gname)||this.needPax,this.needPax=lt(t,e+329,8,this.devmaj)||this.needPax,this.needPax=lt(t,e+337,8,this.devmin)||this.needPax,this.needPax=xt(t,e+345,i,o)||this.needPax,t[e+475]!==0?this.needPax=xt(t,e+345,155,o)||this.needPax:(this.needPax=xt(t,e+345,130,o)||this.needPax,this.needPax=Pi(t,e+476,12,this.atime)||this.needPax,this.needPax=Pi(t,e+488,12,this.ctime)||this.needPax);let h=256;for(let a=e;a<e+148;a++)h+=t[a];for(let a=e+156;a<e+512;a++)h+=t[a];return this.cksum=h,lt(t,e+148,8,this.cksum),this.cksumValid=!0,this.needPax}get type(){return this.#t==="Unsupported"?this.#t:he.get(this.#t)}get typeKey(){return this.#t}set type(t){let e=String(Ye.get(t));if(oe(e)||e==="Unsupported")this.#t=e;else if(oe(t))this.#t=t;else throw new TypeError("invalid entry type: "+t)}},sn=(s,t)=>{let i=s,r="",n,o=external_node_path_namespaceObject.posix.parse(s).root||".";if(Buffer.byteLength(i)<100)n=[i,r,!1];else{r=external_node_path_namespaceObject.posix.dirname(i),i=external_node_path_namespaceObject.posix.basename(i);do Buffer.byteLength(i)<=100&&Buffer.byteLength(r)<=t?n=[i,r,!1]:Buffer.byteLength(i)>100&&Buffer.byteLength(r)<=t?n=[i.slice(0,99),r,!0]:(i=external_node_path_namespaceObject.posix.join(external_node_path_namespaceObject.posix.basename(r),i),r=external_node_path_namespaceObject.posix.dirname(r));while(r!==o&&n===void 0);n||(n=[s.slice(0,99),"",!0])}return n},Tt=(s,t,e)=>s.subarray(t,t+e).toString("utf8").replace(/\0.*/,""),Bi=(s,t,e)=>rn(at(s,t,e)),rn=s=>s===void 0?void 0:new Date(s*1e3),at=(s,t,e)=>Number(s[t])&128?Ps(s.subarray(t,t+e)):on(s,t,e),nn=s=>isNaN(s)?void 0:s,on=(s,t,e)=>nn(parseInt(s.subarray(t,t+e).toString("utf8").replace(/\0.*$/,"").trim(),8)),hn={12:8589934591,8:2097151},lt=(s,t,e,i)=>i===void 0?!1:i>hn[e]||i<0?(Bs(i,s.subarray(t,t+e)),!0):(an(s,t,e,i),!1),an=(s,t,e,i)=>s.write(ln(i,e),t,e,"ascii"),ln=(s,t)=>cn(Math.floor(s).toString(8),t),cn=(s,t)=>(s.length===t-1?s:new Array(t-s.length-1).join("0")+s+" ")+"\0",Pi=(s,t,e,i)=>i===void 0?!1:lt(s,t,e,i.getTime()/1e3),fn=new Array(156).join("\0"),xt=(s,t,e,i)=>i===void 0?!1:(s.write(i+fn,t,e,"utf8"),i.length!==Buffer.byteLength(i)||i.length>e);var ct=class s{atime;mtime;ctime;charset;comment;gid;uid;gname;uname;linkpath;dev;ino;nlink;path;size;mode;global;constructor(t,e=!1){this.atime=t.atime,this.charset=t.charset,this.comment=t.comment,this.ctime=t.ctime,this.dev=t.dev,this.gid=t.gid,this.global=e,this.gname=t.gname,this.ino=t.ino,this.linkpath=t.linkpath,this.mtime=t.mtime,this.nlink=t.nlink,this.path=t.path,this.size=t.size,this.uid=t.uid,this.uname=t.uname}encode(){let t=this.encodeBody();if(t==="")return Buffer.allocUnsafe(0);let e=Buffer.byteLength(t),i=512*Math.ceil(1+e/512),r=Buffer.allocUnsafe(i);for(let n=0;n<512;n++)r[n]=0;new F({path:("PaxHeader/"+(0,external_node_path_namespaceObject.basename)(this.path??"")).slice(0,99),mode:this.mode||420,uid:this.uid,gid:this.gid,size:e,mtime:this.mtime,type:this.global?"GlobalExtendedHeader":"ExtendedHeader",linkpath:"",uname:this.uname||"",gname:this.gname||"",devmaj:0,devmin:0,atime:this.atime,ctime:this.ctime}).encode(r),r.write(t,512,e,"utf8");for(let n=e+512;n<r.length;n++)r[n]=0;return r}encodeBody(){return this.encodeField("path")+this.encodeField("ctime")+this.encodeField("atime")+this.encodeField("dev")+this.encodeField("ino")+this.encodeField("nlink")+this.encodeField("charset")+this.encodeField("comment")+this.encodeField("gid")+this.encodeField("gname")+this.encodeField("linkpath")+this.encodeField("mtime")+this.encodeField("size")+this.encodeField("uid")+this.encodeField("uname")}encodeField(t){if(this[t]===void 0)return"";let e=this[t],i=e instanceof Date?e.getTime()/1e3:e,r=" "+(t==="dev"||t==="ino"||t==="nlink"?"SCHILY.":"")+t+"="+i+`
 `,n=Buffer.byteLength(r),o=Math.floor(Math.log(n)/Math.log(10))+1;return n+o>=Math.pow(10,o)&&(o+=1),o+n+r}static parse(t,e,i=!1){return new s(un(mn(t),e),i)}},un=(s,t)=>t?Object.assign({},t,s):s,mn=s=>s.replace(/\n$/,"").split(`
-`).reduce(pn,Object.create(null)),pn=(s,t)=>{let e=parseInt(t,10);if(e!==Buffer.byteLength(t)+1)return s;t=t.slice((e+" ").length);let i=t.split("="),r=i.shift();if(!r)return s;let n=r.replace(/^SCHILY\.(dev|ino|nlink)/,"$1"),o=i.join("=");return s[n]=/^([A-Z]+\.)?([mac]|birth|creation)time$/.test(n)?new Date(Number(o)*1e3):/^[0-9]+$/.test(o)?+o:o,s};var En={}.TESTING_TAR_FAKE_PLATFORM||process.platform,f=En!=="win32"?s=>s:s=>s&&s.replace(/\\/g,"/");var Yt=class extends A{extended;globalExtended;header;startBlockSize;blockRemain;remain;type;meta=!1;ignore=!1;path;mode;uid;gid;uname;gname;size=0;mtime;atime;ctime;linkpath;dev;ino;nlink;invalid=!1;absolute;unsupported=!1;constructor(t,e,i){switch(super({}),this.pause(),this.extended=e,this.globalExtended=i,this.header=t,this.remain=t.size??0,this.startBlockSize=512*Math.ceil(this.remain/512),this.blockRemain=this.startBlockSize,this.type=t.type,this.type){case"File":case"OldFile":case"Link":case"SymbolicLink":case"CharacterDevice":case"BlockDevice":case"Directory":case"FIFO":case"ContiguousFile":case"GNUDumpDir":break;case"NextFileHasLongLinkpath":case"NextFileHasLongPath":case"OldGnuLongPath":case"GlobalExtendedHeader":case"ExtendedHeader":case"OldExtendedHeader":this.meta=!0;break;default:this.ignore=!0}if(!t.path)throw new Error("no path provided for tar.ReadEntry");this.path=f(t.path),this.mode=t.mode,this.mode&&(this.mode=this.mode&4095),this.uid=t.uid,this.gid=t.gid,this.uname=t.uname,this.gname=t.gname,this.size=this.remain,this.mtime=t.mtime,this.atime=t.atime,this.ctime=t.ctime,this.linkpath=t.linkpath?f(t.linkpath):void 0,this.uname=t.uname,this.gname=t.gname,e&&this.#t(e),i&&this.#t(i,!0)}write(t){let e=t.length;if(e>this.blockRemain)throw new Error("writing more to entry than is appropriate");let i=this.remain,r=this.blockRemain;return this.remain=Math.max(0,i-e),this.blockRemain=Math.max(0,r-e),this.ignore?!0:i>=e?super.write(t):super.write(t.subarray(0,i))}#t(t,e=!1){t.path&&(t.path=f(t.path)),t.linkpath&&(t.linkpath=f(t.linkpath)),Object.assign(this,Object.fromEntries(Object.entries(t).filter(([i,r])=>!(r==null||i==="path"&&e))))}};var Lt=(s,t,e,i={})=>{s.file&&(i.file=s.file),s.cwd&&(i.cwd=s.cwd),i.code=e instanceof Error&&e.code||t,i.tarCode=t,!s.strict&&i.recoverable!==!1?(e instanceof Error&&(i=Object.assign(e,i),e=e.message),s.emit("warn",t,e,i)):e instanceof Error?s.emit("error",Object.assign(e,i)):s.emit("error",Object.assign(new Error(`${t}: ${e}`),i))};var Sn=1024*1024,Gi=Buffer.from([31,139]),Zi=Buffer.from([40,181,47,253]),yn=Math.max(Gi.length,Zi.length),B=Symbol("state"),Nt=Symbol("writeEntry"),et=Symbol("readEntry"),zi=Symbol("nextEntry"),Hs=Symbol("processEntry"),V=Symbol("extendedHeader"),ae=Symbol("globalExtendedHeader"),ft=Symbol("meta"),Ws=Symbol("emitMeta"),p=Symbol("buffer"),it=Symbol("queue"),dt=Symbol("ended"),Ui=Symbol("emittedEnd"),Dt=Symbol("emit"),y=Symbol("unzip"),Ke=Symbol("consumeChunk"),Ve=Symbol("consumeChunkSub"),Hi=Symbol("consumeBody"),Gs=Symbol("consumeMeta"),Zs=Symbol("consumeHeader"),le=Symbol("consuming"),Wi=Symbol("bufferConcat"),$e=Symbol("maybeEnd"),Kt=Symbol("writing"),ut=Symbol("aborted"),Xe=Symbol("onDone"),At=Symbol("sawValidEntry"),qe=Symbol("sawNullBlock"),je=Symbol("sawEOF"),Ys=Symbol("closeStream"),Rn=()=>!0,st=class extends external_events_namespaceObject.EventEmitter{file;strict;maxMetaEntrySize;filter;brotli;zstd;writable=!0;readable=!1;[it]=[];[p];[et];[Nt];[B]="begin";[ft]="";[V];[ae];[dt]=!1;[y];[ut]=!1;[At];[qe]=!1;[je]=!1;[Kt]=!1;[le]=!1;[Ui]=!1;constructor(t={}){super(),this.file=t.file||"",this.on(Xe,()=>{(this[B]==="begin"||this[At]===!1)&&this.warn("TAR_BAD_ARCHIVE","Unrecognized archive format")}),t.ondone?this.on(Xe,t.ondone):this.on(Xe,()=>{this.emit("prefinish"),this.emit("finish"),this.emit("end")}),this.strict=!!t.strict,this.maxMetaEntrySize=t.maxMetaEntrySize||Sn,this.filter=typeof t.filter=="function"?t.filter:Rn;let e=t.file&&(t.file.endsWith(".tar.br")||t.file.endsWith(".tbr"));this.brotli=!(t.gzip||t.zstd)&&t.brotli!==void 0?t.brotli:e?void 0:!1;let i=t.file&&(t.file.endsWith(".tar.zst")||t.file.endsWith(".tzst"));this.zstd=!(t.gzip||t.brotli)&&t.zstd!==void 0?t.zstd:i?!0:void 0,this.on("end",()=>this[Ys]()),typeof t.onwarn=="function"&&this.on("warn",t.onwarn),typeof t.onReadEntry=="function"&&this.on("entry",t.onReadEntry)}warn(t,e,i={}){Lt(this,t,e,i)}[Zs](t,e){this[At]===void 0&&(this[At]=!1);let i;try{i=new F(t,e,this[V],this[ae])}catch(r){return this.warn("TAR_ENTRY_INVALID",r)}if(i.nullBlock)this[qe]?(this[je]=!0,this[B]==="begin"&&(this[B]="header"),this[Dt]("eof")):(this[qe]=!0,this[Dt]("nullBlock"));else if(this[qe]=!1,!i.cksumValid)this.warn("TAR_ENTRY_INVALID","checksum failure",{header:i});else if(!i.path)this.warn("TAR_ENTRY_INVALID","path is required",{header:i});else{let r=i.type;if(/^(Symbolic)?Link$/.test(r)&&!i.linkpath)this.warn("TAR_ENTRY_INVALID","linkpath required",{header:i});else if(!/^(Symbolic)?Link$/.test(r)&&!/^(Global)?ExtendedHeader$/.test(r)&&i.linkpath)this.warn("TAR_ENTRY_INVALID","linkpath forbidden",{header:i});else{let n=this[Nt]=new Yt(i,this[V],this[ae]);if(!this[At])if(n.remain){let o=()=>{n.invalid||(this[At]=!0)};n.on("end",o)}else this[At]=!0;n.meta?n.size>this.maxMetaEntrySize?(n.ignore=!0,this[Dt]("ignoredEntry",n),this[B]="ignore",n.resume()):n.size>0&&(this[ft]="",n.on("data",o=>this[ft]+=o),this[B]="meta"):(this[V]=void 0,n.ignore=n.ignore||!this.filter(n.path,n),n.ignore?(this[Dt]("ignoredEntry",n),this[B]=n.remain?"ignore":"header",n.resume()):(n.remain?this[B]="body":(this[B]="header",n.end()),this[et]?this[it].push(n):(this[it].push(n),this[zi]())))}}}[Ys](){queueMicrotask(()=>this.emit("close"))}[Hs](t){let e=!0;if(!t)this[et]=void 0,e=!1;else if(Array.isArray(t)){let[i,...r]=t;this.emit(i,...r)}else this[et]=t,this.emit("entry",t),t.emittedEnd||(t.on("end",()=>this[zi]()),e=!1);return e}[zi](){do;while(this[Hs](this[it].shift()));if(!this[it].length){let t=this[et];!t||t.flowing||t.size===t.remain?this[Kt]||this.emit("drain"):t.once("drain",()=>this.emit("drain"))}}[Hi](t,e){let i=this[Nt];if(!i)throw new Error("attempt to consume body without entry??");let r=i.blockRemain??0,n=r>=t.length&&e===0?t:t.subarray(e,e+r);return i.write(n),i.blockRemain||(this[B]="header",this[Nt]=void 0,i.end()),n.length}[Gs](t,e){let i=this[Nt],r=this[Hi](t,e);return!this[Nt]&&i&&this[Ws](i),r}[Dt](t,e,i){!this[it].length&&!this[et]?this.emit(t,e,i):this[it].push([t,e,i])}[Ws](t){switch(this[Dt]("meta",this[ft]),t.type){case"ExtendedHeader":case"OldExtendedHeader":this[V]=ct.parse(this[ft],this[V],!1);break;case"GlobalExtendedHeader":this[ae]=ct.parse(this[ft],this[ae],!0);break;case"NextFileHasLongPath":case"OldGnuLongPath":{let e=this[V]??Object.create(null);this[V]=e,e.path=this[ft].replace(/\0.*/,"");break}case"NextFileHasLongLinkpath":{let e=this[V]||Object.create(null);this[V]=e,e.linkpath=this[ft].replace(/\0.*/,"");break}default:throw new Error("unknown meta: "+t.type)}}abort(t){this[ut]=!0,this.emit("abort",t),this.warn("TAR_ABORT",t,{recoverable:!1})}write(t,e,i){if(typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,typeof e=="string"?e:"utf8")),this[ut])return i?.(),!1;if((this[y]===void 0||this.brotli===void 0&&this[y]===!1)&&t){if(this[p]&&(t=Buffer.concat([this[p],t]),this[p]=void 0),t.length<yn)return this[p]=t,i?.(),!0;for(let a=0;this[y]===void 0&&a<Gi.length;a++)t[a]!==Gi[a]&&(this[y]=!1);let o=!1;if(this[y]===!1&&this.zstd!==!1){o=!0;for(let a=0;a<Zi.length;a++)if(t[a]!==Zi[a]){o=!1;break}}let h=this.brotli===void 0&&!o;if(this[y]===!1&&h)if(t.length<512)if(this[dt])this.brotli=!0;else return this[p]=t,i?.(),!0;else try{new F(t.subarray(0,512)),this.brotli=!1}catch{this.brotli=!0}if(this[y]===void 0||this[y]===!1&&(this.brotli||o)){let a=this[dt];this[dt]=!1,this[y]=this[y]===void 0?new Pe({}):o?new Ze({}):new He({}),this[y].on("data",c=>this[Ke](c)),this[y].on("error",c=>this.abort(c)),this[y].on("end",()=>{this[dt]=!0,this[Ke]()}),this[Kt]=!0;let l=!!this[y][a?"end":"write"](t);return this[Kt]=!1,i?.(),l}}this[Kt]=!0,this[y]?this[y].write(t):this[Ke](t),this[Kt]=!1;let n=this[it].length?!1:this[et]?this[et].flowing:!0;return!n&&!this[it].length&&this[et]?.once("drain",()=>this.emit("drain")),i?.(),n}[Wi](t){t&&!this[ut]&&(this[p]=this[p]?Buffer.concat([this[p],t]):t)}[$e](){if(this[dt]&&!this[Ui]&&!this[ut]&&!this[le]){this[Ui]=!0;let t=this[Nt];if(t&&t.blockRemain){let e=this[p]?this[p].length:0;this.warn("TAR_BAD_ARCHIVE",`Truncated input (needed ${t.blockRemain} more bytes, only ${e} available)`,{entry:t}),this[p]&&t.write(this[p]),t.end()}this[Dt](Xe)}}[Ke](t){if(this[le]&&t)this[Wi](t);else if(!t&&!this[p])this[$e]();else if(t){if(this[le]=!0,this[p]){this[Wi](t);let e=this[p];this[p]=void 0,this[Ve](e)}else this[Ve](t);for(;this[p]&&this[p]?.length>=512&&!this[ut]&&!this[je];){let e=this[p];this[p]=void 0,this[Ve](e)}this[le]=!1}(!this[p]||this[dt])&&this[$e]()}[Ve](t){let e=0,i=t.length;for(;e+512<=i&&!this[ut]&&!this[je];)switch(this[B]){case"begin":case"header":this[Zs](t,e),e+=512;break;case"ignore":case"body":e+=this[Hi](t,e);break;case"meta":e+=this[Gs](t,e);break;default:throw new Error("invalid state: "+this[B])}e<i&&(this[p]?this[p]=Buffer.concat([t.subarray(e),this[p]]):this[p]=t.subarray(e))}end(t,e,i){return typeof t=="function"&&(i=t,e=void 0,t=void 0),typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,e)),i&&this.once("finish",i),this[ut]||(this[y]?(t&&this[y].write(t),this[y].end()):(this[dt]=!0,(this.brotli===void 0||this.zstd===void 0)&&(t=t||Buffer.alloc(0)),t&&this.write(t),this[$e]())),this}};var mt=s=>{let t=s.length-1,e=-1;for(;t>-1&&s.charAt(t)==="/";)e=t,t--;return e===-1?s:s.slice(0,e)};var _n=s=>{let t=s.onReadEntry;s.onReadEntry=t?e=>{t(e),e.resume()}:e=>e.resume()},Yi=(s,t)=>{let e=new Map(t.map(n=>[mt(n),!0])),i=s.filter,r=(n,o="")=>{let h=o||(0,external_path_.parse)(n).root||".",a;if(n===h)a=!1;else{let l=e.get(n);l!==void 0?a=l:a=r((0,external_path_.dirname)(n),h)}return e.set(n,a),a};s.filter=i?(n,o)=>i(n,o)&&r(mt(n)):n=>r(mt(n))},On=s=>{let t=new st(s),e=s.file,i;try{i=external_node_fs_namespaceObject.openSync(e,"r");let r=external_node_fs_namespaceObject.fstatSync(i),n=s.maxReadSize||16*1024*1024;if(r.size<n){let o=Buffer.allocUnsafe(r.size),h=external_node_fs_namespaceObject.readSync(i,o,0,r.size,0);t.end(h===o.byteLength?o:o.subarray(0,h))}else{let o=0,h=Buffer.allocUnsafe(n);for(;o<r.size;){let a=external_node_fs_namespaceObject.readSync(i,h,0,n,o);if(a===0)break;o+=a,t.write(h.subarray(0,a))}t.end()}}finally{if(typeof i=="number")try{external_node_fs_namespaceObject.closeSync(i)}catch{}}},Tn=(s,t)=>{let e=new st(s),i=s.maxReadSize||16*1024*1024,r=s.file;return new Promise((o,h)=>{e.on("error",h),e.on("end",o),external_node_fs_namespaceObject.stat(r,(a,l)=>{if(a)h(a);else{let c=new gt(r,{readSize:i,size:l.size});c.on("error",h),c.pipe(e)}})})},It=K(On,Tn,s=>new st(s),s=>new st(s),(s,t)=>{t?.length&&Yi(s,t),s.noResume||_n(s)});var Ki=(s,t,e)=>(s&=4095,e&&(s=(s|384)&-19),t&&(s&256&&(s|=64),s&32&&(s|=8),s&4&&(s|=1)),s);var{isAbsolute:Ln,parse:Ks}=external_node_path_namespaceObject.win32,index_min_ce=s=>{let t="",e=Ks(s);for(;Ln(s)||e.root;){let i=s.charAt(0)==="/"&&s.slice(0,4)!=="//?/"?"/":e.root;s=s.slice(i.length),t+=i,e=Ks(s)}return[t,s]};var Qe=["|","<",">","?",":"],Vi=Qe.map(s=>String.fromCharCode(61440+s.charCodeAt(0))),Nn=new Map(Qe.map((s,t)=>[s,Vi[t]])),Dn=new Map(Vi.map((s,t)=>[s,Qe[t]])),$i=s=>Qe.reduce((t,e)=>t.split(e).join(Nn.get(e)),s),Vs=s=>Vi.reduce((t,e)=>t.split(e).join(Dn.get(e)),s);var tr=(s,t)=>t?(s=f(s).replace(/^\.(\/|$)/,""),mt(t)+"/"+s):f(s),An=16*1024*1024,qs=Symbol("process"),js=Symbol("file"),Qs=Symbol("directory"),qi=Symbol("symlink"),Js=Symbol("hardlink"),fe=Symbol("header"),Je=Symbol("read"),ji=Symbol("lstat"),ti=Symbol("onlstat"),Qi=Symbol("onread"),Ji=Symbol("onreadlink"),ts=Symbol("openfile"),es=Symbol("onopenfile"),pt=Symbol("close"),ei=Symbol("mode"),is=Symbol("awaitDrain"),Xi=Symbol("ondrain"),X=Symbol("prefix"),de=class extends A{path;portable;myuid=process.getuid&&process.getuid()||0;myuser={}.USER||"";maxReadSize;linkCache;statCache;preservePaths;cwd;strict;mtime;noPax;noMtime;prefix;fd;blockLen=0;blockRemain=0;buf;pos=0;remain=0;length=0;offset=0;win32;absolute;header;type;linkpath;stat;onWriteEntry;#t=!1;constructor(t,e={}){let i=re(e);super(),this.path=f(t),this.portable=!!i.portable,this.maxReadSize=i.maxReadSize||An,this.linkCache=i.linkCache||new Map,this.statCache=i.statCache||new Map,this.preservePaths=!!i.preservePaths,this.cwd=f(i.cwd||process.cwd()),this.strict=!!i.strict,this.noPax=!!i.noPax,this.noMtime=!!i.noMtime,this.mtime=i.mtime,this.prefix=i.prefix?f(i.prefix):void 0,this.onWriteEntry=i.onWriteEntry,typeof i.onwarn=="function"&&this.on("warn",i.onwarn);let r=!1;if(!this.preservePaths){let[o,h]=index_min_ce(this.path);o&&typeof h=="string"&&(this.path=h,r=o)}this.win32=!!i.win32||process.platform==="win32",this.win32&&(this.path=Vs(this.path.replace(/\\/g,"/")),t=t.replace(/\\/g,"/")),this.absolute=f(i.absolute||external_path_.resolve(this.cwd,t)),this.path===""&&(this.path="./"),r&&this.warn("TAR_ENTRY_INFO",`stripping ${r} from absolute path`,{entry:this,path:r+this.path});let n=this.statCache.get(this.absolute);n?this[ti](n):this[ji]()}warn(t,e,i={}){return Lt(this,t,e,i)}emit(t,...e){return t==="error"&&(this.#t=!0),super.emit(t,...e)}[ji](){external_fs_.lstat(this.absolute,(t,e)=>{if(t)return this.emit("error",t);this[ti](e)})}[ti](t){this.statCache.set(this.absolute,t),this.stat=t,t.isFile()||(t.size=0),this.type=In(t),this.emit("stat",t),this[qs]()}[qs](){switch(this.type){case"File":return this[js]();case"Directory":return this[Qs]();case"SymbolicLink":return this[qi]();default:return this.end()}}[ei](t){return Ki(t,this.type==="Directory",this.portable)}[X](t){return tr(t,this.prefix)}[fe](){if(!this.stat)throw new Error("cannot write header before stat");this.type==="Directory"&&this.portable&&(this.noMtime=!0),this.onWriteEntry?.(this),this.header=new F({path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,mode:this[ei](this.stat.mode),uid:this.portable?void 0:this.stat.uid,gid:this.portable?void 0:this.stat.gid,size:this.stat.size,mtime:this.noMtime?void 0:this.mtime||this.stat.mtime,type:this.type==="Unsupported"?void 0:this.type,uname:this.portable?void 0:this.stat.uid===this.myuid?this.myuser:"",atime:this.portable?void 0:this.stat.atime,ctime:this.portable?void 0:this.stat.ctime}),this.header.encode()&&!this.noPax&&super.write(new ct({atime:this.portable?void 0:this.header.atime,ctime:this.portable?void 0:this.header.ctime,gid:this.portable?void 0:this.header.gid,mtime:this.noMtime?void 0:this.mtime||this.header.mtime,path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,size:this.header.size,uid:this.portable?void 0:this.header.uid,uname:this.portable?void 0:this.header.uname,dev:this.portable?void 0:this.stat.dev,ino:this.portable?void 0:this.stat.ino,nlink:this.portable?void 0:this.stat.nlink}).encode());let t=this.header?.block;if(!t)throw new Error("failed to encode header");super.write(t)}[Qs](){if(!this.stat)throw new Error("cannot create directory entry without stat");this.path.slice(-1)!=="/"&&(this.path+="/"),this.stat.size=0,this[fe](),this.end()}[qi](){external_fs_.readlink(this.absolute,(t,e)=>{if(t)return this.emit("error",t);this[Ji](e)})}[Ji](t){this.linkpath=f(t),this[fe](),this.end()}[Js](t){if(!this.stat)throw new Error("cannot create link entry without stat");this.type="Link",this.linkpath=f(external_path_.relative(this.cwd,t)),this.stat.size=0,this[fe](),this.end()}[js](){if(!this.stat)throw new Error("cannot create file entry without stat");if(this.stat.nlink>1){let t=`${this.stat.dev}:${this.stat.ino}`,e=this.linkCache.get(t);if(e?.indexOf(this.cwd)===0)return this[Js](e);this.linkCache.set(t,this.absolute)}if(this[fe](),this.stat.size===0)return this.end();this[ts]()}[ts](){external_fs_.open(this.absolute,"r",(t,e)=>{if(t)return this.emit("error",t);this[es](e)})}[es](t){if(this.fd=t,this.#t)return this[pt]();if(!this.stat)throw new Error("should stat before calling onopenfile");this.blockLen=512*Math.ceil(this.stat.size/512),this.blockRemain=this.blockLen;let e=Math.min(this.blockLen,this.maxReadSize);this.buf=Buffer.allocUnsafe(e),this.offset=0,this.pos=0,this.remain=this.stat.size,this.length=this.buf.length,this[Je]()}[Je](){let{fd:t,buf:e,offset:i,length:r,pos:n}=this;if(t===void 0||e===void 0)throw new Error("cannot read file without first opening");external_fs_.read(t,e,i,r,n,(o,h)=>{if(o)return this[pt](()=>this.emit("error",o));this[Qi](h)})}[pt](t=()=>{}){this.fd!==void 0&&external_fs_.close(this.fd,t)}[Qi](t){if(t<=0&&this.remain>0){let r=Object.assign(new Error("encountered unexpected EOF"),{path:this.absolute,syscall:"read",code:"EOF"});return this[pt](()=>this.emit("error",r))}if(t>this.remain){let r=Object.assign(new Error("did not encounter expected EOF"),{path:this.absolute,syscall:"read",code:"EOF"});return this[pt](()=>this.emit("error",r))}if(!this.buf)throw new Error("should have created buffer prior to reading");if(t===this.remain)for(let r=t;r<this.length&&t<this.blockRemain;r++)this.buf[r+this.offset]=0,t++,this.remain++;let e=this.offset===0&&t===this.buf.length?this.buf:this.buf.subarray(this.offset,this.offset+t);this.write(e)?this[Xi]():this[is](()=>this[Xi]())}[is](t){this.once("drain",t)}write(t,e,i){if(typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,typeof e=="string"?e:"utf8")),this.blockRemain<t.length){let r=Object.assign(new Error("writing more data than expected"),{path:this.absolute});return this.emit("error",r)}return this.remain-=t.length,this.blockRemain-=t.length,this.pos+=t.length,this.offset+=t.length,super.write(t,null,i)}[Xi](){if(!this.remain)return this.blockRemain&&super.write(Buffer.alloc(this.blockRemain)),this[pt](t=>t?this.emit("error",t):this.end());if(!this.buf)throw new Error("buffer lost somehow in ONDRAIN");this.offset>=this.length&&(this.buf=Buffer.allocUnsafe(Math.min(this.blockRemain,this.buf.length)),this.offset=0),this.length=this.buf.length-this.offset,this[Je]()}},ii=class extends de{sync=!0;[ji](){this[ti](external_fs_.lstatSync(this.absolute))}[qi](){this[Ji](external_fs_.readlinkSync(this.absolute))}[ts](){this[es](external_fs_.openSync(this.absolute,"r"))}[Je](){let t=!0;try{let{fd:e,buf:i,offset:r,length:n,pos:o}=this;if(e===void 0||i===void 0)throw new Error("fd and buf must be set in READ method");let h=external_fs_.readSync(e,i,r,n,o);this[Qi](h),t=!1}finally{if(t)try{this[pt](()=>{})}catch{}}}[is](t){t()}[pt](t=()=>{}){this.fd!==void 0&&external_fs_.closeSync(this.fd),t()}},si=class extends A{blockLen=0;blockRemain=0;buf=0;pos=0;remain=0;length=0;preservePaths;portable;strict;noPax;noMtime;readEntry;type;prefix;path;mode;uid;gid;uname;gname;header;mtime;atime;ctime;linkpath;size;onWriteEntry;warn(t,e,i={}){return Lt(this,t,e,i)}constructor(t,e={}){let i=re(e);super(),this.preservePaths=!!i.preservePaths,this.portable=!!i.portable,this.strict=!!i.strict,this.noPax=!!i.noPax,this.noMtime=!!i.noMtime,this.onWriteEntry=i.onWriteEntry,this.readEntry=t;let{type:r}=t;if(r==="Unsupported")throw new Error("writing entry that should be ignored");this.type=r,this.type==="Directory"&&this.portable&&(this.noMtime=!0),this.prefix=i.prefix,this.path=f(t.path),this.mode=t.mode!==void 0?this[ei](t.mode):void 0,this.uid=this.portable?void 0:t.uid,this.gid=this.portable?void 0:t.gid,this.uname=this.portable?void 0:t.uname,this.gname=this.portable?void 0:t.gname,this.size=t.size,this.mtime=this.noMtime?void 0:i.mtime||t.mtime,this.atime=this.portable?void 0:t.atime,this.ctime=this.portable?void 0:t.ctime,this.linkpath=t.linkpath!==void 0?f(t.linkpath):void 0,typeof i.onwarn=="function"&&this.on("warn",i.onwarn);let n=!1;if(!this.preservePaths){let[h,a]=index_min_ce(this.path);h&&typeof a=="string"&&(this.path=a,n=h)}this.remain=t.size,this.blockRemain=t.startBlockSize,this.onWriteEntry?.(this),this.header=new F({path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,mode:this.mode,uid:this.portable?void 0:this.uid,gid:this.portable?void 0:this.gid,size:this.size,mtime:this.noMtime?void 0:this.mtime,type:this.type,uname:this.portable?void 0:this.uname,atime:this.portable?void 0:this.atime,ctime:this.portable?void 0:this.ctime}),n&&this.warn("TAR_ENTRY_INFO",`stripping ${n} from absolute path`,{entry:this,path:n+this.path}),this.header.encode()&&!this.noPax&&super.write(new ct({atime:this.portable?void 0:this.atime,ctime:this.portable?void 0:this.ctime,gid:this.portable?void 0:this.gid,mtime:this.noMtime?void 0:this.mtime,path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,size:this.size,uid:this.portable?void 0:this.uid,uname:this.portable?void 0:this.uname,dev:this.portable?void 0:this.readEntry.dev,ino:this.portable?void 0:this.readEntry.ino,nlink:this.portable?void 0:this.readEntry.nlink}).encode());let o=this.header?.block;if(!o)throw new Error("failed to encode header");super.write(o),t.pipe(this)}[X](t){return tr(t,this.prefix)}[ei](t){return Ki(t,this.type==="Directory",this.portable)}write(t,e,i){typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,typeof e=="string"?e:"utf8"));let r=t.length;if(r>this.blockRemain)throw new Error("writing more to entry than is appropriate");return this.blockRemain-=r,super.write(t,i)}end(t,e,i){return this.blockRemain&&super.write(Buffer.alloc(this.blockRemain)),typeof t=="function"&&(i=t,e=void 0,t=void 0),typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,e??"utf8")),i&&this.once("finish",i),t?super.end(t,i):super.end(i),this}},In=s=>s.isFile()?"File":s.isDirectory()?"Directory":s.isSymbolicLink()?"SymbolicLink":"Unsupported";var ri=class s{tail;head;length=0;static create(t=[]){return new s(t)}constructor(t=[]){for(let e of t)this.push(e)}*[Symbol.iterator](){for(let t=this.head;t;t=t.next)yield t.value}removeNode(t){if(t.list!==this)throw new Error("removing node which does not belong to this list");let e=t.next,i=t.prev;return e&&(e.prev=i),i&&(i.next=e),t===this.head&&(this.head=e),t===this.tail&&(this.tail=i),this.length--,t.next=void 0,t.prev=void 0,t.list=void 0,e}unshiftNode(t){if(t===this.head)return;t.list&&t.list.removeNode(t);let e=this.head;t.list=this,t.next=e,e&&(e.prev=t),this.head=t,this.tail||(this.tail=t),this.length++}pushNode(t){if(t===this.tail)return;t.list&&t.list.removeNode(t);let e=this.tail;t.list=this,t.prev=e,e&&(e.next=t),this.tail=t,this.head||(this.head=t),this.length++}push(...t){for(let e=0,i=t.length;e<i;e++)Fn(this,t[e]);return this.length}unshift(...t){for(var e=0,i=t.length;e<i;e++)kn(this,t[e]);return this.length}pop(){if(!this.tail)return;let t=this.tail.value,e=this.tail;return this.tail=this.tail.prev,this.tail?this.tail.next=void 0:this.head=void 0,e.list=void 0,this.length--,t}shift(){if(!this.head)return;let t=this.head.value,e=this.head;return this.head=this.head.next,this.head?this.head.prev=void 0:this.tail=void 0,e.list=void 0,this.length--,t}forEach(t,e){e=e||this;for(let i=this.head,r=0;i;r++)t.call(e,i.value,r,this),i=i.next}forEachReverse(t,e){e=e||this;for(let i=this.tail,r=this.length-1;i;r--)t.call(e,i.value,r,this),i=i.prev}get(t){let e=0,i=this.head;for(;i&&e<t;e++)i=i.next;if(e===t&&i)return i.value}getReverse(t){let e=0,i=this.tail;for(;i&&e<t;e++)i=i.prev;if(e===t&&i)return i.value}map(t,e){e=e||this;let i=new s;for(let r=this.head;r;)i.push(t.call(e,r.value,this)),r=r.next;return i}mapReverse(t,e){e=e||this;var i=new s;for(let r=this.tail;r;)i.push(t.call(e,r.value,this)),r=r.prev;return i}reduce(t,e){let i,r=this.head;if(arguments.length>1)i=e;else if(this.head)r=this.head.next,i=this.head.value;else throw new TypeError("Reduce of empty list with no initial value");for(var n=0;r;n++)i=t(i,r.value,n),r=r.next;return i}reduceReverse(t,e){let i,r=this.tail;if(arguments.length>1)i=e;else if(this.tail)r=this.tail.prev,i=this.tail.value;else throw new TypeError("Reduce of empty list with no initial value");for(let n=this.length-1;r;n--)i=t(i,r.value,n),r=r.prev;return i}toArray(){let t=new Array(this.length);for(let e=0,i=this.head;i;e++)t[e]=i.value,i=i.next;return t}toArrayReverse(){let t=new Array(this.length);for(let e=0,i=this.tail;i;e++)t[e]=i.value,i=i.prev;return t}slice(t=0,e=this.length){e<0&&(e+=this.length),t<0&&(t+=this.length);let i=new s;if(e<t||e<0)return i;t<0&&(t=0),e>this.length&&(e=this.length);let r=this.head,n=0;for(n=0;r&&n<t;n++)r=r.next;for(;r&&n<e;n++,r=r.next)i.push(r.value);return i}sliceReverse(t=0,e=this.length){e<0&&(e+=this.length),t<0&&(t+=this.length);let i=new s;if(e<t||e<0)return i;t<0&&(t=0),e>this.length&&(e=this.length);let r=this.length,n=this.tail;for(;n&&r>e;r--)n=n.prev;for(;n&&r>t;r--,n=n.prev)i.push(n.value);return i}splice(t,e=0,...i){t>this.length&&(t=this.length-1),t<0&&(t=this.length+t);let r=this.head;for(let o=0;r&&o<t;o++)r=r.next;let n=[];for(let o=0;r&&o<e;o++)n.push(r.value),r=this.removeNode(r);r?r!==this.tail&&(r=r.prev):r=this.tail;for(let o of i)r=Cn(this,r,o);return n}reverse(){let t=this.head,e=this.tail;for(let i=t;i;i=i.prev){let r=i.prev;i.prev=i.next,i.next=r}return this.head=e,this.tail=t,this}};function Cn(s,t,e){let i=t,r=t?t.next:s.head,n=new ue(e,i,r,s);return n.next===void 0&&(s.tail=n),n.prev===void 0&&(s.head=n),s.length++,n}function Fn(s,t){s.tail=new ue(t,s.tail,void 0,s),s.head||(s.head=s.tail),s.length++}function kn(s,t){s.head=new ue(t,void 0,s.head,s),s.tail||(s.tail=s.head),s.length++}var ue=class{list;next;prev;value;constructor(t,e,i,r){this.list=r,this.value=t,e?(e.next=this,this.prev=e):this.prev=void 0,i?(i.prev=this,this.next=i):this.next=void 0}};var fi=class{path;absolute;entry;stat;readdir;pending=!1;ignore=!1;piped=!1;constructor(t,e){this.path=t||"./",this.absolute=e}},er=Buffer.alloc(1024),ni=Symbol("onStat"),me=Symbol("ended"),W=Symbol("queue"),Ct=Symbol("current"),Ft=Symbol("process"),pe=Symbol("processing"),ss=Symbol("processJob"),G=Symbol("jobs"),rs=Symbol("jobDone"),oi=Symbol("addFSEntry"),ir=Symbol("addTarEntry"),hs=Symbol("stat"),as=Symbol("readdir"),hi=Symbol("onreaddir"),ai=Symbol("pipe"),sr=Symbol("entry"),index_min_ns=Symbol("entryOpt"),li=Symbol("writeEntryClass"),nr=Symbol("write"),os=Symbol("ondrain"),Et=class extends A{sync=!1;opt;cwd;maxReadSize;preservePaths;strict;noPax;prefix;linkCache;statCache;file;portable;zip;readdirCache;noDirRecurse;follow;noMtime;mtime;filter;jobs;[li];onWriteEntry;[W];[G]=0;[pe]=!1;[me]=!1;constructor(t={}){if(super(),this.opt=t,this.file=t.file||"",this.cwd=t.cwd||process.cwd(),this.maxReadSize=t.maxReadSize,this.preservePaths=!!t.preservePaths,this.strict=!!t.strict,this.noPax=!!t.noPax,this.prefix=f(t.prefix||""),this.linkCache=t.linkCache||new Map,this.statCache=t.statCache||new Map,this.readdirCache=t.readdirCache||new Map,this.onWriteEntry=t.onWriteEntry,this[li]=de,typeof t.onwarn=="function"&&this.on("warn",t.onwarn),this.portable=!!t.portable,t.gzip||t.brotli||t.zstd){if((t.gzip?1:0)+(t.brotli?1:0)+(t.zstd?1:0)>1)throw new TypeError("gzip, brotli, zstd are mutually exclusive");if(t.gzip&&(typeof t.gzip!="object"&&(t.gzip={}),this.portable&&(t.gzip.portable=!0),this.zip=new Be(t.gzip)),t.brotli&&(typeof t.brotli!="object"&&(t.brotli={}),this.zip=new Ue(t.brotli)),t.zstd&&(typeof t.zstd!="object"&&(t.zstd={}),this.zip=new Ge(t.zstd)),!this.zip)throw new Error("impossible");let e=this.zip;e.on("data",i=>super.write(i)),e.on("end",()=>super.end()),e.on("drain",()=>this[os]()),this.on("resume",()=>e.resume())}else this.on("drain",this[os]);this.noDirRecurse=!!t.noDirRecurse,this.follow=!!t.follow,this.noMtime=!!t.noMtime,t.mtime&&(this.mtime=t.mtime),this.filter=typeof t.filter=="function"?t.filter:()=>!0,this[W]=new ri,this[G]=0,this.jobs=Number(t.jobs)||4,this[pe]=!1,this[me]=!1}[nr](t){return super.write(t)}add(t){return this.write(t),this}end(t,e,i){return typeof t=="function"&&(i=t,t=void 0),typeof e=="function"&&(i=e,e=void 0),t&&this.add(t),this[me]=!0,this[Ft](),i&&i(),this}write(t){if(this[me])throw new Error("write after end");return t instanceof Yt?this[ir](t):this[oi](t),this.flowing}[ir](t){let e=f(external_path_.resolve(this.cwd,t.path));if(!this.filter(t.path,t))t.resume();else{let i=new fi(t.path,e);i.entry=new si(t,this[index_min_ns](i)),i.entry.on("end",()=>this[rs](i)),this[G]+=1,this[W].push(i)}this[Ft]()}[oi](t){let e=f(external_path_.resolve(this.cwd,t));this[W].push(new fi(t,e)),this[Ft]()}[hs](t){t.pending=!0,this[G]+=1;let e=this.follow?"stat":"lstat";external_fs_[e](t.absolute,(i,r)=>{t.pending=!1,this[G]-=1,i?this.emit("error",i):this[ni](t,r)})}[ni](t,e){this.statCache.set(t.absolute,e),t.stat=e,this.filter(t.path,e)?e.isFile()&&e.nlink>1&&t===this[Ct]&&!this.linkCache.get(`${e.dev}:${e.ino}`)&&!this.sync&&this[ss](t):t.ignore=!0,this[Ft]()}[as](t){t.pending=!0,this[G]+=1,external_fs_.readdir(t.absolute,(e,i)=>{if(t.pending=!1,this[G]-=1,e)return this.emit("error",e);this[hi](t,i)})}[hi](t,e){this.readdirCache.set(t.absolute,e),t.readdir=e,this[Ft]()}[Ft](){if(!this[pe]){this[pe]=!0;for(let t=this[W].head;t&&this[G]<this.jobs;t=t.next)if(this[ss](t.value),t.value.ignore){let e=t.next;this[W].removeNode(t),t.next=e}this[pe]=!1,this[me]&&!this[W].length&&this[G]===0&&(this.zip?this.zip.end(er):(super.write(er),super.end()))}}get[Ct](){return this[W]&&this[W].head&&this[W].head.value}[rs](t){this[W].shift(),this[G]-=1,this[Ft]()}[ss](t){if(!t.pending){if(t.entry){t===this[Ct]&&!t.piped&&this[ai](t);return}if(!t.stat){let e=this.statCache.get(t.absolute);e?this[ni](t,e):this[hs](t)}if(t.stat&&!t.ignore){if(!this.noDirRecurse&&t.stat.isDirectory()&&!t.readdir){let e=this.readdirCache.get(t.absolute);if(e?this[hi](t,e):this[as](t),!t.readdir)return}if(t.entry=this[sr](t),!t.entry){t.ignore=!0;return}t===this[Ct]&&!t.piped&&this[ai](t)}}}[index_min_ns](t){return{onwarn:(e,i,r)=>this.warn(e,i,r),noPax:this.noPax,cwd:this.cwd,absolute:t.absolute,preservePaths:this.preservePaths,maxReadSize:this.maxReadSize,strict:this.strict,portable:this.portable,linkCache:this.linkCache,statCache:this.statCache,noMtime:this.noMtime,mtime:this.mtime,prefix:this.prefix,onWriteEntry:this.onWriteEntry}}[sr](t){this[G]+=1;try{return new this[li](t.path,this[index_min_ns](t)).on("end",()=>this[rs](t)).on("error",i=>this.emit("error",i))}catch(e){this.emit("error",e)}}[os](){this[Ct]&&this[Ct].entry&&this[Ct].entry.resume()}[ai](t){t.piped=!0,t.readdir&&t.readdir.forEach(r=>{let n=t.path,o=n==="./"?"":n.replace(/\/*$/,"/");this[oi](o+r)});let e=t.entry,i=this.zip;if(!e)throw new Error("cannot pipe without source");i?e.on("data",r=>{i.write(r)||e.pause()}):e.on("data",r=>{super.write(r)||e.pause()})}pause(){return this.zip&&this.zip.pause(),super.pause()}warn(t,e,i={}){Lt(this,t,e,i)}},kt=class extends Et{sync=!0;constructor(t){super(t),this[li]=ii}pause(){}resume(){}[hs](t){let e=this.follow?"statSync":"lstatSync";this[ni](t,external_fs_[e](t.absolute))}[as](t){this[hi](t,external_fs_.readdirSync(t.absolute))}[ai](t){let e=t.entry,i=this.zip;if(t.readdir&&t.readdir.forEach(r=>{let n=t.path,o=n==="./"?"":n.replace(/\/*$/,"/");this[oi](o+r)}),!e)throw new Error("Cannot pipe without source");i?e.on("data",r=>{i.write(r)}):e.on("data",r=>{super[nr](r)})}};var vn=(s,t)=>{let e=new kt(s),i=new Wt(s.file,{mode:s.mode||438});e.pipe(i),hr(e,t)},Mn=(s,t)=>{let e=new Et(s),i=new tt(s.file,{mode:s.mode||438});e.pipe(i);let r=new Promise((n,o)=>{i.on("error",o),i.on("close",n),e.on("error",o)});return ar(e,t),r},hr=(s,t)=>{t.forEach(e=>{e.charAt(0)==="@"?It({file:external_node_path_namespaceObject.resolve(s.cwd,e.slice(1)),sync:!0,noResume:!0,onReadEntry:i=>s.add(i)}):s.add(e)}),s.end()},ar=async(s,t)=>{for(let e=0;e<t.length;e++){let i=String(t[e]);i.charAt(0)==="@"?await It({file:external_node_path_namespaceObject.resolve(String(s.cwd),i.slice(1)),noResume:!0,onReadEntry:r=>{s.add(r)}}):s.add(i)}s.end()},Bn=(s,t)=>{let e=new kt(s);return hr(e,t),e},Pn=(s,t)=>{let e=new Et(s);return ar(e,t),e},zn=K(vn,Mn,Bn,Pn,(s,t)=>{if(!t?.length)throw new TypeError("no paths specified to add to archive")});var Un={}.__FAKE_PLATFORM__||process.platform,Hn=Un==="win32",{O_CREAT:Wn,O_TRUNC:Gn,O_WRONLY:Zn}=external_fs_.constants,cr=Number({}.__FAKE_FS_O_FILENAME__)||external_fs_.constants.UV_FS_O_FILEMAP||0,Yn=Hn&&!!cr,Kn=512*1024,Vn=cr|Gn|Wn|Zn,ls=Yn?s=>s<Kn?Vn:"w":()=>"w";var cs=(s,t,e)=>{try{return external_node_fs_namespaceObject.lchownSync(s,t,e)}catch(i){if(i?.code!=="ENOENT")throw i}},di=(s,t,e,i)=>{external_node_fs_namespaceObject.lchown(s,t,e,r=>{i(r&&r?.code!=="ENOENT"?r:null)})},$n=(s,t,e,i,r)=>{if(t.isDirectory())fs(external_node_path_namespaceObject.resolve(s,t.name),e,i,n=>{if(n)return r(n);let o=external_node_path_namespaceObject.resolve(s,t.name);di(o,e,i,r)});else{let n=external_node_path_namespaceObject.resolve(s,t.name);di(n,e,i,r)}},fs=(s,t,e,i)=>{external_node_fs_namespaceObject.readdir(s,{withFileTypes:!0},(r,n)=>{if(r){if(r.code==="ENOENT")return i();if(r.code!=="ENOTDIR"&&r.code!=="ENOTSUP")return i(r)}if(r||!n.length)return di(s,t,e,i);let o=n.length,h=null,a=l=>{if(!h){if(l)return i(h=l);if(--o===0)return di(s,t,e,i)}};for(let l of n)$n(s,l,t,e,a)})},Xn=(s,t,e,i)=>{t.isDirectory()&&ds(external_node_path_namespaceObject.resolve(s,t.name),e,i),cs(external_node_path_namespaceObject.resolve(s,t.name),e,i)},ds=(s,t,e)=>{let i;try{i=external_node_fs_namespaceObject.readdirSync(s,{withFileTypes:!0})}catch(r){let n=r;if(n?.code==="ENOENT")return;if(n?.code==="ENOTDIR"||n?.code==="ENOTSUP")return cs(s,t,e);throw n}for(let r of i)Xn(s,r,t,e);return cs(s,t,e)};var we=class extends Error{path;code;syscall="chdir";constructor(t,e){super(`${e}: Cannot cd into '${t}'`),this.path=t,this.code=e}get name(){return"CwdError"}};var wt=class extends Error{path;symlink;syscall="symlink";code="TAR_SYMLINK_ERROR";constructor(t,e){super("TAR_SYMLINK_ERROR: Cannot extract through symbolic link"),this.symlink=t,this.path=e}get name(){return"SymlinkError"}};var jn=(s,t)=>{external_node_fs_namespaceObject.stat(s,(e,i)=>{(e||!i.isDirectory())&&(e=new we(s,e?.code||"ENOTDIR")),t(e)})},fr=(s,t,e)=>{s=f(s);let i=t.umask??18,r=t.mode|448,n=(r&i)!==0,o=t.uid,h=t.gid,a=typeof o=="number"&&typeof h=="number"&&(o!==t.processUid||h!==t.processGid),l=t.preserve,c=t.unlink,d=f(t.cwd),S=(E,x)=>{E?e(E):x&&a?fs(x,o,h,_s=>S(_s)):n?external_node_fs_namespaceObject.chmod(s,r,e):e()};if(s===d)return jn(s,S);if(l)return promises_namespaceObject.mkdir(s,{mode:r,recursive:!0}).then(E=>S(null,E??void 0),S);let N=f(external_node_path_namespaceObject.relative(d,s)).split("/");us(d,N,r,c,d,void 0,S)},us=(s,t,e,i,r,n,o)=>{if(!t.length)return o(null,n);let h=t.shift(),a=f(external_node_path_namespaceObject.resolve(s+"/"+h));external_node_fs_namespaceObject.mkdir(a,e,dr(a,t,e,i,r,n,o))},dr=(s,t,e,i,r,n,o)=>h=>{h?external_node_fs_namespaceObject.lstat(s,(a,l)=>{if(a)a.path=a.path&&f(a.path),o(a);else if(l.isDirectory())us(s,t,e,i,r,n,o);else if(i)external_node_fs_namespaceObject.unlink(s,c=>{if(c)return o(c);external_node_fs_namespaceObject.mkdir(s,e,dr(s,t,e,i,r,n,o))});else{if(l.isSymbolicLink())return o(new wt(s,s+"/"+t.join("/")));o(h)}}):(n=n||s,us(s,t,e,i,r,n,o))},Qn=s=>{let t=!1,e;try{t=external_node_fs_namespaceObject.statSync(s).isDirectory()}catch(i){e=i?.code}finally{if(!t)throw new we(s,e??"ENOTDIR")}},ur=(s,t)=>{s=f(s);let e=t.umask??18,i=t.mode|448,r=(i&e)!==0,n=t.uid,o=t.gid,h=typeof n=="number"&&typeof o=="number"&&(n!==t.processUid||o!==t.processGid),a=t.preserve,l=t.unlink,c=f(t.cwd),d=E=>{E&&h&&ds(E,n,o),r&&external_node_fs_namespaceObject.chmodSync(s,i)};if(s===c)return Qn(c),d();if(a)return d(external_node_fs_namespaceObject.mkdirSync(s,{mode:i,recursive:!0})??void 0);let T=f(external_node_path_namespaceObject.relative(c,s)).split("/"),N;for(let E=T.shift(),x=c;E&&(x+="/"+E);E=T.shift()){x=f(external_node_path_namespaceObject.resolve(x));try{external_node_fs_namespaceObject.mkdirSync(x,i),N=N||x}catch{let Os=external_node_fs_namespaceObject.lstatSync(x);if(Os.isDirectory())continue;if(l){external_node_fs_namespaceObject.unlinkSync(x),external_node_fs_namespaceObject.mkdirSync(x,i),N=N||x;continue}else if(Os.isSymbolicLink())return new wt(x,x+"/"+T.join("/"))}}return d(N)};var ms=Object.create(null),mr=1e4,$t=new Set,pr=s=>{$t.has(s)?$t.delete(s):ms[s]=s.normalize("NFD").toLocaleLowerCase("en").toLocaleUpperCase("en"),$t.add(s);let t=ms[s],e=$t.size-mr;if(e>mr/10){for(let i of $t)if($t.delete(i),delete ms[i],--e<=0)break}return t};var Jn={}.TESTING_TAR_FAKE_PLATFORM||process.platform,to=Jn==="win32",eo=s=>s.split("/").slice(0,-1).reduce((e,i)=>{let r=e[e.length-1];return r!==void 0&&(i=(0,external_node_path_namespaceObject.join)(r,i)),e.push(i||"/"),e},[]),pi=class{#t=new Map;#i=new Map;#s=new Set;reserve(t,e){t=to?["win32 parallelization disabled"]:t.map(r=>mt((0,external_node_path_namespaceObject.join)(pr(r))));let i=new Set(t.map(r=>eo(r)).reduce((r,n)=>r.concat(n)));this.#i.set(e,{dirs:i,paths:t});for(let r of t){let n=this.#t.get(r);n?n.push(e):this.#t.set(r,[e])}for(let r of i){let n=this.#t.get(r);if(!n)this.#t.set(r,[new Set([e])]);else{let o=n[n.length-1];o instanceof Set?o.add(e):n.push(new Set([e]))}}return this.#r(e)}#n(t){let e=this.#i.get(t);if(!e)throw new Error("function does not have any path reservations");return{paths:e.paths.map(i=>this.#t.get(i)),dirs:[...e.dirs].map(i=>this.#t.get(i))}}check(t){let{paths:e,dirs:i}=this.#n(t);return e.every(r=>r&&r[0]===t)&&i.every(r=>r&&r[0]instanceof Set&&r[0].has(t))}#r(t){return this.#s.has(t)||!this.check(t)?!1:(this.#s.add(t),t(()=>this.#e(t)),!0)}#e(t){if(!this.#s.has(t))return!1;let e=this.#i.get(t);if(!e)throw new Error("invalid reservation");let{paths:i,dirs:r}=e,n=new Set;for(let o of i){let h=this.#t.get(o);if(!h||h?.[0]!==t)continue;let a=h[1];if(!a){this.#t.delete(o);continue}if(h.shift(),typeof a=="function")n.add(a);else for(let l of a)n.add(l)}for(let o of r){let h=this.#t.get(o),a=h?.[0];if(!(!h||!(a instanceof Set)))if(a.size===1&&h.length===1){this.#t.delete(o);continue}else if(a.size===1){h.shift();let l=h[0];typeof l=="function"&&n.add(l)}else a.delete(t)}return this.#s.delete(t),n.forEach(o=>this.#r(o)),!0}};var wr=()=>process.umask();var Sr=Symbol("onEntry"),Ss=Symbol("checkFs"),yr=Symbol("checkFs2"),ys=Symbol("isReusable"),P=Symbol("makeFs"),Rs=Symbol("file"),bs=Symbol("directory"),wi=Symbol("link"),Rr=Symbol("symlink"),br=Symbol("hardlink"),ye=Symbol("ensureNoSymlink"),gr=Symbol("unsupported"),_r=Symbol("checkPath"),ps=Symbol("stripAbsolutePath"),St=Symbol("mkdir"),O=Symbol("onError"),Ei=Symbol("pending"),Or=Symbol("pend"),Xt=Symbol("unpend"),Es=Symbol("ended"),ws=Symbol("maybeClose"),gs=Symbol("skip"),Re=Symbol("doChown"),be=Symbol("uid"),ge=Symbol("gid"),_e=Symbol("checkedCwd"),so={}.TESTING_TAR_FAKE_PLATFORM||process.platform,Oe=so==="win32",ro=1024,no=(s,t)=>{if(!Oe)return external_node_fs_namespaceObject.unlink(s,t);let e=s+".DELETE."+(0,external_node_crypto_namespaceObject.randomBytes)(16).toString("hex");external_node_fs_namespaceObject.rename(s,e,i=>{if(i)return t(i);external_node_fs_namespaceObject.unlink(e,t)})},oo=s=>{if(!Oe)return external_node_fs_namespaceObject.unlinkSync(s);let t=s+".DELETE."+(0,external_node_crypto_namespaceObject.randomBytes)(16).toString("hex");external_node_fs_namespaceObject.renameSync(s,t),external_node_fs_namespaceObject.unlinkSync(t)},Tr=(s,t,e)=>s!==void 0&&s===s>>>0?s:t!==void 0&&t===t>>>0?t:e,qt=class extends st{[Es]=!1;[_e]=!1;[Ei]=0;reservations=new pi;transform;writable=!0;readable=!1;uid;gid;setOwner;preserveOwner;processGid;processUid;maxDepth;forceChown;win32;newer;keep;noMtime;preservePaths;unlink;cwd;strip;processUmask;umask;dmode;fmode;chmod;constructor(t={}){if(t.ondone=()=>{this[Es]=!0,this[ws]()},super(t),this.transform=t.transform,this.chmod=!!t.chmod,typeof t.uid=="number"||typeof t.gid=="number"){if(typeof t.uid!="number"||typeof t.gid!="number")throw new TypeError("cannot set owner without number uid and gid");if(t.preserveOwner)throw new TypeError("cannot preserve owner in archive and also set owner explicitly");this.uid=t.uid,this.gid=t.gid,this.setOwner=!0}else this.uid=void 0,this.gid=void 0,this.setOwner=!1;t.preserveOwner===void 0&&typeof t.uid!="number"?this.preserveOwner=!!(process.getuid&&process.getuid()===0):this.preserveOwner=!!t.preserveOwner,this.processUid=(this.preserveOwner||this.setOwner)&&process.getuid?process.getuid():void 0,this.processGid=(this.preserveOwner||this.setOwner)&&process.getgid?process.getgid():void 0,this.maxDepth=typeof t.maxDepth=="number"?t.maxDepth:ro,this.forceChown=t.forceChown===!0,this.win32=!!t.win32||Oe,this.newer=!!t.newer,this.keep=!!t.keep,this.noMtime=!!t.noMtime,this.preservePaths=!!t.preservePaths,this.unlink=!!t.unlink,this.cwd=f(external_node_path_namespaceObject.resolve(t.cwd||process.cwd())),this.strip=Number(t.strip)||0,this.processUmask=this.chmod?typeof t.processUmask=="number"?t.processUmask:wr():0,this.umask=typeof t.umask=="number"?t.umask:this.processUmask,this.dmode=t.dmode||511&~this.umask,this.fmode=t.fmode||438&~this.umask,this.on("entry",e=>this[Sr](e))}warn(t,e,i={}){return(t==="TAR_BAD_ARCHIVE"||t==="TAR_ABORT")&&(i.recoverable=!1),super.warn(t,e,i)}[ws](){this[Es]&&this[Ei]===0&&(this.emit("prefinish"),this.emit("finish"),this.emit("end"))}[ps](t,e){let i=t[e],{type:r}=t;if(!i||this.preservePaths)return!0;let[n,o]=index_min_ce(i),h=o.replace(/\\/g,"/").split("/");if(h.includes("..")||Oe&&/^[a-z]:\.\.$/i.test(h[0]??"")){if(e==="path"||r==="Link")return this.warn("TAR_ENTRY_ERROR",`${e} contains '..'`,{entry:t,[e]:i}),!1;{let a=external_node_path_namespaceObject.posix.dirname(t.path),l=external_node_path_namespaceObject.posix.normalize(external_node_path_namespaceObject.posix.join(a,h.join("/")));if(l.startsWith("../")||l==="..")return this.warn("TAR_ENTRY_ERROR",`${e} escapes extraction directory`,{entry:t,[e]:i}),!1}}return n&&(t[e]=String(o),this.warn("TAR_ENTRY_INFO",`stripping ${n} from absolute ${e}`,{entry:t,[e]:i})),!0}[_r](t){let e=f(t.path),i=e.split("/");if(this.strip){if(i.length<this.strip)return!1;if(t.type==="Link"){let r=f(String(t.linkpath)).split("/");if(r.length>=this.strip)t.linkpath=r.slice(this.strip).join("/");else return!1}i.splice(0,this.strip),t.path=i.join("/")}if(isFinite(this.maxDepth)&&i.length>this.maxDepth)return this.warn("TAR_ENTRY_ERROR","path excessively deep",{entry:t,path:e,depth:i.length,maxDepth:this.maxDepth}),!1;if(!this[ps](t,"path")||!this[ps](t,"linkpath"))return!1;if(external_node_path_namespaceObject.isAbsolute(t.path)?t.absolute=f(external_node_path_namespaceObject.resolve(t.path)):t.absolute=f(external_node_path_namespaceObject.resolve(this.cwd,t.path)),!this.preservePaths&&typeof t.absolute=="string"&&t.absolute.indexOf(this.cwd+"/")!==0&&t.absolute!==this.cwd)return this.warn("TAR_ENTRY_ERROR","path escaped extraction target",{entry:t,path:f(t.path),resolvedPath:t.absolute,cwd:this.cwd}),!1;if(t.absolute===this.cwd&&t.type!=="Directory"&&t.type!=="GNUDumpDir")return!1;if(this.win32){let{root:r}=external_node_path_namespaceObject.win32.parse(String(t.absolute));t.absolute=r+$i(String(t.absolute).slice(r.length));let{root:n}=external_node_path_namespaceObject.win32.parse(t.path);t.path=n+$i(t.path.slice(n.length))}return!0}[Sr](t){if(!this[_r](t))return t.resume();switch(external_node_assert_namespaceObject.equal(typeof t.absolute,"string"),t.type){case"Directory":case"GNUDumpDir":t.mode&&(t.mode=t.mode|448);case"File":case"OldFile":case"ContiguousFile":case"Link":case"SymbolicLink":return this[Ss](t);default:return this[gr](t)}}[O](t,e){t.name==="CwdError"?this.emit("error",t):(this.warn("TAR_ENTRY_ERROR",t,{entry:e}),this[Xt](),e.resume())}[St](t,e,i){fr(f(t),{uid:this.uid,gid:this.gid,processUid:this.processUid,processGid:this.processGid,umask:this.processUmask,preserve:this.preservePaths,unlink:this.unlink,cwd:this.cwd,mode:e},i)}[Re](t){return this.forceChown||this.preserveOwner&&(typeof t.uid=="number"&&t.uid!==this.processUid||typeof t.gid=="number"&&t.gid!==this.processGid)||typeof this.uid=="number"&&this.uid!==this.processUid||typeof this.gid=="number"&&this.gid!==this.processGid}[be](t){return Tr(this.uid,t.uid,this.processUid)}[ge](t){return Tr(this.gid,t.gid,this.processGid)}[Rs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.fmode,r=new tt(String(t.absolute),{flags:ls(t.size),mode:i,autoClose:!1});r.on("error",a=>{r.fd&&external_node_fs_namespaceObject.close(r.fd,()=>{}),r.write=()=>!0,this[O](a,t),e()});let n=1,o=a=>{if(a){r.fd&&external_node_fs_namespaceObject.close(r.fd,()=>{}),this[O](a,t),e();return}--n===0&&r.fd!==void 0&&external_node_fs_namespaceObject.close(r.fd,l=>{l?this[O](l,t):this[Xt](),e()})};r.on("finish",()=>{let a=String(t.absolute),l=r.fd;if(typeof l=="number"&&t.mtime&&!this.noMtime){n++;let c=t.atime||new Date,d=t.mtime;external_node_fs_namespaceObject.futimes(l,c,d,S=>S?external_node_fs_namespaceObject.utimes(a,c,d,T=>o(T&&S)):o())}if(typeof l=="number"&&this[Re](t)){n++;let c=this[be](t),d=this[ge](t);typeof c=="number"&&typeof d=="number"&&external_node_fs_namespaceObject.fchown(l,c,d,S=>S?external_node_fs_namespaceObject.chown(a,c,d,T=>o(T&&S)):o())}o()});let h=this.transform&&this.transform(t)||t;h!==t&&(h.on("error",a=>{this[O](a,t),e()}),t.pipe(h)),h.pipe(r)}[bs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.dmode;this[St](String(t.absolute),i,r=>{if(r){this[O](r,t),e();return}let n=1,o=()=>{--n===0&&(e(),this[Xt](),t.resume())};t.mtime&&!this.noMtime&&(n++,external_node_fs_namespaceObject.utimes(String(t.absolute),t.atime||new Date,t.mtime,o)),this[Re](t)&&(n++,external_node_fs_namespaceObject.chown(String(t.absolute),Number(this[be](t)),Number(this[ge](t)),o)),o()})}[gr](t){t.unsupported=!0,this.warn("TAR_ENTRY_UNSUPPORTED",`unsupported entry type: ${t.type}`,{entry:t}),t.resume()}[Rr](t,e){let i=f(external_node_path_namespaceObject.relative(this.cwd,external_node_path_namespaceObject.resolve(external_node_path_namespaceObject.dirname(String(t.absolute)),String(t.linkpath)))).split("/");this[ye](t,this.cwd,i,()=>this[wi](t,String(t.linkpath),"symlink",e),r=>{this[O](r,t),e()})}[br](t,e){let i=f(external_node_path_namespaceObject.resolve(this.cwd,String(t.linkpath))),r=f(String(t.linkpath)).split("/");this[ye](t,this.cwd,r,()=>this[wi](t,i,"link",e),n=>{this[O](n,t),e()})}[ye](t,e,i,r,n){let o=i.shift();if(this.preservePaths||o===void 0)return r();let h=external_node_path_namespaceObject.resolve(e,o);external_node_fs_namespaceObject.lstat(h,(a,l)=>{if(a)return r();if(l?.isSymbolicLink())return n(new wt(h,external_node_path_namespaceObject.resolve(h,i.join("/"))));this[ye](t,h,i,r,n)})}[Or](){this[Ei]++}[Xt](){this[Ei]--,this[ws]()}[gs](t){this[Xt](),t.resume()}[ys](t,e){return t.type==="File"&&!this.unlink&&e.isFile()&&e.nlink<=1&&!Oe}[Ss](t){this[Or]();let e=[t.path];t.linkpath&&e.push(t.linkpath),this.reservations.reserve(e,i=>this[yr](t,i))}[yr](t,e){let i=h=>{e(h)},r=()=>{this[St](this.cwd,this.dmode,h=>{if(h){this[O](h,t),i();return}this[_e]=!0,n()})},n=()=>{if(t.absolute!==this.cwd){let h=f(external_node_path_namespaceObject.dirname(String(t.absolute)));if(h!==this.cwd)return this[St](h,this.dmode,a=>{if(a){this[O](a,t),i();return}o()})}o()},o=()=>{external_node_fs_namespaceObject.lstat(String(t.absolute),(h,a)=>{if(a&&(this.keep||this.newer&&a.mtime>(t.mtime??a.mtime))){this[gs](t),i();return}if(h||this[ys](t,a))return this[P](null,t,i);if(a.isDirectory()){if(t.type==="Directory"){let l=this.chmod&&t.mode&&(a.mode&4095)!==t.mode,c=d=>this[P](d??null,t,i);return l?external_node_fs_namespaceObject.chmod(String(t.absolute),Number(t.mode),c):c()}if(t.absolute!==this.cwd)return external_node_fs_namespaceObject.rmdir(String(t.absolute),l=>this[P](l??null,t,i))}if(t.absolute===this.cwd)return this[P](null,t,i);no(String(t.absolute),l=>this[P](l??null,t,i))})};this[_e]?n():r()}[P](t,e,i){if(t){this[O](t,e),i();return}switch(e.type){case"File":case"OldFile":case"ContiguousFile":return this[Rs](e,i);case"Link":return this[br](e,i);case"SymbolicLink":return this[Rr](e,i);case"Directory":case"GNUDumpDir":return this[bs](e,i)}}[wi](t,e,i,r){external_node_fs_namespaceObject[i](e,String(t.absolute),n=>{n?this[O](n,t):(this[Xt](),t.resume()),r()})}},Se=s=>{try{return[null,s()]}catch(t){return[t,null]}},Te=class extends qt{sync=!0;[P](t,e){return super[P](t,e,()=>{})}[Ss](t){if(!this[_e]){let n=this[St](this.cwd,this.dmode);if(n)return this[O](n,t);this[_e]=!0}if(t.absolute!==this.cwd){let n=f(external_node_path_namespaceObject.dirname(String(t.absolute)));if(n!==this.cwd){let o=this[St](n,this.dmode);if(o)return this[O](o,t)}}let[e,i]=Se(()=>external_node_fs_namespaceObject.lstatSync(String(t.absolute)));if(i&&(this.keep||this.newer&&i.mtime>(t.mtime??i.mtime)))return this[gs](t);if(e||this[ys](t,i))return this[P](null,t);if(i.isDirectory()){if(t.type==="Directory"){let o=this.chmod&&t.mode&&(i.mode&4095)!==t.mode,[h]=o?Se(()=>{external_node_fs_namespaceObject.chmodSync(String(t.absolute),Number(t.mode))}):[];return this[P](h,t)}let[n]=Se(()=>external_node_fs_namespaceObject.rmdirSync(String(t.absolute)));this[P](n,t)}let[r]=t.absolute===this.cwd?[]:Se(()=>oo(String(t.absolute)));this[P](r,t)}[Rs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.fmode,r=h=>{let a;try{external_node_fs_namespaceObject.closeSync(n)}catch(l){a=l}(h||a)&&this[O](h||a,t),e()},n;try{n=external_node_fs_namespaceObject.openSync(String(t.absolute),ls(t.size),i)}catch(h){return r(h)}let o=this.transform&&this.transform(t)||t;o!==t&&(o.on("error",h=>this[O](h,t)),t.pipe(o)),o.on("data",h=>{try{external_node_fs_namespaceObject.writeSync(n,h,0,h.length)}catch(a){r(a)}}),o.on("end",()=>{let h=null;if(t.mtime&&!this.noMtime){let a=t.atime||new Date,l=t.mtime;try{external_node_fs_namespaceObject.futimesSync(n,a,l)}catch(c){try{external_node_fs_namespaceObject.utimesSync(String(t.absolute),a,l)}catch{h=c}}}if(this[Re](t)){let a=this[be](t),l=this[ge](t);try{external_node_fs_namespaceObject.fchownSync(n,Number(a),Number(l))}catch(c){try{external_node_fs_namespaceObject.chownSync(String(t.absolute),Number(a),Number(l))}catch{h=h||c}}}r(h)})}[bs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.dmode,r=this[St](String(t.absolute),i);if(r){this[O](r,t),e();return}if(t.mtime&&!this.noMtime)try{external_node_fs_namespaceObject.utimesSync(String(t.absolute),t.atime||new Date,t.mtime)}catch{}if(this[Re](t))try{external_node_fs_namespaceObject.chownSync(String(t.absolute),Number(this[be](t)),Number(this[ge](t)))}catch{}e(),t.resume()}[St](t,e){try{return ur(f(t),{uid:this.uid,gid:this.gid,processUid:this.processUid,processGid:this.processGid,umask:this.processUmask,preserve:this.preservePaths,unlink:this.unlink,cwd:this.cwd,mode:e})}catch(i){return i}}[ye](t,e,i,r,n){if(this.preservePaths||!i.length)return r();let o=e;for(let h of i){o=external_node_path_namespaceObject.resolve(o,h);let[a,l]=Se(()=>external_node_fs_namespaceObject.lstatSync(o));if(a)return r();if(l.isSymbolicLink())return n(new wt(o,external_node_path_namespaceObject.resolve(e,i.join("/"))))}r()}[wi](t,e,i,r){let n=`${i}Sync`;try{external_node_fs_namespaceObject[n](e,String(t.absolute)),r(),t.resume()}catch(o){return this[O](o,t)}}};var ho=s=>{let t=new Te(s),e=s.file,i=external_node_fs_namespaceObject.statSync(e),r=s.maxReadSize||16*1024*1024;new ve(e,{readSize:r,size:i.size}).pipe(t)},ao=(s,t)=>{let e=new qt(s),i=s.maxReadSize||16*1024*1024,r=s.file;return new Promise((o,h)=>{e.on("error",h),e.on("close",o),external_node_fs_namespaceObject.stat(r,(a,l)=>{if(a)h(a);else{let c=new gt(r,{readSize:i,size:l.size});c.on("error",h),c.pipe(e)}})})},lo=K(ho,ao,s=>new Te(s),s=>new qt(s),(s,t)=>{t?.length&&Yi(s,t)});var co=(s,t)=>{let e=new kt(s),i=!0,r,n;try{try{r=external_node_fs_namespaceObject.openSync(s.file,"r+")}catch(a){if(a?.code==="ENOENT")r=external_node_fs_namespaceObject.openSync(s.file,"w+");else throw a}let o=external_node_fs_namespaceObject.fstatSync(r),h=Buffer.alloc(512);t:for(n=0;n<o.size;n+=512){for(let c=0,d=0;c<512;c+=d){if(d=external_node_fs_namespaceObject.readSync(r,h,c,h.length-c,n+c),n===0&&h[0]===31&&h[1]===139)throw new Error("cannot append to compressed archives");if(!d)break t}let a=new F(h);if(!a.cksumValid)break;let l=512*Math.ceil((a.size||0)/512);if(n+l+512>o.size)break;n+=l,s.mtimeCache&&a.mtime&&s.mtimeCache.set(String(a.path),a.mtime)}i=!1,fo(s,e,n,r,t)}finally{if(i)try{external_node_fs_namespaceObject.closeSync(r)}catch{}}},fo=(s,t,e,i,r)=>{let n=new Wt(s.file,{fd:i,start:e});t.pipe(n),mo(t,r)},uo=(s,t)=>{t=Array.from(t);let e=new Et(s),i=(n,o,h)=>{let a=(T,N)=>{T?external_node_fs_namespaceObject.close(n,E=>h(T)):h(null,N)},l=0;if(o===0)return a(null,0);let c=0,d=Buffer.alloc(512),S=(T,N)=>{if(T||typeof N>"u")return a(T);if(c+=N,c<512&&N)return external_node_fs_namespaceObject.read(n,d,c,d.length-c,l+c,S);if(l===0&&d[0]===31&&d[1]===139)return a(new Error("cannot append to compressed archives"));if(c<512)return a(null,l);let E=new F(d);if(!E.cksumValid)return a(null,l);let x=512*Math.ceil((E.size??0)/512);if(l+x+512>o||(l+=x+512,l>=o))return a(null,l);s.mtimeCache&&E.mtime&&s.mtimeCache.set(String(E.path),E.mtime),c=0,external_node_fs_namespaceObject.read(n,d,0,512,l,S)};external_node_fs_namespaceObject.read(n,d,0,512,l,S)};return new Promise((n,o)=>{e.on("error",o);let h="r+",a=(l,c)=>{if(l&&l.code==="ENOENT"&&h==="r+")return h="w+",external_node_fs_namespaceObject.open(s.file,h,a);if(l||!c)return o(l);external_node_fs_namespaceObject.fstat(c,(d,S)=>{if(d)return external_node_fs_namespaceObject.close(c,()=>o(d));i(c,S.size,(T,N)=>{if(T)return o(T);let E=new tt(s.file,{fd:c,start:N});e.pipe(E),E.on("error",o),E.on("close",n),po(e,t)})})};external_node_fs_namespaceObject.open(s.file,h,a)})},mo=(s,t)=>{t.forEach(e=>{e.charAt(0)==="@"?It({file:external_node_path_namespaceObject.resolve(s.cwd,e.slice(1)),sync:!0,noResume:!0,onReadEntry:i=>s.add(i)}):s.add(e)}),s.end()},po=async(s,t)=>{for(let e=0;e<t.length;e++){let i=String(t[e]);i.charAt(0)==="@"?await It({file:external_node_path_namespaceObject.resolve(String(s.cwd),i.slice(1)),noResume:!0,onReadEntry:r=>s.add(r)}):s.add(i)}s.end()},vt=K(co,uo,()=>{throw new TypeError("file is required")},()=>{throw new TypeError("file is required")},(s,t)=>{if(!ks(s))throw new TypeError("file is required");if(s.gzip||s.brotli||s.zstd||s.file.endsWith(".br")||s.file.endsWith(".tbr"))throw new TypeError("cannot append to compressed archives");if(!t?.length)throw new TypeError("no paths specified to add/replace")});var Eo=K(vt.syncFile,vt.asyncFile,vt.syncNoFile,vt.asyncNoFile,(s,t=[])=>{vt.validate?.(s,t),wo(s)}),wo=s=>{let t=s.filter;s.mtimeCache||(s.mtimeCache=new Map),s.filter=t?(e,i)=>t(e,i)&&!((s.mtimeCache?.get(e)??i.mtime??0)>(i.mtime??0)):(e,i)=>!((s.mtimeCache?.get(e)??i.mtime??0)>(i.mtime??0))};
+`).reduce(pn,Object.create(null)),pn=(s,t)=>{let e=parseInt(t,10);if(e!==Buffer.byteLength(t)+1)return s;t=t.slice((e+" ").length);let i=t.split("="),r=i.shift();if(!r)return s;let n=r.replace(/^SCHILY\.(dev|ino|nlink)/,"$1"),o=i.join("=");return s[n]=/^([A-Z]+\.)?([mac]|birth|creation)time$/.test(n)?new Date(Number(o)*1e3):/^[0-9]+$/.test(o)?+o:o,s};var En={}.TESTING_TAR_FAKE_PLATFORM||process.platform,f=En!=="win32"?s=>s:s=>s&&s.replace(/\\/g,"/");var Yt=class extends A{extended;globalExtended;header;startBlockSize;blockRemain;remain;type;meta=!1;ignore=!1;path;mode;uid;gid;uname;gname;size=0;mtime;atime;ctime;linkpath;dev;ino;nlink;invalid=!1;absolute;unsupported=!1;constructor(t,e,i){switch(super({}),this.pause(),this.extended=e,this.globalExtended=i,this.header=t,this.remain=t.size??0,this.startBlockSize=512*Math.ceil(this.remain/512),this.blockRemain=this.startBlockSize,this.type=t.type,this.type){case"File":case"OldFile":case"Link":case"SymbolicLink":case"CharacterDevice":case"BlockDevice":case"Directory":case"FIFO":case"ContiguousFile":case"GNUDumpDir":break;case"NextFileHasLongLinkpath":case"NextFileHasLongPath":case"OldGnuLongPath":case"GlobalExtendedHeader":case"ExtendedHeader":case"OldExtendedHeader":this.meta=!0;break;default:this.ignore=!0}if(!t.path)throw new Error("no path provided for tar.ReadEntry");this.path=f(t.path),this.mode=t.mode,this.mode&&(this.mode=this.mode&4095),this.uid=t.uid,this.gid=t.gid,this.uname=t.uname,this.gname=t.gname,this.size=this.remain,this.mtime=t.mtime,this.atime=t.atime,this.ctime=t.ctime,this.linkpath=t.linkpath?f(t.linkpath):void 0,this.uname=t.uname,this.gname=t.gname,e&&this.#t(e),i&&this.#t(i,!0)}write(t){let e=t.length;if(e>this.blockRemain)throw new Error("writing more to entry than is appropriate");let i=this.remain,r=this.blockRemain;return this.remain=Math.max(0,i-e),this.blockRemain=Math.max(0,r-e),this.ignore?!0:i>=e?super.write(t):super.write(t.subarray(0,i))}#t(t,e=!1){t.path&&(t.path=f(t.path)),t.linkpath&&(t.linkpath=f(t.linkpath)),Object.assign(this,Object.fromEntries(Object.entries(t).filter(([i,r])=>!(r==null||i==="path"&&e))))}};var Lt=(s,t,e,i={})=>{s.file&&(i.file=s.file),s.cwd&&(i.cwd=s.cwd),i.code=e instanceof Error&&e.code||t,i.tarCode=t,!s.strict&&i.recoverable!==!1?(e instanceof Error&&(i=Object.assign(e,i),e=e.message),s.emit("warn",t,e,i)):e instanceof Error?s.emit("error",Object.assign(e,i)):s.emit("error",Object.assign(new Error(`${t}: ${e}`),i))};var Sn=1024*1024,Gi=Buffer.from([31,139]),Zi=Buffer.from([40,181,47,253]),yn=Math.max(Gi.length,Zi.length),B=Symbol("state"),Nt=Symbol("writeEntry"),et=Symbol("readEntry"),zi=Symbol("nextEntry"),Hs=Symbol("processEntry"),V=Symbol("extendedHeader"),ae=Symbol("globalExtendedHeader"),ft=Symbol("meta"),Ws=Symbol("emitMeta"),p=Symbol("buffer"),it=Symbol("queue"),dt=Symbol("ended"),Ui=Symbol("emittedEnd"),Dt=Symbol("emit"),y=Symbol("unzip"),Ke=Symbol("consumeChunk"),Ve=Symbol("consumeChunkSub"),Hi=Symbol("consumeBody"),Gs=Symbol("consumeMeta"),Zs=Symbol("consumeHeader"),le=Symbol("consuming"),Wi=Symbol("bufferConcat"),$e=Symbol("maybeEnd"),Kt=Symbol("writing"),ut=Symbol("aborted"),Xe=Symbol("onDone"),At=Symbol("sawValidEntry"),qe=Symbol("sawNullBlock"),je=Symbol("sawEOF"),Ys=Symbol("closeStream"),Rn=()=>!0,st=class extends external_events_namespaceObject.EventEmitter{file;strict;maxMetaEntrySize;filter;brotli;zstd;writable=!0;readable=!1;[it]=[];[p];[et];[Nt];[B]="begin";[ft]="";[V];[ae];[dt]=!1;[y];[ut]=!1;[At];[qe]=!1;[je]=!1;[Kt]=!1;[le]=!1;[Ui]=!1;constructor(t={}){super(),this.file=t.file||"",this.on(Xe,()=>{(this[B]==="begin"||this[At]===!1)&&this.warn("TAR_BAD_ARCHIVE","Unrecognized archive format")}),t.ondone?this.on(Xe,t.ondone):this.on(Xe,()=>{this.emit("prefinish"),this.emit("finish"),this.emit("end")}),this.strict=!!t.strict,this.maxMetaEntrySize=t.maxMetaEntrySize||Sn,this.filter=typeof t.filter=="function"?t.filter:Rn;let e=t.file&&(t.file.endsWith(".tar.br")||t.file.endsWith(".tbr"));this.brotli=!(t.gzip||t.zstd)&&t.brotli!==void 0?t.brotli:e?void 0:!1;let i=t.file&&(t.file.endsWith(".tar.zst")||t.file.endsWith(".tzst"));this.zstd=!(t.gzip||t.brotli)&&t.zstd!==void 0?t.zstd:i?!0:void 0,this.on("end",()=>this[Ys]()),typeof t.onwarn=="function"&&this.on("warn",t.onwarn),typeof t.onReadEntry=="function"&&this.on("entry",t.onReadEntry)}warn(t,e,i={}){Lt(this,t,e,i)}[Zs](t,e){this[At]===void 0&&(this[At]=!1);let i;try{i=new F(t,e,this[V],this[ae])}catch(r){return this.warn("TAR_ENTRY_INVALID",r)}if(i.nullBlock)this[qe]?(this[je]=!0,this[B]==="begin"&&(this[B]="header"),this[Dt]("eof")):(this[qe]=!0,this[Dt]("nullBlock"));else if(this[qe]=!1,!i.cksumValid)this.warn("TAR_ENTRY_INVALID","checksum failure",{header:i});else if(!i.path)this.warn("TAR_ENTRY_INVALID","path is required",{header:i});else{let r=i.type;if(/^(Symbolic)?Link$/.test(r)&&!i.linkpath)this.warn("TAR_ENTRY_INVALID","linkpath required",{header:i});else if(!/^(Symbolic)?Link$/.test(r)&&!/^(Global)?ExtendedHeader$/.test(r)&&i.linkpath)this.warn("TAR_ENTRY_INVALID","linkpath forbidden",{header:i});else{let n=this[Nt]=new Yt(i,this[V],this[ae]);if(!this[At])if(n.remain){let o=()=>{n.invalid||(this[At]=!0)};n.on("end",o)}else this[At]=!0;n.meta?n.size>this.maxMetaEntrySize?(n.ignore=!0,this[Dt]("ignoredEntry",n),this[B]="ignore",n.resume()):n.size>0&&(this[ft]="",n.on("data",o=>this[ft]+=o),this[B]="meta"):(this[V]=void 0,n.ignore=n.ignore||!this.filter(n.path,n),n.ignore?(this[Dt]("ignoredEntry",n),this[B]=n.remain?"ignore":"header",n.resume()):(n.remain?this[B]="body":(this[B]="header",n.end()),this[et]?this[it].push(n):(this[it].push(n),this[zi]())))}}}[Ys](){queueMicrotask(()=>this.emit("close"))}[Hs](t){let e=!0;if(!t)this[et]=void 0,e=!1;else if(Array.isArray(t)){let[i,...r]=t;this.emit(i,...r)}else this[et]=t,this.emit("entry",t),t.emittedEnd||(t.on("end",()=>this[zi]()),e=!1);return e}[zi](){do;while(this[Hs](this[it].shift()));if(!this[it].length){let t=this[et];!t||t.flowing||t.size===t.remain?this[Kt]||this.emit("drain"):t.once("drain",()=>this.emit("drain"))}}[Hi](t,e){let i=this[Nt];if(!i)throw new Error("attempt to consume body without entry??");let r=i.blockRemain??0,n=r>=t.length&&e===0?t:t.subarray(e,e+r);return i.write(n),i.blockRemain||(this[B]="header",this[Nt]=void 0,i.end()),n.length}[Gs](t,e){let i=this[Nt],r=this[Hi](t,e);return!this[Nt]&&i&&this[Ws](i),r}[Dt](t,e,i){!this[it].length&&!this[et]?this.emit(t,e,i):this[it].push([t,e,i])}[Ws](t){switch(this[Dt]("meta",this[ft]),t.type){case"ExtendedHeader":case"OldExtendedHeader":this[V]=ct.parse(this[ft],this[V],!1);break;case"GlobalExtendedHeader":this[ae]=ct.parse(this[ft],this[ae],!0);break;case"NextFileHasLongPath":case"OldGnuLongPath":{let e=this[V]??Object.create(null);this[V]=e,e.path=this[ft].replace(/\0.*/,"");break}case"NextFileHasLongLinkpath":{let e=this[V]||Object.create(null);this[V]=e,e.linkpath=this[ft].replace(/\0.*/,"");break}default:throw new Error("unknown meta: "+t.type)}}abort(t){this[ut]=!0,this.emit("abort",t),this.warn("TAR_ABORT",t,{recoverable:!1})}write(t,e,i){if(typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,typeof e=="string"?e:"utf8")),this[ut])return i?.(),!1;if((this[y]===void 0||this.brotli===void 0&&this[y]===!1)&&t){if(this[p]&&(t=Buffer.concat([this[p],t]),this[p]=void 0),t.length<yn)return this[p]=t,i?.(),!0;for(let a=0;this[y]===void 0&&a<Gi.length;a++)t[a]!==Gi[a]&&(this[y]=!1);let o=!1;if(this[y]===!1&&this.zstd!==!1){o=!0;for(let a=0;a<Zi.length;a++)if(t[a]!==Zi[a]){o=!1;break}}let h=this.brotli===void 0&&!o;if(this[y]===!1&&h)if(t.length<512)if(this[dt])this.brotli=!0;else return this[p]=t,i?.(),!0;else try{new F(t.subarray(0,512)),this.brotli=!1}catch{this.brotli=!0}if(this[y]===void 0||this[y]===!1&&(this.brotli||o)){let a=this[dt];this[dt]=!1,this[y]=this[y]===void 0?new Pe({}):o?new Ze({}):new He({}),this[y].on("data",c=>this[Ke](c)),this[y].on("error",c=>this.abort(c)),this[y].on("end",()=>{this[dt]=!0,this[Ke]()}),this[Kt]=!0;let l=!!this[y][a?"end":"write"](t);return this[Kt]=!1,i?.(),l}}this[Kt]=!0,this[y]?this[y].write(t):this[Ke](t),this[Kt]=!1;let n=this[it].length?!1:this[et]?this[et].flowing:!0;return!n&&!this[it].length&&this[et]?.once("drain",()=>this.emit("drain")),i?.(),n}[Wi](t){t&&!this[ut]&&(this[p]=this[p]?Buffer.concat([this[p],t]):t)}[$e](){if(this[dt]&&!this[Ui]&&!this[ut]&&!this[le]){this[Ui]=!0;let t=this[Nt];if(t&&t.blockRemain){let e=this[p]?this[p].length:0;this.warn("TAR_BAD_ARCHIVE",`Truncated input (needed ${t.blockRemain} more bytes, only ${e} available)`,{entry:t}),this[p]&&t.write(this[p]),t.end()}this[Dt](Xe)}}[Ke](t){if(this[le]&&t)this[Wi](t);else if(!t&&!this[p])this[$e]();else if(t){if(this[le]=!0,this[p]){this[Wi](t);let e=this[p];this[p]=void 0,this[Ve](e)}else this[Ve](t);for(;this[p]&&this[p]?.length>=512&&!this[ut]&&!this[je];){let e=this[p];this[p]=void 0,this[Ve](e)}this[le]=!1}(!this[p]||this[dt])&&this[$e]()}[Ve](t){let e=0,i=t.length;for(;e+512<=i&&!this[ut]&&!this[je];)switch(this[B]){case"begin":case"header":this[Zs](t,e),e+=512;break;case"ignore":case"body":e+=this[Hi](t,e);break;case"meta":e+=this[Gs](t,e);break;default:throw new Error("invalid state: "+this[B])}e<i&&(this[p]?this[p]=Buffer.concat([t.subarray(e),this[p]]):this[p]=t.subarray(e))}end(t,e,i){return typeof t=="function"&&(i=t,e=void 0,t=void 0),typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,e)),i&&this.once("finish",i),this[ut]||(this[y]?(t&&this[y].write(t),this[y].end()):(this[dt]=!0,(this.brotli===void 0||this.zstd===void 0)&&(t=t||Buffer.alloc(0)),t&&this.write(t),this[$e]())),this}};var mt=s=>{let t=s.length-1,e=-1;for(;t>-1&&s.charAt(t)==="/";)e=t,t--;return e===-1?s:s.slice(0,e)};var _n=s=>{let t=s.onReadEntry;s.onReadEntry=t?e=>{t(e),e.resume()}:e=>e.resume()},Yi=(s,t)=>{let e=new Map(t.map(n=>[mt(n),!0])),i=s.filter,r=(n,o="")=>{let h=o||(0,external_path_.parse)(n).root||".",a;if(n===h)a=!1;else{let l=e.get(n);l!==void 0?a=l:a=r((0,external_path_.dirname)(n),h)}return e.set(n,a),a};s.filter=i?(n,o)=>i(n,o)&&r(mt(n)):n=>r(mt(n))},On=s=>{let t=new st(s),e=s.file,i;try{i=external_node_fs_namespaceObject.openSync(e,"r");let r=external_node_fs_namespaceObject.fstatSync(i),n=s.maxReadSize||16*1024*1024;if(r.size<n){let o=Buffer.allocUnsafe(r.size),h=external_node_fs_namespaceObject.readSync(i,o,0,r.size,0);t.end(h===o.byteLength?o:o.subarray(0,h))}else{let o=0,h=Buffer.allocUnsafe(n);for(;o<r.size;){let a=external_node_fs_namespaceObject.readSync(i,h,0,n,o);if(a===0)break;o+=a,t.write(h.subarray(0,a))}t.end()}}finally{if(typeof i=="number")try{external_node_fs_namespaceObject.closeSync(i)}catch{}}},Tn=(s,t)=>{let e=new st(s),i=s.maxReadSize||16*1024*1024,r=s.file;return new Promise((o,h)=>{e.on("error",h),e.on("end",o),external_node_fs_namespaceObject.stat(r,(a,l)=>{if(a)h(a);else{let c=new gt(r,{readSize:i,size:l.size});c.on("error",h),c.pipe(e)}})})},It=K(On,Tn,s=>new st(s),s=>new st(s),(s,t)=>{t?.length&&Yi(s,t),s.noResume||_n(s)});var Ki=(s,t,e)=>(s&=4095,e&&(s=(s|384)&-19),t&&(s&256&&(s|=64),s&32&&(s|=8),s&4&&(s|=1)),s);var{isAbsolute:Ln,parse:Ks}=external_node_path_namespaceObject.win32,ce=s=>{let t="",e=Ks(s);for(;Ln(s)||e.root;){let i=s.charAt(0)==="/"&&s.slice(0,4)!=="//?/"?"/":e.root;s=s.slice(i.length),t+=i,e=Ks(s)}return[t,s]};var Qe=["|","<",">","?",":"],Vi=Qe.map(s=>String.fromCharCode(61440+s.charCodeAt(0))),Nn=new Map(Qe.map((s,t)=>[s,Vi[t]])),Dn=new Map(Vi.map((s,t)=>[s,Qe[t]])),$i=s=>Qe.reduce((t,e)=>t.split(e).join(Nn.get(e)),s),Vs=s=>Vi.reduce((t,e)=>t.split(e).join(Dn.get(e)),s);var tr=(s,t)=>t?(s=f(s).replace(/^\.(\/|$)/,""),mt(t)+"/"+s):f(s),An=16*1024*1024,qs=Symbol("process"),js=Symbol("file"),Qs=Symbol("directory"),qi=Symbol("symlink"),Js=Symbol("hardlink"),fe=Symbol("header"),Je=Symbol("read"),ji=Symbol("lstat"),ti=Symbol("onlstat"),Qi=Symbol("onread"),Ji=Symbol("onreadlink"),ts=Symbol("openfile"),es=Symbol("onopenfile"),pt=Symbol("close"),ei=Symbol("mode"),is=Symbol("awaitDrain"),Xi=Symbol("ondrain"),X=Symbol("prefix"),de=class extends A{path;portable;myuid=process.getuid&&process.getuid()||0;myuser={}.USER||"";maxReadSize;linkCache;statCache;preservePaths;cwd;strict;mtime;noPax;noMtime;prefix;fd;blockLen=0;blockRemain=0;buf;pos=0;remain=0;length=0;offset=0;win32;absolute;header;type;linkpath;stat;onWriteEntry;#t=!1;constructor(t,e={}){let i=re(e);super(),this.path=f(t),this.portable=!!i.portable,this.maxReadSize=i.maxReadSize||An,this.linkCache=i.linkCache||new Map,this.statCache=i.statCache||new Map,this.preservePaths=!!i.preservePaths,this.cwd=f(i.cwd||process.cwd()),this.strict=!!i.strict,this.noPax=!!i.noPax,this.noMtime=!!i.noMtime,this.mtime=i.mtime,this.prefix=i.prefix?f(i.prefix):void 0,this.onWriteEntry=i.onWriteEntry,typeof i.onwarn=="function"&&this.on("warn",i.onwarn);let r=!1;if(!this.preservePaths){let[o,h]=ce(this.path);o&&typeof h=="string"&&(this.path=h,r=o)}this.win32=!!i.win32||process.platform==="win32",this.win32&&(this.path=Vs(this.path.replace(/\\/g,"/")),t=t.replace(/\\/g,"/")),this.absolute=f(i.absolute||external_path_.resolve(this.cwd,t)),this.path===""&&(this.path="./"),r&&this.warn("TAR_ENTRY_INFO",`stripping ${r} from absolute path`,{entry:this,path:r+this.path});let n=this.statCache.get(this.absolute);n?this[ti](n):this[ji]()}warn(t,e,i={}){return Lt(this,t,e,i)}emit(t,...e){return t==="error"&&(this.#t=!0),super.emit(t,...e)}[ji](){external_fs_.lstat(this.absolute,(t,e)=>{if(t)return this.emit("error",t);this[ti](e)})}[ti](t){this.statCache.set(this.absolute,t),this.stat=t,t.isFile()||(t.size=0),this.type=In(t),this.emit("stat",t),this[qs]()}[qs](){switch(this.type){case"File":return this[js]();case"Directory":return this[Qs]();case"SymbolicLink":return this[qi]();default:return this.end()}}[ei](t){return Ki(t,this.type==="Directory",this.portable)}[X](t){return tr(t,this.prefix)}[fe](){if(!this.stat)throw new Error("cannot write header before stat");this.type==="Directory"&&this.portable&&(this.noMtime=!0),this.onWriteEntry?.(this),this.header=new F({path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,mode:this[ei](this.stat.mode),uid:this.portable?void 0:this.stat.uid,gid:this.portable?void 0:this.stat.gid,size:this.stat.size,mtime:this.noMtime?void 0:this.mtime||this.stat.mtime,type:this.type==="Unsupported"?void 0:this.type,uname:this.portable?void 0:this.stat.uid===this.myuid?this.myuser:"",atime:this.portable?void 0:this.stat.atime,ctime:this.portable?void 0:this.stat.ctime}),this.header.encode()&&!this.noPax&&super.write(new ct({atime:this.portable?void 0:this.header.atime,ctime:this.portable?void 0:this.header.ctime,gid:this.portable?void 0:this.header.gid,mtime:this.noMtime?void 0:this.mtime||this.header.mtime,path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,size:this.header.size,uid:this.portable?void 0:this.header.uid,uname:this.portable?void 0:this.header.uname,dev:this.portable?void 0:this.stat.dev,ino:this.portable?void 0:this.stat.ino,nlink:this.portable?void 0:this.stat.nlink}).encode());let t=this.header?.block;if(!t)throw new Error("failed to encode header");super.write(t)}[Qs](){if(!this.stat)throw new Error("cannot create directory entry without stat");this.path.slice(-1)!=="/"&&(this.path+="/"),this.stat.size=0,this[fe](),this.end()}[qi](){external_fs_.readlink(this.absolute,(t,e)=>{if(t)return this.emit("error",t);this[Ji](e)})}[Ji](t){this.linkpath=f(t),this[fe](),this.end()}[Js](t){if(!this.stat)throw new Error("cannot create link entry without stat");this.type="Link",this.linkpath=f(external_path_.relative(this.cwd,t)),this.stat.size=0,this[fe](),this.end()}[js](){if(!this.stat)throw new Error("cannot create file entry without stat");if(this.stat.nlink>1){let t=`${this.stat.dev}:${this.stat.ino}`,e=this.linkCache.get(t);if(e?.indexOf(this.cwd)===0)return this[Js](e);this.linkCache.set(t,this.absolute)}if(this[fe](),this.stat.size===0)return this.end();this[ts]()}[ts](){external_fs_.open(this.absolute,"r",(t,e)=>{if(t)return this.emit("error",t);this[es](e)})}[es](t){if(this.fd=t,this.#t)return this[pt]();if(!this.stat)throw new Error("should stat before calling onopenfile");this.blockLen=512*Math.ceil(this.stat.size/512),this.blockRemain=this.blockLen;let e=Math.min(this.blockLen,this.maxReadSize);this.buf=Buffer.allocUnsafe(e),this.offset=0,this.pos=0,this.remain=this.stat.size,this.length=this.buf.length,this[Je]()}[Je](){let{fd:t,buf:e,offset:i,length:r,pos:n}=this;if(t===void 0||e===void 0)throw new Error("cannot read file without first opening");external_fs_.read(t,e,i,r,n,(o,h)=>{if(o)return this[pt](()=>this.emit("error",o));this[Qi](h)})}[pt](t=()=>{}){this.fd!==void 0&&external_fs_.close(this.fd,t)}[Qi](t){if(t<=0&&this.remain>0){let r=Object.assign(new Error("encountered unexpected EOF"),{path:this.absolute,syscall:"read",code:"EOF"});return this[pt](()=>this.emit("error",r))}if(t>this.remain){let r=Object.assign(new Error("did not encounter expected EOF"),{path:this.absolute,syscall:"read",code:"EOF"});return this[pt](()=>this.emit("error",r))}if(!this.buf)throw new Error("should have created buffer prior to reading");if(t===this.remain)for(let r=t;r<this.length&&t<this.blockRemain;r++)this.buf[r+this.offset]=0,t++,this.remain++;let e=this.offset===0&&t===this.buf.length?this.buf:this.buf.subarray(this.offset,this.offset+t);this.write(e)?this[Xi]():this[is](()=>this[Xi]())}[is](t){this.once("drain",t)}write(t,e,i){if(typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,typeof e=="string"?e:"utf8")),this.blockRemain<t.length){let r=Object.assign(new Error("writing more data than expected"),{path:this.absolute});return this.emit("error",r)}return this.remain-=t.length,this.blockRemain-=t.length,this.pos+=t.length,this.offset+=t.length,super.write(t,null,i)}[Xi](){if(!this.remain)return this.blockRemain&&super.write(Buffer.alloc(this.blockRemain)),this[pt](t=>t?this.emit("error",t):this.end());if(!this.buf)throw new Error("buffer lost somehow in ONDRAIN");this.offset>=this.length&&(this.buf=Buffer.allocUnsafe(Math.min(this.blockRemain,this.buf.length)),this.offset=0),this.length=this.buf.length-this.offset,this[Je]()}},ii=class extends de{sync=!0;[ji](){this[ti](external_fs_.lstatSync(this.absolute))}[qi](){this[Ji](external_fs_.readlinkSync(this.absolute))}[ts](){this[es](external_fs_.openSync(this.absolute,"r"))}[Je](){let t=!0;try{let{fd:e,buf:i,offset:r,length:n,pos:o}=this;if(e===void 0||i===void 0)throw new Error("fd and buf must be set in READ method");let h=external_fs_.readSync(e,i,r,n,o);this[Qi](h),t=!1}finally{if(t)try{this[pt](()=>{})}catch{}}}[is](t){t()}[pt](t=()=>{}){this.fd!==void 0&&external_fs_.closeSync(this.fd),t()}},si=class extends A{blockLen=0;blockRemain=0;buf=0;pos=0;remain=0;length=0;preservePaths;portable;strict;noPax;noMtime;readEntry;type;prefix;path;mode;uid;gid;uname;gname;header;mtime;atime;ctime;linkpath;size;onWriteEntry;warn(t,e,i={}){return Lt(this,t,e,i)}constructor(t,e={}){let i=re(e);super(),this.preservePaths=!!i.preservePaths,this.portable=!!i.portable,this.strict=!!i.strict,this.noPax=!!i.noPax,this.noMtime=!!i.noMtime,this.onWriteEntry=i.onWriteEntry,this.readEntry=t;let{type:r}=t;if(r==="Unsupported")throw new Error("writing entry that should be ignored");this.type=r,this.type==="Directory"&&this.portable&&(this.noMtime=!0),this.prefix=i.prefix,this.path=f(t.path),this.mode=t.mode!==void 0?this[ei](t.mode):void 0,this.uid=this.portable?void 0:t.uid,this.gid=this.portable?void 0:t.gid,this.uname=this.portable?void 0:t.uname,this.gname=this.portable?void 0:t.gname,this.size=t.size,this.mtime=this.noMtime?void 0:i.mtime||t.mtime,this.atime=this.portable?void 0:t.atime,this.ctime=this.portable?void 0:t.ctime,this.linkpath=t.linkpath!==void 0?f(t.linkpath):void 0,typeof i.onwarn=="function"&&this.on("warn",i.onwarn);let n=!1;if(!this.preservePaths){let[h,a]=ce(this.path);h&&typeof a=="string"&&(this.path=a,n=h)}this.remain=t.size,this.blockRemain=t.startBlockSize,this.onWriteEntry?.(this),this.header=new F({path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,mode:this.mode,uid:this.portable?void 0:this.uid,gid:this.portable?void 0:this.gid,size:this.size,mtime:this.noMtime?void 0:this.mtime,type:this.type,uname:this.portable?void 0:this.uname,atime:this.portable?void 0:this.atime,ctime:this.portable?void 0:this.ctime}),n&&this.warn("TAR_ENTRY_INFO",`stripping ${n} from absolute path`,{entry:this,path:n+this.path}),this.header.encode()&&!this.noPax&&super.write(new ct({atime:this.portable?void 0:this.atime,ctime:this.portable?void 0:this.ctime,gid:this.portable?void 0:this.gid,mtime:this.noMtime?void 0:this.mtime,path:this[X](this.path),linkpath:this.type==="Link"&&this.linkpath!==void 0?this[X](this.linkpath):this.linkpath,size:this.size,uid:this.portable?void 0:this.uid,uname:this.portable?void 0:this.uname,dev:this.portable?void 0:this.readEntry.dev,ino:this.portable?void 0:this.readEntry.ino,nlink:this.portable?void 0:this.readEntry.nlink}).encode());let o=this.header?.block;if(!o)throw new Error("failed to encode header");super.write(o),t.pipe(this)}[X](t){return tr(t,this.prefix)}[ei](t){return Ki(t,this.type==="Directory",this.portable)}write(t,e,i){typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,typeof e=="string"?e:"utf8"));let r=t.length;if(r>this.blockRemain)throw new Error("writing more to entry than is appropriate");return this.blockRemain-=r,super.write(t,i)}end(t,e,i){return this.blockRemain&&super.write(Buffer.alloc(this.blockRemain)),typeof t=="function"&&(i=t,e=void 0,t=void 0),typeof e=="function"&&(i=e,e=void 0),typeof t=="string"&&(t=Buffer.from(t,e??"utf8")),i&&this.once("finish",i),t?super.end(t,i):super.end(i),this}},In=s=>s.isFile()?"File":s.isDirectory()?"Directory":s.isSymbolicLink()?"SymbolicLink":"Unsupported";var ri=class s{tail;head;length=0;static create(t=[]){return new s(t)}constructor(t=[]){for(let e of t)this.push(e)}*[Symbol.iterator](){for(let t=this.head;t;t=t.next)yield t.value}removeNode(t){if(t.list!==this)throw new Error("removing node which does not belong to this list");let e=t.next,i=t.prev;return e&&(e.prev=i),i&&(i.next=e),t===this.head&&(this.head=e),t===this.tail&&(this.tail=i),this.length--,t.next=void 0,t.prev=void 0,t.list=void 0,e}unshiftNode(t){if(t===this.head)return;t.list&&t.list.removeNode(t);let e=this.head;t.list=this,t.next=e,e&&(e.prev=t),this.head=t,this.tail||(this.tail=t),this.length++}pushNode(t){if(t===this.tail)return;t.list&&t.list.removeNode(t);let e=this.tail;t.list=this,t.prev=e,e&&(e.next=t),this.tail=t,this.head||(this.head=t),this.length++}push(...t){for(let e=0,i=t.length;e<i;e++)Fn(this,t[e]);return this.length}unshift(...t){for(var e=0,i=t.length;e<i;e++)kn(this,t[e]);return this.length}pop(){if(!this.tail)return;let t=this.tail.value,e=this.tail;return this.tail=this.tail.prev,this.tail?this.tail.next=void 0:this.head=void 0,e.list=void 0,this.length--,t}shift(){if(!this.head)return;let t=this.head.value,e=this.head;return this.head=this.head.next,this.head?this.head.prev=void 0:this.tail=void 0,e.list=void 0,this.length--,t}forEach(t,e){e=e||this;for(let i=this.head,r=0;i;r++)t.call(e,i.value,r,this),i=i.next}forEachReverse(t,e){e=e||this;for(let i=this.tail,r=this.length-1;i;r--)t.call(e,i.value,r,this),i=i.prev}get(t){let e=0,i=this.head;for(;i&&e<t;e++)i=i.next;if(e===t&&i)return i.value}getReverse(t){let e=0,i=this.tail;for(;i&&e<t;e++)i=i.prev;if(e===t&&i)return i.value}map(t,e){e=e||this;let i=new s;for(let r=this.head;r;)i.push(t.call(e,r.value,this)),r=r.next;return i}mapReverse(t,e){e=e||this;var i=new s;for(let r=this.tail;r;)i.push(t.call(e,r.value,this)),r=r.prev;return i}reduce(t,e){let i,r=this.head;if(arguments.length>1)i=e;else if(this.head)r=this.head.next,i=this.head.value;else throw new TypeError("Reduce of empty list with no initial value");for(var n=0;r;n++)i=t(i,r.value,n),r=r.next;return i}reduceReverse(t,e){let i,r=this.tail;if(arguments.length>1)i=e;else if(this.tail)r=this.tail.prev,i=this.tail.value;else throw new TypeError("Reduce of empty list with no initial value");for(let n=this.length-1;r;n--)i=t(i,r.value,n),r=r.prev;return i}toArray(){let t=new Array(this.length);for(let e=0,i=this.head;i;e++)t[e]=i.value,i=i.next;return t}toArrayReverse(){let t=new Array(this.length);for(let e=0,i=this.tail;i;e++)t[e]=i.value,i=i.prev;return t}slice(t=0,e=this.length){e<0&&(e+=this.length),t<0&&(t+=this.length);let i=new s;if(e<t||e<0)return i;t<0&&(t=0),e>this.length&&(e=this.length);let r=this.head,n=0;for(n=0;r&&n<t;n++)r=r.next;for(;r&&n<e;n++,r=r.next)i.push(r.value);return i}sliceReverse(t=0,e=this.length){e<0&&(e+=this.length),t<0&&(t+=this.length);let i=new s;if(e<t||e<0)return i;t<0&&(t=0),e>this.length&&(e=this.length);let r=this.length,n=this.tail;for(;n&&r>e;r--)n=n.prev;for(;n&&r>t;r--,n=n.prev)i.push(n.value);return i}splice(t,e=0,...i){t>this.length&&(t=this.length-1),t<0&&(t=this.length+t);let r=this.head;for(let o=0;r&&o<t;o++)r=r.next;let n=[];for(let o=0;r&&o<e;o++)n.push(r.value),r=this.removeNode(r);r?r!==this.tail&&(r=r.prev):r=this.tail;for(let o of i)r=Cn(this,r,o);return n}reverse(){let t=this.head,e=this.tail;for(let i=t;i;i=i.prev){let r=i.prev;i.prev=i.next,i.next=r}return this.head=e,this.tail=t,this}};function Cn(s,t,e){let i=t,r=t?t.next:s.head,n=new ue(e,i,r,s);return n.next===void 0&&(s.tail=n),n.prev===void 0&&(s.head=n),s.length++,n}function Fn(s,t){s.tail=new ue(t,s.tail,void 0,s),s.head||(s.head=s.tail),s.length++}function kn(s,t){s.head=new ue(t,void 0,s.head,s),s.tail||(s.tail=s.head),s.length++}var ue=class{list;next;prev;value;constructor(t,e,i,r){this.list=r,this.value=t,e?(e.next=this,this.prev=e):this.prev=void 0,i?(i.prev=this,this.next=i):this.next=void 0}};var fi=class{path;absolute;entry;stat;readdir;pending=!1;ignore=!1;piped=!1;constructor(t,e){this.path=t||"./",this.absolute=e}},er=Buffer.alloc(1024),ni=Symbol("onStat"),me=Symbol("ended"),W=Symbol("queue"),Ct=Symbol("current"),Ft=Symbol("process"),pe=Symbol("processing"),ss=Symbol("processJob"),G=Symbol("jobs"),rs=Symbol("jobDone"),oi=Symbol("addFSEntry"),ir=Symbol("addTarEntry"),hs=Symbol("stat"),as=Symbol("readdir"),hi=Symbol("onreaddir"),ai=Symbol("pipe"),sr=Symbol("entry"),index_min_ns=Symbol("entryOpt"),li=Symbol("writeEntryClass"),nr=Symbol("write"),os=Symbol("ondrain"),Et=class extends A{sync=!1;opt;cwd;maxReadSize;preservePaths;strict;noPax;prefix;linkCache;statCache;file;portable;zip;readdirCache;noDirRecurse;follow;noMtime;mtime;filter;jobs;[li];onWriteEntry;[W];[G]=0;[pe]=!1;[me]=!1;constructor(t={}){if(super(),this.opt=t,this.file=t.file||"",this.cwd=t.cwd||process.cwd(),this.maxReadSize=t.maxReadSize,this.preservePaths=!!t.preservePaths,this.strict=!!t.strict,this.noPax=!!t.noPax,this.prefix=f(t.prefix||""),this.linkCache=t.linkCache||new Map,this.statCache=t.statCache||new Map,this.readdirCache=t.readdirCache||new Map,this.onWriteEntry=t.onWriteEntry,this[li]=de,typeof t.onwarn=="function"&&this.on("warn",t.onwarn),this.portable=!!t.portable,t.gzip||t.brotli||t.zstd){if((t.gzip?1:0)+(t.brotli?1:0)+(t.zstd?1:0)>1)throw new TypeError("gzip, brotli, zstd are mutually exclusive");if(t.gzip&&(typeof t.gzip!="object"&&(t.gzip={}),this.portable&&(t.gzip.portable=!0),this.zip=new Be(t.gzip)),t.brotli&&(typeof t.brotli!="object"&&(t.brotli={}),this.zip=new Ue(t.brotli)),t.zstd&&(typeof t.zstd!="object"&&(t.zstd={}),this.zip=new Ge(t.zstd)),!this.zip)throw new Error("impossible");let e=this.zip;e.on("data",i=>super.write(i)),e.on("end",()=>super.end()),e.on("drain",()=>this[os]()),this.on("resume",()=>e.resume())}else this.on("drain",this[os]);this.noDirRecurse=!!t.noDirRecurse,this.follow=!!t.follow,this.noMtime=!!t.noMtime,t.mtime&&(this.mtime=t.mtime),this.filter=typeof t.filter=="function"?t.filter:()=>!0,this[W]=new ri,this[G]=0,this.jobs=Number(t.jobs)||4,this[pe]=!1,this[me]=!1}[nr](t){return super.write(t)}add(t){return this.write(t),this}end(t,e,i){return typeof t=="function"&&(i=t,t=void 0),typeof e=="function"&&(i=e,e=void 0),t&&this.add(t),this[me]=!0,this[Ft](),i&&i(),this}write(t){if(this[me])throw new Error("write after end");return t instanceof Yt?this[ir](t):this[oi](t),this.flowing}[ir](t){let e=f(external_path_.resolve(this.cwd,t.path));if(!this.filter(t.path,t))t.resume();else{let i=new fi(t.path,e);i.entry=new si(t,this[index_min_ns](i)),i.entry.on("end",()=>this[rs](i)),this[G]+=1,this[W].push(i)}this[Ft]()}[oi](t){let e=f(external_path_.resolve(this.cwd,t));this[W].push(new fi(t,e)),this[Ft]()}[hs](t){t.pending=!0,this[G]+=1;let e=this.follow?"stat":"lstat";external_fs_[e](t.absolute,(i,r)=>{t.pending=!1,this[G]-=1,i?this.emit("error",i):this[ni](t,r)})}[ni](t,e){this.statCache.set(t.absolute,e),t.stat=e,this.filter(t.path,e)?e.isFile()&&e.nlink>1&&t===this[Ct]&&!this.linkCache.get(`${e.dev}:${e.ino}`)&&!this.sync&&this[ss](t):t.ignore=!0,this[Ft]()}[as](t){t.pending=!0,this[G]+=1,external_fs_.readdir(t.absolute,(e,i)=>{if(t.pending=!1,this[G]-=1,e)return this.emit("error",e);this[hi](t,i)})}[hi](t,e){this.readdirCache.set(t.absolute,e),t.readdir=e,this[Ft]()}[Ft](){if(!this[pe]){this[pe]=!0;for(let t=this[W].head;t&&this[G]<this.jobs;t=t.next)if(this[ss](t.value),t.value.ignore){let e=t.next;this[W].removeNode(t),t.next=e}this[pe]=!1,this[me]&&!this[W].length&&this[G]===0&&(this.zip?this.zip.end(er):(super.write(er),super.end()))}}get[Ct](){return this[W]&&this[W].head&&this[W].head.value}[rs](t){this[W].shift(),this[G]-=1,this[Ft]()}[ss](t){if(!t.pending){if(t.entry){t===this[Ct]&&!t.piped&&this[ai](t);return}if(!t.stat){let e=this.statCache.get(t.absolute);e?this[ni](t,e):this[hs](t)}if(t.stat&&!t.ignore){if(!this.noDirRecurse&&t.stat.isDirectory()&&!t.readdir){let e=this.readdirCache.get(t.absolute);if(e?this[hi](t,e):this[as](t),!t.readdir)return}if(t.entry=this[sr](t),!t.entry){t.ignore=!0;return}t===this[Ct]&&!t.piped&&this[ai](t)}}}[index_min_ns](t){return{onwarn:(e,i,r)=>this.warn(e,i,r),noPax:this.noPax,cwd:this.cwd,absolute:t.absolute,preservePaths:this.preservePaths,maxReadSize:this.maxReadSize,strict:this.strict,portable:this.portable,linkCache:this.linkCache,statCache:this.statCache,noMtime:this.noMtime,mtime:this.mtime,prefix:this.prefix,onWriteEntry:this.onWriteEntry}}[sr](t){this[G]+=1;try{return new this[li](t.path,this[index_min_ns](t)).on("end",()=>this[rs](t)).on("error",i=>this.emit("error",i))}catch(e){this.emit("error",e)}}[os](){this[Ct]&&this[Ct].entry&&this[Ct].entry.resume()}[ai](t){t.piped=!0,t.readdir&&t.readdir.forEach(r=>{let n=t.path,o=n==="./"?"":n.replace(/\/*$/,"/");this[oi](o+r)});let e=t.entry,i=this.zip;if(!e)throw new Error("cannot pipe without source");i?e.on("data",r=>{i.write(r)||e.pause()}):e.on("data",r=>{super.write(r)||e.pause()})}pause(){return this.zip&&this.zip.pause(),super.pause()}warn(t,e,i={}){Lt(this,t,e,i)}},kt=class extends Et{sync=!0;constructor(t){super(t),this[li]=ii}pause(){}resume(){}[hs](t){let e=this.follow?"statSync":"lstatSync";this[ni](t,external_fs_[e](t.absolute))}[as](t){this[hi](t,external_fs_.readdirSync(t.absolute))}[ai](t){let e=t.entry,i=this.zip;if(t.readdir&&t.readdir.forEach(r=>{let n=t.path,o=n==="./"?"":n.replace(/\/*$/,"/");this[oi](o+r)}),!e)throw new Error("Cannot pipe without source");i?e.on("data",r=>{i.write(r)}):e.on("data",r=>{super[nr](r)})}};var vn=(s,t)=>{let e=new kt(s),i=new Wt(s.file,{mode:s.mode||438});e.pipe(i),hr(e,t)},Mn=(s,t)=>{let e=new Et(s),i=new tt(s.file,{mode:s.mode||438});e.pipe(i);let r=new Promise((n,o)=>{i.on("error",o),i.on("close",n),e.on("error",o)});return ar(e,t),r},hr=(s,t)=>{t.forEach(e=>{e.charAt(0)==="@"?It({file:external_node_path_namespaceObject.resolve(s.cwd,e.slice(1)),sync:!0,noResume:!0,onReadEntry:i=>s.add(i)}):s.add(e)}),s.end()},ar=async(s,t)=>{for(let e=0;e<t.length;e++){let i=String(t[e]);i.charAt(0)==="@"?await It({file:external_node_path_namespaceObject.resolve(String(s.cwd),i.slice(1)),noResume:!0,onReadEntry:r=>{s.add(r)}}):s.add(i)}s.end()},Bn=(s,t)=>{let e=new kt(s);return hr(e,t),e},Pn=(s,t)=>{let e=new Et(s);return ar(e,t),e},zn=K(vn,Mn,Bn,Pn,(s,t)=>{if(!t?.length)throw new TypeError("no paths specified to add to archive")});var Un={}.__FAKE_PLATFORM__||process.platform,Hn=Un==="win32",{O_CREAT:Wn,O_TRUNC:Gn,O_WRONLY:Zn}=external_fs_.constants,cr=Number({}.__FAKE_FS_O_FILENAME__)||external_fs_.constants.UV_FS_O_FILEMAP||0,Yn=Hn&&!!cr,Kn=512*1024,Vn=cr|Gn|Wn|Zn,ls=Yn?s=>s<Kn?Vn:"w":()=>"w";var cs=(s,t,e)=>{try{return external_node_fs_namespaceObject.lchownSync(s,t,e)}catch(i){if(i?.code!=="ENOENT")throw i}},di=(s,t,e,i)=>{external_node_fs_namespaceObject.lchown(s,t,e,r=>{i(r&&r?.code!=="ENOENT"?r:null)})},$n=(s,t,e,i,r)=>{if(t.isDirectory())fs(external_node_path_namespaceObject.resolve(s,t.name),e,i,n=>{if(n)return r(n);let o=external_node_path_namespaceObject.resolve(s,t.name);di(o,e,i,r)});else{let n=external_node_path_namespaceObject.resolve(s,t.name);di(n,e,i,r)}},fs=(s,t,e,i)=>{external_node_fs_namespaceObject.readdir(s,{withFileTypes:!0},(r,n)=>{if(r){if(r.code==="ENOENT")return i();if(r.code!=="ENOTDIR"&&r.code!=="ENOTSUP")return i(r)}if(r||!n.length)return di(s,t,e,i);let o=n.length,h=null,a=l=>{if(!h){if(l)return i(h=l);if(--o===0)return di(s,t,e,i)}};for(let l of n)$n(s,l,t,e,a)})},Xn=(s,t,e,i)=>{t.isDirectory()&&ds(external_node_path_namespaceObject.resolve(s,t.name),e,i),cs(external_node_path_namespaceObject.resolve(s,t.name),e,i)},ds=(s,t,e)=>{let i;try{i=external_node_fs_namespaceObject.readdirSync(s,{withFileTypes:!0})}catch(r){let n=r;if(n?.code==="ENOENT")return;if(n?.code==="ENOTDIR"||n?.code==="ENOTSUP")return cs(s,t,e);throw n}for(let r of i)Xn(s,r,t,e);return cs(s,t,e)};var we=class extends Error{path;code;syscall="chdir";constructor(t,e){super(`${e}: Cannot cd into '${t}'`),this.path=t,this.code=e}get name(){return"CwdError"}};var wt=class extends Error{path;symlink;syscall="symlink";code="TAR_SYMLINK_ERROR";constructor(t,e){super("TAR_SYMLINK_ERROR: Cannot extract through symbolic link"),this.symlink=t,this.path=e}get name(){return"SymlinkError"}};var jn=(s,t)=>{external_node_fs_namespaceObject.stat(s,(e,i)=>{(e||!i.isDirectory())&&(e=new we(s,e?.code||"ENOTDIR")),t(e)})},fr=(s,t,e)=>{s=f(s);let i=t.umask??18,r=t.mode|448,n=(r&i)!==0,o=t.uid,h=t.gid,a=typeof o=="number"&&typeof h=="number"&&(o!==t.processUid||h!==t.processGid),l=t.preserve,c=t.unlink,d=f(t.cwd),S=(E,x)=>{E?e(E):x&&a?fs(x,o,h,_s=>S(_s)):n?external_node_fs_namespaceObject.chmod(s,r,e):e()};if(s===d)return jn(s,S);if(l)return promises_namespaceObject.mkdir(s,{mode:r,recursive:!0}).then(E=>S(null,E??void 0),S);let N=f(external_node_path_namespaceObject.relative(d,s)).split("/");us(d,N,r,c,d,void 0,S)},us=(s,t,e,i,r,n,o)=>{if(!t.length)return o(null,n);let h=t.shift(),a=f(external_node_path_namespaceObject.resolve(s+"/"+h));external_node_fs_namespaceObject.mkdir(a,e,dr(a,t,e,i,r,n,o))},dr=(s,t,e,i,r,n,o)=>h=>{h?external_node_fs_namespaceObject.lstat(s,(a,l)=>{if(a)a.path=a.path&&f(a.path),o(a);else if(l.isDirectory())us(s,t,e,i,r,n,o);else if(i)external_node_fs_namespaceObject.unlink(s,c=>{if(c)return o(c);external_node_fs_namespaceObject.mkdir(s,e,dr(s,t,e,i,r,n,o))});else{if(l.isSymbolicLink())return o(new wt(s,s+"/"+t.join("/")));o(h)}}):(n=n||s,us(s,t,e,i,r,n,o))},Qn=s=>{let t=!1,e;try{t=external_node_fs_namespaceObject.statSync(s).isDirectory()}catch(i){e=i?.code}finally{if(!t)throw new we(s,e??"ENOTDIR")}},ur=(s,t)=>{s=f(s);let e=t.umask??18,i=t.mode|448,r=(i&e)!==0,n=t.uid,o=t.gid,h=typeof n=="number"&&typeof o=="number"&&(n!==t.processUid||o!==t.processGid),a=t.preserve,l=t.unlink,c=f(t.cwd),d=E=>{E&&h&&ds(E,n,o),r&&external_node_fs_namespaceObject.chmodSync(s,i)};if(s===c)return Qn(c),d();if(a)return d(external_node_fs_namespaceObject.mkdirSync(s,{mode:i,recursive:!0})??void 0);let T=f(external_node_path_namespaceObject.relative(c,s)).split("/"),N;for(let E=T.shift(),x=c;E&&(x+="/"+E);E=T.shift()){x=f(external_node_path_namespaceObject.resolve(x));try{external_node_fs_namespaceObject.mkdirSync(x,i),N=N||x}catch{let Os=external_node_fs_namespaceObject.lstatSync(x);if(Os.isDirectory())continue;if(l){external_node_fs_namespaceObject.unlinkSync(x),external_node_fs_namespaceObject.mkdirSync(x,i),N=N||x;continue}else if(Os.isSymbolicLink())return new wt(x,x+"/"+T.join("/"))}}return d(N)};var ms=Object.create(null),mr=1e4,$t=new Set,pr=s=>{$t.has(s)?$t.delete(s):ms[s]=s.normalize("NFD").toLocaleLowerCase("en").toLocaleUpperCase("en"),$t.add(s);let t=ms[s],e=$t.size-mr;if(e>mr/10){for(let i of $t)if($t.delete(i),delete ms[i],--e<=0)break}return t};var Jn={}.TESTING_TAR_FAKE_PLATFORM||process.platform,to=Jn==="win32",eo=s=>s.split("/").slice(0,-1).reduce((e,i)=>{let r=e[e.length-1];return r!==void 0&&(i=(0,external_node_path_namespaceObject.join)(r,i)),e.push(i||"/"),e},[]),pi=class{#t=new Map;#i=new Map;#s=new Set;reserve(t,e){t=to?["win32 parallelization disabled"]:t.map(r=>mt((0,external_node_path_namespaceObject.join)(pr(r))));let i=new Set(t.map(r=>eo(r)).reduce((r,n)=>r.concat(n)));this.#i.set(e,{dirs:i,paths:t});for(let r of t){let n=this.#t.get(r);n?n.push(e):this.#t.set(r,[e])}for(let r of i){let n=this.#t.get(r);if(!n)this.#t.set(r,[new Set([e])]);else{let o=n[n.length-1];o instanceof Set?o.add(e):n.push(new Set([e]))}}return this.#r(e)}#n(t){let e=this.#i.get(t);if(!e)throw new Error("function does not have any path reservations");return{paths:e.paths.map(i=>this.#t.get(i)),dirs:[...e.dirs].map(i=>this.#t.get(i))}}check(t){let{paths:e,dirs:i}=this.#n(t);return e.every(r=>r&&r[0]===t)&&i.every(r=>r&&r[0]instanceof Set&&r[0].has(t))}#r(t){return this.#s.has(t)||!this.check(t)?!1:(this.#s.add(t),t(()=>this.#e(t)),!0)}#e(t){if(!this.#s.has(t))return!1;let e=this.#i.get(t);if(!e)throw new Error("invalid reservation");let{paths:i,dirs:r}=e,n=new Set;for(let o of i){let h=this.#t.get(o);if(!h||h?.[0]!==t)continue;let a=h[1];if(!a){this.#t.delete(o);continue}if(h.shift(),typeof a=="function")n.add(a);else for(let l of a)n.add(l)}for(let o of r){let h=this.#t.get(o),a=h?.[0];if(!(!h||!(a instanceof Set)))if(a.size===1&&h.length===1){this.#t.delete(o);continue}else if(a.size===1){h.shift();let l=h[0];typeof l=="function"&&n.add(l)}else a.delete(t)}return this.#s.delete(t),n.forEach(o=>this.#r(o)),!0}};var wr=()=>process.umask();var Sr=Symbol("onEntry"),Ss=Symbol("checkFs"),yr=Symbol("checkFs2"),ys=Symbol("isReusable"),P=Symbol("makeFs"),Rs=Symbol("file"),bs=Symbol("directory"),wi=Symbol("link"),Rr=Symbol("symlink"),br=Symbol("hardlink"),ye=Symbol("ensureNoSymlink"),gr=Symbol("unsupported"),_r=Symbol("checkPath"),ps=Symbol("stripAbsolutePath"),St=Symbol("mkdir"),O=Symbol("onError"),Ei=Symbol("pending"),Or=Symbol("pend"),Xt=Symbol("unpend"),Es=Symbol("ended"),ws=Symbol("maybeClose"),gs=Symbol("skip"),Re=Symbol("doChown"),be=Symbol("uid"),ge=Symbol("gid"),_e=Symbol("checkedCwd"),so={}.TESTING_TAR_FAKE_PLATFORM||process.platform,Oe=so==="win32",ro=1024,no=(s,t)=>{if(!Oe)return external_node_fs_namespaceObject.unlink(s,t);let e=s+".DELETE."+(0,external_node_crypto_namespaceObject.randomBytes)(16).toString("hex");external_node_fs_namespaceObject.rename(s,e,i=>{if(i)return t(i);external_node_fs_namespaceObject.unlink(e,t)})},oo=s=>{if(!Oe)return external_node_fs_namespaceObject.unlinkSync(s);let t=s+".DELETE."+(0,external_node_crypto_namespaceObject.randomBytes)(16).toString("hex");external_node_fs_namespaceObject.renameSync(s,t),external_node_fs_namespaceObject.unlinkSync(t)},Tr=(s,t,e)=>s!==void 0&&s===s>>>0?s:t!==void 0&&t===t>>>0?t:e,qt=class extends st{[Es]=!1;[_e]=!1;[Ei]=0;reservations=new pi;transform;writable=!0;readable=!1;uid;gid;setOwner;preserveOwner;processGid;processUid;maxDepth;forceChown;win32;newer;keep;noMtime;preservePaths;unlink;cwd;strip;processUmask;umask;dmode;fmode;chmod;constructor(t={}){if(t.ondone=()=>{this[Es]=!0,this[ws]()},super(t),this.transform=t.transform,this.chmod=!!t.chmod,typeof t.uid=="number"||typeof t.gid=="number"){if(typeof t.uid!="number"||typeof t.gid!="number")throw new TypeError("cannot set owner without number uid and gid");if(t.preserveOwner)throw new TypeError("cannot preserve owner in archive and also set owner explicitly");this.uid=t.uid,this.gid=t.gid,this.setOwner=!0}else this.uid=void 0,this.gid=void 0,this.setOwner=!1;t.preserveOwner===void 0&&typeof t.uid!="number"?this.preserveOwner=!!(process.getuid&&process.getuid()===0):this.preserveOwner=!!t.preserveOwner,this.processUid=(this.preserveOwner||this.setOwner)&&process.getuid?process.getuid():void 0,this.processGid=(this.preserveOwner||this.setOwner)&&process.getgid?process.getgid():void 0,this.maxDepth=typeof t.maxDepth=="number"?t.maxDepth:ro,this.forceChown=t.forceChown===!0,this.win32=!!t.win32||Oe,this.newer=!!t.newer,this.keep=!!t.keep,this.noMtime=!!t.noMtime,this.preservePaths=!!t.preservePaths,this.unlink=!!t.unlink,this.cwd=f(external_node_path_namespaceObject.resolve(t.cwd||process.cwd())),this.strip=Number(t.strip)||0,this.processUmask=this.chmod?typeof t.processUmask=="number"?t.processUmask:wr():0,this.umask=typeof t.umask=="number"?t.umask:this.processUmask,this.dmode=t.dmode||511&~this.umask,this.fmode=t.fmode||438&~this.umask,this.on("entry",e=>this[Sr](e))}warn(t,e,i={}){return(t==="TAR_BAD_ARCHIVE"||t==="TAR_ABORT")&&(i.recoverable=!1),super.warn(t,e,i)}[ws](){this[Es]&&this[Ei]===0&&(this.emit("prefinish"),this.emit("finish"),this.emit("end"))}[ps](t,e){let i=t[e],{type:r}=t;if(!i||this.preservePaths)return!0;let[n,o]=ce(i),h=o.replace(/\\/g,"/").split("/");if(h.includes("..")||Oe&&/^[a-z]:\.\.$/i.test(h[0]??"")){if(e==="path"||r==="Link")return this.warn("TAR_ENTRY_ERROR",`${e} contains '..'`,{entry:t,[e]:i}),!1;{let a=external_node_path_namespaceObject.posix.dirname(t.path),l=external_node_path_namespaceObject.posix.normalize(external_node_path_namespaceObject.posix.join(a,h.join("/")));if(l.startsWith("../")||l==="..")return this.warn("TAR_ENTRY_ERROR",`${e} escapes extraction directory`,{entry:t,[e]:i}),!1}}return n&&(t[e]=String(o),this.warn("TAR_ENTRY_INFO",`stripping ${n} from absolute ${e}`,{entry:t,[e]:i})),!0}[_r](t){let e=f(t.path),i=e.split("/");if(this.strip){if(i.length<this.strip)return!1;if(t.type==="Link"){let r=f(String(t.linkpath)).split("/");if(r.length>=this.strip)t.linkpath=r.slice(this.strip).join("/");else return!1}i.splice(0,this.strip),t.path=i.join("/")}if(isFinite(this.maxDepth)&&i.length>this.maxDepth)return this.warn("TAR_ENTRY_ERROR","path excessively deep",{entry:t,path:e,depth:i.length,maxDepth:this.maxDepth}),!1;if(!this[ps](t,"path")||!this[ps](t,"linkpath"))return!1;if(external_node_path_namespaceObject.isAbsolute(t.path)?t.absolute=f(external_node_path_namespaceObject.resolve(t.path)):t.absolute=f(external_node_path_namespaceObject.resolve(this.cwd,t.path)),!this.preservePaths&&typeof t.absolute=="string"&&t.absolute.indexOf(this.cwd+"/")!==0&&t.absolute!==this.cwd)return this.warn("TAR_ENTRY_ERROR","path escaped extraction target",{entry:t,path:f(t.path),resolvedPath:t.absolute,cwd:this.cwd}),!1;if(t.absolute===this.cwd&&t.type!=="Directory"&&t.type!=="GNUDumpDir")return!1;if(this.win32){let{root:r}=external_node_path_namespaceObject.win32.parse(String(t.absolute));t.absolute=r+$i(String(t.absolute).slice(r.length));let{root:n}=external_node_path_namespaceObject.win32.parse(t.path);t.path=n+$i(t.path.slice(n.length))}return!0}[Sr](t){if(!this[_r](t))return t.resume();switch(external_node_assert_namespaceObject.equal(typeof t.absolute,"string"),t.type){case"Directory":case"GNUDumpDir":t.mode&&(t.mode=t.mode|448);case"File":case"OldFile":case"ContiguousFile":case"Link":case"SymbolicLink":return this[Ss](t);default:return this[gr](t)}}[O](t,e){t.name==="CwdError"?this.emit("error",t):(this.warn("TAR_ENTRY_ERROR",t,{entry:e}),this[Xt](),e.resume())}[St](t,e,i){fr(f(t),{uid:this.uid,gid:this.gid,processUid:this.processUid,processGid:this.processGid,umask:this.processUmask,preserve:this.preservePaths,unlink:this.unlink,cwd:this.cwd,mode:e},i)}[Re](t){return this.forceChown||this.preserveOwner&&(typeof t.uid=="number"&&t.uid!==this.processUid||typeof t.gid=="number"&&t.gid!==this.processGid)||typeof this.uid=="number"&&this.uid!==this.processUid||typeof this.gid=="number"&&this.gid!==this.processGid}[be](t){return Tr(this.uid,t.uid,this.processUid)}[ge](t){return Tr(this.gid,t.gid,this.processGid)}[Rs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.fmode,r=new tt(String(t.absolute),{flags:ls(t.size),mode:i,autoClose:!1});r.on("error",a=>{r.fd&&external_node_fs_namespaceObject.close(r.fd,()=>{}),r.write=()=>!0,this[O](a,t),e()});let n=1,o=a=>{if(a){r.fd&&external_node_fs_namespaceObject.close(r.fd,()=>{}),this[O](a,t),e();return}--n===0&&r.fd!==void 0&&external_node_fs_namespaceObject.close(r.fd,l=>{l?this[O](l,t):this[Xt](),e()})};r.on("finish",()=>{let a=String(t.absolute),l=r.fd;if(typeof l=="number"&&t.mtime&&!this.noMtime){n++;let c=t.atime||new Date,d=t.mtime;external_node_fs_namespaceObject.futimes(l,c,d,S=>S?external_node_fs_namespaceObject.utimes(a,c,d,T=>o(T&&S)):o())}if(typeof l=="number"&&this[Re](t)){n++;let c=this[be](t),d=this[ge](t);typeof c=="number"&&typeof d=="number"&&external_node_fs_namespaceObject.fchown(l,c,d,S=>S?external_node_fs_namespaceObject.chown(a,c,d,T=>o(T&&S)):o())}o()});let h=this.transform&&this.transform(t)||t;h!==t&&(h.on("error",a=>{this[O](a,t),e()}),t.pipe(h)),h.pipe(r)}[bs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.dmode;this[St](String(t.absolute),i,r=>{if(r){this[O](r,t),e();return}let n=1,o=()=>{--n===0&&(e(),this[Xt](),t.resume())};t.mtime&&!this.noMtime&&(n++,external_node_fs_namespaceObject.utimes(String(t.absolute),t.atime||new Date,t.mtime,o)),this[Re](t)&&(n++,external_node_fs_namespaceObject.chown(String(t.absolute),Number(this[be](t)),Number(this[ge](t)),o)),o()})}[gr](t){t.unsupported=!0,this.warn("TAR_ENTRY_UNSUPPORTED",`unsupported entry type: ${t.type}`,{entry:t}),t.resume()}[Rr](t,e){let i=f(external_node_path_namespaceObject.relative(this.cwd,external_node_path_namespaceObject.resolve(external_node_path_namespaceObject.dirname(String(t.absolute)),String(t.linkpath)))).split("/");this[ye](t,this.cwd,i,()=>this[wi](t,String(t.linkpath),"symlink",e),r=>{this[O](r,t),e()})}[br](t,e){let i=f(external_node_path_namespaceObject.resolve(this.cwd,String(t.linkpath))),r=f(String(t.linkpath)).split("/");this[ye](t,this.cwd,r,()=>this[wi](t,i,"link",e),n=>{this[O](n,t),e()})}[ye](t,e,i,r,n){let o=i.shift();if(this.preservePaths||o===void 0)return r();let h=external_node_path_namespaceObject.resolve(e,o);external_node_fs_namespaceObject.lstat(h,(a,l)=>{if(a)return r();if(l?.isSymbolicLink())return n(new wt(h,external_node_path_namespaceObject.resolve(h,i.join("/"))));this[ye](t,h,i,r,n)})}[Or](){this[Ei]++}[Xt](){this[Ei]--,this[ws]()}[gs](t){this[Xt](),t.resume()}[ys](t,e){return t.type==="File"&&!this.unlink&&e.isFile()&&e.nlink<=1&&!Oe}[Ss](t){this[Or]();let e=[t.path];t.linkpath&&e.push(t.linkpath),this.reservations.reserve(e,i=>this[yr](t,i))}[yr](t,e){let i=h=>{e(h)},r=()=>{this[St](this.cwd,this.dmode,h=>{if(h){this[O](h,t),i();return}this[_e]=!0,n()})},n=()=>{if(t.absolute!==this.cwd){let h=f(external_node_path_namespaceObject.dirname(String(t.absolute)));if(h!==this.cwd)return this[St](h,this.dmode,a=>{if(a){this[O](a,t),i();return}o()})}o()},o=()=>{external_node_fs_namespaceObject.lstat(String(t.absolute),(h,a)=>{if(a&&(this.keep||this.newer&&a.mtime>(t.mtime??a.mtime))){this[gs](t),i();return}if(h||this[ys](t,a))return this[P](null,t,i);if(a.isDirectory()){if(t.type==="Directory"){let l=this.chmod&&t.mode&&(a.mode&4095)!==t.mode,c=d=>this[P](d??null,t,i);return l?external_node_fs_namespaceObject.chmod(String(t.absolute),Number(t.mode),c):c()}if(t.absolute!==this.cwd)return external_node_fs_namespaceObject.rmdir(String(t.absolute),l=>this[P](l??null,t,i))}if(t.absolute===this.cwd)return this[P](null,t,i);no(String(t.absolute),l=>this[P](l??null,t,i))})};this[_e]?n():r()}[P](t,e,i){if(t){this[O](t,e),i();return}switch(e.type){case"File":case"OldFile":case"ContiguousFile":return this[Rs](e,i);case"Link":return this[br](e,i);case"SymbolicLink":return this[Rr](e,i);case"Directory":case"GNUDumpDir":return this[bs](e,i)}}[wi](t,e,i,r){external_node_fs_namespaceObject[i](e,String(t.absolute),n=>{n?this[O](n,t):(this[Xt](),t.resume()),r()})}},Se=s=>{try{return[null,s()]}catch(t){return[t,null]}},Te=class extends qt{sync=!0;[P](t,e){return super[P](t,e,()=>{})}[Ss](t){if(!this[_e]){let n=this[St](this.cwd,this.dmode);if(n)return this[O](n,t);this[_e]=!0}if(t.absolute!==this.cwd){let n=f(external_node_path_namespaceObject.dirname(String(t.absolute)));if(n!==this.cwd){let o=this[St](n,this.dmode);if(o)return this[O](o,t)}}let[e,i]=Se(()=>external_node_fs_namespaceObject.lstatSync(String(t.absolute)));if(i&&(this.keep||this.newer&&i.mtime>(t.mtime??i.mtime)))return this[gs](t);if(e||this[ys](t,i))return this[P](null,t);if(i.isDirectory()){if(t.type==="Directory"){let o=this.chmod&&t.mode&&(i.mode&4095)!==t.mode,[h]=o?Se(()=>{external_node_fs_namespaceObject.chmodSync(String(t.absolute),Number(t.mode))}):[];return this[P](h,t)}let[n]=Se(()=>external_node_fs_namespaceObject.rmdirSync(String(t.absolute)));this[P](n,t)}let[r]=t.absolute===this.cwd?[]:Se(()=>oo(String(t.absolute)));this[P](r,t)}[Rs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.fmode,r=h=>{let a;try{external_node_fs_namespaceObject.closeSync(n)}catch(l){a=l}(h||a)&&this[O](h||a,t),e()},n;try{n=external_node_fs_namespaceObject.openSync(String(t.absolute),ls(t.size),i)}catch(h){return r(h)}let o=this.transform&&this.transform(t)||t;o!==t&&(o.on("error",h=>this[O](h,t)),t.pipe(o)),o.on("data",h=>{try{external_node_fs_namespaceObject.writeSync(n,h,0,h.length)}catch(a){r(a)}}),o.on("end",()=>{let h=null;if(t.mtime&&!this.noMtime){let a=t.atime||new Date,l=t.mtime;try{external_node_fs_namespaceObject.futimesSync(n,a,l)}catch(c){try{external_node_fs_namespaceObject.utimesSync(String(t.absolute),a,l)}catch{h=c}}}if(this[Re](t)){let a=this[be](t),l=this[ge](t);try{external_node_fs_namespaceObject.fchownSync(n,Number(a),Number(l))}catch(c){try{external_node_fs_namespaceObject.chownSync(String(t.absolute),Number(a),Number(l))}catch{h=h||c}}}r(h)})}[bs](t,e){let i=typeof t.mode=="number"?t.mode&4095:this.dmode,r=this[St](String(t.absolute),i);if(r){this[O](r,t),e();return}if(t.mtime&&!this.noMtime)try{external_node_fs_namespaceObject.utimesSync(String(t.absolute),t.atime||new Date,t.mtime)}catch{}if(this[Re](t))try{external_node_fs_namespaceObject.chownSync(String(t.absolute),Number(this[be](t)),Number(this[ge](t)))}catch{}e(),t.resume()}[St](t,e){try{return ur(f(t),{uid:this.uid,gid:this.gid,processUid:this.processUid,processGid:this.processGid,umask:this.processUmask,preserve:this.preservePaths,unlink:this.unlink,cwd:this.cwd,mode:e})}catch(i){return i}}[ye](t,e,i,r,n){if(this.preservePaths||!i.length)return r();let o=e;for(let h of i){o=external_node_path_namespaceObject.resolve(o,h);let[a,l]=Se(()=>external_node_fs_namespaceObject.lstatSync(o));if(a)return r();if(l.isSymbolicLink())return n(new wt(o,external_node_path_namespaceObject.resolve(e,i.join("/"))))}r()}[wi](t,e,i,r){let n=`${i}Sync`;try{external_node_fs_namespaceObject[n](e,String(t.absolute)),r(),t.resume()}catch(o){return this[O](o,t)}}};var ho=s=>{let t=new Te(s),e=s.file,i=external_node_fs_namespaceObject.statSync(e),r=s.maxReadSize||16*1024*1024;new ve(e,{readSize:r,size:i.size}).pipe(t)},ao=(s,t)=>{let e=new qt(s),i=s.maxReadSize||16*1024*1024,r=s.file;return new Promise((o,h)=>{e.on("error",h),e.on("close",o),external_node_fs_namespaceObject.stat(r,(a,l)=>{if(a)h(a);else{let c=new gt(r,{readSize:i,size:l.size});c.on("error",h),c.pipe(e)}})})},lo=K(ho,ao,s=>new Te(s),s=>new qt(s),(s,t)=>{t?.length&&Yi(s,t)});var co=(s,t)=>{let e=new kt(s),i=!0,r,n;try{try{r=external_node_fs_namespaceObject.openSync(s.file,"r+")}catch(a){if(a?.code==="ENOENT")r=external_node_fs_namespaceObject.openSync(s.file,"w+");else throw a}let o=external_node_fs_namespaceObject.fstatSync(r),h=Buffer.alloc(512);t:for(n=0;n<o.size;n+=512){for(let c=0,d=0;c<512;c+=d){if(d=external_node_fs_namespaceObject.readSync(r,h,c,h.length-c,n+c),n===0&&h[0]===31&&h[1]===139)throw new Error("cannot append to compressed archives");if(!d)break t}let a=new F(h);if(!a.cksumValid)break;let l=512*Math.ceil((a.size||0)/512);if(n+l+512>o.size)break;n+=l,s.mtimeCache&&a.mtime&&s.mtimeCache.set(String(a.path),a.mtime)}i=!1,fo(s,e,n,r,t)}finally{if(i)try{external_node_fs_namespaceObject.closeSync(r)}catch{}}},fo=(s,t,e,i,r)=>{let n=new Wt(s.file,{fd:i,start:e});t.pipe(n),mo(t,r)},uo=(s,t)=>{t=Array.from(t);let e=new Et(s),i=(n,o,h)=>{let a=(T,N)=>{T?external_node_fs_namespaceObject.close(n,E=>h(T)):h(null,N)},l=0;if(o===0)return a(null,0);let c=0,d=Buffer.alloc(512),S=(T,N)=>{if(T||typeof N>"u")return a(T);if(c+=N,c<512&&N)return external_node_fs_namespaceObject.read(n,d,c,d.length-c,l+c,S);if(l===0&&d[0]===31&&d[1]===139)return a(new Error("cannot append to compressed archives"));if(c<512)return a(null,l);let E=new F(d);if(!E.cksumValid)return a(null,l);let x=512*Math.ceil((E.size??0)/512);if(l+x+512>o||(l+=x+512,l>=o))return a(null,l);s.mtimeCache&&E.mtime&&s.mtimeCache.set(String(E.path),E.mtime),c=0,external_node_fs_namespaceObject.read(n,d,0,512,l,S)};external_node_fs_namespaceObject.read(n,d,0,512,l,S)};return new Promise((n,o)=>{e.on("error",o);let h="r+",a=(l,c)=>{if(l&&l.code==="ENOENT"&&h==="r+")return h="w+",external_node_fs_namespaceObject.open(s.file,h,a);if(l||!c)return o(l);external_node_fs_namespaceObject.fstat(c,(d,S)=>{if(d)return external_node_fs_namespaceObject.close(c,()=>o(d));i(c,S.size,(T,N)=>{if(T)return o(T);let E=new tt(s.file,{fd:c,start:N});e.pipe(E),E.on("error",o),E.on("close",n),po(e,t)})})};external_node_fs_namespaceObject.open(s.file,h,a)})},mo=(s,t)=>{t.forEach(e=>{e.charAt(0)==="@"?It({file:external_node_path_namespaceObject.resolve(s.cwd,e.slice(1)),sync:!0,noResume:!0,onReadEntry:i=>s.add(i)}):s.add(e)}),s.end()},po=async(s,t)=>{for(let e=0;e<t.length;e++){let i=String(t[e]);i.charAt(0)==="@"?await It({file:external_node_path_namespaceObject.resolve(String(s.cwd),i.slice(1)),noResume:!0,onReadEntry:r=>s.add(r)}):s.add(i)}s.end()},vt=K(co,uo,()=>{throw new TypeError("file is required")},()=>{throw new TypeError("file is required")},(s,t)=>{if(!ks(s))throw new TypeError("file is required");if(s.gzip||s.brotli||s.zstd||s.file.endsWith(".br")||s.file.endsWith(".tbr"))throw new TypeError("cannot append to compressed archives");if(!t?.length)throw new TypeError("no paths specified to add/replace")});var Eo=K(vt.syncFile,vt.asyncFile,vt.syncNoFile,vt.asyncNoFile,(s,t=[])=>{vt.validate?.(s,t),wo(s)}),wo=s=>{let t=s.filter;s.mtimeCache||(s.mtimeCache=new Map),s.filter=t?(e,i)=>t(e,i)&&!((s.mtimeCache?.get(e)??i.mtime??0)>(i.mtime??0)):(e,i)=>!((s.mtimeCache?.get(e)??i.mtime??0)>(i.mtime??0))};
 
 ;// external "child_process"
 const external_child_process_namespaceObject = require("child_process");
@@ -12252,13 +12261,17 @@ function tarRead(pth) {
 const external_crypto_namespaceObject = require("crypto");
 var external_crypto_default = /*#__PURE__*/__webpack_require__.n(external_crypto_namespaceObject);
 ;// ./app/utils/RequestUtils.js
+/* unused harmony import specifier */ var Auth;
+/* unused harmony import specifier */ var RequestUtils_Request;
+/* unused harmony import specifier */ var MiscUtils;
+/* unused harmony import specifier */ var RequestUtils_crypto;
 
 
 
 
 
 function get(path) {
-    let req = new Request_Request();
+    let req = new Request();
     if (unix) {
         req.unix(unixPath);
     }
@@ -12271,7 +12284,7 @@ function get(path) {
     return req;
 }
 function put(path) {
-    let req = new Request_Request();
+    let req = new Request();
     if (unix) {
         req.unix(unixPath);
     }
@@ -12284,7 +12297,7 @@ function put(path) {
     return req;
 }
 function post(path) {
-    let req = new Request_Request();
+    let req = new Request();
     if (unix) {
         req.unix(unixPath);
     }
@@ -12297,7 +12310,7 @@ function post(path) {
     return req;
 }
 function del(path) {
-    let req = new Request_Request();
+    let req = new Request();
     if (unix) {
         req.unix(unixPath);
     }
@@ -12310,14 +12323,14 @@ function del(path) {
     return req;
 }
 function authGet(host, path, token, secret) {
-    let req = new Request.Request();
+    let req = new RequestUtils_Request.Request();
     req.get(host + path)
         .set("Auth-Token", Auth.token)
         .set("User-Agent", "pritunl");
     let authTimestamp = Math.floor(new Date().getTime() / 1000).toString();
     let authNonce = MiscUtils.nonce();
     let authString = [token, authTimestamp, authNonce, "get", path].join("&");
-    let authSignature = crypto.createHmac("sha512", secret).update(authString).digest("base64");
+    let authSignature = RequestUtils_crypto.createHmac("sha512", secret).update(authString).digest("base64");
     req.secure(false)
         .set("Auth-Token", token)
         .set("Auth-Timestamp", authTimestamp)
@@ -16033,9 +16046,9 @@ class DispatcherBase {
 
 ;// ./app/dispatcher/Dispatcher.js
 
-class Dispatcher_Dispatcher extends DispatcherBase {
+class Dispatcher extends DispatcherBase {
 }
-/* harmony default export */ const dispatcher_Dispatcher = (new Dispatcher_Dispatcher());
+/* harmony default export */ const dispatcher_Dispatcher = (new Dispatcher());
 
 ;// ./app/dispatcher/EventDispatcher.js
 
@@ -17003,7 +17016,7 @@ function New(self) {
                 authNonce, "GET", path].join("&");
             let authSignature = external_crypto_default().createHmac("sha512", this.sync_secret).update(authString).digest("base64");
             path += '?ver=2';
-            let req = new Request_Request();
+            let req = new Request();
             req.get(path)
                 .tcp(syncHost)
                 .timeout(5)
@@ -17290,6 +17303,8 @@ class ProfilesStore extends EventEmitter {
 /* harmony default export */ const stores_ProfilesStore = (new ProfilesStore());
 
 ;// ./app/actions/ProfileActions.js
+/* unused harmony import specifier */ var ProfileActions_Dispatcher;
+/* unused harmony import specifier */ var ProfileTypes;
 
 
 
@@ -17525,7 +17540,7 @@ function sync(noLoading) {
     });
 }
 function traverse(page) {
-    Dispatcher.dispatch({
+    ProfileActions_Dispatcher.dispatch({
         type: ProfileTypes.TRAVERSE,
         data: {
             page: page,
@@ -17534,7 +17549,7 @@ function traverse(page) {
     return sync();
 }
 function filter(filt) {
-    Dispatcher.dispatch({
+    ProfileActions_Dispatcher.dispatch({
         type: ProfileTypes.FILTER,
         data: {
             filter: filt,
@@ -18315,7 +18330,7 @@ async function importUri(prflUri) {
     let prflUrl = new URL(prflUri);
     let resp;
     try {
-        resp = await new Request_Request()
+        resp = await new Request()
             .tcp(prflUrl.protocol + "//" + prflUrl.host)
             .get(prflUrl.pathname)
             .set("User-Agent", "pritunl")
@@ -18559,3128 +18574,6 @@ class LoadingBar extends react.Component {
         return react.createElement("div", { style: this.props.style }, progress);
     }
 }
-
-;// ./app/components/ConfirmButton.js
-
-
-
-const ConfirmButton_css = {
-    box: {
-        display: 'inline-flex',
-        verticalAlign: 'middle',
-    },
-    actionProgress: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        borderRadius: 0,
-        borderBottomLeftRadius: '3px',
-        borderBottomRightRadius: '3px',
-        width: '100%',
-        height: '4px',
-    },
-    squareActionProgress: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        borderRadius: 0,
-        borderBottomLeftRadius: '1px',
-        borderBottomRightRadius: '3px',
-        width: '100%',
-        height: '4px',
-    },
-    dialog: {
-        width: '340px',
-        position: 'absolute',
-    },
-    label: {
-        width: '100%',
-        maxWidth: '220px',
-        margin: '18px 0 0 0',
-    },
-    input: {
-        width: '100%',
-    },
-};
-class ConfirmButton extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.openDialog = () => {
-            this.setState({
-                ...this.state,
-                dialog: true,
-            });
-        };
-        this.closeDialog = () => {
-            this.setState({
-                ...this.state,
-                dialog: false,
-            });
-        };
-        this.closeDialogConfirm = () => {
-            this.setState({
-                ...this.state,
-                dialog: false,
-            });
-            if (this.props.onConfirm) {
-                this.props.onConfirm();
-            }
-        };
-        this.confirm = (evt) => {
-            let confirmId = uuid();
-            if (evt.shiftKey) {
-                if (this.props.onConfirm) {
-                    this.props.onConfirm();
-                }
-                return;
-            }
-            this.setState({
-                ...this.state,
-                confirming: confirmId,
-            });
-            let i = 10;
-            let id = setInterval(() => {
-                if (i > 100) {
-                    clearInterval(id);
-                    setTimeout(() => {
-                        if (this.state.confirming === confirmId) {
-                            this.setState({
-                                ...this.state,
-                                confirm: 0,
-                                confirming: null,
-                            });
-                            if (this.props.onConfirm) {
-                                this.props.onConfirm();
-                            }
-                        }
-                    }, 250);
-                    return;
-                }
-                else if (!this.state.confirming) {
-                    clearInterval(id);
-                    this.setState({
-                        ...this.state,
-                        confirm: 0,
-                        confirming: null,
-                    });
-                    return;
-                }
-                if (i % 10 === 0) {
-                    this.setState({
-                        ...this.state,
-                        confirm: i / 10,
-                    });
-                }
-                i += 2;
-            }, 8);
-        };
-        this.clearConfirm = () => {
-            this.setState({
-                ...this.state,
-                confirm: 0,
-                confirming: null,
-            });
-        };
-        this.state = {
-            input: '',
-            dialog: false,
-            confirm: 0,
-            confirming: null,
-        };
-    }
-    render() {
-        let dialog = this.props.safe;
-        let style = {
-            ...this.props.style,
-        };
-        style.position = 'relative';
-        let className = this.props.className || '';
-        if (!this.props.label) {
-            className += ' bp5-button-empty';
-        }
-        let dialogClassName = this.props.dialogClassName ||
-            this.props.className || '';
-        if (!this.props.label && !this.props.dialogLabel) {
-            dialogClassName += ' bp5-button-empty';
-        }
-        let confirmInput;
-        if (this.props.confirmInput) {
-            confirmInput = react.createElement("label", { className: "bp5-label", style: ConfirmButton_css.label },
-                "Enter \"delete\" to confirm:",
-                react.createElement("input", { className: "bp5-input", style: ConfirmButton_css.input, disabled: this.props.disabled, autoCapitalize: "off", spellCheck: false, placeholder: 'Enter "delete" to confirm', value: this.state.input, onChange: (evt) => {
-                        this.setState({
-                            ...this.state,
-                            input: evt.target.value,
-                        });
-                    } }));
-        }
-        if (dialog) {
-            let confirmMsg = this.props.confirmMsg ? this.props.confirmMsg :
-                'Confirm ' + (this.props.label || '');
-            let itemsList;
-            if (this.props.items) {
-                let items = [];
-                for (let item of this.props.items) {
-                    items.push(react.createElement("li", { key: item }, item));
-                }
-                itemsList = react.createElement("ul", null, items);
-            }
-            return react.createElement("div", { style: ConfirmButton_css.box },
-                react.createElement("button", { className: 'bp5-button ' + className, style: style, type: "button", hidden: this.props.hidden, disabled: this.props.disabled, onMouseDown: dialog ? undefined : this.confirm, onMouseUp: dialog ? undefined : this.clearConfirm, onMouseLeave: dialog ? undefined : this.clearConfirm, onClick: dialog ? this.openDialog : undefined }, this.props.label),
-                react.createElement(Dialog, { title: "Confirm", style: ConfirmButton_css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
-                    react.createElement("div", { className: "bp5-dialog-body" },
-                        confirmMsg,
-                        itemsList,
-                        confirmInput),
-                    react.createElement("div", { className: "bp5-dialog-footer" },
-                        react.createElement("div", { className: "bp5-dialog-footer-actions" },
-                            react.createElement("button", { className: "bp5-button", type: "button", onClick: this.closeDialog }, "Cancel"),
-                            react.createElement("button", { className: 'bp5-button ' + dialogClassName, type: "button", disabled: this.props.confirmInput &&
-                                    this.state.input !== 'delete', onClick: this.closeDialogConfirm }, this.props.dialogLabel || this.props.label)))));
-        }
-        else {
-            let confirmElem;
-            if (this.state.confirming) {
-                let confirmStyle = {
-                    width: this.state.confirm * 10 + '%',
-                    backgroundColor: style.color,
-                    borderRadius: 0,
-                    left: 0,
-                };
-                let progressStyle;
-                if (this.props.grouped) {
-                    progressStyle = ConfirmButton_css.squareActionProgress;
-                }
-                else {
-                    progressStyle = ConfirmButton_css.actionProgress;
-                }
-                confirmElem = react.createElement("div", { className: 'bp5-progress-bar bp5-no-stripes ' + (this.props.progressClassName || ''), style: progressStyle },
-                    react.createElement("div", { className: "bp5-progress-meter", style: confirmStyle }));
-            }
-            return react.createElement("button", { className: 'bp5-button ' + className, style: style, type: "button", hidden: this.props.hidden, disabled: this.props.disabled, onMouseDown: dialog ? undefined : this.confirm, onMouseUp: dialog ? undefined : this.clearConfirm, onMouseLeave: dialog ? undefined : this.clearConfirm, onClick: dialog ? this.openDialog : undefined },
-                this.props.label,
-                confirmElem);
-        }
-    }
-}
-
-;// ./app/components/CopyButton.js
-
-const CopyButton_css = {
-    copy: {
-        cursor: 'pointer',
-        marginLeft: '3px',
-    },
-    copyHover: {
-        cursor: 'pointer',
-        marginLeft: '3px',
-        opacity: 0.7,
-    },
-    copyClicked: {
-        cursor: 'pointer',
-        marginLeft: '3px',
-        opacity: 0.5,
-    },
-};
-class CopyButton extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            hover: false,
-            click: false,
-            copied: false,
-        };
-    }
-    render() {
-        let style;
-        if (this.state.click && !this.state.copied) {
-            style = CopyButton_css.copyClicked;
-        }
-        else if (this.state.hover && !this.state.copied) {
-            style = CopyButton_css.copyHover;
-        }
-        else {
-            style = CopyButton_css.copy;
-        }
-        let className = 'bp5-icon-standard';
-        if (this.state.copied) {
-            className += ' bp5-icon-tick bp5-intent-success';
-        }
-        else {
-            className += ' bp5-icon-clipboard';
-        }
-        return react.createElement("span", { ref: (elem) => this.elem = elem, className: className, style: style, onMouseEnter: () => {
-                this.setState({
-                    ...this.state,
-                    hover: true,
-                });
-            }, onMouseLeave: () => {
-                this.setState({
-                    ...this.state,
-                    hover: false,
-                    click: false,
-                });
-            }, onMouseDown: () => {
-                this.setState({
-                    ...this.state,
-                    click: true,
-                });
-            }, onMouseUp: () => {
-                this.setState({
-                    ...this.state,
-                    click: false,
-                });
-            }, onClick: () => {
-                this.setState({
-                    ...this.state,
-                    copied: true,
-                });
-                setTimeout(() => {
-                    this.setState({
-                        ...this.state,
-                        copied: false,
-                    });
-                }, 1200);
-                let elem = document.createElement('input');
-                elem.contentEditable = 'true';
-                elem.readOnly = true;
-                elem.style.position = 'absolute';
-                elem.style.width = '1px';
-                elem.style.height = '1px';
-                elem.style.padding = '0px';
-                elem.style.border = 'none';
-                elem.style.opacity = '0';
-                elem.value = this.props.value;
-                this.elem.parentElement.append(elem);
-                elem.select();
-                document.execCommand('copy');
-                elem.remove();
-            } });
-    }
-}
-
-;// ./app/components/PageInfo.js
-
-
-const PageInfo_css = {
-    label: {
-        width: '100%',
-        maxWidth: '320px',
-    },
-    value: {
-        overflowWrap: 'anywhere',
-    },
-    item: {
-        marginBottom: '5px',
-        marginRight: '5px',
-    },
-    bar: {
-        maxWidth: '280px',
-    },
-    copy: {
-        cursor: 'pointer',
-        marginLeft: '3px',
-    },
-    copyHover: {
-        cursor: 'pointer',
-        marginLeft: '3px',
-        opacity: 0.7,
-    },
-};
-class PageInfo extends react.Component {
-    render() {
-        let fields = [];
-        let bars = [];
-        for (let field of this.props.fields || []) {
-            if (field == null) {
-                continue;
-            }
-            let value;
-            let copyBtn;
-            if (typeof field.value === 'string') {
-                value = field.value;
-                if (field.copy) {
-                    copyBtn = react.createElement(CopyButton, { value: field.value });
-                }
-            }
-            else if (typeof field.value === 'number') {
-                value = field.value.toString();
-                if (field.copy) {
-                    copyBtn = react.createElement(CopyButton, { value: field.value.toString() });
-                }
-            }
-            else if (typeof field.value === 'boolean') {
-                value = field.value.toString();
-                if (field.copy) {
-                    copyBtn = react.createElement(CopyButton, { value: field.value.toString() });
-                }
-            }
-            else if (field.value === undefined || field.value === null) {
-                value = 'null';
-                if (field.copy) {
-                    copyBtn = react.createElement(CopyButton, { value: value });
-                }
-            }
-            else {
-                value = [];
-                for (let i = 0; i < field.value.length; i++) {
-                    let copyItemBtn;
-                    if (field.copy) {
-                        copyItemBtn = react.createElement(CopyButton, { value: field.value[i] });
-                    }
-                    value.push(react.createElement("div", { key: i, className: field.valueClasses ?
-                            field.valueClasses[i] :
-                            (field.valueClass || 'bp5-text-muted') },
-                        field.value[i],
-                        copyItemBtn));
-                }
-            }
-            fields.push(react.createElement("div", { key: field.label, style: PageInfo_css.item },
-                field.label,
-                react.createElement("div", { className: field.valueClass || 'bp5-text-muted', style: PageInfo_css.value },
-                    value,
-                    copyBtn)));
-        }
-        for (let bar of this.props.bars || []) {
-            let style = {
-                width: (bar.value || 0) + '%',
-            };
-            if (bar.color) {
-                style.backgroundColor = bar.color;
-            }
-            bars.push(react.createElement("div", { key: bar.label, style: PageInfo_css.item },
-                bar.label,
-                react.createElement("div", { className: 'bp5-progress-bar ' + (bar.progressClass || ''), style: PageInfo_css.bar },
-                    react.createElement("div", { className: "bp5-progress-meter", style: style }))));
-        }
-        let labelStyle;
-        if (this.props.style) {
-            labelStyle = {
-                ...PageInfo_css.label,
-                ...this.props.style,
-            };
-        }
-        else {
-            labelStyle = PageInfo_css.label;
-        }
-        return react.createElement("label", { className: "bp5-label", style: labelStyle, hidden: this.props.hidden },
-            fields,
-            bars);
-    }
-}
-
-;// ./app/components/ProfileConnect.js
-
-
-
-
-
-
-const ProfileConnect_css = {
-    box: {
-        display: "inline-block"
-    },
-    button: {
-        marginTop: "10px",
-        marginRight: "5px",
-    },
-    buttonMinimal: {
-        marginTop: "0",
-        marginRight: "5px",
-    },
-    dialog: {
-        width: "340px",
-        position: "absolute",
-    },
-    label: {
-        width: "100%",
-        maxWidth: "220px",
-        margin: "18px 0 0 0",
-    },
-    input: {
-        width: "100%",
-    },
-    header: {
-        margin: "0 0 15px 0",
-    },
-    preConnect: {
-        margin: "0 0 15px 0",
-    },
-};
-class ProfileConnect extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.onConnect = (mode) => {
-            this.setState({
-                ...this.state,
-                disabled: true,
-            });
-            if (this.connected()) {
-                this.disconnect();
-            }
-            else {
-                this.preConnect(mode);
-            }
-        };
-        this.closeDialog = () => {
-            this.setState({
-                ...this.state,
-                disabled: false,
-                dialog: false,
-                autoFocus: "",
-                username: "",
-                hasUsername: false,
-                password: "",
-                hasPassword: false,
-                pin: "",
-                hasPin: false,
-                duo: "",
-                hasDuo: false,
-                onelogin: "",
-                hasOnelogin: false,
-                okta: "",
-                hasOkta: false,
-                otp: "",
-                hasOtp: false,
-                yubikey: "",
-                hasYubikey: false,
-                hasToken: false,
-                mode: "",
-                preConnMsgOnly: false,
-                changed: false,
-            });
-        };
-        this.closeDialogConfirm = () => {
-            let username = this.state.username || "pritunl";
-            let password = "";
-            password += this.state.password;
-            password += this.state.pin;
-            password += this.state.duo;
-            password += this.state.onelogin;
-            password += this.state.okta;
-            password += this.state.otp;
-            password += this.state.yubikey;
-            if (!this.state.hasToken && password === "") {
-                username = "";
-            }
-            this.connect(this.state.mode, username, password);
-            this.closeDialog();
-        };
-        this.connected = () => {
-            let prfl = this.props.profile;
-            if (prfl.system) {
-                return prfl.state;
-            }
-            else {
-                return !!prfl.status && prfl.status !== "disconnected";
-            }
-        };
-        this.state = {
-            disabled: false,
-            autoFocus: "",
-            username: "",
-            hasUsername: false,
-            password: "",
-            hasPassword: false,
-            pin: "",
-            hasPin: false,
-            duo: "",
-            hasDuo: false,
-            onelogin: "",
-            hasOnelogin: false,
-            okta: "",
-            hasOkta: false,
-            otp: "",
-            hasOtp: false,
-            yubikey: "",
-            hasYubikey: false,
-            hasToken: false,
-            mode: "",
-            preConnMsgOnly: false,
-            changed: false,
-            dialog: false,
-            confirm: 0,
-            confirming: null,
-        };
-    }
-    async preConnect(mode) {
-        let prfl = this.props.profile;
-        await prfl.sync();
-        let tokenValid = false;
-        if (prfl.token) {
-            tokenValid = await tokenUpdate(prfl);
-        }
-        else {
-            await tokenDelete(prfl);
-        }
-        let data = await prfl.readData();
-        let authType = prfl.getAuthType(data);
-        let authTypes = [];
-        if (authType) {
-            authTypes = authType.split("_");
-        }
-        if (authTypes && tokenValid) {
-            if (authTypes.indexOf("pin") !== -1) {
-                authTypes.splice(authTypes.indexOf("pin"), 1);
-            }
-            if (authTypes.indexOf("duo") !== -1) {
-                authTypes.splice(authTypes.indexOf("duo"), 1);
-            }
-            if (authTypes.indexOf("onelogin") !== -1) {
-                authTypes.splice(authTypes.indexOf("onelogin"), 1);
-            }
-            if (authTypes.indexOf("okta") !== -1) {
-                authTypes.splice(authTypes.indexOf("okta"), 1);
-            }
-            if (authTypes.indexOf("yubikey") !== -1) {
-                authTypes.splice(authTypes.indexOf("yubikey"), 1);
-            }
-            if (authTypes.indexOf("otp") !== -1) {
-                authTypes.splice(authTypes.indexOf("otp"), 1);
-            }
-        }
-        let autoFocus = "";
-        let hasUsername = false;
-        let hasPassword = false;
-        let hasPin = false;
-        let hasDuo = false;
-        let hasOnelogin = false;
-        let hasOkta = false;
-        let hasOtp = false;
-        let hasYubikey = false;
-        if (authTypes.indexOf("username") !== -1) {
-            hasUsername = true;
-        }
-        if (authTypes.indexOf("password") !== -1) {
-            if (!autoFocus) {
-                autoFocus = "password";
-            }
-            hasPassword = true;
-        }
-        if (authTypes.indexOf("pin") !== -1) {
-            if (!autoFocus) {
-                autoFocus = "pin";
-            }
-            hasPin = true;
-        }
-        if (authTypes.indexOf("otp") !== -1) {
-            if (!autoFocus) {
-                autoFocus = "otp";
-            }
-            hasOtp = true;
-        }
-        if (authTypes.indexOf("duo") !== -1) {
-            if (!autoFocus) {
-                autoFocus = "duo";
-            }
-            hasDuo = true;
-            hasOtp = false;
-        }
-        if (authTypes.indexOf("onelogin") !== -1) {
-            if (!autoFocus) {
-                autoFocus = "onelogin";
-            }
-            hasOnelogin = true;
-            hasOtp = false;
-        }
-        if (authTypes.indexOf("okta") !== -1) {
-            if (!autoFocus) {
-                autoFocus = "okta";
-            }
-            hasOkta = true;
-            hasOtp = false;
-        }
-        if (authTypes.indexOf("yubikey") !== -1) {
-            if (!autoFocus) {
-                autoFocus = "yubikey";
-            }
-            hasYubikey = true;
-        }
-        if (authTypes.length || this.props.profile.pre_connect_msg) {
-            this.setState({
-                ...this.state,
-                disabled: false,
-                dialog: true,
-                autoFocus: autoFocus,
-                hasUsername: hasUsername,
-                hasPassword: hasPassword,
-                hasPin: hasPin,
-                hasDuo: hasDuo,
-                hasOnelogin: hasOnelogin,
-                hasOkta: hasOkta,
-                hasOtp: hasOtp,
-                hasYubikey: hasYubikey,
-                hasToken: tokenValid,
-                preConnMsgOnly: !authTypes.length,
-                mode: mode,
-            });
-        }
-        else {
-            await this.connect(mode, "", "");
-        }
-    }
-    async connect(mode, username, password) {
-        let prfl = this.props.profile;
-        let data = await prfl.readData();
-        if (!data) {
-            this.setState({
-                ...this.state,
-                disabled: false,
-            });
-            return;
-        }
-        if (!prfl.system) {
-            Logger_info("Profiles: Updating profile '" + prfl.id + "'");
-            await prfl.writeData(data);
-        }
-        let serverPubKey = "";
-        if (prfl.server_public_key) {
-            serverPubKey = prfl.server_public_key.join("\n");
-        }
-        let connData = {
-            id: prfl.id,
-            mode: mode,
-            org_id: prfl.organization_id,
-            user_id: prfl.user_id,
-            server_id: prfl.server_id,
-            sync_hosts: prfl.sync_hosts,
-            sync_token: prfl.sync_token,
-            sync_secret: prfl.sync_secret,
-            username: username,
-            password: password,
-            remotes_data: prfl.remotes_data,
-            hide_ovpn: prfl.hide_ovpn,
-            dynamic_firewall: prfl.dynamic_firewall,
-            geo_sort: prfl.geo_sort,
-            force_connect: prfl.force_connect,
-            device_auth: prfl.device_auth,
-            disable_gateway: prfl.disable_gateway,
-            disable_dns: prfl.disable_dns,
-            dco: prfl.dco,
-            debug_output: prfl.debug_output,
-            force_dns: prfl.force_dns,
-            restrict_client: prfl.restrict_client,
-            sso_auth: prfl.sso_auth,
-            server_public_key: serverPubKey,
-            server_box_public_key: prfl.server_box_public_key,
-            token_ttl: prfl.token_ttl,
-            timeout: true,
-            reconnect: !(prfl.disable_reconnect || prfl.disable_reconnect_local),
-            data: data,
-        };
-        await connect(connData);
-        this.closeDialog();
-    }
-    disconnect() {
-        let prfl = this.props.profile;
-        let disconnData = {
-            id: prfl.id,
-        };
-        disconnect(disconnData).then(() => {
-            this.setState({
-                ...this.state,
-                disabled: false,
-            });
-        });
-    }
-    render() {
-        let connected = this.connected();
-        let hasWg = state.wg && this.props.profile.wg;
-        let hideOvpn = this.props.profile.hide_ovpn;
-        let buttonClass = "";
-        let buttonLabel = "";
-        if (connected) {
-            buttonClass = "bp5-intent-danger bp5-icon-delete";
-            buttonLabel = "Disconnect";
-        }
-        else {
-            buttonClass = "bp5-intent-success bp5-icon-link";
-            buttonLabel = "Connect";
-        }
-        let cssButton = ProfileConnect_css.button;
-        let minimalButton = "";
-        if (this.props.minimal) {
-            cssButton = ProfileConnect_css.buttonMinimal;
-            minimalButton = " bp5-minimal";
-        }
-        return react.createElement("div", { style: ProfileConnect_css.box, hidden: this.props.hidden },
-            react.createElement("button", { className: "bp5-button " + buttonClass + minimalButton, style: cssButton, type: "button", hidden: hasWg && !connected, disabled: this.state.disabled, onClick: () => {
-                    this.onConnect("ovpn");
-                } }, buttonLabel),
-            react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-link" + minimalButton, style: cssButton, type: "button", hidden: !hasWg || connected || (hideOvpn && hasWg), disabled: this.state.disabled, onClick: () => {
-                    this.onConnect("ovpn");
-                } }, this.props.minimal ? "OVPN" : "OpenVPN"),
-            react.createElement("button", { className: "bp5-button bp5-intent-primary bp5-icon-link" + minimalButton, style: cssButton, type: "button", hidden: !hasWg || connected, disabled: this.state.disabled, onClick: () => {
-                    this.onConnect("wg");
-                } }, hideOvpn ? "Connect" : (this.props.minimal ? "WG" : "WireGuard")),
-            react.createElement(Dialog, { title: "Profile Connect", style: ProfileConnect_css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
-                react.createElement("div", { className: "bp5-dialog-body" },
-                    react.createElement("h3", { style: ProfileConnect_css.header },
-                        "Connecting to ",
-                        this.props.profile.formattedName()),
-                    react.createElement("div", { style: ProfileConnect_css.preConnect, hidden: !this.props.profile.pre_connect_msg }, this.props.profile.pre_connect_msg),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasUsername, label: "Username", help: "Enter profile username.", type: "text", placeholder: "Enter username", value: this.state.username, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                username: val,
-                            });
-                        } }),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasPassword, autoFocus: this.state.autoFocus === "password", label: "Password", help: "Enter profile password.", type: "password", placeholder: "Enter password", value: this.state.password, onKeyUp: (key) => {
-                            if (key === "Enter") {
-                                this.closeDialogConfirm();
-                            }
-                        }, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                password: val,
-                            });
-                        } }),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasPin, autoFocus: this.state.autoFocus === "pin", label: "Pin", help: "Enter profile pin.", type: "password", placeholder: "Enter pin", value: this.state.pin, onKeyUp: (key) => {
-                            if (key === "Enter") {
-                                this.closeDialogConfirm();
-                            }
-                        }, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                pin: val,
-                            });
-                        } }),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasDuo, autoFocus: this.state.autoFocus === "duo", label: "Duo Passcode", help: "Enter profile Duo passcode from Duo authenticator.", type: "text", placeholder: "Enter passcode", value: this.state.duo, onKeyUp: (key) => {
-                            if (key === "Enter") {
-                                this.closeDialogConfirm();
-                            }
-                        }, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                duo: val,
-                            });
-                        } }),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasOnelogin, autoFocus: this.state.autoFocus === "onelogin", label: "OneLogin Passcode", help: "Enter profile OneLogin passcode from OneLogin authenticator app.", type: "text", placeholder: "Enter passcode", value: this.state.onelogin, onKeyUp: (key) => {
-                            if (key === "Enter") {
-                                this.closeDialogConfirm();
-                            }
-                        }, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                onelogin: val,
-                            });
-                        } }),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasOkta, autoFocus: this.state.autoFocus === "okta", label: "Okta Passcode", help: "Enter profile Okta passcode from Okta authenticator app.", type: "text", placeholder: "Enter passcode", value: this.state.okta, onKeyUp: (key) => {
-                            if (key === "Enter") {
-                                this.closeDialogConfirm();
-                            }
-                        }, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                okta: val,
-                            });
-                        } }),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasOtp, autoFocus: this.state.autoFocus === "otp", label: "Authenticator Passcode", help: "Enter profile passcode from authenticator app.", type: "text", placeholder: "Enter passcode", value: this.state.otp, onKeyUp: (key) => {
-                            if (key === "Enter") {
-                                this.closeDialogConfirm();
-                            }
-                        }, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                otp: val,
-                            });
-                        } }),
-                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasYubikey, autoFocus: this.state.autoFocus === "yubikey", label: "YubiKey", help: "Select field and push button on YubiKey device to fill passcode.", type: "text", placeholder: "Activate YubiKey", value: this.state.yubikey, onKeyUp: (key) => {
-                            if (key === "Enter") {
-                                this.closeDialogConfirm();
-                            }
-                        }, onChange: (val) => {
-                            this.setState({
-                                ...this.state,
-                                changed: true,
-                                yubikey: val,
-                            });
-                        } })),
-                react.createElement("div", { className: "bp5-dialog-footer" },
-                    react.createElement("div", { className: "bp5-dialog-footer-actions" },
-                        react.createElement("button", { className: "bp5-button bp5-intent-danger bp5-icon-cross", type: "button", onClick: this.closeDialog }, "Cancel"),
-                        react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-link", type: "button", disabled: this.state.disabled || (!this.state.changed &&
-                                !this.state.preConnMsgOnly), onClick: this.closeDialogConfirm }, "Connect")))));
-    }
-}
-
-;// ./app/components/PageSwitch.js
-
-
-const PageSwitch_css = {
-    label: {
-        display: 'inline-block',
-    },
-};
-class PageSwitch extends react.Component {
-    render() {
-        return react.createElement("div", { hidden: this.props.hidden },
-            react.createElement("label", { className: "bp5-control bp5-switch", style: PageSwitch_css.label },
-                react.createElement("input", { type: "checkbox", disabled: this.props.disabled, checked: !!this.props.checked, onChange: this.props.onToggle }),
-                react.createElement("span", { className: "bp5-control-indicator" }),
-                this.props.label),
-            react.createElement(Help, { title: this.props.label, content: this.props.help }));
-    }
-}
-
-;// ./app/components/ProfileSettings.js
-
-
-
-
-
-
-
-
-
-
-const ProfileSettings_css = {
-    box: {
-        display: "inline-block"
-    },
-    button: {
-        marginTop: "10px",
-        marginRight: "10px",
-    },
-    dialog: {
-        width: "340px",
-        position: "absolute",
-    },
-    dialogBody: {
-        marginBottom: "0",
-    },
-    dialogFooter: {
-        marginTop: "10px",
-    },
-    info: {
-        marginBottom: "0",
-    },
-    label: {
-        width: "100%",
-        maxWidth: "220px",
-        margin: "18px 0 0 0",
-    },
-    input: {
-        width: "100%",
-    },
-    toggleDataBtn: {
-        opacity: "0.5",
-    },
-    dataInfoBox: {
-        height: "100px",
-        overflowY: "scroll",
-        border: "1px solid rgba(16, 22, 26, 0.4)",
-        borderRadius: "2px",
-    },
-};
-class ProfileSettings extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.onSave = () => {
-            let prfl = this.state.profile;
-            this.setState({
-                ...this.state,
-                disabled: true,
-            });
-            if (prfl) {
-                if (this.state.setAutoStart !== null) {
-                    prfl.disabled = !this.state.setAutoStart;
-                }
-                if (prfl.force_connect && prfl.disabled) {
-                    let err = new WriteError(null, "Profiles: Profile autostart enforced by server", { profile_id: prfl.id });
-                    errorAlert(err, 10);
-                    prfl.disabled = false;
-                    this.setState({
-                        ...this.state,
-                        setAutoStart: null,
-                    });
-                    return;
-                }
-                commit(prfl).then(() => {
-                    if (this.state.setSystem !== null) {
-                        this.onSaveSystem();
-                    }
-                    else {
-                        this.setState({
-                            ...this.state,
-                            changed: false,
-                            disabled: false,
-                            profile: null,
-                        });
-                        this.closeDialog();
-                    }
-                });
-            }
-            else {
-                if (this.state.setSystem !== null) {
-                    this.onSaveSystem();
-                }
-                else {
-                    this.setState({
-                        ...this.state,
-                        changed: false,
-                        disabled: false,
-                        profile: null,
-                    });
-                    this.closeDialog();
-                }
-            }
-        };
-        this.onSaveSystem = () => {
-            let prfl = this.state.profile ||
-                this.props.profile;
-            if (this.state.setSystem && !prfl.system) {
-                prfl.disabled = !this.state.setAutoStart;
-                prfl.convertSystem().then(() => {
-                    this.setState({
-                        ...this.state,
-                        changed: false,
-                        disabled: false,
-                        profile: null,
-                    });
-                    this.closeDialog();
-                });
-            }
-            else if (!this.state.setSystem && !!prfl.system) {
-                prfl.convertUser().then(() => {
-                    this.setState({
-                        ...this.state,
-                        changed: false,
-                        disabled: false,
-                        profile: null,
-                    });
-                    this.closeDialog();
-                });
-            }
-        };
-        this.openDialog = () => {
-            this.setState({
-                ...this.state,
-                dialog: true,
-            });
-        };
-        this.closeDialog = () => {
-            this.setState({
-                ...this.state,
-                dialog: false,
-                changed: false,
-                profile: null,
-                setAutoStart: null,
-                setSystem: null,
-            });
-        };
-        this.toggleData = () => {
-            this.setState({
-                ...this.state,
-                showData: !this.state.showData,
-            });
-        };
-        this.state = {
-            disabled: false,
-            changed: false,
-            dialog: false,
-            profile: null,
-            setAutoStart: null,
-            setSystem: null,
-            showData: false,
-        };
-    }
-    set(name, val) {
-        let profile;
-        if (this.state.changed) {
-            profile = {
-                ...this.state.profile,
-            };
-        }
-        else {
-            profile = {
-                ...this.props.profile,
-            };
-        }
-        profile[name] = val;
-        if (name === "disabled") {
-            this.setState({
-                ...this.state,
-                changed: true,
-                profile: profile,
-                setAutoStart: !profile.disabled,
-            });
-        }
-        else {
-            this.setState({
-                ...this.state,
-                changed: true,
-                profile: profile,
-            });
-        }
-    }
-    render() {
-        let profile = this.state.profile ||
-            this.props.profile;
-        let system = !!profile.system;
-        if (this.state.setSystem !== null) {
-            system = this.state.setSystem;
-        }
-        let autostart = !profile.disabled && !!profile.system;
-        if (this.state.setAutoStart !== null) {
-            autostart = this.state.setAutoStart;
-        }
-        let syncHosts = profile.formatedHosts();
-        let lastSync = "";
-        if (profile.sync_time === -1) {
-            lastSync = "Failed to sync";
-        }
-        else if (profile.sync_time) {
-            lastSync = formatDateLess(profile.sync_time);
-        }
-        else {
-            lastSync = "Never";
-        }
-        let dataInfo;
-        if (this.state.showData) {
-            dataInfo = react.createElement("div", { style: ProfileSettings_css.dataInfoBox },
-                react.createElement(PageInfo, { fields: [
-                        {
-                            label: 'Configuration Sync Hosts',
-                            value: syncHosts,
-                        },
-                        {
-                            label: 'System',
-                            value: profile.system,
-                        },
-                        {
-                            label: 'UV Name',
-                            value: profile.uv_name,
-                        },
-                        {
-                            label: 'State',
-                            value: profile.state,
-                        },
-                        {
-                            label: 'WireGuard',
-                            value: profile.wg,
-                        },
-                        {
-                            label: 'Last Mode',
-                            value: profile.last_mode,
-                        },
-                        {
-                            label: 'Organization ID',
-                            value: profile.organization_id,
-                        },
-                        {
-                            label: 'Organization',
-                            value: profile.organization,
-                        },
-                        {
-                            label: 'Server ID',
-                            value: profile.server_id,
-                        },
-                        {
-                            label: 'Server',
-                            value: profile.server,
-                        },
-                        {
-                            label: 'User ID',
-                            value: profile.user_id,
-                        },
-                        {
-                            label: 'User',
-                            value: profile.user,
-                        },
-                        {
-                            label: 'Pre Connect Message',
-                            value: profile.pre_connect_msg,
-                        },
-                        {
-                            label: 'Disable Reconnect',
-                            value: profile.disable_reconnect,
-                        },
-                        {
-                            label: 'Disable Reconnect Local',
-                            value: profile.disable_reconnect_local,
-                        },
-                        {
-                            label: 'Restrict Client',
-                            value: profile.restrict_client,
-                        },
-                        {
-                            label: 'Remotes Data',
-                            value: JSON.stringify(profile.remotes_data),
-                        },
-                        {
-                            label: 'Hide OpenVPN',
-                            value: profile.hide_ovpn,
-                        },
-                        {
-                            label: 'Dynamic Firewall',
-                            value: profile.dynamic_firewall,
-                        },
-                        {
-                            label: 'Geo Sort',
-                            value: profile.geo_sort,
-                        },
-                        {
-                            label: 'Force Connect',
-                            value: profile.force_connect,
-                        },
-                        {
-                            label: 'Device Auth',
-                            value: profile.device_auth,
-                        },
-                        {
-                            label: 'Disable Gateway',
-                            value: profile.disable_gateway,
-                        },
-                        {
-                            label: 'Disable DNS',
-                            value: profile.disable_dns,
-                        },
-                        {
-                            label: 'Data Channel Offload',
-                            value: profile.dco,
-                        },
-                        {
-                            label: 'Debug Output',
-                            value: profile.debug_output,
-                        },
-                        {
-                            label: 'Force DNS',
-                            value: profile.force_dns,
-                        },
-                        {
-                            label: 'SSO Auth',
-                            value: profile.sso_auth,
-                        },
-                        {
-                            label: 'Password Mode',
-                            value: profile.password_mode,
-                        },
-                        {
-                            label: 'Token',
-                            value: profile.token,
-                        },
-                        {
-                            label: 'Token TTL',
-                            value: profile.token_ttl,
-                        },
-                        {
-                            label: 'Sync Hash',
-                            value: profile.sync_hash,
-                        },
-                    ] }));
-        }
-        return react.createElement("div", { style: ProfileSettings_css.box },
-            react.createElement("button", { className: "bp5-button bp5-icon-cog", style: ProfileSettings_css.button, type: "button", disabled: this.state.disabled, onClick: this.openDialog }, "Settings"),
-            react.createElement(Dialog, { title: "Profile Settings", style: ProfileSettings_css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
-                react.createElement("div", { className: "bp5-dialog-body", style: ProfileSettings_css.dialogBody },
-                    react.createElement(PageInput, { disabled: this.state.disabled, label: "Name", help: "Profile name.", type: "text", placeholder: "Enter name", value: profile.name || "", onChange: (val) => {
-                            this.set("name", val);
-                        } }),
-                    react.createElement(PageSwitch, { disabled: this.state.disabled, label: "System Profile", help: "Automatically start profile with system service. Autostart profiles will run for all users.", checked: system, onToggle: () => {
-                            let profile;
-                            if (this.state.changed) {
-                                profile = {
-                                    ...this.state.profile,
-                                };
-                            }
-                            else {
-                                profile = {
-                                    ...this.props.profile,
-                                };
-                            }
-                            if (!system && this.state.setAutoStart === null) {
-                                this.setState({
-                                    ...this.state,
-                                    changed: true,
-                                    profile: profile,
-                                    setSystem: !system,
-                                    setAutoStart: true,
-                                });
-                            }
-                            else {
-                                this.setState({
-                                    ...this.state,
-                                    changed: true,
-                                    profile: profile,
-                                    setSystem: !system,
-                                });
-                            }
-                        } }),
-                    react.createElement(PageSwitch, { disabled: this.state.disabled || !system, label: "Autostart", help: "Automatically start profile with system service. Autostart profiles will run for all users. Must be system profile to use autostart.", checked: autostart && system, onToggle: () => {
-                            this.set("disabled", !!autostart);
-                        } }),
-                    react.createElement(PageSwitch, { label: "Disable Auto Reconnect", help: "Disable automatically reconnecting on disconnect.", hidden: !!system || profile.restrict_client, checked: !!profile.disable_reconnect_local, onToggle: () => {
-                            this.set("disable_reconnect_local", !profile.disable_reconnect_local);
-                        } }),
-                    react.createElement(PageSwitch, { label: "Disable Default Gateway", help: "Disable routing internet traffic through the VPN connection.", hidden: profile.restrict_client, checked: !!profile.disable_gateway, onToggle: () => {
-                            this.set("disable_gateway", !profile.disable_gateway);
-                        } }),
-                    react.createElement(PageSwitch, { label: "Disable DNS", help: "Disable configuring the DNS configuration provided by the server on this profile.", hidden: profile.restrict_client, checked: !!profile.disable_dns, onToggle: () => {
-                            this.set("disable_dns", !profile.disable_dns);
-                        } }),
-                    react.createElement(PageSwitch, { label: "Data Channel Offload", help: "Enable Data Channel Offload for improved performance. Requires server support and configuration changes.", hidden: profile.restrict_client, checked: !!profile.dco, onToggle: () => {
-                            this.set("dco", !profile.dco);
-                        } }),
-                    react.createElement(PageSwitch, { label: "Debug Output", help: "Enable debug output logging for this profile.", hidden: profile.restrict_client, checked: !!profile.debug_output, onToggle: () => {
-                            this.set("debug_output", !profile.debug_output);
-                        } }),
-                    react.createElement(PageSwitch, { label: "Force DNS configuration", help: "Configure only one DNS server to correct issues with macOS DNS server priority. This is not recommended unless required and will cause networking compatibility issues.", hidden: platform !== "darwin" &&
-                            !profile.force_dns &&
-                            !this.state.showData, checked: !!profile.force_dns, onToggle: () => {
-                            this.set("force_dns", !profile.force_dns);
-                        } }),
-                    react.createElement(PageInfo, { style: ProfileSettings_css.info, fields: [
-                            {
-                                label: 'ID',
-                                value: profile.id || '-',
-                            },
-                            {
-                                label: 'Last Configuration Sync',
-                                value: lastSync,
-                            },
-                        ] }),
-                    dataInfo),
-                react.createElement("div", { className: "bp5-dialog-footer", style: ProfileSettings_css.dialogFooter },
-                    react.createElement("div", { className: "bp5-dialog-footer-actions" },
-                        react.createElement("button", { className: "bp5-button bp5-icon-console", type: "button", style: ProfileSettings_css.toggleDataBtn, disabled: this.state.disabled, onClick: this.toggleData }, "Debugging"),
-                        react.createElement("button", { className: "bp5-button bp5-intent-danger bp5-icon-cross", type: "button", disabled: this.state.disabled, onClick: this.closeDialog }, "Cancel"),
-                        react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-tick", type: "button", disabled: this.state.disabled || !this.state.changed, onClick: this.onSave }, "Save")))));
-    }
-}
-
-;// ./app/components/Profile.js
-
-
-
-
-
-
-
-const Profile_css = {
-    box: {
-        paddingTop: "31px",
-    },
-    message: {
-        margin: '0 0 6px 0',
-    },
-    toast: {
-        margin: '0 20px 10px 0',
-    },
-    toastHeader: {
-        fontWeight: "bold",
-    },
-    label: {
-        marginBottom: '0',
-    },
-    labelLast: {
-        marginBottom: '-5px',
-    },
-    card: {
-        position: "relative",
-        margin: '0 8px 8px 0',
-        paddingRight: 0,
-    },
-    progress: {
-        width: '100%',
-        height: '4px',
-        borderRadius: 0,
-    },
-    progressBar: {
-        width: '50%',
-        borderRadius: 0,
-    },
-    button: {
-        marginRight: '10px',
-    },
-    deleteButton: {},
-    deleteButtonBox: {
-        marginTop: "-1px",
-    },
-    buttons: {},
-    editor: {
-        margin: '10px 0 0 0',
-    },
-    header: {
-        userSelect: 'none',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        padding: '4px',
-        height: '39px',
-        color: 'inherit',
-        border: 'none',
-        font: 'inherit',
-        cursor: 'default',
-        outline: 'inherit',
-    },
-    headerOpen: {
-        userSelect: 'none',
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        right: '0',
-        padding: '4px',
-        height: '36px',
-        color: 'inherit',
-        border: 'none',
-        font: 'inherit',
-        cursor: 'pointer',
-        outline: 'none',
-    },
-    headerClosed: {
-        userSelect: 'none',
-        position: 'absolute',
-        top: '1px',
-        left: '1px',
-        right: '2px',
-        padding: '4px',
-        height: '36px',
-        color: 'inherit',
-        border: 'none',
-        font: 'inherit',
-        cursor: 'pointer',
-        backgroundColor: 'inherit',
-        outline: 'none',
-    },
-    headerLabel: {
-        fontSize: "1.09em",
-        margin: "4px 34px 0 6px",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-    },
-    body: {},
-    regBox: {
-        padding: "0 20px 10px 0",
-    },
-    reg: {
-        textAlign: "center",
-    },
-    regTitle: {
-        margin: "3px 0 0 0",
-    },
-    regName: {
-        margin: "1px 0 0 0",
-        fontSize: "14px",
-        fontWeight: "normal",
-    },
-    regKey: {
-        margin: "1px 0",
-        fontWeight: "bold",
-    },
-};
-class Profile extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.onChange = () => {
-            this.setState({
-                ...this.state,
-            });
-        };
-        this.onDelete = () => {
-            this.setState({
-                ...this.state,
-                disabled: true,
-            });
-            let profile = this.props.profile;
-            profile.delete().then(() => {
-                this.setState({
-                    ...this.state,
-                    disabled: false,
-                });
-                sync();
-            });
-        };
-        this.state = {
-            open: false,
-            message: '',
-            disabled: false,
-            changed: false,
-            value: 'test',
-        };
-    }
-    componentDidMount() {
-        Constants_addChangeListener(this.onChange);
-    }
-    componentWillUnmount() {
-        Constants_removeChangeListener(this.onChange);
-    }
-    render() {
-        let profile = this.props.profile;
-        let statusLabel = "Online For";
-        let statusVal = profile.formattedUptime();
-        if (statusVal === "") {
-            statusLabel = "Status";
-            statusVal = profile.formattedStatus();
-        }
-        let open = this.state.open || !!profile.registration_key;
-        let fieldsLeft = [
-            {
-                label: 'User',
-                value: profile.user || '-',
-            },
-            {
-                label: 'Server',
-                value: profile.server || '-',
-            },
-        ];
-        let fieldsRight = [
-            {
-                label: statusLabel,
-                value: statusVal,
-            },
-            {
-                label: 'Organization',
-                value: profile.organization || '-',
-            },
-        ];
-        let fieldsLong = [];
-        let longIp = false;
-        if ((profile.server_addr && profile.server_addr.length >= 16) ||
-            (profile.client_addr && profile.client_addr.length >= 16)) {
-            fieldsLong.push({
-                label: 'Server Address',
-                value: profile.server_addr || '-',
-                copy: !!profile.server_addr,
-            });
-            fieldsLong.push({
-                label: 'Client Address',
-                value: profile.client_addr || '-',
-                copy: !!profile.client_addr,
-            });
-            longIp = true;
-        }
-        else if (profile.server_addr || profile.client_addr) {
-            fieldsLeft.push({
-                label: 'Server Address',
-                value: profile.server_addr || '-',
-                copy: !!profile.server_addr,
-            });
-            fieldsRight.push({
-                label: 'Client Address',
-                value: profile.client_addr || '-',
-                copy: !!profile.client_addr,
-            });
-        }
-        let header;
-        if (this.props.minimal) {
-            header = react.createElement("button", { className: (open ? "bp5-card-header " : "") +
-                    "layout horizontal tab-toggle", style: open ? Profile_css.headerOpen : Profile_css.headerClosed, onClick: (evt) => {
-                    let target = evt.target;
-                    if (this.props.minimal &&
-                        target.className && target.className.indexOf &&
-                        target.className.indexOf('tab-toggle') !== -1) {
-                        this.setState({
-                            ...this.state,
-                            open: !open,
-                        });
-                    }
-                } },
-                react.createElement("h3", { className: "tab-toggle", style: Profile_css.headerLabel }, profile.formattedNameShort() || 'Profile'),
-                react.createElement("div", { className: "flex tab-toggle" }),
-                react.createElement(ProfileConnect, { profile: this.props.profile, minimal: true, hidden: !this.props.minimal || open }),
-                react.createElement("div", { style: Profile_css.deleteButtonBox, hidden: this.props.minimal && !open },
-                    react.createElement(ConfirmButton, { className: "bp5-minimal bp5-intent-danger bp5-icon-trash", style: Profile_css.deleteButton, safe: true, progressClassName: "bp5-intent-danger", dialogClassName: "bp5-intent-danger bp5-icon-delete", dialogLabel: "Delete Profile", confirmMsg: "Permanently delete this profile", items: [profile.formattedName()], disabled: this.state.disabled, onConfirm: this.onDelete })));
-        }
-        else {
-            header = react.createElement("div", { className: "bp5-card-header layout horizontal tab-toggle", style: Profile_css.header },
-                react.createElement("h3", { className: "tab-toggle", style: Profile_css.headerLabel }, profile.formattedNameShort() || 'Profile'),
-                react.createElement("div", { className: "flex tab-toggle" }),
-                react.createElement("div", { style: Profile_css.deleteButtonBox, hidden: this.props.minimal && !open },
-                    react.createElement(ConfirmButton, { className: "bp5-minimal bp5-intent-danger bp5-icon-trash", style: Profile_css.deleteButton, safe: true, progressClassName: "bp5-intent-danger", dialogClassName: "bp5-intent-danger bp5-icon-delete", dialogLabel: "Delete Profile", confirmMsg: "Permanently delete this profile", items: [profile.formattedName()], disabled: this.state.disabled, onConfirm: this.onDelete })));
-        }
-        return react.createElement("div", { className: "bp5-card layout vertical", style: Profile_css.card },
-            header,
-            react.createElement("div", { style: Profile_css.box, hidden: this.props.minimal && !open },
-                react.createElement("div", { style: Profile_css.toast, hidden: !profile.auth_reconnect, className: "bp5-toast bp5-intent-primary bp5-overlay-content" },
-                    react.createElement("span", { className: "bp5-toast-message" },
-                        react.createElement("span", { style: Profile_css.toastHeader }, "Connection Lost"),
-                        react.createElement("br", null),
-                        "Authentication required to reconnect")),
-                react.createElement("div", { className: "layout vertical", style: Profile_css.regBox, hidden: !profile.registration_key },
-                    react.createElement("div", { className: "bp5-card layout vertical", style: Profile_css.reg },
-                        react.createElement("h3", { className: "bp5-text-intent-danger", style: Profile_css.regTitle }, "Device Registration Required"),
-                        "Contact Server Administrator with Code:",
-                        react.createElement("h3", { className: "bp5-text-intent-primary", style: Profile_css.regName }, hostname),
-                        react.createElement("h1", { className: "bp5-text-intent-primary", style: Profile_css.regKey }, profile.registration_key))),
-                react.createElement("div", { className: "layout horizontal", style: Profile_css.body },
-                    react.createElement(PageInfo, { style: Profile_css.label, fields: fieldsLeft }),
-                    react.createElement(PageInfo, { style: Profile_css.label, fields: fieldsRight })),
-                react.createElement(PageInfo, { style: Profile_css.labelLast, hidden: !longIp, fields: fieldsLong }),
-                react.createElement("div", { style: Profile_css.message, hidden: !this.state.message }, this.state.message),
-                react.createElement("div", { className: "layout horizontal" },
-                    react.createElement("div", { style: Profile_css.buttons },
-                        react.createElement(ProfileConnect, { profile: this.props.profile }),
-                        react.createElement(ProfileSettings, { profile: this.props.profile })))));
-    }
-}
-
-;// ./app/components/Profiles.js
-
-
-
-
-const profilesStyle = `
-.profiles-grid {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 0;
-	margin: 8px 0 0 8px;
-}
-@media (min-width: 864px) {
-	.profiles-grid {
-		grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-	}
-}
-`;
-class Profiles extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.onResize = () => {
-            this.setState({
-                windowWidth: document.documentElement.clientWidth,
-            });
-        };
-        this.onChange = () => {
-            this.setState({
-                profiles: stores_ProfilesStore.profiles,
-            });
-        };
-        this.state = {
-            profiles: stores_ProfilesStore.profiles,
-            windowWidth: document.documentElement.clientWidth,
-        };
-    }
-    componentDidMount() {
-        stores_ProfilesStore.addChangeListener(this.onChange);
-        sync();
-        window.addEventListener('resize', this.onResize);
-        this.interval = setInterval(() => {
-            sync(true);
-        }, 1000);
-    }
-    componentWillUnmount() {
-        stores_ProfilesStore.removeChangeListener(this.onChange);
-        window.removeEventListener('resize', this.onResize);
-        clearInterval(this.interval);
-    }
-    render() {
-        let profilesDom = [];
-        let minimal = this.state.profiles.length > 3 && this.state.windowWidth < 864;
-        let prflIds = new Set();
-        this.state.profiles.forEach((prfl) => {
-            if (prflIds.has(prfl.id)) {
-                return;
-            }
-            prflIds.add(prfl.id);
-            profilesDom.push(react.createElement(Profile, { key: prfl.id, profile: prfl, minimal: minimal }));
-        });
-        return react.createElement("div", null,
-            react.createElement("style", null, profilesStyle),
-            react.createElement("div", { className: "profiles-grid" }, profilesDom));
-    }
-}
-
-;// ./app/utils/LogUtils.js
-
-
-
-
-
-async function readServiceLog() {
-    let logData = "";
-    try {
-        let resp = await get('/log/service')
-            .end();
-        logData = resp.data;
-    }
-    catch (err) {
-        err = new RequestError(err, "Logs: Service log request error");
-        errorAlert2(err, 10);
-    }
-    return logData;
-}
-async function clearServiceLog() {
-    try {
-        await del('/log/service')
-            .end();
-    }
-    catch (err) {
-        err = new RequestError(err, "Logs: Service log request error");
-        errorAlert2(err, 10);
-    }
-}
-async function readClientLog() {
-    let logData = "";
-    let logPath = log();
-    try {
-        let exists = await fileExists(logPath);
-        if (exists) {
-            logData = await fileRead(logPath);
-        }
-    }
-    catch (err) {
-        errorAlert2(err, 10);
-    }
-    return logData;
-}
-async function clearClientLog() {
-    try {
-        await fileWrite(log(), "");
-    }
-    catch (err) {
-        errorAlert2(err, 10);
-    }
-}
-
-;// ./node_modules/@monaco-editor/react/dist/index.mjs
-var dist_le={wrapper:{display:"flex",position:"relative",textAlign:"initial"},fullWidth:{width:"100%"},hide:{display:"none"}},v=dist_le;var dist_ae={container:{display:"flex",height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}},dist_Y=dist_ae;function dist_Me({children:e}){return react.createElement("div",{style:dist_Y.container},e)}var dist_Z=dist_Me;var $=dist_Z;function Ee({width:e,height:r,isEditorReady:n,loading:t,_ref:a,className:m,wrapperProps:E}){return react.createElement("section",{style:{...v.wrapper,width:e,height:r},...E},!n&&react.createElement($,null,t),react.createElement("div",{ref:a,style:{...v.fullWidth,...!n&&v.hide},className:m}))}var dist_ee=Ee;var dist_H=(0,react.memo)(dist_ee);function dist_Ce(e){(0,react.useEffect)(e,[])}var k=dist_Ce;function dist_he(e,r,n=!0){let t=(0,react.useRef)(!0);(0,react.useEffect)(t.current||!n?()=>{t.current=!1}:e,r)}var l=dist_he;function dist_D(){}function h(e,r,n,t){return dist_De(e,t)||dist_be(e,r,n,t)}function dist_De(e,r){return e.editor.getModel(dist_te(e,r))}function dist_be(e,r,n,t){return e.editor.createModel(r,n,t?dist_te(e,t):void 0)}function dist_te(e,r){return e.Uri.parse(r)}function dist_Oe({original:e,modified:r,language:n,originalLanguage:t,modifiedLanguage:a,originalModelPath:m,modifiedModelPath:E,keepCurrentOriginalModel:g=!1,keepCurrentModifiedModel:N=!1,theme:x="light",loading:P="Loading...",options:y={},height:V="100%",width:z="100%",className:F,wrapperProps:j={},beforeMount:A=dist_D,onMount:q=dist_D}){let[M,O]=(0,react.useState)(!1),[T,s]=(0,react.useState)(!0),u=(0,react.useRef)(null),c=(0,react.useRef)(null),w=(0,react.useRef)(null),d=(0,react.useRef)(q),o=(0,react.useRef)(A),b=(0,react.useRef)(!1);k(()=>{let i=es_loader.init();return i.then(f=>(c.current=f)&&s(!1)).catch(f=>f?.type!=="cancelation"&&console.error("Monaco initialization: error:",f)),()=>u.current?I():i.cancel()}),l(()=>{if(u.current&&c.current){let i=u.current.getOriginalEditor(),f=h(c.current,e||"",t||n||"text",m||"");f!==i.getModel()&&i.setModel(f)}},[m],M),l(()=>{if(u.current&&c.current){let i=u.current.getModifiedEditor(),f=h(c.current,r||"",a||n||"text",E||"");f!==i.getModel()&&i.setModel(f)}},[E],M),l(()=>{let i=u.current.getModifiedEditor();i.getOption(c.current.editor.EditorOption.readOnly)?i.setValue(r||""):r!==i.getValue()&&(i.executeEdits("",[{range:i.getModel().getFullModelRange(),text:r||"",forceMoveMarkers:!0}]),i.pushUndoStop())},[r],M),l(()=>{u.current?.getModel()?.original.setValue(e||"")},[e],M),l(()=>{let{original:i,modified:f}=u.current.getModel();c.current.editor.setModelLanguage(i,t||n||"text"),c.current.editor.setModelLanguage(f,a||n||"text")},[n,t,a],M),l(()=>{c.current?.editor.setTheme(x)},[x],M),l(()=>{u.current?.updateOptions(y)},[y],M);let L=(0,react.useCallback)(()=>{if(!c.current)return;o.current(c.current);let i=h(c.current,e||"",t||n||"text",m||""),f=h(c.current,r||"",a||n||"text",E||"");u.current?.setModel({original:i,modified:f})},[n,r,a,e,t,m,E]),U=(0,react.useCallback)(()=>{!b.current&&w.current&&(u.current=c.current.editor.createDiffEditor(w.current,{automaticLayout:!0,...y}),L(),c.current?.editor.setTheme(x),O(!0),b.current=!0)},[y,x,L]);(0,react.useEffect)(()=>{M&&d.current(u.current,c.current)},[M]),(0,react.useEffect)(()=>{!T&&!M&&U()},[T,M,U]);function I(){let i=u.current?.getModel();g||i?.original?.dispose(),N||i?.modified?.dispose(),u.current?.dispose()}return react.createElement(dist_H,{width:z,height:V,isEditorReady:M,loading:P,_ref:w,className:F,wrapperProps:j})}var dist_ie=dist_Oe;var dist_we=(0,react.memo)(dist_ie);function dist_Pe(){let[e,r]=Ie(ce.__getMonacoInstance());return k(()=>{let n;return e||(n=ce.init(),n.then(t=>{r(t)})),()=>n?.cancel()}),e}var dist_Le=(/* unused pure expression or super */ null && (dist_Pe));function dist_He(e){let r=(0,react.useRef)();return (0,react.useEffect)(()=>{r.current=e},[e]),r.current}var dist_se=dist_He;var dist_=new Map;function dist_Ve({defaultValue:e,defaultLanguage:r,defaultPath:n,value:t,language:a,path:m,theme:E="light",line:g,loading:N="Loading...",options:x={},overrideServices:P={},saveViewState:y=!0,keepCurrentModel:V=!1,width:z="100%",height:F="100%",className:j,wrapperProps:A={},beforeMount:q=dist_D,onMount:M=dist_D,onChange:O,onValidate:T=dist_D}){let[s,u]=(0,react.useState)(!1),[c,w]=(0,react.useState)(!0),d=(0,react.useRef)(null),o=(0,react.useRef)(null),b=(0,react.useRef)(null),L=(0,react.useRef)(M),U=(0,react.useRef)(q),I=(0,react.useRef)(),i=(0,react.useRef)(t),f=dist_se(m),Q=(0,react.useRef)(!1),B=(0,react.useRef)(!1);k(()=>{let p=es_loader.init();return p.then(R=>(d.current=R)&&w(!1)).catch(R=>R?.type!=="cancelation"&&console.error("Monaco initialization: error:",R)),()=>o.current?pe():p.cancel()}),l(()=>{let p=h(d.current,e||t||"",r||a||"",m||n||"");p!==o.current?.getModel()&&(y&&dist_.set(f,o.current?.saveViewState()),o.current?.setModel(p),y&&o.current?.restoreViewState(dist_.get(m)))},[m],s),l(()=>{o.current?.updateOptions(x)},[x],s),l(()=>{!o.current||t===void 0||(o.current.getOption(d.current.editor.EditorOption.readOnly)?o.current.setValue(t):t!==o.current.getValue()&&(B.current=!0,o.current.executeEdits("",[{range:o.current.getModel().getFullModelRange(),text:t,forceMoveMarkers:!0}]),o.current.pushUndoStop(),B.current=!1))},[t],s),l(()=>{let p=o.current?.getModel();p&&a&&d.current?.editor.setModelLanguage(p,a)},[a],s),l(()=>{g!==void 0&&o.current?.revealLine(g)},[g],s),l(()=>{d.current?.editor.setTheme(E)},[E],s);let X=(0,react.useCallback)(()=>{if(!(!b.current||!d.current)&&!Q.current){U.current(d.current);let p=m||n,R=h(d.current,t||e||"",r||a||"",p||"");o.current=d.current?.editor.create(b.current,{model:R,automaticLayout:!0,...x},P),y&&o.current.restoreViewState(dist_.get(p)),d.current.editor.setTheme(E),g!==void 0&&o.current.revealLine(g),u(!0),Q.current=!0}},[e,r,n,t,a,m,x,P,y,E,g]);(0,react.useEffect)(()=>{s&&L.current(o.current,d.current)},[s]),(0,react.useEffect)(()=>{!c&&!s&&X()},[c,s,X]),i.current=t,(0,react.useEffect)(()=>{s&&O&&(I.current?.dispose(),I.current=o.current?.onDidChangeModelContent(p=>{B.current||O(o.current.getValue(),p)}))},[s,O]),(0,react.useEffect)(()=>{if(s){let p=d.current.editor.onDidChangeMarkers(R=>{let G=o.current.getModel()?.uri;if(G&&R.find(J=>J.path===G.path)){let J=d.current.editor.getModelMarkers({resource:G});T?.(J)}});return()=>{p?.dispose()}}return()=>{}},[s,T]);function pe(){I.current?.dispose(),V?y&&dist_.set(m,o.current.saveViewState()):o.current.getModel()?.dispose(),o.current.dispose()}return react.createElement(dist_H,{width:z,height:F,isEditorReady:s,loading:N,_ref:b,className:j,wrapperProps:A})}var dist_fe=dist_Ve;var dist_de=(0,react.memo)(dist_fe);var dist_Ft=(/* unused pure expression or super */ null && (dist_de));
-//# sourceMappingURL=index.mjs.map
-;// ./app/components/Editor.js
-
-
-
-const Editor_css = {
-    editorBox: {
-        margin: "0",
-    },
-    editor: {
-        margin: "0",
-        borderRadius: "3px",
-        overflow: "hidden",
-        width: "100%",
-    },
-};
-class Editor extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {};
-    }
-    render() {
-        return react.createElement("div", { className: "layout horizontal flex", style: Editor_css.editorBox },
-            react.createElement("div", { style: Editor_css.editor },
-                react.createElement(dist_de, { height: this.props.height, width: this.props.width, defaultLanguage: "markdown", theme: getEditorTheme(), value: this.props.value, options: {
-                        folding: false,
-                        fontSize: this.props.fontSize,
-                        fontFamily: monospaceFont,
-                        fontWeight: monospaceWeight,
-                        tabSize: 4,
-                        detectIndentation: false,
-                        readOnly: this.props.readOnly,
-                        scrollBeyondLastLine: false,
-                        minimap: {
-                            enabled: false,
-                        },
-                        wordWrap: "on",
-                    }, onChange: (val) => {
-                        if (this.props.onChange) {
-                            this.props.onChange(val);
-                        }
-                    } })));
-    }
-}
-
-;// ./app/components/Logs.js
-
-
-
-
-
-
-
-let lastView = "service";
-const Logs_css = {
-    message: {
-        margin: '0 0 6px 0',
-    },
-    header: {
-        margin: '0 0 5px 0',
-    },
-    label: {
-        marginBottom: '0',
-    },
-    card: {
-        position: "relative",
-        margin: '8px',
-    },
-    layout: {
-        height: '100%',
-    },
-    progress: {
-        width: '100%',
-        height: '4px',
-        borderRadius: 0,
-    },
-    progressBar: {
-        width: '50%',
-        borderRadius: 0,
-    },
-    button: {
-        marginRight: '10px',
-    },
-    deleteButton: {},
-    buttonsTop: {
-        position: "absolute",
-        top: "5px",
-        right: "5px",
-    },
-    buttons: {
-        flexShrink: 0,
-    },
-    editor: {
-        margin: '10px 0 0 0',
-    },
-};
-class Logs extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.onChange = () => {
-            if (this.state.view === "service") {
-                readServiceLog().then((data) => {
-                    this.setState({
-                        ...this.state,
-                        log: data,
-                        profiles: stores_ProfilesStore.profiles,
-                    });
-                });
-            }
-            else if (this.state.view === "client") {
-                readClientLog().then((data) => {
-                    this.setState({
-                        ...this.state,
-                        log: data,
-                        profiles: stores_ProfilesStore.profiles,
-                    });
-                });
-            }
-            else if (this.state.curProfile) {
-                this.state.curProfile.readLog().then((data) => {
-                    this.setState({
-                        ...this.state,
-                        log: data,
-                        profiles: stores_ProfilesStore.profiles,
-                    });
-                });
-            }
-        };
-        this.onChangeView = (view) => {
-            if (view === "service") {
-                readServiceLog().then((data) => {
-                    this.setState({
-                        ...this.state,
-                        log: data,
-                        view: view,
-                        profiles: stores_ProfilesStore.profiles,
-                    });
-                });
-            }
-            else if (view === "client") {
-                readClientLog().then((data) => {
-                    this.setState({
-                        ...this.state,
-                        log: data,
-                        view: view,
-                        profiles: stores_ProfilesStore.profiles,
-                    });
-                });
-            }
-            else {
-                let prfl = stores_ProfilesStore.profile(view);
-                if (!prfl) {
-                    this.onChangeView("service");
-                    return;
-                }
-                prfl.readLog().then((data) => {
-                    this.setState({
-                        ...this.state,
-                        log: data,
-                        view: view,
-                        curProfile: prfl,
-                        profiles: stores_ProfilesStore.profiles,
-                    });
-                });
-            }
-        };
-        this.onDelete = () => {
-            this.setState({
-                ...this.state,
-                disabled: true,
-            });
-            if (this.state.view === "service") {
-                clearServiceLog().then(() => {
-                    this.setState({
-                        ...this.state,
-                        disabled: false,
-                    });
-                    this.onChange();
-                });
-            }
-            else if (this.state.view === "client") {
-                clearClientLog().then(() => {
-                    this.setState({
-                        ...this.state,
-                        disabled: false,
-                    });
-                    this.onChange();
-                });
-            }
-            else if (this.state.curProfile) {
-                this.state.curProfile.clearLog().then(() => {
-                    this.setState({
-                        ...this.state,
-                        disabled: false,
-                    });
-                    sync();
-                });
-            }
-        };
-        this.state = {
-            profiles: stores_ProfilesStore.profiles,
-            curProfile: null,
-            view: lastView,
-            log: "",
-            disabled: false,
-        };
-    }
-    componentDidMount() {
-        Constants_addChangeListener(this.onChange);
-        stores_ProfilesStore.addChangeListener(this.onChange);
-        sync();
-        this.onChangeView(this.state.view);
-    }
-    componentWillUnmount() {
-        lastView = this.state.view;
-        Constants_removeChangeListener(this.onChange);
-        stores_ProfilesStore.removeChangeListener(this.onChange);
-    }
-    render() {
-        let label = "";
-        if (this.state.view === "service") {
-            label = "Service";
-        }
-        else if (this.state.view === "client") {
-            label = "Client";
-        }
-        else if (this.state.curProfile) {
-            label = this.state.curProfile.formattedName();
-        }
-        let viewsDom = [
-            react.createElement("option", { value: "service" }, "Service logs"),
-            react.createElement("option", { value: "client" }, "Client logs"),
-        ];
-        this.state.profiles.forEach((prfl) => {
-            viewsDom.push(react.createElement("option", { value: prfl.id }, prfl.formattedName() + " logs"));
-        });
-        return react.createElement("div", { className: "bp5-card layout vertical flex", style: Logs_css.card },
-            react.createElement("div", { style: Logs_css.buttonsTop },
-                react.createElement(ConfirmButton, { className: "bp5-minimal bp5-intent-danger bp5-icon-trash", style: Logs_css.deleteButton, safe: true, progressClassName: "bp5-intent-danger", dialogClassName: "bp5-intent-danger bp5-icon-delete", dialogLabel: "Clear Logs", confirmMsg: "Confirm clearing " + label + " logs", disabled: this.state.disabled, onConfirm: this.onDelete }),
-                react.createElement("button", { className: "bp5-button bp5-minimal bp5-icon-cross", onClick: this.props.onClose })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement("h3", { style: Logs_css.header }, "Log Viewer")),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement("div", { className: "bp5-select" },
-                    react.createElement("select", { disabled: this.state.disabled, value: this.state.view, onChange: (evt) => {
-                            this.onChangeView(evt.target.value);
-                        } }, viewsDom))),
-            react.createElement("div", { className: "layout horizontal flex" },
-                react.createElement("label", { className: "bp5-label layout horizontal flex", style: Logs_css.editor },
-                    react.createElement(Editor, { disabled: this.state.disabled, value: this.state.log, readOnly: true, mode: "text", fontSize: 10, height: "100%", width: "100%" }))));
-    }
-}
-
-;// ./app/stores/ConfigStore.js
-
-
-
-
-class ConfigStore extends EventEmitter {
-    constructor() {
-        super(...arguments);
-        this._token = dispatcher_Dispatcher.register((this._callback).bind(this));
-    }
-    get config() {
-        return this._config || {};
-    }
-    get configM() {
-        if (this._config) {
-            return {
-                ...this._config || {},
-            };
-        }
-        return undefined;
-    }
-    emitChange() {
-        this.emitDefer(GlobalTypes_CHANGE);
-    }
-    addChangeListener(callback) {
-        this.on(GlobalTypes_CHANGE, callback);
-    }
-    removeChangeListener(callback) {
-        this.removeListener(GlobalTypes_CHANGE, callback);
-    }
-    _sync(config) {
-        this._config = Object.freeze(config);
-        this.emitChange();
-    }
-    _callback(action) {
-        switch (action.type) {
-            case ConfigTypes_SYNC:
-                this._sync(action.data);
-                break;
-        }
-    }
-}
-/* harmony default export */ const stores_ConfigStore = (new ConfigStore());
-
-;// ./node_modules/@blueprintjs/icons/lib/esm/generated/components/chevron-up.js
-/*
- * Copyright 2024 Palantir Technologies, Inc. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-var ChevronUp = react.forwardRef(function (props, ref) {
-    var isLarge = props.size >= iconTypes/* IconSize */.l.LARGE;
-    var pixelGridSize = isLarge ? iconTypes/* IconSize */.l.LARGE : iconTypes/* IconSize */.l.STANDARD;
-    var translation = "".concat(-1 * pixelGridSize / 0.05 / 2);
-    var style = { transformOrigin: "center" };
-    return (react.createElement(SVGIconContainer, (0,tslib_es6/* __assign */.Cl)({ iconName: "chevron-up", ref: ref }, props),
-        react.createElement("path", { d: isLarge ? "M334.2000000000001 154.2L214.2 274.2000000000001C210.6 277.8 205.6 280 200 280S189.4 277.8 185.8 274.2L65.8 154.2C62.2 150.6 60 145.6 60 140C60 129 69 120 80 120C85.6 120 90.6 122.2 94.2 125.8L200 231.8L305.8 126C309.4000000000001 122.2 314.4000000000001 120 320 120C331 120 340 129 340 140C340 145.6 337.8 150.6 334.2000000000001 154.2z" : "M254.2 134.2L174.2 214.2C170.6 217.8 165.6 220 160 220S149.4 217.8 145.8 214.2L65.8 134.2C62.2 130.6 60 125.6 60 120C60 109 69 100 80 100C85.6 100 90.6 102.2 94.2 105.8L160 171.8L225.8 106C229.4 102.2 234.4 100 240 100C251 100 260 109 260 120C260 125.6 257.8 130.6 254.2 134.2z", fillRule: "evenodd", transform: "scale(0.05, -0.05) translate(".concat(translation, ", ").concat(translation, ")"), style: style })));
-});
-ChevronUp.defaultProps = {
-    size: iconTypes/* IconSize */.l.STANDARD,
-};
-ChevronUp.displayName = "Blueprint5.Icon.ChevronUp";
-/* harmony default export */ const chevron_up = ((/* unused pure expression or super */ null && (ChevronUp)));
-
-;// ./node_modules/@blueprintjs/icons/lib/esm/generated/components/chevron-down.js
-/*
- * Copyright 2024 Palantir Technologies, Inc. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-var ChevronDown = react.forwardRef(function (props, ref) {
-    var isLarge = props.size >= iconTypes/* IconSize */.l.LARGE;
-    var pixelGridSize = isLarge ? iconTypes/* IconSize */.l.LARGE : iconTypes/* IconSize */.l.STANDARD;
-    var translation = "".concat(-1 * pixelGridSize / 0.05 / 2);
-    var style = { transformOrigin: "center" };
-    return (react.createElement(SVGIconContainer, (0,tslib_es6/* __assign */.Cl)({ iconName: "chevron-down", ref: ref }, props),
-        react.createElement("path", { d: isLarge ? "M320 280C314.4000000000001 280 309.4000000000001 277.8 305.8 274.2L200 168.2L94.2 274.2C90.6 277.8 85.6 280 80 280C69 280 60 271 60 260C60 254.4 62.2 249.4 65.8 245.8L185.8 125.8C189.4 122.2 194.4 120 200 120S210.6 122.2 214.2 125.8L334.2000000000001 245.8C337.8 249.4 340 254.4 340 260C340 271 331 280 320 280z" : "M240 220C234.4 220 229.4 217.8 225.8 214.2L160 148.2L94.2 214.2C90.6 217.8 85.6 220 80 220C69 220 60 211 60 200C60 194.4 62.2 189.4 65.8 185.8L145.8 105.8C149.4 102.2 154.4 100 160 100S170.6 102.2 174.2 105.8L254.2 185.8C257.8 189.4 260 194.4 260 200C260 211 251 220 240 220z", fillRule: "evenodd", transform: "scale(0.05, -0.05) translate(".concat(translation, ", ").concat(translation, ")"), style: style })));
-});
-ChevronDown.defaultProps = {
-    size: iconTypes/* IconSize */.l.STANDARD,
-};
-ChevronDown.displayName = "Blueprint5.Icon.ChevronDown";
-/* harmony default export */ const chevron_down = ((/* unused pure expression or super */ null && (ChevronDown)));
-
-;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/controlGroup.js
-/*
- * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-// this component is simple enough that tests would be purely tautological.
-/* istanbul ignore next */
-/**
- * Control group component.
- *
- * @see https://blueprintjs.com/docs/#core/components/control-group
- */
-var ControlGroup = react.forwardRef(function (props, ref) {
-    var _a;
-    var children = props.children, className = props.className, fill = props.fill, vertical = props.vertical, htmlProps = (0,tslib_es6/* __rest */.Tt)(props, ["children", "className", "fill", "vertical"]);
-    var rootClasses = classnames_default()(CONTROL_GROUP, (_a = {},
-        _a[FILL] = fill,
-        _a[VERTICAL] = vertical,
-        _a), className);
-    return (react.createElement("div", (0,tslib_es6/* __assign */.Cl)({ role: "group" }, htmlProps, { ref: ref, className: rootClasses }), children));
-});
-ControlGroup.displayName = "".concat(DISPLAYNAME_PREFIX, ".ControlGroup");
-
-;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/asyncControllableInput.js
-/* !
- * Copyright 2020 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-/**
- * A stateful wrapper around the low-level <input> component which works around a
- * [React bug](https://github.com/facebook/react/issues/3926). This bug is reproduced when an input
- * receives CompositionEvents (for example, through IME composition) and has its value prop updated
- * asychronously. This might happen if a component chooses to do async validation of a value
- * returned by the input's `onChange` callback.
- *
- * Note: this component does not apply any Blueprint-specific styling.
- */
-var AsyncControllableInput = /** @class */ (function (_super) {
-    (0,tslib_es6/* __extends */.C6)(AsyncControllableInput, _super);
-    function AsyncControllableInput() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            hasPendingUpdate: false,
-            isComposing: false,
-            nextValue: _this.props.value,
-            value: _this.props.value,
-        };
-        _this.cancelPendingCompositionEnd = null;
-        _this.handleCompositionStart = function (e) {
-            var _a, _b, _c;
-            (_a = _this.cancelPendingCompositionEnd) === null || _a === void 0 ? void 0 : _a.call(_this);
-            _this.setState({ isComposing: true });
-            (_c = (_b = _this.props).onCompositionStart) === null || _c === void 0 ? void 0 : _c.call(_b, e);
-        };
-        _this.handleCompositionEnd = function (e) {
-            var _a, _b;
-            // In some non-latin languages, a keystroke can end a composition event and immediately afterwards start another.
-            // This can lead to unexpected characters showing up in the text input. In order to circumvent this problem, we
-            // use a timeout which creates a delay which merges the two composition events, creating a more natural and predictable UX.
-            // `this.state.nextValue` will become "locked" (it cannot be overwritten by the `value` prop) until a delay (10ms) has
-            // passed without a new composition event starting.
-            _this.cancelPendingCompositionEnd = _this.setTimeout(function () { return _this.setState({ isComposing: false }); }, AsyncControllableInput.COMPOSITION_END_DELAY);
-            (_b = (_a = _this.props).onCompositionEnd) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-        };
-        _this.handleChange = function (e) {
-            var _a, _b;
-            var value = e.target.value;
-            _this.setState({ nextValue: value });
-            (_b = (_a = _this.props).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-        };
-        return _this;
-    }
-    AsyncControllableInput.getDerivedStateFromProps = function (nextProps, nextState) {
-        if (nextState.isComposing || nextProps.value === undefined) {
-            // don't derive anything from props if:
-            // - in uncontrolled mode, OR
-            // - currently composing, since we'll do that after composition ends
-            return null;
-        }
-        var userTriggeredUpdate = nextState.nextValue !== nextState.value;
-        if (userTriggeredUpdate) {
-            if (nextProps.value === nextState.nextValue) {
-                // parent has processed and accepted our update
-                if (nextState.hasPendingUpdate) {
-                    return { hasPendingUpdate: false, value: nextProps.value };
-                }
-                else {
-                    return { value: nextState.nextValue };
-                }
-            }
-            else {
-                if (nextProps.value === nextState.value) {
-                    // we have sent the update to our parent, but it has not been processed yet. just wait.
-                    // DO NOT set nextValue here, since that will temporarily render a potentially stale controlled value,
-                    // causing the cursor to jump once the new value is accepted
-                    return { hasPendingUpdate: true };
-                }
-                // accept controlled update overriding user action
-                return { hasPendingUpdate: false, nextValue: nextProps.value, value: nextProps.value };
-            }
-        }
-        else {
-            // accept controlled update, could be confirming or denying user action
-            return { hasPendingUpdate: false, nextValue: nextProps.value, value: nextProps.value };
-        }
-    };
-    AsyncControllableInput.prototype.render = function () {
-        var _a = this.state, isComposing = _a.isComposing, hasPendingUpdate = _a.hasPendingUpdate, value = _a.value, nextValue = _a.nextValue;
-        var _b = this.props, inputRef = _b.inputRef, restProps = (0,tslib_es6/* __rest */.Tt)(_b, ["inputRef"]);
-        return (react.createElement("input", (0,tslib_es6/* __assign */.Cl)({}, restProps, { ref: inputRef, 
-            // render the pending value even if it is not confirmed by a parent's async controlled update
-            // so that the cursor does not jump to the end of input as reported in
-            // https://github.com/palantir/blueprint/issues/4298
-            value: isComposing || hasPendingUpdate ? nextValue : value, onCompositionStart: this.handleCompositionStart, onCompositionEnd: this.handleCompositionEnd, onChange: this.handleChange })));
-    };
-    AsyncControllableInput.displayName = "".concat(DISPLAYNAME_PREFIX, ".AsyncControllableInput");
-    /**
-     * The amount of time (in milliseconds) which the input will wait after a compositionEnd event before
-     * unlocking its state value for external updates via props. See `handleCompositionEnd` for more details.
-     */
-    AsyncControllableInput.COMPOSITION_END_DELAY = 10;
-    return AsyncControllableInput;
-}(AbstractPureComponent));
-
-
-;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/inputGroup.js
-/*
- * Copyright 2016 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-
-
-
-var NON_HTML_PROPS = ["inputSize", "onValueChange"];
-/**
- * Input group component.
- *
- * @see https://blueprintjs.com/docs/#core/components/input-group
- */
-var InputGroup = /** @class */ (function (_super) {
-    (0,tslib_es6/* __extends */.C6)(InputGroup, _super);
-    function InputGroup() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {};
-        _this.leftElement = null;
-        _this.rightElement = null;
-        _this.refHandlers = {
-            leftElement: function (ref) { return (_this.leftElement = ref); },
-            rightElement: function (ref) { return (_this.rightElement = ref); },
-        };
-        _this.handleInputChange = function (event) {
-            var _a, _b, _c, _d;
-            var value = event.target.value;
-            (_b = (_a = _this.props).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, event);
-            (_d = (_c = _this.props).onValueChange) === null || _d === void 0 ? void 0 : _d.call(_c, value, event.target);
-        };
-        return _this;
-    }
-    InputGroup.prototype.render = function () {
-        var _a;
-        var _b = this.props, _c = _b.asyncControl, asyncControl = _c === void 0 ? false : _c, className = _b.className, disabled = _b.disabled, fill = _b.fill, inputClassName = _b.inputClassName, inputRef = _b.inputRef, inputSize = _b.inputSize, intent = _b.intent, 
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        large = _b.large, readOnly = _b.readOnly, round = _b.round, _d = _b.size, size = _d === void 0 ? "medium" : _d, 
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        small = _b.small, _e = _b.tagName, tagName = _e === void 0 ? "div" : _e;
-        var inputGroupClasses = classnames_default()(INPUT_GROUP, classes_intentClass(intent), (_a = {},
-            _a[DISABLED] = disabled,
-            _a[READ_ONLY] = readOnly,
-            _a[FILL] = fill,
-            _a[ROUND] = round,
-            _a), sizeClass(size, { large: large, small: small }), className);
-        var style = (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({}, this.props.style), { paddingLeft: this.state.leftElementWidth, paddingRight: this.state.rightElementWidth });
-        var inputProps = (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({ type: "text" }, removeNonHTMLProps(this.props, NON_HTML_PROPS, true)), { "aria-disabled": disabled, className: classnames_default()(INPUT, inputClassName), onChange: this.handleInputChange, size: inputSize !== null && inputSize !== void 0 ? inputSize : (typeof size === "number" ? size : undefined), style: style });
-        var inputElement = asyncControl ? (react.createElement(AsyncControllableInput, (0,tslib_es6/* __assign */.Cl)({}, inputProps, { inputRef: inputRef }))) : (react.createElement("input", (0,tslib_es6/* __assign */.Cl)({}, inputProps, { ref: inputRef })));
-        return react.createElement(tagName, { className: inputGroupClasses }, this.maybeRenderLeftElement(), inputElement, this.maybeRenderRightElement());
-    };
-    InputGroup.prototype.componentDidMount = function () {
-        this.updateInputWidth();
-    };
-    InputGroup.prototype.componentDidUpdate = function (prevProps) {
-        var _a = this.props, leftElement = _a.leftElement, rightElement = _a.rightElement;
-        if (prevProps.leftElement !== leftElement || prevProps.rightElement !== rightElement) {
-            this.updateInputWidth();
-        }
-    };
-    InputGroup.prototype.validateProps = function (props) {
-        if (props.leftElement != null && props.leftIcon != null) {
-            console.warn(INPUT_WARN_LEFT_ELEMENT_LEFT_ICON_MUTEX);
-        }
-    };
-    InputGroup.prototype.maybeRenderLeftElement = function () {
-        var _a = this.props, leftElement = _a.leftElement, leftIcon = _a.leftIcon;
-        if (leftElement != null) {
-            return (react.createElement("span", { className: INPUT_LEFT_CONTAINER, ref: this.refHandlers.leftElement }, leftElement));
-        }
-        else if (leftIcon != null) {
-            return react.createElement(Icon, { icon: leftIcon, "aria-hidden": true, tabIndex: -1 });
-        }
-        return undefined;
-    };
-    InputGroup.prototype.maybeRenderRightElement = function () {
-        var rightElement = this.props.rightElement;
-        if (rightElement == null) {
-            return undefined;
-        }
-        return (react.createElement("span", { className: INPUT_ACTION, ref: this.refHandlers.rightElement }, rightElement));
-    };
-    InputGroup.prototype.updateInputWidth = function () {
-        var _a = this.state, leftElementWidth = _a.leftElementWidth, rightElementWidth = _a.rightElementWidth;
-        if (this.leftElement != null) {
-            var clientWidth = this.leftElement.clientWidth;
-            // small threshold to prevent infinite loops
-            if (leftElementWidth === undefined || Math.abs(clientWidth - leftElementWidth) > 2) {
-                this.setState({ leftElementWidth: clientWidth });
-            }
-        }
-        else {
-            this.setState({ leftElementWidth: undefined });
-        }
-        if (this.rightElement != null) {
-            var clientWidth = this.rightElement.clientWidth;
-            // small threshold to prevent infinite loops
-            if (rightElementWidth === undefined || Math.abs(clientWidth - rightElementWidth) > 2) {
-                this.setState({ rightElementWidth: clientWidth });
-            }
-        }
-        else {
-            this.setState({ rightElementWidth: undefined });
-        }
-    };
-    InputGroup.displayName = "".concat(DISPLAYNAME_PREFIX, ".InputGroup");
-    return InputGroup;
-}(AbstractPureComponent));
-
-
-;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/numericInputUtils.js
-/*
- * Copyright 2018 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/** Returns the `decimal` number separator based on locale */
-function getDecimalSeparator(locale) {
-    var testNumber = 1.9;
-    var testText = testNumber.toLocaleString(locale);
-    var one = (1).toLocaleString(locale);
-    var nine = (9).toLocaleString(locale);
-    var pattern = "".concat(one, "(.+)").concat(nine);
-    var result = new RegExp(pattern).exec(testText);
-    return (result && result[1]) || ".";
-}
-function toLocaleString(num, locale) {
-    if (locale === void 0) { locale = "en-US"; }
-    // HACKHACK: roundingPriority is not supported yet in TypeScript https://github.com/microsoft/TypeScript/issues/43336
-    return sanitizeNumericInput(num.toLocaleString(locale, { roundingPriority: "morePrecision" }), locale);
-}
-function clampValue(value, min, max) {
-    // defaultProps won't work if the user passes in null, so just default
-    // to +/- infinity here instead, as a catch-all.
-    var adjustedMin = min != null ? min : -Infinity;
-    var adjustedMax = max != null ? max : Infinity;
-    return clamp(value, adjustedMin, adjustedMax);
-}
-function getValueOrEmptyValue(value) {
-    if (value === void 0) { value = ""; }
-    return value.toString();
-}
-/** Transform the localized character (ex. "") to a javascript recognizable string number (ex. "10.99")  */
-function transformLocalizedNumberToStringNumber(character, locale) {
-    var charactersMap = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (value) { return value.toLocaleString(locale); });
-    var jsNumber = charactersMap.indexOf(character);
-    if (jsNumber !== -1) {
-        return jsNumber;
-    }
-    else {
-        return character;
-    }
-}
-/** Transforms the localized number (ex. "10,99") to a javascript recognizable string number (ex. "10.99")  */
-function parseStringToStringNumber(value, locale) {
-    var valueAsString = "" + value;
-    if (parseFloat(valueAsString).toString() === value.toString()) {
-        return value.toString();
-    }
-    if (locale !== undefined) {
-        var decimalSeparator = getDecimalSeparator(locale);
-        var sanitizedString = sanitizeNumericInput(valueAsString, locale);
-        return sanitizedString
-            .split("")
-            .map(function (character) { return transformLocalizedNumberToStringNumber(character, locale); })
-            .join("")
-            .replace(decimalSeparator, ".");
-    }
-    return value.toString();
-}
-/** Returns `true` if the string represents a valid numeric value, like "1e6". */
-function isValueNumeric(value, locale) {
-    // checking if a string is numeric in Typescript is a big pain, because
-    // we can't simply toss a string parameter to isFinite. below is the
-    // essential approach that jQuery uses, which involves subtracting a
-    // parsed numeric value from the string representation of the value. we
-    // need to cast the value to the `any` type to allow this operation
-    // between dissimilar types.
-    var stringToStringNumber = parseStringToStringNumber(value, locale);
-    return value != null && stringToStringNumber - parseFloat(stringToStringNumber) + 1 >= 0;
-}
-function isValidNumericKeyboardEvent(e, locale) {
-    // unit tests may not include e.key. don't bother disabling those events.
-    if (e.key == null) {
-        return true;
-    }
-    // allow modified key strokes that may involve letters and other
-    // non-numeric/invalid characters (Cmd + A, Cmd + C, Cmd + V, Cmd + X).
-    if (e.ctrlKey || e.altKey || e.metaKey) {
-        return true;
-    }
-    // keys that print a single character when pressed have a `key` name of
-    // length 1. every other key has a longer `key` name (e.g. "Backspace",
-    // "ArrowUp", "Shift"). since none of those keys can print a character
-    // to the field--and since they may have important native behaviors
-    // beyond printing a character--we don't want to disable their effects.
-    var isSingleCharKey = e.key.length === 1;
-    if (!isSingleCharKey) {
-        return true;
-    }
-    // now we can simply check that the single character that wants to be printed
-    // is a floating-point number character that we're allowed to print.
-    return isFloatingPointNumericCharacter(e.key, locale);
-}
-/**
- * A regex that matches a string of length 1 (i.e. a standalone character)
- * if and only if it is a floating-point number character as defined by W3C:
- * https://www.w3.org/TR/2012/WD-html-markup-20120329/datatypes.html#common.data.float
- *
- * Floating-point number characters are the only characters that can be
- * printed within a default input[type="number"]. This component should
- * behave the same way when this.props.allowNumericCharactersOnly = true.
- * See here for the input[type="number"].value spec:
- * https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.value
- */
-function isFloatingPointNumericCharacter(character, locale) {
-    if (locale !== undefined) {
-        var decimalSeparator = getDecimalSeparator(locale).replace(".", "\\.");
-        var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (value) { return value.toLocaleString(locale); }).join("");
-        var localeFloatingPointNumericCharacterRegex = new RegExp("^[Ee" + numbers + "\\+\\-" + decimalSeparator + "]$");
-        return localeFloatingPointNumericCharacterRegex.test(character);
-    }
-    else {
-        var floatingPointNumericCharacterRegex = /^[Ee0-9\+\-\.]$/;
-        return floatingPointNumericCharacterRegex.test(character);
-    }
-}
-/**
- * Round the value to have _up to_ the specified maximum precision.
- *
- * This differs from `toFixed(5)` in that trailing zeroes are not added on
- * more precise values, resulting in shorter strings.
- */
-function toMaxPrecision(value, maxPrecision) {
-    // round the value to have the specified maximum precision (toFixed is the wrong choice,
-    // because it would show trailing zeros in the decimal part out to the specified precision)
-    // source: http://stackoverflow.com/a/18358056/5199574
-    var scaleFactor = Math.pow(10, maxPrecision);
-    return Math.round(value * scaleFactor) / scaleFactor;
-}
-/**
- * Convert Japanese full-width numbers, e.g. '５', to ASCII, e.g. '5'
- * This should be called before performing any other numeric string input validation.
- */
-function convertFullWidthNumbersToAscii(value) {
-    return value.replace(/[\uFF10-\uFF19]/g, function (m) { return String.fromCharCode(m.charCodeAt(0) - 0xfee0); });
-}
-/**
- * Convert full-width (Japanese) numbers to ASCII, and strip all characters that are not valid floating-point numeric characters
- */
-function sanitizeNumericInput(value, locale) {
-    var valueChars = convertFullWidthNumbersToAscii(value).split("");
-    var sanitizedValueChars = valueChars.filter(function (valueChar) { return isFloatingPointNumericCharacter(valueChar, locale); });
-    return sanitizedValueChars.join("");
-}
-
-;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/numericInput.js
-/*
- * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-
-
-
-
-
-
-var IncrementDirection;
-(function (IncrementDirection) {
-    IncrementDirection[IncrementDirection["DOWN"] = -1] = "DOWN";
-    IncrementDirection[IncrementDirection["UP"] = 1] = "UP";
-})(IncrementDirection || (IncrementDirection = {}));
-var numericInput_NON_HTML_PROPS = [
-    "allowNumericCharactersOnly",
-    "buttonPosition",
-    "clampValueOnBlur",
-    "className",
-    "defaultValue",
-    "majorStepSize",
-    "minorStepSize",
-    "onButtonClick",
-    "onValueChange",
-    "selectAllOnFocus",
-    "selectAllOnIncrement",
-    "stepSize",
-];
-/**
- * Numeric input component.
- *
- * @see https://blueprintjs.com/docs/#core/components/numeric-input
- */
-var NumericInput = /** @class */ (function (_super) {
-    (0,tslib_es6/* __extends */.C6)(NumericInput, _super);
-    function NumericInput() {
-        var _a;
-        var _this = _super.apply(this, arguments) || this;
-        _this.numericInputId = uniqueId("numericInput");
-        _this.state = {
-            currentImeInputInvalid: false,
-            shouldSelectAfterUpdate: false,
-            stepMaxPrecision: NumericInput.getStepMaxPrecision(_this.props),
-            value: getValueOrEmptyValue((_a = _this.props.value) !== null && _a !== void 0 ? _a : _this.props.defaultValue),
-        };
-        // updating these flags need not trigger re-renders, so don't include them in this.state.
-        _this.didPasteEventJustOccur = false;
-        _this.delta = 0;
-        _this.inputElement = null;
-        _this.inputRef = refHandler(_this, "inputElement", _this.props.inputRef);
-        _this.incrementButtonHandlers = _this.getButtonEventHandlers(IncrementDirection.UP);
-        _this.decrementButtonHandlers = _this.getButtonEventHandlers(IncrementDirection.DOWN);
-        _this.getCurrentValueAsNumber = function () { return Number(parseStringToStringNumber(_this.state.value, _this.props.locale)); };
-        _this.handleButtonClick = function (e, direction) {
-            var _a, _b;
-            var delta = _this.updateDelta(direction, e);
-            var nextValue = _this.incrementValue(delta);
-            (_b = (_a = _this.props).onButtonClick) === null || _b === void 0 ? void 0 : _b.call(_a, Number(parseStringToStringNumber(nextValue, _this.props.locale)), nextValue);
-        };
-        _this.stopContinuousChange = function () {
-            _this.delta = 0;
-            _this.clearTimeouts();
-            clearInterval(_this.intervalId);
-            document.removeEventListener("mouseup", _this.stopContinuousChange);
-        };
-        _this.handleContinuousChange = function () {
-            var _a, _b, _c, _d;
-            // If either min or max prop is set, when reaching the limit
-            // the button will be disabled and stopContinuousChange will be never fired,
-            // hence the need to check on each iteration to properly clear the timeout
-            if (_this.props.min !== undefined || _this.props.max !== undefined) {
-                var min = (_a = _this.props.min) !== null && _a !== void 0 ? _a : -Infinity;
-                var max = (_b = _this.props.max) !== null && _b !== void 0 ? _b : Infinity;
-                var valueAsNumber = _this.getCurrentValueAsNumber();
-                if (valueAsNumber <= min || valueAsNumber >= max) {
-                    _this.stopContinuousChange();
-                    return;
-                }
-            }
-            var nextValue = _this.incrementValue(_this.delta);
-            (_d = (_c = _this.props).onButtonClick) === null || _d === void 0 ? void 0 : _d.call(_c, Number(parseStringToStringNumber(nextValue, _this.props.locale)), nextValue);
-        };
-        // Callbacks - Input
-        // =================
-        _this.handleInputFocus = function (e) {
-            var _a, _b;
-            // update this state flag to trigger update for input selection (see componentDidUpdate)
-            _this.setState({ shouldSelectAfterUpdate: _this.props.selectAllOnFocus });
-            (_b = (_a = _this.props).onFocus) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-        };
-        _this.handleInputBlur = function (e) {
-            var _a, _b;
-            // always disable this flag on blur so it's ready for next time.
-            _this.setState({ shouldSelectAfterUpdate: false });
-            if (_this.props.clampValueOnBlur) {
-                var value = e.target.value;
-                _this.handleNextValue(_this.roundAndClampValue(value));
-            }
-            (_b = (_a = _this.props).onBlur) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-        };
-        _this.handleInputKeyDown = function (e) {
-            var _a, _b;
-            if (_this.props.disabled || _this.props.readOnly) {
-                return;
-            }
-            var direction = getArrowKeyDirection(e, ["ArrowDown"], ["ArrowUp"]);
-            if (direction !== undefined) {
-                // when the input field has focus, some key combinations will modify
-                // the field's selection range. we'll actually want to select all
-                // text in the field after we modify the value on the following
-                // lines. preventing the default selection behavior lets us do that
-                // without interference.
-                e.preventDefault();
-                var delta = _this.updateDelta(direction, e);
-                _this.incrementValue(delta);
-            }
-            (_b = (_a = _this.props).onKeyDown) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-        };
-        _this.handleCompositionEnd = function (e) {
-            if (_this.props.allowNumericCharactersOnly) {
-                _this.handleNextValue(sanitizeNumericInput(e.data, _this.props.locale));
-                _this.setState({ currentImeInputInvalid: false });
-            }
-        };
-        _this.handleCompositionUpdate = function (e) {
-            if (_this.props.allowNumericCharactersOnly) {
-                var data = e.data;
-                var sanitizedValue = sanitizeNumericInput(data, _this.props.locale);
-                if (sanitizedValue.length === 0 && data.length > 0) {
-                    _this.setState({ currentImeInputInvalid: true });
-                }
-                else {
-                    _this.setState({ currentImeInputInvalid: false });
-                }
-            }
-        };
-        _this.handleInputKeyPress = function (e) {
-            var _a, _b;
-            // we prohibit keystrokes in onKeyPress instead of onKeyDown, because
-            // e.key is not trustworthy in onKeyDown in all browsers.
-            if (_this.props.allowNumericCharactersOnly && !isValidNumericKeyboardEvent(e, _this.props.locale)) {
-                e.preventDefault();
-            }
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
-            (_b = (_a = _this.props).onKeyPress) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-        };
-        _this.handleInputPaste = function (e) {
-            var _a, _b;
-            _this.didPasteEventJustOccur = true;
-            (_b = (_a = _this.props).onPaste) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-        };
-        _this.handleInputChange = function (value) {
-            var nextValue = value;
-            if (_this.props.allowNumericCharactersOnly && _this.didPasteEventJustOccur) {
-                _this.didPasteEventJustOccur = false;
-                nextValue = sanitizeNumericInput(value, _this.props.locale);
-            }
-            _this.handleNextValue(nextValue);
-            _this.setState({ shouldSelectAfterUpdate: false });
-        };
-        return _this;
-    }
-    NumericInput.getDerivedStateFromProps = function (props, state) {
-        var _a, _b;
-        var nextState = {
-            prevMaxProp: props.max,
-            prevMinProp: props.min,
-        };
-        var didMinChange = props.min !== state.prevMinProp;
-        var didMaxChange = props.max !== state.prevMaxProp;
-        var didBoundsChange = didMinChange || didMaxChange;
-        // in controlled mode, use props.value
-        // in uncontrolled mode, if state.value has not been assigned yet (upon initial mount), use props.defaultValue
-        var value = (_b = (_a = props.value) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : state.value;
-        var stepMaxPrecision = NumericInput.getStepMaxPrecision(props);
-        var sanitizedValue = value !== NumericInput.VALUE_EMPTY
-            ? NumericInput.roundAndClampValue(value, stepMaxPrecision, props.min, props.max, 0, props.locale)
-            : NumericInput.VALUE_EMPTY;
-        // if a new min and max were provided that cause the existing value to fall
-        // outside of the new bounds, then clamp the value to the new valid range.
-        if (didBoundsChange && sanitizedValue !== state.value) {
-            return (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({}, nextState), { stepMaxPrecision: stepMaxPrecision, value: sanitizedValue });
-        }
-        return (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({}, nextState), { stepMaxPrecision: stepMaxPrecision, value: value });
-    };
-    // Value Helpers
-    // =============
-    NumericInput.getStepMaxPrecision = function (props) {
-        if (props.minorStepSize != null) {
-            return countDecimalPlaces(props.minorStepSize);
-        }
-        else {
-            return countDecimalPlaces(props.stepSize);
-        }
-    };
-    NumericInput.roundAndClampValue = function (value, stepMaxPrecision, min, max, delta, locale) {
-        if (delta === void 0) { delta = 0; }
-        if (!isValueNumeric(value, locale)) {
-            return NumericInput.VALUE_EMPTY;
-        }
-        var currentValue = parseStringToStringNumber(value, locale);
-        var nextValue = toMaxPrecision(Number(currentValue) + delta, stepMaxPrecision);
-        var clampedValue = clampValue(nextValue, min, max);
-        return toLocaleString(clampedValue, locale);
-    };
-    NumericInput.prototype.render = function () {
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        var _a = this.props, buttonPosition = _a.buttonPosition, className = _a.className, fill = _a.fill, large = _a.large, _b = _a.size, size = _b === void 0 ? "medium" : _b, small = _a.small;
-        var containerClasses = classnames_default()(NUMERIC_INPUT, sizeClass(size, { large: large, small: small }), className);
-        var buttons = this.renderButtons();
-        return (react.createElement(ControlGroup, { className: containerClasses, fill: fill },
-            buttonPosition === Position.LEFT && buttons,
-            this.renderInput(),
-            buttonPosition === Position.RIGHT && buttons));
-    };
-    NumericInput.prototype.componentDidUpdate = function (prevProps, prevState) {
-        var _a, _b, _c;
-        _super.prototype.componentDidUpdate.call(this, prevProps, prevState);
-        if (prevProps.inputRef !== this.props.inputRef) {
-            setRef(prevProps.inputRef, null);
-            this.inputRef = refHandler(this, "inputElement", this.props.inputRef);
-            setRef(this.props.inputRef, this.inputElement);
-        }
-        if (this.state.shouldSelectAfterUpdate) {
-            (_a = this.inputElement) === null || _a === void 0 ? void 0 : _a.setSelectionRange(0, this.state.value.length);
-        }
-        var didMinChange = this.props.min !== prevProps.min;
-        var didMaxChange = this.props.max !== prevProps.max;
-        var didBoundsChange = didMinChange || didMaxChange;
-        var didLocaleChange = this.props.locale !== prevProps.locale;
-        var didValueChange = this.state.value !== prevState.value;
-        if ((didBoundsChange && didValueChange) || (didLocaleChange && prevState.value !== NumericInput.VALUE_EMPTY)) {
-            // we clamped the value due to a bounds change, so we should fire the change callback
-            var valueToParse = didLocaleChange ? prevState.value : this.state.value;
-            var valueAsString = parseStringToStringNumber(valueToParse, prevProps.locale);
-            var localizedValue = toLocaleString(+valueAsString, this.props.locale);
-            (_c = (_b = this.props).onValueChange) === null || _c === void 0 ? void 0 : _c.call(_b, +valueAsString, localizedValue, this.inputElement);
-        }
-    };
-    NumericInput.prototype.validateProps = function (nextProps) {
-        var majorStepSize = nextProps.majorStepSize, max = nextProps.max, min = nextProps.min, minorStepSize = nextProps.minorStepSize, stepSize = nextProps.stepSize, value = nextProps.value;
-        if (min != null && max != null && min > max) {
-            console.error(NUMERIC_INPUT_MIN_MAX);
-        }
-        if (stepSize <= 0) {
-            console.error(NUMERIC_INPUT_STEP_SIZE_NON_POSITIVE);
-        }
-        if (minorStepSize && minorStepSize <= 0) {
-            console.error(NUMERIC_INPUT_MINOR_STEP_SIZE_NON_POSITIVE);
-        }
-        if (majorStepSize && majorStepSize <= 0) {
-            console.error(NUMERIC_INPUT_MAJOR_STEP_SIZE_NON_POSITIVE);
-        }
-        if (minorStepSize && minorStepSize > stepSize) {
-            console.error(NUMERIC_INPUT_MINOR_STEP_SIZE_BOUND);
-        }
-        if (majorStepSize && majorStepSize < stepSize) {
-            console.error(NUMERIC_INPUT_MAJOR_STEP_SIZE_BOUND);
-        }
-        // controlled mode
-        if (value != null) {
-            var stepMaxPrecision = NumericInput.getStepMaxPrecision(nextProps);
-            var sanitizedValue = NumericInput.roundAndClampValue(value.toString(), stepMaxPrecision, min, max, 0, this.props.locale);
-            var valueDoesNotMatch = sanitizedValue !== value.toString();
-            var localizedValue = toLocaleString(Number(parseStringToStringNumber(value, this.props.locale)), this.props.locale);
-            var isNotLocalized = sanitizedValue !== localizedValue;
-            if (valueDoesNotMatch && isNotLocalized) {
-                console.warn(NUMERIC_INPUT_CONTROLLED_VALUE_INVALID);
-            }
-        }
-    };
-    // Render Helpers
-    // ==============
-    NumericInput.prototype.renderButtons = function () {
-        var _a = this.props, intent = _a.intent, max = _a.max, min = _a.min, locale = _a.locale;
-        var value = parseStringToStringNumber(this.state.value, locale);
-        var disabled = this.props.disabled || this.props.readOnly;
-        var isIncrementDisabled = max !== undefined && value !== "" && +value >= max;
-        var isDecrementDisabled = min !== undefined && value !== "" && +value <= min;
-        return (react.createElement(ButtonGroup, { className: FIXED, key: "button-group", vertical: true },
-            react.createElement(Button, (0,tslib_es6/* __assign */.Cl)({ "aria-label": "increment", "aria-controls": this.numericInputId, disabled: disabled || isIncrementDisabled, icon: react.createElement(ChevronUp, null), intent: intent }, this.incrementButtonHandlers)),
-            react.createElement(Button, (0,tslib_es6/* __assign */.Cl)({ "aria-label": "decrement", "aria-controls": this.numericInputId, disabled: disabled || isDecrementDisabled, icon: react.createElement(ChevronDown, null), intent: intent }, this.decrementButtonHandlers))));
-    };
-    NumericInput.prototype.renderInput = function () {
-        var inputGroupHtmlProps = removeNonHTMLProps(this.props, numericInput_NON_HTML_PROPS, true);
-        var valueAsNumber = this.getCurrentValueAsNumber();
-        return (react.createElement(InputGroup, (0,tslib_es6/* __assign */.Cl)({ asyncControl: this.props.asyncControl, autoComplete: "off", id: this.numericInputId, role: this.props.allowNumericCharactersOnly ? "spinbutton" : undefined }, inputGroupHtmlProps, { "aria-valuemax": this.props.max, "aria-valuemin": this.props.min, "aria-valuenow": valueAsNumber, intent: this.state.currentImeInputInvalid ? Intent.DANGER : this.props.intent, inputClassName: this.props.inputClassName, inputRef: this.inputRef, inputSize: this.props.inputSize, 
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
-            large: this.props.large, leftElement: this.props.leftElement, leftIcon: this.props.leftIcon, onFocus: this.handleInputFocus, onBlur: this.handleInputBlur, onCompositionEnd: this.handleCompositionEnd, onCompositionUpdate: this.handleCompositionUpdate, onKeyDown: this.handleInputKeyDown, 
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
-            onKeyPress: this.handleInputKeyPress, onPaste: this.handleInputPaste, onValueChange: this.handleInputChange, rightElement: this.props.rightElement, size: this.props.size, 
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
-            small: this.props.small, value: this.state.value })));
-    };
-    // Callbacks - Buttons
-    // ===================
-    NumericInput.prototype.getButtonEventHandlers = function (direction) {
-        var _this = this;
-        return {
-            // keydown is fired repeatedly when held so it's implicitly continuous
-            onKeyDown: function (evt) {
-                if (!_this.props.disabled && keyboardUtils_isKeyboardClick(evt)) {
-                    _this.handleButtonClick(evt, direction);
-                }
-            },
-            onMouseDown: function (evt) {
-                if (!_this.props.disabled) {
-                    _this.handleButtonClick(evt, direction);
-                    _this.startContinuousChange();
-                }
-            },
-        };
-    };
-    NumericInput.prototype.startContinuousChange = function () {
-        var _this = this;
-        // The button's onMouseUp event handler doesn't fire if the user
-        // releases outside of the button, so we need to watch all the way
-        // from the top.
-        document.addEventListener("mouseup", this.stopContinuousChange);
-        // Initial delay is slightly longer to prevent the user from
-        // accidentally triggering the continuous increment/decrement.
-        this.setTimeout(function () {
-            _this.intervalId = window.setInterval(_this.handleContinuousChange, NumericInput.CONTINUOUS_CHANGE_INTERVAL);
-        }, NumericInput.CONTINUOUS_CHANGE_DELAY);
-    };
-    // Data logic
-    // ==========
-    NumericInput.prototype.handleNextValue = function (valueAsString) {
-        var _a, _b;
-        if (this.props.value == null) {
-            this.setState({ value: valueAsString });
-        }
-        (_b = (_a = this.props).onValueChange) === null || _b === void 0 ? void 0 : _b.call(_a, Number(parseStringToStringNumber(valueAsString, this.props.locale)), valueAsString, this.inputElement);
-    };
-    NumericInput.prototype.incrementValue = function (delta) {
-        // pretend we're incrementing from 0 if currValue is empty
-        var currValue = this.state.value === NumericInput.VALUE_EMPTY ? NumericInput.VALUE_ZERO : this.state.value;
-        var nextValue = this.roundAndClampValue(currValue, delta);
-        if (nextValue !== this.state.value) {
-            this.handleNextValue(nextValue);
-            this.setState({ shouldSelectAfterUpdate: this.props.selectAllOnIncrement });
-        }
-        // return value used in continuous change updates
-        return nextValue;
-    };
-    NumericInput.prototype.getIncrementDelta = function (direction, isShiftKeyPressed, isAltKeyPressed) {
-        var _a = this.props, majorStepSize = _a.majorStepSize, minorStepSize = _a.minorStepSize, stepSize = _a.stepSize;
-        if (isShiftKeyPressed && majorStepSize != null) {
-            return direction * majorStepSize;
-        }
-        else if (isAltKeyPressed && minorStepSize != null) {
-            return direction * minorStepSize;
-        }
-        else {
-            return direction * stepSize;
-        }
-    };
-    NumericInput.prototype.roundAndClampValue = function (value, delta) {
-        if (delta === void 0) { delta = 0; }
-        return NumericInput.roundAndClampValue(value, this.state.stepMaxPrecision, this.props.min, this.props.max, delta, this.props.locale);
-    };
-    NumericInput.prototype.updateDelta = function (direction, e) {
-        this.delta = this.getIncrementDelta(direction, e.shiftKey, e.altKey);
-        return this.delta;
-    };
-    NumericInput.displayName = "".concat(DISPLAYNAME_PREFIX, ".NumericInput");
-    NumericInput.VALUE_EMPTY = "";
-    NumericInput.VALUE_ZERO = "0";
-    NumericInput.defaultProps = {
-        allowNumericCharactersOnly: true,
-        buttonPosition: Position.RIGHT,
-        clampValueOnBlur: false,
-        defaultValue: NumericInput.VALUE_EMPTY,
-        large: false,
-        majorStepSize: 10,
-        minorStepSize: 0.1,
-        selectAllOnFocus: false,
-        selectAllOnIncrement: false,
-        size: "medium",
-        small: false,
-        stepSize: 1,
-    };
-    NumericInput.CONTINUOUS_CHANGE_DELAY = 300;
-    NumericInput.CONTINUOUS_CHANGE_INTERVAL = 100;
-    return NumericInput;
-}(AbstractPureComponent));
-
-
-;// ./app/components/PageNumInput.js
-
-
-
-const PageNumInput_css = {
-    label: {
-        display: 'inline-block',
-    },
-};
-class PageNumInput extends react.Component {
-    render() {
-        return react.createElement("div", { hidden: this.props.hidden },
-            react.createElement("label", { className: "bp5-label", style: PageNumInput_css.label },
-                this.props.label,
-                react.createElement(Help, { title: this.props.label, content: this.props.help }),
-                react.createElement(NumericInput, { allowNumericCharactersOnly: true, min: this.props.min, minorStepSize: this.props.minorStepSize, max: this.props.max, stepSize: this.props.stepSize, majorStepSize: this.props.majorStepSize, disabled: this.props.disabled, selectAllOnFocus: this.props.selectAllOnFocus, onValueChange: (val) => {
-                        if (this.props.max && val > this.props.max) {
-                            val = this.props.max;
-                        }
-                        this.props.onChange(val);
-                    }, value: this.props.value })));
-    }
-}
-
-;// ./app/components/Config.js
-
-
-
-
-
-
-const Config_css = {
-    message: {
-        margin: "0 0 6px 0",
-    },
-    header: {
-        margin: "0 0 5px 0",
-    },
-    card: {
-        position: "relative",
-        margin: "8px",
-    },
-    buttonsTop: {
-        position: "absolute",
-        top: "5px",
-        right: "5px",
-    },
-    footer: {
-        margin: 0,
-    },
-};
-class ConfigView extends react.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.onChange = () => {
-            this.setState({
-                ...this.state,
-                config: stores_ConfigStore.config,
-            });
-        };
-        this.onCancel = () => {
-            this.setState({
-                ...this.state,
-                changed: false,
-                config: stores_ConfigStore.config,
-            });
-        };
-        this.onSave = () => {
-            this.setState({
-                ...this.state,
-                disabled: true,
-            });
-            if (this.state.safeStorage !== null) {
-                app_Config.save({
-                    safe_storage: this.state.safeStorage,
-                });
-            }
-            if (this.state.config) {
-                ConfigActions_commit(this.state.config).then(() => {
-                    this.setState({
-                        ...this.state,
-                        changed: false,
-                        disabled: false,
-                    });
-                });
-            }
-        };
-        this.state = {
-            config: stores_ConfigStore.config,
-            safeStorage: null,
-            changed: false,
-            disabled: false,
-        };
-    }
-    componentDidMount() {
-        stores_ConfigStore.addChangeListener(this.onChange);
-        ConfigActions_sync();
-    }
-    componentWillUnmount() {
-        stores_ConfigStore.removeChangeListener(this.onChange);
-    }
-    set(name, val) {
-        let config;
-        config = {
-            ...this.state.config,
-        };
-        config[name] = val;
-        this.setState({
-            ...this.state,
-            changed: true,
-            config: config,
-        });
-    }
-    render() {
-        let safeStorage = this.state.safeStorage;
-        if (safeStorage === null) {
-            safeStorage = app_Config.safe_storage;
-        }
-        return react.createElement("div", { className: "bp5-card layout vertical flex", style: Config_css.card },
-            react.createElement("div", { style: Config_css.buttonsTop },
-                react.createElement("button", { className: "bp5-button bp5-minimal bp5-icon-cross", onClick: this.props.onClose })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement("h3", { style: Config_css.header }, "Advanced Settings")),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Enable DNS refresh", help: "Automatically refresh DNS to fix issues with macOS DNS cache.", checked: !!this.state.config.enable_dns_refresh, onToggle: () => {
-                        this.set("enable_dns_refresh", !this.state.config.enable_dns_refresh);
-                    } })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable DNS watch", help: "Disable automatic correction of DNS changes if configuration is lost from system network change.", checked: !!this.state.config.disable_dns_watch, onToggle: () => {
-                        this.set("disable_dns_watch", !this.state.config.disable_dns_watch);
-                    } })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable WireGuard DNS watch", help: "Disable WireGuard DNS watch on macOS.", checked: !!this.state.config.disable_wg_dns, onToggle: () => {
-                        this.set("disable_wg_dns", !this.state.config.disable_wg_dns);
-                    } })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable device wake watch", help: "Disable wake watch used for faster reconnections when device is resumed from sleep.", checked: !!this.state.config.disable_wake_watch, onToggle: () => {
-                        this.set("disable_wake_watch", !this.state.config.disable_wake_watch);
-                    } })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable network clean", help: "Disable Windows VPN interface cleanup on startup.", checked: !!this.state.config.disable_net_clean, onToggle: () => {
-                        this.set("disable_net_clean", !this.state.config.disable_net_clean);
-                    } })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable browser open", help: "Disable automatic opening of browser for single sign-on authentication.", checked: !!this.state.config.disable_browser, onToggle: () => {
-                        this.set("disable_browser", !this.state.config.disable_browser);
-                    } })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Enable safe storage", help: "Enable encryption of profile keys with safe storage. May cause client to become unresponsive or connections to fail.", checked: !!safeStorage, onToggle: () => {
-                        this.setState({
-                            ...this.state,
-                            changed: true,
-                            safeStorage: !safeStorage,
-                        });
-                    } })),
-            react.createElement("div", { className: "layout horizontal" },
-                react.createElement(PageNumInput, { label: "Interface Metric", help: "Configure the VPN interfaces metric on Windows. Set to 0 to leave interfaces unmodified.", min: 0, max: 9999, stepSize: 1, disabled: this.state.disabled, selectAllOnFocus: true, value: this.state.config.interface_metric, onChange: (val) => {
-                        this.set('interface_metric', val);
-                    } })),
-            react.createElement("div", { className: "layout horizontal flex" }),
-            react.createElement("div", { className: "bp5-dialog-footer", style: Config_css.footer },
-                react.createElement("div", { className: "bp5-dialog-footer-actions" },
-                    react.createElement("button", { className: "bp5-button bp5-intent-danger bp5-icon-cross", type: "button", disabled: this.state.disabled || !this.state.changed, onClick: this.onCancel }, "Cancel"),
-                    react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-tick", type: "button", disabled: this.state.disabled || !this.state.changed, onClick: this.onSave }, "Save"))));
-    }
-}
-
-;// ./node_modules/@blueprintjs/core/lib/esm/components/menu/menu.js
-/*
- * Copyright 2015 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-/**
- * Menu component.
- *
- * @see https://blueprintjs.com/docs/#core/components/menu
- */
-var Menu = function (props) {
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    var className = props.className, children = props.children, large = props.large, _a = props.size, size = _a === void 0 ? "medium" : _a, small = props.small, ulRef = props.ulRef, htmlProps = (0,tslib_es6/* __rest */.Tt)(props, ["className", "children", "large", "size", "small", "ulRef"]);
-    return (react.createElement("ul", (0,tslib_es6/* __assign */.Cl)({ role: "menu" }, htmlProps, { className: classnames_default()(className, MENU, sizeClass(size, { large: large, small: small })), ref: ulRef }), children));
-};
-Menu.displayName = "".concat(DISPLAYNAME_PREFIX, ".Menu");
-
-;// ./node_modules/@blueprintjs/core/lib/esm/components/menu/menuDivider.js
-/*
- * Copyright 2015 Palantir Technologies, Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-/**
- * Menu divider component.
- *
- * @see https://blueprintjs.com/docs/#core/components/menu.menu-divider
- */
-var MenuDivider = function (_a) {
-    var className = _a.className, title = _a.title, titleId = _a.titleId;
-    var dividerClasses = classnames_default()(title ? MENU_HEADER : MENU_DIVIDER, className);
-    return (react.createElement("li", { className: dividerClasses, role: "separator" }, title && react.createElement(H6, { id: titleId }, title)));
-};
-MenuDivider.displayName = "".concat(DISPLAYNAME_PREFIX, ".MenuDivider");
 
 ;// ./node_modules/@blueprintjs/icons/lib/esm/generated/components/small-tick.js
 /*
@@ -25037,6 +21930,39 @@ function popover_noop() {
     // no-op
 }
 
+;// ./node_modules/@blueprintjs/core/lib/esm/components/menu/menu.js
+/*
+ * Copyright 2015 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+
+/**
+ * Menu component.
+ *
+ * @see https://blueprintjs.com/docs/#core/components/menu
+ */
+var Menu = function (props) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    var className = props.className, children = props.children, large = props.large, _a = props.size, size = _a === void 0 ? "medium" : _a, small = props.small, ulRef = props.ulRef, htmlProps = (0,tslib_es6/* __rest */.Tt)(props, ["className", "children", "large", "size", "small", "ulRef"]);
+    return (react.createElement("ul", (0,tslib_es6/* __assign */.Cl)({ role: "menu" }, htmlProps, { className: classnames_default()(className, MENU, sizeClass(size, { large: large, small: small })), ref: ulRef }), children));
+};
+Menu.displayName = "".concat(DISPLAYNAME_PREFIX, ".Menu");
+
 ;// ./node_modules/@blueprintjs/core/lib/esm/components/menu/menuItem.js
 /*
  * Copyright 2022 Palantir Technologies, Inc. All rights reserved.
@@ -25142,6 +22068,3118 @@ var DISABLED_PROPS = {
     onMouseLeave: undefined,
     tabIndex: -1,
 };
+
+;// ./app/components/ConfirmButton.js
+
+
+
+const ConfirmButton_css = {
+    box: {
+        display: 'inline-flex',
+        verticalAlign: 'middle',
+    },
+    actionProgress: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        borderRadius: 0,
+        borderBottomLeftRadius: '3px',
+        borderBottomRightRadius: '3px',
+        width: '100%',
+        height: '4px',
+    },
+    squareActionProgress: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        borderRadius: 0,
+        borderBottomLeftRadius: '1px',
+        borderBottomRightRadius: '3px',
+        width: '100%',
+        height: '4px',
+    },
+    dialog: {
+        scrollbarGutter: "stable",
+        width: '340px',
+        position: 'absolute',
+    },
+    label: {
+        width: '100%',
+        maxWidth: '220px',
+        margin: '18px 0 0 0',
+    },
+    input: {
+        width: '100%',
+    },
+};
+class ConfirmButton extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.openDialog = (evt) => {
+            this.setState({
+                ...this.state,
+                dialog: true,
+                force: evt?.ctrlKey || false,
+            });
+        };
+        this.closeDialog = () => {
+            this.setState({
+                ...this.state,
+                dialog: false,
+                input: '',
+                force: false,
+            });
+        };
+        this.closeDialogConfirm = () => {
+            this.setState({
+                ...this.state,
+                dialog: false,
+                input: '',
+            });
+            if (this.props.onConfirm) {
+                this.props.onConfirm();
+            }
+        };
+        this.confirm = (evt) => {
+            let confirmId = uuid();
+            if (evt.shiftKey) {
+                if (this.props.onConfirm) {
+                    this.props.onConfirm();
+                }
+                return;
+            }
+            this.setState({
+                ...this.state,
+                confirming: confirmId,
+            });
+            let i = 10;
+            let id = setInterval(() => {
+                if (i > 100) {
+                    clearInterval(id);
+                    setTimeout(() => {
+                        if (this.state.confirming === confirmId) {
+                            this.setState({
+                                ...this.state,
+                                confirm: 0,
+                                confirming: null,
+                            });
+                            if (this.props.onConfirm) {
+                                this.props.onConfirm();
+                            }
+                        }
+                    }, 250);
+                    return;
+                }
+                else if (!this.state.confirming) {
+                    clearInterval(id);
+                    this.setState({
+                        ...this.state,
+                        confirm: 0,
+                        confirming: null,
+                    });
+                    return;
+                }
+                if (i % 10 === 0) {
+                    this.setState({
+                        ...this.state,
+                        confirm: i / 10,
+                    });
+                }
+                i += 2;
+            }, 8);
+        };
+        this.clearConfirm = () => {
+            this.setState({
+                ...this.state,
+                confirm: 0,
+                confirming: null,
+            });
+        };
+        this.state = {
+            input: '',
+            dialog: false,
+            confirm: 0,
+            confirming: null,
+            force: false,
+        };
+    }
+    render() {
+        let dialog = this.props.safe || this.props.menuItem;
+        let style = {
+            ...this.props.style,
+        };
+        style.position = 'relative';
+        let className = this.props.className || '';
+        if (!this.props.label) {
+            className += ' bp5-button-empty';
+        }
+        let dialogClassName = this.props.dialogClassName ||
+            this.props.className || '';
+        if (!this.props.label && !this.props.dialogLabel) {
+            dialogClassName += ' bp5-button-empty';
+        }
+        let confirmInput;
+        if (this.props.confirmInput && !this.state.force) {
+            confirmInput = react.createElement("label", { className: "bp5-label", style: ConfirmButton_css.label },
+                "Enter \"delete\" to confirm:",
+                react.createElement("input", { className: "bp5-input", style: ConfirmButton_css.input, disabled: this.props.disabled, autoCapitalize: "off", spellCheck: false, placeholder: 'Enter "delete" to confirm', value: this.state.input, onKeyDown: (evt) => {
+                        if (evt.key === "Enter" && this.state.input === 'delete') {
+                            this.closeDialogConfirm();
+                        }
+                    }, onChange: (evt) => {
+                        this.setState({
+                            ...this.state,
+                            input: evt.target.value,
+                        });
+                    } }));
+        }
+        if (dialog) {
+            let confirmMsg = this.props.confirmMsg ? this.props.confirmMsg :
+                'Confirm ' + (this.props.label || '');
+            let itemsList;
+            if (this.props.items) {
+                let items = [];
+                for (let item of this.props.items) {
+                    items.push(react.createElement("li", { key: item }, item));
+                }
+                itemsList = react.createElement("ul", null, items);
+            }
+            let dialogElem = react.createElement(Dialog, { title: "Confirm", style: ConfirmButton_css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
+                react.createElement("div", { className: "bp5-dialog-body" },
+                    confirmMsg,
+                    itemsList,
+                    confirmInput),
+                react.createElement("div", { className: "bp5-dialog-footer" },
+                    react.createElement("div", { className: "bp5-dialog-footer-actions" },
+                        react.createElement("button", { className: "bp5-button", type: "button", onClick: this.closeDialog }, "Cancel"),
+                        react.createElement("button", { className: 'bp5-button ' + dialogClassName, type: "button", disabled: this.props.confirmInput && !this.state.force &&
+                                this.state.input !== 'delete', onClick: this.closeDialogConfirm }, this.props.dialogLabel || this.props.label))));
+            if (this.props.menuItem) {
+                return react.createElement("div", null,
+                    react.createElement(MenuItem, { key: "menu-new-unit", className: className, disabled: this.props.disabled, hidden: this.props.hidden, onClick: (evt) => {
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                            this.openDialog(evt);
+                        }, text: this.props.label }, this.props.children),
+                    dialogElem);
+            }
+            return react.createElement("div", { style: ConfirmButton_css.box },
+                react.createElement("button", { className: 'bp5-button ' + className, style: style, type: "button", hidden: this.props.hidden, disabled: this.props.disabled, onMouseDown: dialog ? undefined : this.confirm, onMouseUp: dialog ? undefined : this.clearConfirm, onMouseLeave: dialog ? undefined : this.clearConfirm, onClick: dialog ? (evt) => this.openDialog(evt) : undefined }, this.props.children || this.props.label),
+                dialogElem);
+        }
+        else {
+            let confirmElem;
+            if (this.state.confirming) {
+                let confirmStyle = {
+                    width: this.state.confirm * 10 + '%',
+                    backgroundColor: style.color,
+                    borderRadius: 0,
+                    left: 0,
+                };
+                let progressStyle;
+                if (this.props.grouped) {
+                    progressStyle = ConfirmButton_css.squareActionProgress;
+                }
+                else {
+                    progressStyle = ConfirmButton_css.actionProgress;
+                }
+                confirmElem = react.createElement("div", { className: 'bp5-progress-bar bp5-no-stripes ' + (this.props.progressClassName || ''), style: progressStyle },
+                    react.createElement("div", { className: "bp5-progress-meter", style: confirmStyle }));
+            }
+            return react.createElement("button", { className: 'bp5-button ' + className, style: style, type: "button", hidden: this.props.hidden, disabled: this.props.disabled, onMouseDown: dialog ? undefined : this.confirm, onMouseUp: dialog ? undefined : this.clearConfirm, onMouseLeave: dialog ? undefined : this.clearConfirm, onClick: dialog ? this.openDialog : undefined },
+                this.props.children || this.props.label,
+                confirmElem);
+        }
+    }
+}
+
+;// ./app/components/CopyButton.js
+
+const CopyButton_css = {
+    copy: {
+        cursor: 'pointer',
+        marginLeft: '3px',
+    },
+    copyHover: {
+        cursor: 'pointer',
+        marginLeft: '3px',
+        opacity: 0.7,
+    },
+    copyClicked: {
+        cursor: 'pointer',
+        marginLeft: '3px',
+        opacity: 0.5,
+    },
+};
+class CopyButton extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            hover: false,
+            click: false,
+            copied: false,
+        };
+    }
+    render() {
+        let style;
+        if (this.state.click && !this.state.copied) {
+            style = CopyButton_css.copyClicked;
+        }
+        else if (this.state.hover && !this.state.copied) {
+            style = CopyButton_css.copyHover;
+        }
+        else {
+            style = CopyButton_css.copy;
+        }
+        let className = 'bp5-icon-standard';
+        if (this.state.copied) {
+            className += ' bp5-icon-tick bp5-intent-success';
+        }
+        else {
+            className += ' bp5-icon-clipboard';
+        }
+        return react.createElement("span", { ref: (elem) => this.elem = elem, className: className, style: style, onMouseEnter: () => {
+                this.setState({
+                    ...this.state,
+                    hover: true,
+                });
+            }, onMouseLeave: () => {
+                this.setState({
+                    ...this.state,
+                    hover: false,
+                    click: false,
+                });
+            }, onMouseDown: () => {
+                this.setState({
+                    ...this.state,
+                    click: true,
+                });
+            }, onMouseUp: () => {
+                this.setState({
+                    ...this.state,
+                    click: false,
+                });
+            }, onClick: () => {
+                this.setState({
+                    ...this.state,
+                    copied: true,
+                });
+                setTimeout(() => {
+                    this.setState({
+                        ...this.state,
+                        copied: false,
+                    });
+                }, 1200);
+                let elem = document.createElement('input');
+                elem.contentEditable = 'true';
+                elem.readOnly = true;
+                elem.style.position = 'absolute';
+                elem.style.width = '1px';
+                elem.style.height = '1px';
+                elem.style.padding = '0px';
+                elem.style.border = 'none';
+                elem.style.opacity = '0';
+                elem.value = this.props.value;
+                this.elem.parentElement.append(elem);
+                elem.select();
+                document.execCommand('copy');
+                elem.remove();
+            } });
+    }
+}
+
+;// ./app/components/PageInfo.js
+
+
+const PageInfo_css = {
+    label: {
+        width: '100%',
+        maxWidth: '320px',
+    },
+    value: {
+        overflowWrap: 'anywhere',
+    },
+    item: {
+        marginBottom: '5px',
+        marginRight: '5px',
+    },
+    bar: {
+        maxWidth: '280px',
+    },
+    copy: {
+        cursor: 'pointer',
+        marginLeft: '3px',
+    },
+    copyHover: {
+        cursor: 'pointer',
+        marginLeft: '3px',
+        opacity: 0.7,
+    },
+};
+class PageInfo extends react.Component {
+    render() {
+        let fields = [];
+        let bars = [];
+        for (let field of this.props.fields || []) {
+            if (field == null) {
+                continue;
+            }
+            let value;
+            let copyBtn;
+            if (typeof field.value === 'string') {
+                value = field.value;
+                if (field.copy) {
+                    copyBtn = react.createElement(CopyButton, { value: field.value });
+                }
+            }
+            else if (typeof field.value === 'number') {
+                value = field.value.toString();
+                if (field.copy) {
+                    copyBtn = react.createElement(CopyButton, { value: field.value.toString() });
+                }
+            }
+            else if (typeof field.value === 'boolean') {
+                value = field.value.toString();
+                if (field.copy) {
+                    copyBtn = react.createElement(CopyButton, { value: field.value.toString() });
+                }
+            }
+            else if (field.value === undefined || field.value === null) {
+                value = 'null';
+                if (field.copy) {
+                    copyBtn = react.createElement(CopyButton, { value: value });
+                }
+            }
+            else {
+                value = [];
+                for (let i = 0; i < field.value.length; i++) {
+                    let copyItemBtn;
+                    if (field.copy) {
+                        copyItemBtn = react.createElement(CopyButton, { value: field.value[i] });
+                    }
+                    value.push(react.createElement("div", { key: i, className: field.valueClasses ?
+                            field.valueClasses[i] :
+                            (field.valueClass || 'bp5-text-muted') },
+                        field.value[i],
+                        copyItemBtn));
+                }
+            }
+            fields.push(react.createElement("div", { key: field.label, style: PageInfo_css.item },
+                field.label,
+                react.createElement("div", { className: field.valueClass || 'bp5-text-muted', style: PageInfo_css.value },
+                    value,
+                    copyBtn)));
+        }
+        for (let bar of this.props.bars || []) {
+            let style = {
+                width: (bar.value || 0) + '%',
+            };
+            if (bar.color) {
+                style.backgroundColor = bar.color;
+            }
+            bars.push(react.createElement("div", { key: bar.label, style: PageInfo_css.item },
+                bar.label,
+                react.createElement("div", { className: 'bp5-progress-bar ' + (bar.progressClass || ''), style: PageInfo_css.bar },
+                    react.createElement("div", { className: "bp5-progress-meter", style: style }))));
+        }
+        let labelStyle;
+        if (this.props.style) {
+            labelStyle = {
+                ...PageInfo_css.label,
+                ...this.props.style,
+            };
+        }
+        else {
+            labelStyle = PageInfo_css.label;
+        }
+        return react.createElement("label", { className: "bp5-label", style: labelStyle, hidden: this.props.hidden },
+            fields,
+            bars);
+    }
+}
+
+;// ./app/components/ProfileConnect.js
+
+
+
+
+
+
+const ProfileConnect_css = {
+    box: {
+        display: "inline-block"
+    },
+    button: {
+        marginTop: "10px",
+        marginRight: "5px",
+    },
+    buttonMinimal: {
+        marginTop: "0",
+        marginRight: "5px",
+    },
+    dialog: {
+        width: "340px",
+        position: "absolute",
+    },
+    label: {
+        width: "100%",
+        maxWidth: "220px",
+        margin: "18px 0 0 0",
+    },
+    input: {
+        width: "100%",
+    },
+    header: {
+        margin: "0 0 15px 0",
+    },
+    preConnect: {
+        margin: "0 0 15px 0",
+    },
+};
+class ProfileConnect extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onConnect = (mode) => {
+            this.setState({
+                ...this.state,
+                disabled: true,
+            });
+            if (this.connected()) {
+                this.disconnect();
+            }
+            else {
+                this.preConnect(mode);
+            }
+        };
+        this.closeDialog = () => {
+            this.setState({
+                ...this.state,
+                disabled: false,
+                dialog: false,
+                autoFocus: "",
+                username: "",
+                hasUsername: false,
+                password: "",
+                hasPassword: false,
+                pin: "",
+                hasPin: false,
+                duo: "",
+                hasDuo: false,
+                onelogin: "",
+                hasOnelogin: false,
+                okta: "",
+                hasOkta: false,
+                otp: "",
+                hasOtp: false,
+                yubikey: "",
+                hasYubikey: false,
+                hasToken: false,
+                mode: "",
+                preConnMsgOnly: false,
+                changed: false,
+            });
+        };
+        this.closeDialogConfirm = () => {
+            let username = this.state.username || "pritunl";
+            let password = "";
+            password += this.state.password;
+            password += this.state.pin;
+            password += this.state.duo;
+            password += this.state.onelogin;
+            password += this.state.okta;
+            password += this.state.otp;
+            password += this.state.yubikey;
+            if (!this.state.hasToken && password === "") {
+                username = "";
+            }
+            this.connect(this.state.mode, username, password);
+            this.closeDialog();
+        };
+        this.connected = () => {
+            let prfl = this.props.profile;
+            if (prfl.system) {
+                return prfl.state;
+            }
+            else {
+                return !!prfl.status && prfl.status !== "disconnected";
+            }
+        };
+        this.state = {
+            disabled: false,
+            autoFocus: "",
+            username: "",
+            hasUsername: false,
+            password: "",
+            hasPassword: false,
+            pin: "",
+            hasPin: false,
+            duo: "",
+            hasDuo: false,
+            onelogin: "",
+            hasOnelogin: false,
+            okta: "",
+            hasOkta: false,
+            otp: "",
+            hasOtp: false,
+            yubikey: "",
+            hasYubikey: false,
+            hasToken: false,
+            mode: "",
+            preConnMsgOnly: false,
+            changed: false,
+            dialog: false,
+            confirm: 0,
+            confirming: null,
+        };
+    }
+    async preConnect(mode) {
+        let prfl = this.props.profile;
+        await prfl.sync();
+        let tokenValid = false;
+        if (prfl.token) {
+            tokenValid = await tokenUpdate(prfl);
+        }
+        else {
+            await tokenDelete(prfl);
+        }
+        let data = await prfl.readData();
+        let authType = prfl.getAuthType(data);
+        let authTypes = [];
+        if (authType) {
+            authTypes = authType.split("_");
+        }
+        if (authTypes && tokenValid) {
+            if (authTypes.indexOf("pin") !== -1) {
+                authTypes.splice(authTypes.indexOf("pin"), 1);
+            }
+            if (authTypes.indexOf("duo") !== -1) {
+                authTypes.splice(authTypes.indexOf("duo"), 1);
+            }
+            if (authTypes.indexOf("onelogin") !== -1) {
+                authTypes.splice(authTypes.indexOf("onelogin"), 1);
+            }
+            if (authTypes.indexOf("okta") !== -1) {
+                authTypes.splice(authTypes.indexOf("okta"), 1);
+            }
+            if (authTypes.indexOf("yubikey") !== -1) {
+                authTypes.splice(authTypes.indexOf("yubikey"), 1);
+            }
+            if (authTypes.indexOf("otp") !== -1) {
+                authTypes.splice(authTypes.indexOf("otp"), 1);
+            }
+        }
+        let autoFocus = "";
+        let hasUsername = false;
+        let hasPassword = false;
+        let hasPin = false;
+        let hasDuo = false;
+        let hasOnelogin = false;
+        let hasOkta = false;
+        let hasOtp = false;
+        let hasYubikey = false;
+        if (authTypes.indexOf("username") !== -1) {
+            hasUsername = true;
+        }
+        if (authTypes.indexOf("password") !== -1) {
+            if (!autoFocus) {
+                autoFocus = "password";
+            }
+            hasPassword = true;
+        }
+        if (authTypes.indexOf("pin") !== -1) {
+            if (!autoFocus) {
+                autoFocus = "pin";
+            }
+            hasPin = true;
+        }
+        if (authTypes.indexOf("otp") !== -1) {
+            if (!autoFocus) {
+                autoFocus = "otp";
+            }
+            hasOtp = true;
+        }
+        if (authTypes.indexOf("duo") !== -1) {
+            if (!autoFocus) {
+                autoFocus = "duo";
+            }
+            hasDuo = true;
+            hasOtp = false;
+        }
+        if (authTypes.indexOf("onelogin") !== -1) {
+            if (!autoFocus) {
+                autoFocus = "onelogin";
+            }
+            hasOnelogin = true;
+            hasOtp = false;
+        }
+        if (authTypes.indexOf("okta") !== -1) {
+            if (!autoFocus) {
+                autoFocus = "okta";
+            }
+            hasOkta = true;
+            hasOtp = false;
+        }
+        if (authTypes.indexOf("yubikey") !== -1) {
+            if (!autoFocus) {
+                autoFocus = "yubikey";
+            }
+            hasYubikey = true;
+        }
+        if (authTypes.length || this.props.profile.pre_connect_msg) {
+            this.setState({
+                ...this.state,
+                disabled: false,
+                dialog: true,
+                autoFocus: autoFocus,
+                hasUsername: hasUsername,
+                hasPassword: hasPassword,
+                hasPin: hasPin,
+                hasDuo: hasDuo,
+                hasOnelogin: hasOnelogin,
+                hasOkta: hasOkta,
+                hasOtp: hasOtp,
+                hasYubikey: hasYubikey,
+                hasToken: tokenValid,
+                preConnMsgOnly: !authTypes.length,
+                mode: mode,
+            });
+        }
+        else {
+            await this.connect(mode, "", "");
+        }
+    }
+    async connect(mode, username, password) {
+        let prfl = this.props.profile;
+        let data = await prfl.readData();
+        if (!data) {
+            this.setState({
+                ...this.state,
+                disabled: false,
+            });
+            return;
+        }
+        if (!prfl.system) {
+            Logger_info("Profiles: Updating profile '" + prfl.id + "'");
+            await prfl.writeData(data);
+        }
+        let serverPubKey = "";
+        if (prfl.server_public_key) {
+            serverPubKey = prfl.server_public_key.join("\n");
+        }
+        let connData = {
+            id: prfl.id,
+            mode: mode,
+            org_id: prfl.organization_id,
+            user_id: prfl.user_id,
+            server_id: prfl.server_id,
+            sync_hosts: prfl.sync_hosts,
+            sync_token: prfl.sync_token,
+            sync_secret: prfl.sync_secret,
+            sync_hash: prfl.sync_hash,
+            username: username,
+            password: password,
+            remotes_data: prfl.remotes_data,
+            hide_ovpn: prfl.hide_ovpn,
+            dynamic_firewall: prfl.dynamic_firewall,
+            geo_sort: prfl.geo_sort,
+            force_connect: prfl.force_connect,
+            device_auth: prfl.device_auth,
+            disable_gateway: prfl.disable_gateway,
+            disable_dns: prfl.disable_dns,
+            dco: prfl.dco,
+            debug_output: prfl.debug_output,
+            force_dns: prfl.force_dns,
+            restrict_client: prfl.restrict_client,
+            sso_auth: prfl.sso_auth,
+            server_public_key: serverPubKey,
+            server_box_public_key: prfl.server_box_public_key,
+            token_ttl: prfl.token_ttl,
+            timeout: true,
+            reconnect: !(prfl.disable_reconnect || prfl.disable_reconnect_local),
+            data: data,
+        };
+        await connect(connData);
+        this.closeDialog();
+    }
+    disconnect() {
+        let prfl = this.props.profile;
+        let disconnData = {
+            id: prfl.id,
+        };
+        disconnect(disconnData).then(() => {
+            this.setState({
+                ...this.state,
+                disabled: false,
+            });
+        });
+    }
+    render() {
+        let connected = this.connected();
+        let hasWg = state.wg && this.props.profile.wg;
+        let hideOvpn = this.props.profile.hide_ovpn;
+        let buttonClass = "";
+        let buttonLabel = "";
+        if (connected) {
+            buttonClass = "bp5-intent-danger bp5-icon-delete";
+            buttonLabel = "Disconnect";
+        }
+        else {
+            buttonClass = "bp5-intent-success bp5-icon-link";
+            buttonLabel = "Connect";
+        }
+        let cssButton = ProfileConnect_css.button;
+        let minimalButton = "";
+        if (this.props.minimal) {
+            cssButton = ProfileConnect_css.buttonMinimal;
+            minimalButton = " bp5-minimal";
+        }
+        return react.createElement("div", { style: ProfileConnect_css.box, hidden: this.props.hidden },
+            react.createElement("button", { className: "bp5-button " + buttonClass + minimalButton, style: cssButton, type: "button", hidden: hasWg && !connected, disabled: this.state.disabled, onClick: () => {
+                    this.onConnect("ovpn");
+                } }, buttonLabel),
+            react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-link" + minimalButton, style: cssButton, type: "button", hidden: !hasWg || connected || (hideOvpn && hasWg), disabled: this.state.disabled, onClick: () => {
+                    this.onConnect("ovpn");
+                } }, this.props.minimal ? "OVPN" : "OpenVPN"),
+            react.createElement("button", { className: "bp5-button bp5-intent-primary bp5-icon-link" + minimalButton, style: cssButton, type: "button", hidden: !hasWg || connected, disabled: this.state.disabled, onClick: () => {
+                    this.onConnect("wg");
+                } }, hideOvpn ? "Connect" : (this.props.minimal ? "WG" : "WireGuard")),
+            react.createElement(Dialog, { title: "Profile Connect", style: ProfileConnect_css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
+                react.createElement("div", { className: "bp5-dialog-body" },
+                    react.createElement("h3", { style: ProfileConnect_css.header },
+                        "Connecting to ",
+                        this.props.profile.formattedName()),
+                    react.createElement("div", { style: ProfileConnect_css.preConnect, hidden: !this.props.profile.pre_connect_msg }, this.props.profile.pre_connect_msg),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasUsername, label: "Username", help: "Enter profile username.", type: "text", placeholder: "Enter username", value: this.state.username, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                username: val,
+                            });
+                        } }),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasPassword, autoFocus: this.state.autoFocus === "password", label: "Password", help: "Enter profile password.", type: "password", placeholder: "Enter password", value: this.state.password, onKeyUp: (key) => {
+                            if (key === "Enter") {
+                                this.closeDialogConfirm();
+                            }
+                        }, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                password: val,
+                            });
+                        } }),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasPin, autoFocus: this.state.autoFocus === "pin", label: "Pin", help: "Enter profile pin.", type: "password", placeholder: "Enter pin", value: this.state.pin, onKeyUp: (key) => {
+                            if (key === "Enter") {
+                                this.closeDialogConfirm();
+                            }
+                        }, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                pin: val,
+                            });
+                        } }),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasDuo, autoFocus: this.state.autoFocus === "duo", label: "Duo Passcode", help: "Enter profile Duo passcode from Duo authenticator.", type: "text", placeholder: "Enter passcode", value: this.state.duo, onKeyUp: (key) => {
+                            if (key === "Enter") {
+                                this.closeDialogConfirm();
+                            }
+                        }, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                duo: val,
+                            });
+                        } }),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasOnelogin, autoFocus: this.state.autoFocus === "onelogin", label: "OneLogin Passcode", help: "Enter profile OneLogin passcode from OneLogin authenticator app.", type: "text", placeholder: "Enter passcode", value: this.state.onelogin, onKeyUp: (key) => {
+                            if (key === "Enter") {
+                                this.closeDialogConfirm();
+                            }
+                        }, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                onelogin: val,
+                            });
+                        } }),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasOkta, autoFocus: this.state.autoFocus === "okta", label: "Okta Passcode", help: "Enter profile Okta passcode from Okta authenticator app.", type: "text", placeholder: "Enter passcode", value: this.state.okta, onKeyUp: (key) => {
+                            if (key === "Enter") {
+                                this.closeDialogConfirm();
+                            }
+                        }, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                okta: val,
+                            });
+                        } }),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasOtp, autoFocus: this.state.autoFocus === "otp", label: "Authenticator Passcode", help: "Enter profile passcode from authenticator app.", type: "text", placeholder: "Enter passcode", value: this.state.otp, onKeyUp: (key) => {
+                            if (key === "Enter") {
+                                this.closeDialogConfirm();
+                            }
+                        }, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                otp: val,
+                            });
+                        } }),
+                    react.createElement(PageInput, { disabled: this.state.disabled, hidden: !this.state.hasYubikey, autoFocus: this.state.autoFocus === "yubikey", label: "YubiKey", help: "Select field and push button on YubiKey device to fill passcode.", type: "text", placeholder: "Activate YubiKey", value: this.state.yubikey, onKeyUp: (key) => {
+                            if (key === "Enter") {
+                                this.closeDialogConfirm();
+                            }
+                        }, onChange: (val) => {
+                            this.setState({
+                                ...this.state,
+                                changed: true,
+                                yubikey: val,
+                            });
+                        } })),
+                react.createElement("div", { className: "bp5-dialog-footer" },
+                    react.createElement("div", { className: "bp5-dialog-footer-actions" },
+                        react.createElement("button", { className: "bp5-button bp5-intent-danger bp5-icon-cross", type: "button", onClick: this.closeDialog }, "Cancel"),
+                        react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-link", type: "button", disabled: this.state.disabled || (!this.state.changed &&
+                                !this.state.preConnMsgOnly), onClick: this.closeDialogConfirm }, "Connect")))));
+    }
+}
+
+;// ./app/components/PageSwitch.js
+
+
+const PageSwitch_css = {
+    label: {
+        display: 'inline-block',
+    },
+};
+class PageSwitch extends react.Component {
+    render() {
+        return react.createElement("div", { hidden: this.props.hidden },
+            react.createElement("label", { className: "bp5-control bp5-switch", style: PageSwitch_css.label },
+                react.createElement("input", { type: "checkbox", disabled: this.props.disabled, checked: !!this.props.checked, onChange: this.props.onToggle }),
+                react.createElement("span", { className: "bp5-control-indicator" }),
+                this.props.label),
+            react.createElement(Help, { title: this.props.label, content: this.props.help }));
+    }
+}
+
+;// ./app/components/ProfileSettings.js
+
+
+
+
+
+
+
+
+
+
+const ProfileSettings_css = {
+    box: {
+        display: "inline-block"
+    },
+    button: {
+        marginTop: "10px",
+        marginRight: "10px",
+    },
+    dialog: {
+        width: "340px",
+        position: "absolute",
+    },
+    dialogBody: {
+        marginBottom: "0",
+    },
+    dialogFooter: {
+        marginTop: "10px",
+    },
+    info: {
+        marginBottom: "0",
+    },
+    label: {
+        width: "100%",
+        maxWidth: "220px",
+        margin: "18px 0 0 0",
+    },
+    input: {
+        width: "100%",
+    },
+    toggleDataBtn: {
+        opacity: "0.5",
+    },
+    dataInfoBox: {
+        height: "100px",
+        overflowY: "scroll",
+        border: "1px solid rgba(16, 22, 26, 0.4)",
+        borderRadius: "2px",
+    },
+};
+class ProfileSettings extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onSave = () => {
+            let prfl = this.state.profile;
+            this.setState({
+                ...this.state,
+                disabled: true,
+            });
+            if (prfl) {
+                if (this.state.setAutoStart !== null) {
+                    prfl.disabled = !this.state.setAutoStart;
+                }
+                if (prfl.force_connect && prfl.disabled) {
+                    let err = new WriteError(null, "Profiles: Profile autostart enforced by server", { profile_id: prfl.id });
+                    errorAlert(err, 10);
+                    prfl.disabled = false;
+                    this.setState({
+                        ...this.state,
+                        setAutoStart: null,
+                    });
+                    return;
+                }
+                commit(prfl).then(() => {
+                    if (this.state.setSystem !== null) {
+                        this.onSaveSystem();
+                    }
+                    else {
+                        this.setState({
+                            ...this.state,
+                            changed: false,
+                            disabled: false,
+                            profile: null,
+                        });
+                        this.closeDialog();
+                    }
+                });
+            }
+            else {
+                if (this.state.setSystem !== null) {
+                    this.onSaveSystem();
+                }
+                else {
+                    this.setState({
+                        ...this.state,
+                        changed: false,
+                        disabled: false,
+                        profile: null,
+                    });
+                    this.closeDialog();
+                }
+            }
+        };
+        this.onSaveSystem = () => {
+            let prfl = this.state.profile ||
+                this.props.profile;
+            if (this.state.setSystem && !prfl.system) {
+                prfl.disabled = !this.state.setAutoStart;
+                prfl.convertSystem().then(() => {
+                    this.setState({
+                        ...this.state,
+                        changed: false,
+                        disabled: false,
+                        profile: null,
+                    });
+                    this.closeDialog();
+                });
+            }
+            else if (!this.state.setSystem && !!prfl.system) {
+                prfl.convertUser().then(() => {
+                    this.setState({
+                        ...this.state,
+                        changed: false,
+                        disabled: false,
+                        profile: null,
+                    });
+                    this.closeDialog();
+                });
+            }
+        };
+        this.openDialog = () => {
+            this.setState({
+                ...this.state,
+                dialog: true,
+            });
+        };
+        this.closeDialog = () => {
+            this.setState({
+                ...this.state,
+                dialog: false,
+                changed: false,
+                profile: null,
+                setAutoStart: null,
+                setSystem: null,
+            });
+        };
+        this.toggleData = () => {
+            this.setState({
+                ...this.state,
+                showData: !this.state.showData,
+            });
+        };
+        this.state = {
+            disabled: false,
+            changed: false,
+            dialog: false,
+            profile: null,
+            setAutoStart: null,
+            setSystem: null,
+            showData: false,
+        };
+    }
+    set(name, val) {
+        let profile;
+        if (this.state.changed) {
+            profile = {
+                ...this.state.profile,
+            };
+        }
+        else {
+            profile = {
+                ...this.props.profile,
+            };
+        }
+        profile[name] = val;
+        if (name === "disabled") {
+            this.setState({
+                ...this.state,
+                changed: true,
+                profile: profile,
+                setAutoStart: !profile.disabled,
+            });
+        }
+        else {
+            this.setState({
+                ...this.state,
+                changed: true,
+                profile: profile,
+            });
+        }
+    }
+    render() {
+        let profile = this.state.profile ||
+            this.props.profile;
+        let system = !!profile.system;
+        if (this.state.setSystem !== null) {
+            system = this.state.setSystem;
+        }
+        let autostart = !profile.disabled && !!profile.system;
+        if (this.state.setAutoStart !== null) {
+            autostart = this.state.setAutoStart;
+        }
+        let syncHosts = profile.formatedHosts();
+        let lastSync = "";
+        if (profile.sync_time === -1) {
+            lastSync = "Failed to sync";
+        }
+        else if (profile.sync_time) {
+            lastSync = formatDateLess(profile.sync_time);
+        }
+        else {
+            lastSync = "Never";
+        }
+        let dataInfo;
+        if (this.state.showData) {
+            dataInfo = react.createElement("div", { style: ProfileSettings_css.dataInfoBox },
+                react.createElement(PageInfo, { fields: [
+                        {
+                            label: 'Configuration Sync Hosts',
+                            value: syncHosts,
+                        },
+                        {
+                            label: 'System',
+                            value: profile.system,
+                        },
+                        {
+                            label: 'UV Name',
+                            value: profile.uv_name,
+                        },
+                        {
+                            label: 'State',
+                            value: profile.state,
+                        },
+                        {
+                            label: 'WireGuard',
+                            value: profile.wg,
+                        },
+                        {
+                            label: 'Last Mode',
+                            value: profile.last_mode,
+                        },
+                        {
+                            label: 'Organization ID',
+                            value: profile.organization_id,
+                        },
+                        {
+                            label: 'Organization',
+                            value: profile.organization,
+                        },
+                        {
+                            label: 'Server ID',
+                            value: profile.server_id,
+                        },
+                        {
+                            label: 'Server',
+                            value: profile.server,
+                        },
+                        {
+                            label: 'User ID',
+                            value: profile.user_id,
+                        },
+                        {
+                            label: 'User',
+                            value: profile.user,
+                        },
+                        {
+                            label: 'Pre Connect Message',
+                            value: profile.pre_connect_msg,
+                        },
+                        {
+                            label: 'Disable Reconnect',
+                            value: profile.disable_reconnect,
+                        },
+                        {
+                            label: 'Disable Reconnect Local',
+                            value: profile.disable_reconnect_local,
+                        },
+                        {
+                            label: 'Restrict Client',
+                            value: profile.restrict_client,
+                        },
+                        {
+                            label: 'Remotes Data',
+                            value: JSON.stringify(profile.remotes_data),
+                        },
+                        {
+                            label: 'Hide OpenVPN',
+                            value: profile.hide_ovpn,
+                        },
+                        {
+                            label: 'Dynamic Firewall',
+                            value: profile.dynamic_firewall,
+                        },
+                        {
+                            label: 'Geo Sort',
+                            value: profile.geo_sort,
+                        },
+                        {
+                            label: 'Force Connect',
+                            value: profile.force_connect,
+                        },
+                        {
+                            label: 'Device Auth',
+                            value: profile.device_auth,
+                        },
+                        {
+                            label: 'Disable Gateway',
+                            value: profile.disable_gateway,
+                        },
+                        {
+                            label: 'Disable DNS',
+                            value: profile.disable_dns,
+                        },
+                        {
+                            label: 'Data Channel Offload',
+                            value: profile.dco,
+                        },
+                        {
+                            label: 'Debug Output',
+                            value: profile.debug_output,
+                        },
+                        {
+                            label: 'Force DNS',
+                            value: profile.force_dns,
+                        },
+                        {
+                            label: 'SSO Auth',
+                            value: profile.sso_auth,
+                        },
+                        {
+                            label: 'Password Mode',
+                            value: profile.password_mode,
+                        },
+                        {
+                            label: 'Token',
+                            value: profile.token,
+                        },
+                        {
+                            label: 'Token TTL',
+                            value: profile.token_ttl,
+                        },
+                        {
+                            label: 'Sync Hash',
+                            value: profile.sync_hash,
+                        },
+                    ] }));
+        }
+        return react.createElement("div", { style: ProfileSettings_css.box },
+            react.createElement("button", { className: "bp5-button bp5-icon-cog", style: ProfileSettings_css.button, type: "button", disabled: this.state.disabled, onClick: this.openDialog }, "Settings"),
+            react.createElement(Dialog, { title: "Profile Settings", style: ProfileSettings_css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
+                react.createElement("div", { className: "bp5-dialog-body", style: ProfileSettings_css.dialogBody },
+                    react.createElement(PageInput, { disabled: this.state.disabled, label: "Name", help: "Profile name.", type: "text", placeholder: "Enter name", value: profile.name || "", onChange: (val) => {
+                            this.set("name", val);
+                        } }),
+                    react.createElement(PageSwitch, { disabled: this.state.disabled, label: "System Profile", help: "Automatically start profile with system service. Autostart profiles will run for all users.", checked: system, onToggle: () => {
+                            let profile;
+                            if (this.state.changed) {
+                                profile = {
+                                    ...this.state.profile,
+                                };
+                            }
+                            else {
+                                profile = {
+                                    ...this.props.profile,
+                                };
+                            }
+                            if (!system && this.state.setAutoStart === null) {
+                                this.setState({
+                                    ...this.state,
+                                    changed: true,
+                                    profile: profile,
+                                    setSystem: !system,
+                                    setAutoStart: true,
+                                });
+                            }
+                            else {
+                                this.setState({
+                                    ...this.state,
+                                    changed: true,
+                                    profile: profile,
+                                    setSystem: !system,
+                                });
+                            }
+                        } }),
+                    react.createElement(PageSwitch, { disabled: this.state.disabled || !system, label: "Autostart", help: "Automatically start profile with system service. Autostart profiles will run for all users. Must be system profile to use autostart.", checked: autostart && system, onToggle: () => {
+                            this.set("disabled", !!autostart);
+                        } }),
+                    react.createElement(PageSwitch, { label: "Disable Auto Reconnect", help: "Disable automatically reconnecting on disconnect.", hidden: !!system || profile.restrict_client, checked: !!profile.disable_reconnect_local, onToggle: () => {
+                            this.set("disable_reconnect_local", !profile.disable_reconnect_local);
+                        } }),
+                    react.createElement(PageSwitch, { label: "Disable Default Gateway", help: "Disable routing internet traffic through the VPN connection.", hidden: profile.restrict_client, checked: !!profile.disable_gateway, onToggle: () => {
+                            this.set("disable_gateway", !profile.disable_gateway);
+                        } }),
+                    react.createElement(PageSwitch, { label: "Disable DNS", help: "Disable configuring the DNS configuration provided by the server on this profile.", hidden: profile.restrict_client, checked: !!profile.disable_dns, onToggle: () => {
+                            this.set("disable_dns", !profile.disable_dns);
+                        } }),
+                    react.createElement(PageSwitch, { label: "Data Channel Offload", help: "Enable Data Channel Offload for improved performance. Requires server support and configuration changes.", hidden: profile.restrict_client, checked: !!profile.dco, onToggle: () => {
+                            this.set("dco", !profile.dco);
+                        } }),
+                    react.createElement(PageSwitch, { label: "Debug Output", help: "Enable debug output logging for this profile.", hidden: profile.restrict_client, checked: !!profile.debug_output, onToggle: () => {
+                            this.set("debug_output", !profile.debug_output);
+                        } }),
+                    react.createElement(PageSwitch, { label: "Force DNS configuration", help: "Configure only one DNS server to correct issues with macOS DNS server priority. This is not recommended unless required and will cause networking compatibility issues.", hidden: platform !== "darwin" &&
+                            !profile.force_dns &&
+                            !this.state.showData, checked: !!profile.force_dns, onToggle: () => {
+                            this.set("force_dns", !profile.force_dns);
+                        } }),
+                    react.createElement(PageInfo, { style: ProfileSettings_css.info, fields: [
+                            {
+                                label: 'ID',
+                                value: profile.id || '-',
+                            },
+                            {
+                                label: 'Last Configuration Sync',
+                                value: lastSync,
+                            },
+                        ] }),
+                    dataInfo),
+                react.createElement("div", { className: "bp5-dialog-footer", style: ProfileSettings_css.dialogFooter },
+                    react.createElement("div", { className: "bp5-dialog-footer-actions" },
+                        react.createElement("button", { className: "bp5-button bp5-icon-console", type: "button", style: ProfileSettings_css.toggleDataBtn, disabled: this.state.disabled, onClick: this.toggleData }, "Debugging"),
+                        react.createElement("button", { className: "bp5-button bp5-intent-danger bp5-icon-cross", type: "button", disabled: this.state.disabled, onClick: this.closeDialog }, "Cancel"),
+                        react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-tick", type: "button", disabled: this.state.disabled || !this.state.changed, onClick: this.onSave }, "Save")))));
+    }
+}
+
+;// ./app/components/Profile.js
+
+
+
+
+
+
+
+const Profile_css = {
+    box: {
+        paddingTop: "31px",
+    },
+    message: {
+        margin: '0 0 6px 0',
+    },
+    toast: {
+        margin: '0 20px 10px 0',
+    },
+    toastHeader: {
+        fontWeight: "bold",
+    },
+    label: {
+        marginBottom: '0',
+    },
+    labelLast: {
+        marginBottom: '-5px',
+    },
+    card: {
+        position: "relative",
+        margin: '0 8px 8px 0',
+        paddingRight: 0,
+    },
+    progress: {
+        width: '100%',
+        height: '4px',
+        borderRadius: 0,
+    },
+    progressBar: {
+        width: '50%',
+        borderRadius: 0,
+    },
+    button: {
+        marginRight: '10px',
+    },
+    deleteButton: {},
+    deleteButtonBox: {
+        marginTop: "-1px",
+    },
+    buttons: {},
+    editor: {
+        margin: '10px 0 0 0',
+    },
+    header: {
+        userSelect: 'none',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        padding: '4px',
+        height: '39px',
+        color: 'inherit',
+        border: 'none',
+        font: 'inherit',
+        cursor: 'default',
+        outline: 'inherit',
+    },
+    headerOpen: {
+        userSelect: 'none',
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        right: '0',
+        padding: '4px',
+        height: '36px',
+        color: 'inherit',
+        border: 'none',
+        font: 'inherit',
+        cursor: 'pointer',
+        outline: 'none',
+    },
+    headerClosed: {
+        userSelect: 'none',
+        position: 'absolute',
+        top: '1px',
+        left: '1px',
+        right: '2px',
+        padding: '4px',
+        height: '36px',
+        color: 'inherit',
+        border: 'none',
+        font: 'inherit',
+        cursor: 'pointer',
+        backgroundColor: 'inherit',
+        outline: 'none',
+    },
+    headerLabel: {
+        fontSize: "1.09em",
+        margin: "4px 34px 0 6px",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+    },
+    body: {},
+    regBox: {
+        padding: "0 20px 10px 0",
+    },
+    reg: {
+        textAlign: "center",
+    },
+    regTitle: {
+        margin: "3px 0 0 0",
+    },
+    regName: {
+        margin: "1px 0 0 0",
+        fontSize: "14px",
+        fontWeight: "normal",
+    },
+    regKey: {
+        margin: "1px 0",
+        fontWeight: "bold",
+    },
+};
+class Profile extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onChange = () => {
+            this.setState({
+                ...this.state,
+            });
+        };
+        this.onDelete = () => {
+            this.setState({
+                ...this.state,
+                disabled: true,
+            });
+            let profile = this.props.profile;
+            profile.delete().then(() => {
+                this.setState({
+                    ...this.state,
+                    disabled: false,
+                });
+                sync();
+            });
+        };
+        this.state = {
+            open: false,
+            message: '',
+            disabled: false,
+            changed: false,
+            value: 'test',
+        };
+    }
+    componentDidMount() {
+        Constants_addChangeListener(this.onChange);
+    }
+    componentWillUnmount() {
+        Constants_removeChangeListener(this.onChange);
+    }
+    render() {
+        let profile = this.props.profile;
+        let statusLabel = "Online For";
+        let statusVal = profile.formattedUptime();
+        if (statusVal === "") {
+            statusLabel = "Status";
+            statusVal = profile.formattedStatus();
+        }
+        let open = this.state.open || !!profile.registration_key;
+        let fieldsLeft = [
+            {
+                label: 'User',
+                value: profile.user || '-',
+            },
+            {
+                label: 'Server',
+                value: profile.server || '-',
+            },
+        ];
+        let fieldsRight = [
+            {
+                label: statusLabel,
+                value: statusVal,
+            },
+            {
+                label: 'Organization',
+                value: profile.organization || '-',
+            },
+        ];
+        let fieldsLong = [];
+        let longIp = false;
+        if ((profile.server_addr && profile.server_addr.length >= 16) ||
+            (profile.client_addr && profile.client_addr.length >= 16)) {
+            fieldsLong.push({
+                label: 'Server Address',
+                value: profile.server_addr || '-',
+                copy: !!profile.server_addr,
+            });
+            fieldsLong.push({
+                label: 'Client Address',
+                value: profile.client_addr || '-',
+                copy: !!profile.client_addr,
+            });
+            longIp = true;
+        }
+        else if (profile.server_addr || profile.client_addr) {
+            fieldsLeft.push({
+                label: 'Server Address',
+                value: profile.server_addr || '-',
+                copy: !!profile.server_addr,
+            });
+            fieldsRight.push({
+                label: 'Client Address',
+                value: profile.client_addr || '-',
+                copy: !!profile.client_addr,
+            });
+        }
+        let header;
+        if (this.props.minimal) {
+            header = react.createElement("button", { className: (open ? "bp5-card-header " : "") +
+                    "layout horizontal tab-toggle", style: open ? Profile_css.headerOpen : Profile_css.headerClosed, onClick: (evt) => {
+                    let target = evt.target;
+                    if (this.props.minimal &&
+                        target.className && target.className.indexOf &&
+                        target.className.indexOf('tab-toggle') !== -1) {
+                        this.setState({
+                            ...this.state,
+                            open: !open,
+                        });
+                    }
+                } },
+                react.createElement("h3", { className: "tab-toggle", style: Profile_css.headerLabel }, profile.formattedNameShort() || 'Profile'),
+                react.createElement("div", { className: "flex tab-toggle" }),
+                react.createElement(ProfileConnect, { profile: this.props.profile, minimal: true, hidden: !this.props.minimal || open }),
+                react.createElement("div", { style: Profile_css.deleteButtonBox, hidden: this.props.minimal && !open },
+                    react.createElement(ConfirmButton, { className: "bp5-minimal bp5-intent-danger bp5-icon-trash", style: Profile_css.deleteButton, safe: true, progressClassName: "bp5-intent-danger", dialogClassName: "bp5-intent-danger bp5-icon-delete", dialogLabel: "Delete Profile", confirmMsg: "Permanently delete this profile", items: [profile.formattedName()], disabled: this.state.disabled, onConfirm: this.onDelete })));
+        }
+        else {
+            header = react.createElement("div", { className: "bp5-card-header layout horizontal tab-toggle", style: Profile_css.header },
+                react.createElement("h3", { className: "tab-toggle", style: Profile_css.headerLabel }, profile.formattedNameShort() || 'Profile'),
+                react.createElement("div", { className: "flex tab-toggle" }),
+                react.createElement("div", { style: Profile_css.deleteButtonBox, hidden: this.props.minimal && !open },
+                    react.createElement(ConfirmButton, { className: "bp5-minimal bp5-intent-danger bp5-icon-trash", style: Profile_css.deleteButton, safe: true, progressClassName: "bp5-intent-danger", dialogClassName: "bp5-intent-danger bp5-icon-delete", dialogLabel: "Delete Profile", confirmMsg: "Permanently delete this profile", items: [profile.formattedName()], disabled: this.state.disabled, onConfirm: this.onDelete })));
+        }
+        return react.createElement("div", { className: "bp5-card layout vertical", style: Profile_css.card },
+            header,
+            react.createElement("div", { style: Profile_css.box, hidden: this.props.minimal && !open },
+                react.createElement("div", { style: Profile_css.toast, hidden: !profile.auth_reconnect, className: "bp5-toast bp5-intent-primary bp5-overlay-content" },
+                    react.createElement("span", { className: "bp5-toast-message" },
+                        react.createElement("span", { style: Profile_css.toastHeader }, "Connection Lost"),
+                        react.createElement("br", null),
+                        "Authentication required to reconnect")),
+                react.createElement("div", { className: "layout vertical", style: Profile_css.regBox, hidden: !profile.registration_key },
+                    react.createElement("div", { className: "bp5-card layout vertical", style: Profile_css.reg },
+                        react.createElement("h3", { className: "bp5-text-intent-danger", style: Profile_css.regTitle }, "Device Registration Required"),
+                        "Contact Server Administrator with Code:",
+                        react.createElement("h3", { className: "bp5-text-intent-primary", style: Profile_css.regName }, hostname),
+                        react.createElement("h1", { className: "bp5-text-intent-primary", style: Profile_css.regKey }, profile.registration_key))),
+                react.createElement("div", { className: "layout horizontal", style: Profile_css.body },
+                    react.createElement(PageInfo, { style: Profile_css.label, fields: fieldsLeft }),
+                    react.createElement(PageInfo, { style: Profile_css.label, fields: fieldsRight })),
+                react.createElement(PageInfo, { style: Profile_css.labelLast, hidden: !longIp, fields: fieldsLong }),
+                react.createElement("div", { style: Profile_css.message, hidden: !this.state.message }, this.state.message),
+                react.createElement("div", { className: "layout horizontal" },
+                    react.createElement("div", { style: Profile_css.buttons },
+                        react.createElement(ProfileConnect, { profile: this.props.profile }),
+                        react.createElement(ProfileSettings, { profile: this.props.profile })))));
+    }
+}
+
+;// ./app/components/Profiles.js
+
+
+
+
+const profilesStyle = `
+.profiles-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0;
+	margin: 8px 0 0 8px;
+}
+@media (min-width: 864px) {
+	.profiles-grid {
+		grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+	}
+}
+`;
+class Profiles extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onResize = () => {
+            this.setState({
+                windowWidth: document.documentElement.clientWidth,
+            });
+        };
+        this.onChange = () => {
+            this.setState({
+                profiles: stores_ProfilesStore.profiles,
+            });
+        };
+        this.state = {
+            profiles: stores_ProfilesStore.profiles,
+            windowWidth: document.documentElement.clientWidth,
+        };
+    }
+    componentDidMount() {
+        stores_ProfilesStore.addChangeListener(this.onChange);
+        sync();
+        window.addEventListener('resize', this.onResize);
+        this.interval = setInterval(() => {
+            sync(true);
+        }, 1000);
+    }
+    componentWillUnmount() {
+        stores_ProfilesStore.removeChangeListener(this.onChange);
+        window.removeEventListener('resize', this.onResize);
+        clearInterval(this.interval);
+    }
+    render() {
+        let profilesDom = [];
+        let minimal = this.state.profiles.length > 3 && this.state.windowWidth < 864;
+        let prflIds = new Set();
+        this.state.profiles.forEach((prfl) => {
+            if (prflIds.has(prfl.id)) {
+                return;
+            }
+            prflIds.add(prfl.id);
+            profilesDom.push(react.createElement(Profile, { key: prfl.id, profile: prfl, minimal: minimal }));
+        });
+        return react.createElement("div", null,
+            react.createElement("style", null, profilesStyle),
+            react.createElement("div", { className: "profiles-grid" }, profilesDom));
+    }
+}
+
+;// ./app/utils/LogUtils.js
+
+
+
+
+
+async function readServiceLog() {
+    let logData = "";
+    try {
+        let resp = await get('/log/service')
+            .end();
+        logData = resp.data;
+    }
+    catch (err) {
+        err = new RequestError(err, "Logs: Service log request error");
+        errorAlert2(err, 10);
+    }
+    return logData;
+}
+async function clearServiceLog() {
+    try {
+        await del('/log/service')
+            .end();
+    }
+    catch (err) {
+        err = new RequestError(err, "Logs: Service log request error");
+        errorAlert2(err, 10);
+    }
+}
+async function readClientLog() {
+    let logData = "";
+    let logPath = log();
+    try {
+        let exists = await fileExists(logPath);
+        if (exists) {
+            logData = await fileRead(logPath);
+        }
+    }
+    catch (err) {
+        errorAlert2(err, 10);
+    }
+    return logData;
+}
+async function clearClientLog() {
+    try {
+        await fileWrite(log(), "");
+    }
+    catch (err) {
+        errorAlert2(err, 10);
+    }
+}
+
+;// ./node_modules/@monaco-editor/react/dist/index.mjs
+/* unused harmony import specifier */ var dist_Ie;
+/* unused harmony import specifier */ var dist_ce;
+var dist_le={wrapper:{display:"flex",position:"relative",textAlign:"initial"},fullWidth:{width:"100%"},hide:{display:"none"}},v=dist_le;var dist_ae={container:{display:"flex",height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}},dist_Y=dist_ae;function dist_Me({children:e}){return react.createElement("div",{style:dist_Y.container},e)}var dist_Z=dist_Me;var $=dist_Z;function Ee({width:e,height:r,isEditorReady:n,loading:t,_ref:a,className:m,wrapperProps:E}){return react.createElement("section",{style:{...v.wrapper,width:e,height:r},...E},!n&&react.createElement($,null,t),react.createElement("div",{ref:a,style:{...v.fullWidth,...!n&&v.hide},className:m}))}var dist_ee=Ee;var dist_H=(0,react.memo)(dist_ee);function dist_Ce(e){(0,react.useEffect)(e,[])}var k=dist_Ce;function dist_he(e,r,n=!0){let t=(0,react.useRef)(!0);(0,react.useEffect)(t.current||!n?()=>{t.current=!1}:e,r)}var l=dist_he;function dist_D(){}function h(e,r,n,t){return dist_De(e,t)||dist_be(e,r,n,t)}function dist_De(e,r){return e.editor.getModel(dist_te(e,r))}function dist_be(e,r,n,t){return e.editor.createModel(r,n,t?dist_te(e,t):void 0)}function dist_te(e,r){return e.Uri.parse(r)}function dist_Oe({original:e,modified:r,language:n,originalLanguage:t,modifiedLanguage:a,originalModelPath:m,modifiedModelPath:E,keepCurrentOriginalModel:g=!1,keepCurrentModifiedModel:N=!1,theme:x="light",loading:P="Loading...",options:y={},height:V="100%",width:z="100%",className:F,wrapperProps:j={},beforeMount:A=dist_D,onMount:q=dist_D}){let[M,O]=(0,react.useState)(!1),[T,s]=(0,react.useState)(!0),u=(0,react.useRef)(null),c=(0,react.useRef)(null),w=(0,react.useRef)(null),d=(0,react.useRef)(q),o=(0,react.useRef)(A),b=(0,react.useRef)(!1);k(()=>{let i=es_loader.init();return i.then(f=>(c.current=f)&&s(!1)).catch(f=>f?.type!=="cancelation"&&console.error("Monaco initialization: error:",f)),()=>u.current?I():i.cancel()}),l(()=>{if(u.current&&c.current){let i=u.current.getOriginalEditor(),f=h(c.current,e||"",t||n||"text",m||"");f!==i.getModel()&&i.setModel(f)}},[m],M),l(()=>{if(u.current&&c.current){let i=u.current.getModifiedEditor(),f=h(c.current,r||"",a||n||"text",E||"");f!==i.getModel()&&i.setModel(f)}},[E],M),l(()=>{let i=u.current.getModifiedEditor();i.getOption(c.current.editor.EditorOption.readOnly)?i.setValue(r||""):r!==i.getValue()&&(i.executeEdits("",[{range:i.getModel().getFullModelRange(),text:r||"",forceMoveMarkers:!0}]),i.pushUndoStop())},[r],M),l(()=>{u.current?.getModel()?.original.setValue(e||"")},[e],M),l(()=>{let{original:i,modified:f}=u.current.getModel();c.current.editor.setModelLanguage(i,t||n||"text"),c.current.editor.setModelLanguage(f,a||n||"text")},[n,t,a],M),l(()=>{c.current?.editor.setTheme(x)},[x],M),l(()=>{u.current?.updateOptions(y)},[y],M);let L=(0,react.useCallback)(()=>{if(!c.current)return;o.current(c.current);let i=h(c.current,e||"",t||n||"text",m||""),f=h(c.current,r||"",a||n||"text",E||"");u.current?.setModel({original:i,modified:f})},[n,r,a,e,t,m,E]),U=(0,react.useCallback)(()=>{!b.current&&w.current&&(u.current=c.current.editor.createDiffEditor(w.current,{automaticLayout:!0,...y}),L(),c.current?.editor.setTheme(x),O(!0),b.current=!0)},[y,x,L]);(0,react.useEffect)(()=>{M&&d.current(u.current,c.current)},[M]),(0,react.useEffect)(()=>{!T&&!M&&U()},[T,M,U]);function I(){let i=u.current?.getModel();g||i?.original?.dispose(),N||i?.modified?.dispose(),u.current?.dispose()}return react.createElement(dist_H,{width:z,height:V,isEditorReady:M,loading:P,_ref:w,className:F,wrapperProps:j})}var dist_ie=dist_Oe;var dist_we=(0,react.memo)(dist_ie);function dist_Pe(){let[e,r]=dist_Ie(dist_ce.__getMonacoInstance());return k(()=>{let n;return e||(n=dist_ce.init(),n.then(t=>{r(t)})),()=>n?.cancel()}),e}var dist_Le=(/* unused pure expression or super */ null && (dist_Pe));function dist_He(e){let r=(0,react.useRef)();return (0,react.useEffect)(()=>{r.current=e},[e]),r.current}var dist_se=dist_He;var dist_=new Map;function dist_Ve({defaultValue:e,defaultLanguage:r,defaultPath:n,value:t,language:a,path:m,theme:E="light",line:g,loading:N="Loading...",options:x={},overrideServices:P={},saveViewState:y=!0,keepCurrentModel:V=!1,width:z="100%",height:F="100%",className:j,wrapperProps:A={},beforeMount:q=dist_D,onMount:M=dist_D,onChange:O,onValidate:T=dist_D}){let[s,u]=(0,react.useState)(!1),[c,w]=(0,react.useState)(!0),d=(0,react.useRef)(null),o=(0,react.useRef)(null),b=(0,react.useRef)(null),L=(0,react.useRef)(M),U=(0,react.useRef)(q),I=(0,react.useRef)(),i=(0,react.useRef)(t),f=dist_se(m),Q=(0,react.useRef)(!1),B=(0,react.useRef)(!1);k(()=>{let p=es_loader.init();return p.then(R=>(d.current=R)&&w(!1)).catch(R=>R?.type!=="cancelation"&&console.error("Monaco initialization: error:",R)),()=>o.current?pe():p.cancel()}),l(()=>{let p=h(d.current,e||t||"",r||a||"",m||n||"");p!==o.current?.getModel()&&(y&&dist_.set(f,o.current?.saveViewState()),o.current?.setModel(p),y&&o.current?.restoreViewState(dist_.get(m)))},[m],s),l(()=>{o.current?.updateOptions(x)},[x],s),l(()=>{!o.current||t===void 0||(o.current.getOption(d.current.editor.EditorOption.readOnly)?o.current.setValue(t):t!==o.current.getValue()&&(B.current=!0,o.current.executeEdits("",[{range:o.current.getModel().getFullModelRange(),text:t,forceMoveMarkers:!0}]),o.current.pushUndoStop(),B.current=!1))},[t],s),l(()=>{let p=o.current?.getModel();p&&a&&d.current?.editor.setModelLanguage(p,a)},[a],s),l(()=>{g!==void 0&&o.current?.revealLine(g)},[g],s),l(()=>{d.current?.editor.setTheme(E)},[E],s);let X=(0,react.useCallback)(()=>{if(!(!b.current||!d.current)&&!Q.current){U.current(d.current);let p=m||n,R=h(d.current,t||e||"",r||a||"",p||"");o.current=d.current?.editor.create(b.current,{model:R,automaticLayout:!0,...x},P),y&&o.current.restoreViewState(dist_.get(p)),d.current.editor.setTheme(E),g!==void 0&&o.current.revealLine(g),u(!0),Q.current=!0}},[e,r,n,t,a,m,x,P,y,E,g]);(0,react.useEffect)(()=>{s&&L.current(o.current,d.current)},[s]),(0,react.useEffect)(()=>{!c&&!s&&X()},[c,s,X]),i.current=t,(0,react.useEffect)(()=>{s&&O&&(I.current?.dispose(),I.current=o.current?.onDidChangeModelContent(p=>{B.current||O(o.current.getValue(),p)}))},[s,O]),(0,react.useEffect)(()=>{if(s){let p=d.current.editor.onDidChangeMarkers(R=>{let G=o.current.getModel()?.uri;if(G&&R.find(J=>J.path===G.path)){let J=d.current.editor.getModelMarkers({resource:G});T?.(J)}});return()=>{p?.dispose()}}return()=>{}},[s,T]);function pe(){I.current?.dispose(),V?y&&dist_.set(m,o.current.saveViewState()):o.current.getModel()?.dispose(),o.current.dispose()}return react.createElement(dist_H,{width:z,height:F,isEditorReady:s,loading:N,_ref:b,className:j,wrapperProps:A})}var dist_fe=dist_Ve;var dist_de=(0,react.memo)(dist_fe);var dist_Ft=(/* unused pure expression or super */ null && (dist_de));
+//# sourceMappingURL=index.mjs.map
+;// ./app/components/Editor.js
+
+
+
+const Editor_css = {
+    editorBox: {
+        margin: "0",
+    },
+    editor: {
+        margin: "0",
+        borderRadius: "3px",
+        overflow: "hidden",
+        width: "100%",
+    },
+};
+class Editor extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {};
+    }
+    render() {
+        return react.createElement("div", { className: "layout horizontal flex", style: Editor_css.editorBox },
+            react.createElement("div", { style: Editor_css.editor },
+                react.createElement(dist_de, { height: this.props.height, width: this.props.width, defaultLanguage: "markdown", theme: getEditorTheme(), value: this.props.value, options: {
+                        folding: false,
+                        fontSize: this.props.fontSize,
+                        fontFamily: monospaceFont,
+                        fontWeight: monospaceWeight,
+                        tabSize: 4,
+                        detectIndentation: false,
+                        readOnly: this.props.readOnly,
+                        scrollBeyondLastLine: false,
+                        minimap: {
+                            enabled: false,
+                        },
+                        wordWrap: "on",
+                    }, onChange: (val) => {
+                        if (this.props.onChange) {
+                            this.props.onChange(val);
+                        }
+                    } })));
+    }
+}
+
+;// ./app/components/Logs.js
+
+
+
+
+
+
+
+let lastView = "service";
+const Logs_css = {
+    message: {
+        margin: '0 0 6px 0',
+    },
+    header: {
+        margin: '0 0 5px 0',
+    },
+    label: {
+        marginBottom: '0',
+    },
+    card: {
+        position: "relative",
+        margin: '8px',
+    },
+    layout: {
+        height: '100%',
+    },
+    progress: {
+        width: '100%',
+        height: '4px',
+        borderRadius: 0,
+    },
+    progressBar: {
+        width: '50%',
+        borderRadius: 0,
+    },
+    button: {
+        marginRight: '10px',
+    },
+    deleteButton: {},
+    buttonsTop: {
+        position: "absolute",
+        top: "5px",
+        right: "5px",
+    },
+    buttons: {
+        flexShrink: 0,
+    },
+    editor: {
+        margin: '10px 0 0 0',
+    },
+};
+class Logs extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onChange = () => {
+            if (this.state.view === "service") {
+                readServiceLog().then((data) => {
+                    this.setState({
+                        ...this.state,
+                        log: data,
+                        profiles: stores_ProfilesStore.profiles,
+                    });
+                });
+            }
+            else if (this.state.view === "client") {
+                readClientLog().then((data) => {
+                    this.setState({
+                        ...this.state,
+                        log: data,
+                        profiles: stores_ProfilesStore.profiles,
+                    });
+                });
+            }
+            else if (this.state.curProfile) {
+                this.state.curProfile.readLog().then((data) => {
+                    this.setState({
+                        ...this.state,
+                        log: data,
+                        profiles: stores_ProfilesStore.profiles,
+                    });
+                });
+            }
+        };
+        this.onChangeView = (view) => {
+            if (view === "service") {
+                readServiceLog().then((data) => {
+                    this.setState({
+                        ...this.state,
+                        log: data,
+                        view: view,
+                        profiles: stores_ProfilesStore.profiles,
+                    });
+                });
+            }
+            else if (view === "client") {
+                readClientLog().then((data) => {
+                    this.setState({
+                        ...this.state,
+                        log: data,
+                        view: view,
+                        profiles: stores_ProfilesStore.profiles,
+                    });
+                });
+            }
+            else {
+                let prfl = stores_ProfilesStore.profile(view);
+                if (!prfl) {
+                    this.onChangeView("service");
+                    return;
+                }
+                prfl.readLog().then((data) => {
+                    this.setState({
+                        ...this.state,
+                        log: data,
+                        view: view,
+                        curProfile: prfl,
+                        profiles: stores_ProfilesStore.profiles,
+                    });
+                });
+            }
+        };
+        this.onDelete = () => {
+            this.setState({
+                ...this.state,
+                disabled: true,
+            });
+            if (this.state.view === "service") {
+                clearServiceLog().then(() => {
+                    this.setState({
+                        ...this.state,
+                        disabled: false,
+                    });
+                    this.onChange();
+                });
+            }
+            else if (this.state.view === "client") {
+                clearClientLog().then(() => {
+                    this.setState({
+                        ...this.state,
+                        disabled: false,
+                    });
+                    this.onChange();
+                });
+            }
+            else if (this.state.curProfile) {
+                this.state.curProfile.clearLog().then(() => {
+                    this.setState({
+                        ...this.state,
+                        disabled: false,
+                    });
+                    sync();
+                });
+            }
+        };
+        this.state = {
+            profiles: stores_ProfilesStore.profiles,
+            curProfile: null,
+            view: lastView,
+            log: "",
+            disabled: false,
+        };
+    }
+    componentDidMount() {
+        Constants_addChangeListener(this.onChange);
+        stores_ProfilesStore.addChangeListener(this.onChange);
+        sync();
+        this.onChangeView(this.state.view);
+    }
+    componentWillUnmount() {
+        lastView = this.state.view;
+        Constants_removeChangeListener(this.onChange);
+        stores_ProfilesStore.removeChangeListener(this.onChange);
+    }
+    render() {
+        let label = "";
+        if (this.state.view === "service") {
+            label = "Service";
+        }
+        else if (this.state.view === "client") {
+            label = "Client";
+        }
+        else if (this.state.curProfile) {
+            label = this.state.curProfile.formattedName();
+        }
+        let viewsDom = [
+            react.createElement("option", { value: "service" }, "Service logs"),
+            react.createElement("option", { value: "client" }, "Client logs"),
+        ];
+        this.state.profiles.forEach((prfl) => {
+            viewsDom.push(react.createElement("option", { value: prfl.id }, prfl.formattedName() + " logs"));
+        });
+        return react.createElement("div", { className: "bp5-card layout vertical flex", style: Logs_css.card },
+            react.createElement("div", { style: Logs_css.buttonsTop },
+                react.createElement(ConfirmButton, { className: "bp5-minimal bp5-intent-danger bp5-icon-trash", style: Logs_css.deleteButton, safe: true, progressClassName: "bp5-intent-danger", dialogClassName: "bp5-intent-danger bp5-icon-delete", dialogLabel: "Clear Logs", confirmMsg: "Confirm clearing " + label + " logs", disabled: this.state.disabled, onConfirm: this.onDelete }),
+                react.createElement("button", { className: "bp5-button bp5-minimal bp5-icon-cross", onClick: this.props.onClose })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement("h3", { style: Logs_css.header }, "Log Viewer")),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement("div", { className: "bp5-select" },
+                    react.createElement("select", { disabled: this.state.disabled, value: this.state.view, onChange: (evt) => {
+                            this.onChangeView(evt.target.value);
+                        } }, viewsDom))),
+            react.createElement("div", { className: "layout horizontal flex" },
+                react.createElement("label", { className: "bp5-label layout horizontal flex", style: Logs_css.editor },
+                    react.createElement(Editor, { disabled: this.state.disabled, value: this.state.log, readOnly: true, mode: "text", fontSize: 10, height: "100%", width: "100%" }))));
+    }
+}
+
+;// ./app/stores/ConfigStore.js
+
+
+
+
+class ConfigStore extends EventEmitter {
+    constructor() {
+        super(...arguments);
+        this._token = dispatcher_Dispatcher.register((this._callback).bind(this));
+    }
+    get config() {
+        return this._config || {};
+    }
+    get configM() {
+        if (this._config) {
+            return {
+                ...this._config || {},
+            };
+        }
+        return undefined;
+    }
+    emitChange() {
+        this.emitDefer(GlobalTypes_CHANGE);
+    }
+    addChangeListener(callback) {
+        this.on(GlobalTypes_CHANGE, callback);
+    }
+    removeChangeListener(callback) {
+        this.removeListener(GlobalTypes_CHANGE, callback);
+    }
+    _sync(config) {
+        this._config = Object.freeze(config);
+        this.emitChange();
+    }
+    _callback(action) {
+        switch (action.type) {
+            case ConfigTypes_SYNC:
+                this._sync(action.data);
+                break;
+        }
+    }
+}
+/* harmony default export */ const stores_ConfigStore = (new ConfigStore());
+
+;// ./node_modules/@blueprintjs/icons/lib/esm/generated/components/chevron-up.js
+/*
+ * Copyright 2024 Palantir Technologies, Inc. All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+var ChevronUp = react.forwardRef(function (props, ref) {
+    var isLarge = props.size >= iconTypes/* IconSize */.l.LARGE;
+    var pixelGridSize = isLarge ? iconTypes/* IconSize */.l.LARGE : iconTypes/* IconSize */.l.STANDARD;
+    var translation = "".concat(-1 * pixelGridSize / 0.05 / 2);
+    var style = { transformOrigin: "center" };
+    return (react.createElement(SVGIconContainer, (0,tslib_es6/* __assign */.Cl)({ iconName: "chevron-up", ref: ref }, props),
+        react.createElement("path", { d: isLarge ? "M334.2000000000001 154.2L214.2 274.2000000000001C210.6 277.8 205.6 280 200 280S189.4 277.8 185.8 274.2L65.8 154.2C62.2 150.6 60 145.6 60 140C60 129 69 120 80 120C85.6 120 90.6 122.2 94.2 125.8L200 231.8L305.8 126C309.4000000000001 122.2 314.4000000000001 120 320 120C331 120 340 129 340 140C340 145.6 337.8 150.6 334.2000000000001 154.2z" : "M254.2 134.2L174.2 214.2C170.6 217.8 165.6 220 160 220S149.4 217.8 145.8 214.2L65.8 134.2C62.2 130.6 60 125.6 60 120C60 109 69 100 80 100C85.6 100 90.6 102.2 94.2 105.8L160 171.8L225.8 106C229.4 102.2 234.4 100 240 100C251 100 260 109 260 120C260 125.6 257.8 130.6 254.2 134.2z", fillRule: "evenodd", transform: "scale(0.05, -0.05) translate(".concat(translation, ", ").concat(translation, ")"), style: style })));
+});
+ChevronUp.defaultProps = {
+    size: iconTypes/* IconSize */.l.STANDARD,
+};
+ChevronUp.displayName = "Blueprint5.Icon.ChevronUp";
+/* harmony default export */ const chevron_up = ((/* unused pure expression or super */ null && (ChevronUp)));
+
+;// ./node_modules/@blueprintjs/icons/lib/esm/generated/components/chevron-down.js
+/*
+ * Copyright 2024 Palantir Technologies, Inc. All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+var ChevronDown = react.forwardRef(function (props, ref) {
+    var isLarge = props.size >= iconTypes/* IconSize */.l.LARGE;
+    var pixelGridSize = isLarge ? iconTypes/* IconSize */.l.LARGE : iconTypes/* IconSize */.l.STANDARD;
+    var translation = "".concat(-1 * pixelGridSize / 0.05 / 2);
+    var style = { transformOrigin: "center" };
+    return (react.createElement(SVGIconContainer, (0,tslib_es6/* __assign */.Cl)({ iconName: "chevron-down", ref: ref }, props),
+        react.createElement("path", { d: isLarge ? "M320 280C314.4000000000001 280 309.4000000000001 277.8 305.8 274.2L200 168.2L94.2 274.2C90.6 277.8 85.6 280 80 280C69 280 60 271 60 260C60 254.4 62.2 249.4 65.8 245.8L185.8 125.8C189.4 122.2 194.4 120 200 120S210.6 122.2 214.2 125.8L334.2000000000001 245.8C337.8 249.4 340 254.4 340 260C340 271 331 280 320 280z" : "M240 220C234.4 220 229.4 217.8 225.8 214.2L160 148.2L94.2 214.2C90.6 217.8 85.6 220 80 220C69 220 60 211 60 200C60 194.4 62.2 189.4 65.8 185.8L145.8 105.8C149.4 102.2 154.4 100 160 100S170.6 102.2 174.2 105.8L254.2 185.8C257.8 189.4 260 194.4 260 200C260 211 251 220 240 220z", fillRule: "evenodd", transform: "scale(0.05, -0.05) translate(".concat(translation, ", ").concat(translation, ")"), style: style })));
+});
+ChevronDown.defaultProps = {
+    size: iconTypes/* IconSize */.l.STANDARD,
+};
+ChevronDown.displayName = "Blueprint5.Icon.ChevronDown";
+/* harmony default export */ const chevron_down = ((/* unused pure expression or super */ null && (ChevronDown)));
+
+;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/controlGroup.js
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+
+// this component is simple enough that tests would be purely tautological.
+/* istanbul ignore next */
+/**
+ * Control group component.
+ *
+ * @see https://blueprintjs.com/docs/#core/components/control-group
+ */
+var ControlGroup = react.forwardRef(function (props, ref) {
+    var _a;
+    var children = props.children, className = props.className, fill = props.fill, vertical = props.vertical, htmlProps = (0,tslib_es6/* __rest */.Tt)(props, ["children", "className", "fill", "vertical"]);
+    var rootClasses = classnames_default()(CONTROL_GROUP, (_a = {},
+        _a[FILL] = fill,
+        _a[VERTICAL] = vertical,
+        _a), className);
+    return (react.createElement("div", (0,tslib_es6/* __assign */.Cl)({ role: "group" }, htmlProps, { ref: ref, className: rootClasses }), children));
+});
+ControlGroup.displayName = "".concat(DISPLAYNAME_PREFIX, ".ControlGroup");
+
+;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/asyncControllableInput.js
+/* !
+ * Copyright 2020 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+/**
+ * A stateful wrapper around the low-level <input> component which works around a
+ * [React bug](https://github.com/facebook/react/issues/3926). This bug is reproduced when an input
+ * receives CompositionEvents (for example, through IME composition) and has its value prop updated
+ * asychronously. This might happen if a component chooses to do async validation of a value
+ * returned by the input's `onChange` callback.
+ *
+ * Note: this component does not apply any Blueprint-specific styling.
+ */
+var AsyncControllableInput = /** @class */ (function (_super) {
+    (0,tslib_es6/* __extends */.C6)(AsyncControllableInput, _super);
+    function AsyncControllableInput() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            hasPendingUpdate: false,
+            isComposing: false,
+            nextValue: _this.props.value,
+            value: _this.props.value,
+        };
+        _this.cancelPendingCompositionEnd = null;
+        _this.handleCompositionStart = function (e) {
+            var _a, _b, _c;
+            (_a = _this.cancelPendingCompositionEnd) === null || _a === void 0 ? void 0 : _a.call(_this);
+            _this.setState({ isComposing: true });
+            (_c = (_b = _this.props).onCompositionStart) === null || _c === void 0 ? void 0 : _c.call(_b, e);
+        };
+        _this.handleCompositionEnd = function (e) {
+            var _a, _b;
+            // In some non-latin languages, a keystroke can end a composition event and immediately afterwards start another.
+            // This can lead to unexpected characters showing up in the text input. In order to circumvent this problem, we
+            // use a timeout which creates a delay which merges the two composition events, creating a more natural and predictable UX.
+            // `this.state.nextValue` will become "locked" (it cannot be overwritten by the `value` prop) until a delay (10ms) has
+            // passed without a new composition event starting.
+            _this.cancelPendingCompositionEnd = _this.setTimeout(function () { return _this.setState({ isComposing: false }); }, AsyncControllableInput.COMPOSITION_END_DELAY);
+            (_b = (_a = _this.props).onCompositionEnd) === null || _b === void 0 ? void 0 : _b.call(_a, e);
+        };
+        _this.handleChange = function (e) {
+            var _a, _b;
+            var value = e.target.value;
+            _this.setState({ nextValue: value });
+            (_b = (_a = _this.props).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, e);
+        };
+        return _this;
+    }
+    AsyncControllableInput.getDerivedStateFromProps = function (nextProps, nextState) {
+        if (nextState.isComposing || nextProps.value === undefined) {
+            // don't derive anything from props if:
+            // - in uncontrolled mode, OR
+            // - currently composing, since we'll do that after composition ends
+            return null;
+        }
+        var userTriggeredUpdate = nextState.nextValue !== nextState.value;
+        if (userTriggeredUpdate) {
+            if (nextProps.value === nextState.nextValue) {
+                // parent has processed and accepted our update
+                if (nextState.hasPendingUpdate) {
+                    return { hasPendingUpdate: false, value: nextProps.value };
+                }
+                else {
+                    return { value: nextState.nextValue };
+                }
+            }
+            else {
+                if (nextProps.value === nextState.value) {
+                    // we have sent the update to our parent, but it has not been processed yet. just wait.
+                    // DO NOT set nextValue here, since that will temporarily render a potentially stale controlled value,
+                    // causing the cursor to jump once the new value is accepted
+                    return { hasPendingUpdate: true };
+                }
+                // accept controlled update overriding user action
+                return { hasPendingUpdate: false, nextValue: nextProps.value, value: nextProps.value };
+            }
+        }
+        else {
+            // accept controlled update, could be confirming or denying user action
+            return { hasPendingUpdate: false, nextValue: nextProps.value, value: nextProps.value };
+        }
+    };
+    AsyncControllableInput.prototype.render = function () {
+        var _a = this.state, isComposing = _a.isComposing, hasPendingUpdate = _a.hasPendingUpdate, value = _a.value, nextValue = _a.nextValue;
+        var _b = this.props, inputRef = _b.inputRef, restProps = (0,tslib_es6/* __rest */.Tt)(_b, ["inputRef"]);
+        return (react.createElement("input", (0,tslib_es6/* __assign */.Cl)({}, restProps, { ref: inputRef, 
+            // render the pending value even if it is not confirmed by a parent's async controlled update
+            // so that the cursor does not jump to the end of input as reported in
+            // https://github.com/palantir/blueprint/issues/4298
+            value: isComposing || hasPendingUpdate ? nextValue : value, onCompositionStart: this.handleCompositionStart, onCompositionEnd: this.handleCompositionEnd, onChange: this.handleChange })));
+    };
+    AsyncControllableInput.displayName = "".concat(DISPLAYNAME_PREFIX, ".AsyncControllableInput");
+    /**
+     * The amount of time (in milliseconds) which the input will wait after a compositionEnd event before
+     * unlocking its state value for external updates via props. See `handleCompositionEnd` for more details.
+     */
+    AsyncControllableInput.COMPOSITION_END_DELAY = 10;
+    return AsyncControllableInput;
+}(AbstractPureComponent));
+
+
+;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/inputGroup.js
+/*
+ * Copyright 2016 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+
+
+
+
+var NON_HTML_PROPS = ["inputSize", "onValueChange"];
+/**
+ * Input group component.
+ *
+ * @see https://blueprintjs.com/docs/#core/components/input-group
+ */
+var InputGroup = /** @class */ (function (_super) {
+    (0,tslib_es6/* __extends */.C6)(InputGroup, _super);
+    function InputGroup() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {};
+        _this.leftElement = null;
+        _this.rightElement = null;
+        _this.refHandlers = {
+            leftElement: function (ref) { return (_this.leftElement = ref); },
+            rightElement: function (ref) { return (_this.rightElement = ref); },
+        };
+        _this.handleInputChange = function (event) {
+            var _a, _b, _c, _d;
+            var value = event.target.value;
+            (_b = (_a = _this.props).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, event);
+            (_d = (_c = _this.props).onValueChange) === null || _d === void 0 ? void 0 : _d.call(_c, value, event.target);
+        };
+        return _this;
+    }
+    InputGroup.prototype.render = function () {
+        var _a;
+        var _b = this.props, _c = _b.asyncControl, asyncControl = _c === void 0 ? false : _c, className = _b.className, disabled = _b.disabled, fill = _b.fill, inputClassName = _b.inputClassName, inputRef = _b.inputRef, inputSize = _b.inputSize, intent = _b.intent, 
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
+        large = _b.large, readOnly = _b.readOnly, round = _b.round, _d = _b.size, size = _d === void 0 ? "medium" : _d, 
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
+        small = _b.small, _e = _b.tagName, tagName = _e === void 0 ? "div" : _e;
+        var inputGroupClasses = classnames_default()(INPUT_GROUP, classes_intentClass(intent), (_a = {},
+            _a[DISABLED] = disabled,
+            _a[READ_ONLY] = readOnly,
+            _a[FILL] = fill,
+            _a[ROUND] = round,
+            _a), sizeClass(size, { large: large, small: small }), className);
+        var style = (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({}, this.props.style), { paddingLeft: this.state.leftElementWidth, paddingRight: this.state.rightElementWidth });
+        var inputProps = (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({ type: "text" }, removeNonHTMLProps(this.props, NON_HTML_PROPS, true)), { "aria-disabled": disabled, className: classnames_default()(INPUT, inputClassName), onChange: this.handleInputChange, size: inputSize !== null && inputSize !== void 0 ? inputSize : (typeof size === "number" ? size : undefined), style: style });
+        var inputElement = asyncControl ? (react.createElement(AsyncControllableInput, (0,tslib_es6/* __assign */.Cl)({}, inputProps, { inputRef: inputRef }))) : (react.createElement("input", (0,tslib_es6/* __assign */.Cl)({}, inputProps, { ref: inputRef })));
+        return react.createElement(tagName, { className: inputGroupClasses }, this.maybeRenderLeftElement(), inputElement, this.maybeRenderRightElement());
+    };
+    InputGroup.prototype.componentDidMount = function () {
+        this.updateInputWidth();
+    };
+    InputGroup.prototype.componentDidUpdate = function (prevProps) {
+        var _a = this.props, leftElement = _a.leftElement, rightElement = _a.rightElement;
+        if (prevProps.leftElement !== leftElement || prevProps.rightElement !== rightElement) {
+            this.updateInputWidth();
+        }
+    };
+    InputGroup.prototype.validateProps = function (props) {
+        if (props.leftElement != null && props.leftIcon != null) {
+            console.warn(INPUT_WARN_LEFT_ELEMENT_LEFT_ICON_MUTEX);
+        }
+    };
+    InputGroup.prototype.maybeRenderLeftElement = function () {
+        var _a = this.props, leftElement = _a.leftElement, leftIcon = _a.leftIcon;
+        if (leftElement != null) {
+            return (react.createElement("span", { className: INPUT_LEFT_CONTAINER, ref: this.refHandlers.leftElement }, leftElement));
+        }
+        else if (leftIcon != null) {
+            return react.createElement(Icon, { icon: leftIcon, "aria-hidden": true, tabIndex: -1 });
+        }
+        return undefined;
+    };
+    InputGroup.prototype.maybeRenderRightElement = function () {
+        var rightElement = this.props.rightElement;
+        if (rightElement == null) {
+            return undefined;
+        }
+        return (react.createElement("span", { className: INPUT_ACTION, ref: this.refHandlers.rightElement }, rightElement));
+    };
+    InputGroup.prototype.updateInputWidth = function () {
+        var _a = this.state, leftElementWidth = _a.leftElementWidth, rightElementWidth = _a.rightElementWidth;
+        if (this.leftElement != null) {
+            var clientWidth = this.leftElement.clientWidth;
+            // small threshold to prevent infinite loops
+            if (leftElementWidth === undefined || Math.abs(clientWidth - leftElementWidth) > 2) {
+                this.setState({ leftElementWidth: clientWidth });
+            }
+        }
+        else {
+            this.setState({ leftElementWidth: undefined });
+        }
+        if (this.rightElement != null) {
+            var clientWidth = this.rightElement.clientWidth;
+            // small threshold to prevent infinite loops
+            if (rightElementWidth === undefined || Math.abs(clientWidth - rightElementWidth) > 2) {
+                this.setState({ rightElementWidth: clientWidth });
+            }
+        }
+        else {
+            this.setState({ rightElementWidth: undefined });
+        }
+    };
+    InputGroup.displayName = "".concat(DISPLAYNAME_PREFIX, ".InputGroup");
+    return InputGroup;
+}(AbstractPureComponent));
+
+
+;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/numericInputUtils.js
+/*
+ * Copyright 2018 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/** Returns the `decimal` number separator based on locale */
+function getDecimalSeparator(locale) {
+    var testNumber = 1.9;
+    var testText = testNumber.toLocaleString(locale);
+    var one = (1).toLocaleString(locale);
+    var nine = (9).toLocaleString(locale);
+    var pattern = "".concat(one, "(.+)").concat(nine);
+    var result = new RegExp(pattern).exec(testText);
+    return (result && result[1]) || ".";
+}
+function toLocaleString(num, locale) {
+    if (locale === void 0) { locale = "en-US"; }
+    // HACKHACK: roundingPriority is not supported yet in TypeScript https://github.com/microsoft/TypeScript/issues/43336
+    return sanitizeNumericInput(num.toLocaleString(locale, { roundingPriority: "morePrecision" }), locale);
+}
+function clampValue(value, min, max) {
+    // defaultProps won't work if the user passes in null, so just default
+    // to +/- infinity here instead, as a catch-all.
+    var adjustedMin = min != null ? min : -Infinity;
+    var adjustedMax = max != null ? max : Infinity;
+    return clamp(value, adjustedMin, adjustedMax);
+}
+function getValueOrEmptyValue(value) {
+    if (value === void 0) { value = ""; }
+    return value.toString();
+}
+/** Transform the localized character (ex. "") to a javascript recognizable string number (ex. "10.99")  */
+function transformLocalizedNumberToStringNumber(character, locale) {
+    var charactersMap = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (value) { return value.toLocaleString(locale); });
+    var jsNumber = charactersMap.indexOf(character);
+    if (jsNumber !== -1) {
+        return jsNumber;
+    }
+    else {
+        return character;
+    }
+}
+/** Transforms the localized number (ex. "10,99") to a javascript recognizable string number (ex. "10.99")  */
+function parseStringToStringNumber(value, locale) {
+    var valueAsString = "" + value;
+    if (parseFloat(valueAsString).toString() === value.toString()) {
+        return value.toString();
+    }
+    if (locale !== undefined) {
+        var decimalSeparator = getDecimalSeparator(locale);
+        var sanitizedString = sanitizeNumericInput(valueAsString, locale);
+        return sanitizedString
+            .split("")
+            .map(function (character) { return transformLocalizedNumberToStringNumber(character, locale); })
+            .join("")
+            .replace(decimalSeparator, ".");
+    }
+    return value.toString();
+}
+/** Returns `true` if the string represents a valid numeric value, like "1e6". */
+function isValueNumeric(value, locale) {
+    // checking if a string is numeric in Typescript is a big pain, because
+    // we can't simply toss a string parameter to isFinite. below is the
+    // essential approach that jQuery uses, which involves subtracting a
+    // parsed numeric value from the string representation of the value. we
+    // need to cast the value to the `any` type to allow this operation
+    // between dissimilar types.
+    var stringToStringNumber = parseStringToStringNumber(value, locale);
+    return value != null && stringToStringNumber - parseFloat(stringToStringNumber) + 1 >= 0;
+}
+function isValidNumericKeyboardEvent(e, locale) {
+    // unit tests may not include e.key. don't bother disabling those events.
+    if (e.key == null) {
+        return true;
+    }
+    // allow modified key strokes that may involve letters and other
+    // non-numeric/invalid characters (Cmd + A, Cmd + C, Cmd + V, Cmd + X).
+    if (e.ctrlKey || e.altKey || e.metaKey) {
+        return true;
+    }
+    // keys that print a single character when pressed have a `key` name of
+    // length 1. every other key has a longer `key` name (e.g. "Backspace",
+    // "ArrowUp", "Shift"). since none of those keys can print a character
+    // to the field--and since they may have important native behaviors
+    // beyond printing a character--we don't want to disable their effects.
+    var isSingleCharKey = e.key.length === 1;
+    if (!isSingleCharKey) {
+        return true;
+    }
+    // now we can simply check that the single character that wants to be printed
+    // is a floating-point number character that we're allowed to print.
+    return isFloatingPointNumericCharacter(e.key, locale);
+}
+/**
+ * A regex that matches a string of length 1 (i.e. a standalone character)
+ * if and only if it is a floating-point number character as defined by W3C:
+ * https://www.w3.org/TR/2012/WD-html-markup-20120329/datatypes.html#common.data.float
+ *
+ * Floating-point number characters are the only characters that can be
+ * printed within a default input[type="number"]. This component should
+ * behave the same way when this.props.allowNumericCharactersOnly = true.
+ * See here for the input[type="number"].value spec:
+ * https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.value
+ */
+function isFloatingPointNumericCharacter(character, locale) {
+    if (locale !== undefined) {
+        var decimalSeparator = getDecimalSeparator(locale).replace(".", "\\.");
+        var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (value) { return value.toLocaleString(locale); }).join("");
+        var localeFloatingPointNumericCharacterRegex = new RegExp("^[Ee" + numbers + "\\+\\-" + decimalSeparator + "]$");
+        return localeFloatingPointNumericCharacterRegex.test(character);
+    }
+    else {
+        var floatingPointNumericCharacterRegex = /^[Ee0-9\+\-\.]$/;
+        return floatingPointNumericCharacterRegex.test(character);
+    }
+}
+/**
+ * Round the value to have _up to_ the specified maximum precision.
+ *
+ * This differs from `toFixed(5)` in that trailing zeroes are not added on
+ * more precise values, resulting in shorter strings.
+ */
+function toMaxPrecision(value, maxPrecision) {
+    // round the value to have the specified maximum precision (toFixed is the wrong choice,
+    // because it would show trailing zeros in the decimal part out to the specified precision)
+    // source: http://stackoverflow.com/a/18358056/5199574
+    var scaleFactor = Math.pow(10, maxPrecision);
+    return Math.round(value * scaleFactor) / scaleFactor;
+}
+/**
+ * Convert Japanese full-width numbers, e.g. '５', to ASCII, e.g. '5'
+ * This should be called before performing any other numeric string input validation.
+ */
+function convertFullWidthNumbersToAscii(value) {
+    return value.replace(/[\uFF10-\uFF19]/g, function (m) { return String.fromCharCode(m.charCodeAt(0) - 0xfee0); });
+}
+/**
+ * Convert full-width (Japanese) numbers to ASCII, and strip all characters that are not valid floating-point numeric characters
+ */
+function sanitizeNumericInput(value, locale) {
+    var valueChars = convertFullWidthNumbersToAscii(value).split("");
+    var sanitizedValueChars = valueChars.filter(function (valueChar) { return isFloatingPointNumericCharacter(valueChar, locale); });
+    return sanitizedValueChars.join("");
+}
+
+;// ./node_modules/@blueprintjs/core/lib/esm/components/forms/numericInput.js
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+
+
+
+
+
+
+
+var IncrementDirection;
+(function (IncrementDirection) {
+    IncrementDirection[IncrementDirection["DOWN"] = -1] = "DOWN";
+    IncrementDirection[IncrementDirection["UP"] = 1] = "UP";
+})(IncrementDirection || (IncrementDirection = {}));
+var numericInput_NON_HTML_PROPS = [
+    "allowNumericCharactersOnly",
+    "buttonPosition",
+    "clampValueOnBlur",
+    "className",
+    "defaultValue",
+    "majorStepSize",
+    "minorStepSize",
+    "onButtonClick",
+    "onValueChange",
+    "selectAllOnFocus",
+    "selectAllOnIncrement",
+    "stepSize",
+];
+/**
+ * Numeric input component.
+ *
+ * @see https://blueprintjs.com/docs/#core/components/numeric-input
+ */
+var NumericInput = /** @class */ (function (_super) {
+    (0,tslib_es6/* __extends */.C6)(NumericInput, _super);
+    function NumericInput() {
+        var _a;
+        var _this = _super.apply(this, arguments) || this;
+        _this.numericInputId = uniqueId("numericInput");
+        _this.state = {
+            currentImeInputInvalid: false,
+            shouldSelectAfterUpdate: false,
+            stepMaxPrecision: NumericInput.getStepMaxPrecision(_this.props),
+            value: getValueOrEmptyValue((_a = _this.props.value) !== null && _a !== void 0 ? _a : _this.props.defaultValue),
+        };
+        // updating these flags need not trigger re-renders, so don't include them in this.state.
+        _this.didPasteEventJustOccur = false;
+        _this.delta = 0;
+        _this.inputElement = null;
+        _this.inputRef = refHandler(_this, "inputElement", _this.props.inputRef);
+        _this.incrementButtonHandlers = _this.getButtonEventHandlers(IncrementDirection.UP);
+        _this.decrementButtonHandlers = _this.getButtonEventHandlers(IncrementDirection.DOWN);
+        _this.getCurrentValueAsNumber = function () { return Number(parseStringToStringNumber(_this.state.value, _this.props.locale)); };
+        _this.handleButtonClick = function (e, direction) {
+            var _a, _b;
+            var delta = _this.updateDelta(direction, e);
+            var nextValue = _this.incrementValue(delta);
+            (_b = (_a = _this.props).onButtonClick) === null || _b === void 0 ? void 0 : _b.call(_a, Number(parseStringToStringNumber(nextValue, _this.props.locale)), nextValue);
+        };
+        _this.stopContinuousChange = function () {
+            _this.delta = 0;
+            _this.clearTimeouts();
+            clearInterval(_this.intervalId);
+            document.removeEventListener("mouseup", _this.stopContinuousChange);
+        };
+        _this.handleContinuousChange = function () {
+            var _a, _b, _c, _d;
+            // If either min or max prop is set, when reaching the limit
+            // the button will be disabled and stopContinuousChange will be never fired,
+            // hence the need to check on each iteration to properly clear the timeout
+            if (_this.props.min !== undefined || _this.props.max !== undefined) {
+                var min = (_a = _this.props.min) !== null && _a !== void 0 ? _a : -Infinity;
+                var max = (_b = _this.props.max) !== null && _b !== void 0 ? _b : Infinity;
+                var valueAsNumber = _this.getCurrentValueAsNumber();
+                if (valueAsNumber <= min || valueAsNumber >= max) {
+                    _this.stopContinuousChange();
+                    return;
+                }
+            }
+            var nextValue = _this.incrementValue(_this.delta);
+            (_d = (_c = _this.props).onButtonClick) === null || _d === void 0 ? void 0 : _d.call(_c, Number(parseStringToStringNumber(nextValue, _this.props.locale)), nextValue);
+        };
+        // Callbacks - Input
+        // =================
+        _this.handleInputFocus = function (e) {
+            var _a, _b;
+            // update this state flag to trigger update for input selection (see componentDidUpdate)
+            _this.setState({ shouldSelectAfterUpdate: _this.props.selectAllOnFocus });
+            (_b = (_a = _this.props).onFocus) === null || _b === void 0 ? void 0 : _b.call(_a, e);
+        };
+        _this.handleInputBlur = function (e) {
+            var _a, _b;
+            // always disable this flag on blur so it's ready for next time.
+            _this.setState({ shouldSelectAfterUpdate: false });
+            if (_this.props.clampValueOnBlur) {
+                var value = e.target.value;
+                _this.handleNextValue(_this.roundAndClampValue(value));
+            }
+            (_b = (_a = _this.props).onBlur) === null || _b === void 0 ? void 0 : _b.call(_a, e);
+        };
+        _this.handleInputKeyDown = function (e) {
+            var _a, _b;
+            if (_this.props.disabled || _this.props.readOnly) {
+                return;
+            }
+            var direction = getArrowKeyDirection(e, ["ArrowDown"], ["ArrowUp"]);
+            if (direction !== undefined) {
+                // when the input field has focus, some key combinations will modify
+                // the field's selection range. we'll actually want to select all
+                // text in the field after we modify the value on the following
+                // lines. preventing the default selection behavior lets us do that
+                // without interference.
+                e.preventDefault();
+                var delta = _this.updateDelta(direction, e);
+                _this.incrementValue(delta);
+            }
+            (_b = (_a = _this.props).onKeyDown) === null || _b === void 0 ? void 0 : _b.call(_a, e);
+        };
+        _this.handleCompositionEnd = function (e) {
+            if (_this.props.allowNumericCharactersOnly) {
+                _this.handleNextValue(sanitizeNumericInput(e.data, _this.props.locale));
+                _this.setState({ currentImeInputInvalid: false });
+            }
+        };
+        _this.handleCompositionUpdate = function (e) {
+            if (_this.props.allowNumericCharactersOnly) {
+                var data = e.data;
+                var sanitizedValue = sanitizeNumericInput(data, _this.props.locale);
+                if (sanitizedValue.length === 0 && data.length > 0) {
+                    _this.setState({ currentImeInputInvalid: true });
+                }
+                else {
+                    _this.setState({ currentImeInputInvalid: false });
+                }
+            }
+        };
+        _this.handleInputKeyPress = function (e) {
+            var _a, _b;
+            // we prohibit keystrokes in onKeyPress instead of onKeyDown, because
+            // e.key is not trustworthy in onKeyDown in all browsers.
+            if (_this.props.allowNumericCharactersOnly && !isValidNumericKeyboardEvent(e, _this.props.locale)) {
+                e.preventDefault();
+            }
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
+            (_b = (_a = _this.props).onKeyPress) === null || _b === void 0 ? void 0 : _b.call(_a, e);
+        };
+        _this.handleInputPaste = function (e) {
+            var _a, _b;
+            _this.didPasteEventJustOccur = true;
+            (_b = (_a = _this.props).onPaste) === null || _b === void 0 ? void 0 : _b.call(_a, e);
+        };
+        _this.handleInputChange = function (value) {
+            var nextValue = value;
+            if (_this.props.allowNumericCharactersOnly && _this.didPasteEventJustOccur) {
+                _this.didPasteEventJustOccur = false;
+                nextValue = sanitizeNumericInput(value, _this.props.locale);
+            }
+            _this.handleNextValue(nextValue);
+            _this.setState({ shouldSelectAfterUpdate: false });
+        };
+        return _this;
+    }
+    NumericInput.getDerivedStateFromProps = function (props, state) {
+        var _a, _b;
+        var nextState = {
+            prevMaxProp: props.max,
+            prevMinProp: props.min,
+        };
+        var didMinChange = props.min !== state.prevMinProp;
+        var didMaxChange = props.max !== state.prevMaxProp;
+        var didBoundsChange = didMinChange || didMaxChange;
+        // in controlled mode, use props.value
+        // in uncontrolled mode, if state.value has not been assigned yet (upon initial mount), use props.defaultValue
+        var value = (_b = (_a = props.value) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : state.value;
+        var stepMaxPrecision = NumericInput.getStepMaxPrecision(props);
+        var sanitizedValue = value !== NumericInput.VALUE_EMPTY
+            ? NumericInput.roundAndClampValue(value, stepMaxPrecision, props.min, props.max, 0, props.locale)
+            : NumericInput.VALUE_EMPTY;
+        // if a new min and max were provided that cause the existing value to fall
+        // outside of the new bounds, then clamp the value to the new valid range.
+        if (didBoundsChange && sanitizedValue !== state.value) {
+            return (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({}, nextState), { stepMaxPrecision: stepMaxPrecision, value: sanitizedValue });
+        }
+        return (0,tslib_es6/* __assign */.Cl)((0,tslib_es6/* __assign */.Cl)({}, nextState), { stepMaxPrecision: stepMaxPrecision, value: value });
+    };
+    // Value Helpers
+    // =============
+    NumericInput.getStepMaxPrecision = function (props) {
+        if (props.minorStepSize != null) {
+            return countDecimalPlaces(props.minorStepSize);
+        }
+        else {
+            return countDecimalPlaces(props.stepSize);
+        }
+    };
+    NumericInput.roundAndClampValue = function (value, stepMaxPrecision, min, max, delta, locale) {
+        if (delta === void 0) { delta = 0; }
+        if (!isValueNumeric(value, locale)) {
+            return NumericInput.VALUE_EMPTY;
+        }
+        var currentValue = parseStringToStringNumber(value, locale);
+        var nextValue = toMaxPrecision(Number(currentValue) + delta, stepMaxPrecision);
+        var clampedValue = clampValue(nextValue, min, max);
+        return toLocaleString(clampedValue, locale);
+    };
+    NumericInput.prototype.render = function () {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
+        var _a = this.props, buttonPosition = _a.buttonPosition, className = _a.className, fill = _a.fill, large = _a.large, _b = _a.size, size = _b === void 0 ? "medium" : _b, small = _a.small;
+        var containerClasses = classnames_default()(NUMERIC_INPUT, sizeClass(size, { large: large, small: small }), className);
+        var buttons = this.renderButtons();
+        return (react.createElement(ControlGroup, { className: containerClasses, fill: fill },
+            buttonPosition === Position.LEFT && buttons,
+            this.renderInput(),
+            buttonPosition === Position.RIGHT && buttons));
+    };
+    NumericInput.prototype.componentDidUpdate = function (prevProps, prevState) {
+        var _a, _b, _c;
+        _super.prototype.componentDidUpdate.call(this, prevProps, prevState);
+        if (prevProps.inputRef !== this.props.inputRef) {
+            setRef(prevProps.inputRef, null);
+            this.inputRef = refHandler(this, "inputElement", this.props.inputRef);
+            setRef(this.props.inputRef, this.inputElement);
+        }
+        if (this.state.shouldSelectAfterUpdate) {
+            (_a = this.inputElement) === null || _a === void 0 ? void 0 : _a.setSelectionRange(0, this.state.value.length);
+        }
+        var didMinChange = this.props.min !== prevProps.min;
+        var didMaxChange = this.props.max !== prevProps.max;
+        var didBoundsChange = didMinChange || didMaxChange;
+        var didLocaleChange = this.props.locale !== prevProps.locale;
+        var didValueChange = this.state.value !== prevState.value;
+        if ((didBoundsChange && didValueChange) || (didLocaleChange && prevState.value !== NumericInput.VALUE_EMPTY)) {
+            // we clamped the value due to a bounds change, so we should fire the change callback
+            var valueToParse = didLocaleChange ? prevState.value : this.state.value;
+            var valueAsString = parseStringToStringNumber(valueToParse, prevProps.locale);
+            var localizedValue = toLocaleString(+valueAsString, this.props.locale);
+            (_c = (_b = this.props).onValueChange) === null || _c === void 0 ? void 0 : _c.call(_b, +valueAsString, localizedValue, this.inputElement);
+        }
+    };
+    NumericInput.prototype.validateProps = function (nextProps) {
+        var majorStepSize = nextProps.majorStepSize, max = nextProps.max, min = nextProps.min, minorStepSize = nextProps.minorStepSize, stepSize = nextProps.stepSize, value = nextProps.value;
+        if (min != null && max != null && min > max) {
+            console.error(NUMERIC_INPUT_MIN_MAX);
+        }
+        if (stepSize <= 0) {
+            console.error(NUMERIC_INPUT_STEP_SIZE_NON_POSITIVE);
+        }
+        if (minorStepSize && minorStepSize <= 0) {
+            console.error(NUMERIC_INPUT_MINOR_STEP_SIZE_NON_POSITIVE);
+        }
+        if (majorStepSize && majorStepSize <= 0) {
+            console.error(NUMERIC_INPUT_MAJOR_STEP_SIZE_NON_POSITIVE);
+        }
+        if (minorStepSize && minorStepSize > stepSize) {
+            console.error(NUMERIC_INPUT_MINOR_STEP_SIZE_BOUND);
+        }
+        if (majorStepSize && majorStepSize < stepSize) {
+            console.error(NUMERIC_INPUT_MAJOR_STEP_SIZE_BOUND);
+        }
+        // controlled mode
+        if (value != null) {
+            var stepMaxPrecision = NumericInput.getStepMaxPrecision(nextProps);
+            var sanitizedValue = NumericInput.roundAndClampValue(value.toString(), stepMaxPrecision, min, max, 0, this.props.locale);
+            var valueDoesNotMatch = sanitizedValue !== value.toString();
+            var localizedValue = toLocaleString(Number(parseStringToStringNumber(value, this.props.locale)), this.props.locale);
+            var isNotLocalized = sanitizedValue !== localizedValue;
+            if (valueDoesNotMatch && isNotLocalized) {
+                console.warn(NUMERIC_INPUT_CONTROLLED_VALUE_INVALID);
+            }
+        }
+    };
+    // Render Helpers
+    // ==============
+    NumericInput.prototype.renderButtons = function () {
+        var _a = this.props, intent = _a.intent, max = _a.max, min = _a.min, locale = _a.locale;
+        var value = parseStringToStringNumber(this.state.value, locale);
+        var disabled = this.props.disabled || this.props.readOnly;
+        var isIncrementDisabled = max !== undefined && value !== "" && +value >= max;
+        var isDecrementDisabled = min !== undefined && value !== "" && +value <= min;
+        return (react.createElement(ButtonGroup, { className: FIXED, key: "button-group", vertical: true },
+            react.createElement(Button, (0,tslib_es6/* __assign */.Cl)({ "aria-label": "increment", "aria-controls": this.numericInputId, disabled: disabled || isIncrementDisabled, icon: react.createElement(ChevronUp, null), intent: intent }, this.incrementButtonHandlers)),
+            react.createElement(Button, (0,tslib_es6/* __assign */.Cl)({ "aria-label": "decrement", "aria-controls": this.numericInputId, disabled: disabled || isDecrementDisabled, icon: react.createElement(ChevronDown, null), intent: intent }, this.decrementButtonHandlers))));
+    };
+    NumericInput.prototype.renderInput = function () {
+        var inputGroupHtmlProps = removeNonHTMLProps(this.props, numericInput_NON_HTML_PROPS, true);
+        var valueAsNumber = this.getCurrentValueAsNumber();
+        return (react.createElement(InputGroup, (0,tslib_es6/* __assign */.Cl)({ asyncControl: this.props.asyncControl, autoComplete: "off", id: this.numericInputId, role: this.props.allowNumericCharactersOnly ? "spinbutton" : undefined }, inputGroupHtmlProps, { "aria-valuemax": this.props.max, "aria-valuemin": this.props.min, "aria-valuenow": valueAsNumber, intent: this.state.currentImeInputInvalid ? Intent.DANGER : this.props.intent, inputClassName: this.props.inputClassName, inputRef: this.inputRef, inputSize: this.props.inputSize, 
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
+            large: this.props.large, leftElement: this.props.leftElement, leftIcon: this.props.leftIcon, onFocus: this.handleInputFocus, onBlur: this.handleInputBlur, onCompositionEnd: this.handleCompositionEnd, onCompositionUpdate: this.handleCompositionUpdate, onKeyDown: this.handleInputKeyDown, 
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
+            onKeyPress: this.handleInputKeyPress, onPaste: this.handleInputPaste, onValueChange: this.handleInputChange, rightElement: this.props.rightElement, size: this.props.size, 
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
+            small: this.props.small, value: this.state.value })));
+    };
+    // Callbacks - Buttons
+    // ===================
+    NumericInput.prototype.getButtonEventHandlers = function (direction) {
+        var _this = this;
+        return {
+            // keydown is fired repeatedly when held so it's implicitly continuous
+            onKeyDown: function (evt) {
+                if (!_this.props.disabled && keyboardUtils_isKeyboardClick(evt)) {
+                    _this.handleButtonClick(evt, direction);
+                }
+            },
+            onMouseDown: function (evt) {
+                if (!_this.props.disabled) {
+                    _this.handleButtonClick(evt, direction);
+                    _this.startContinuousChange();
+                }
+            },
+        };
+    };
+    NumericInput.prototype.startContinuousChange = function () {
+        var _this = this;
+        // The button's onMouseUp event handler doesn't fire if the user
+        // releases outside of the button, so we need to watch all the way
+        // from the top.
+        document.addEventListener("mouseup", this.stopContinuousChange);
+        // Initial delay is slightly longer to prevent the user from
+        // accidentally triggering the continuous increment/decrement.
+        this.setTimeout(function () {
+            _this.intervalId = window.setInterval(_this.handleContinuousChange, NumericInput.CONTINUOUS_CHANGE_INTERVAL);
+        }, NumericInput.CONTINUOUS_CHANGE_DELAY);
+    };
+    // Data logic
+    // ==========
+    NumericInput.prototype.handleNextValue = function (valueAsString) {
+        var _a, _b;
+        if (this.props.value == null) {
+            this.setState({ value: valueAsString });
+        }
+        (_b = (_a = this.props).onValueChange) === null || _b === void 0 ? void 0 : _b.call(_a, Number(parseStringToStringNumber(valueAsString, this.props.locale)), valueAsString, this.inputElement);
+    };
+    NumericInput.prototype.incrementValue = function (delta) {
+        // pretend we're incrementing from 0 if currValue is empty
+        var currValue = this.state.value === NumericInput.VALUE_EMPTY ? NumericInput.VALUE_ZERO : this.state.value;
+        var nextValue = this.roundAndClampValue(currValue, delta);
+        if (nextValue !== this.state.value) {
+            this.handleNextValue(nextValue);
+            this.setState({ shouldSelectAfterUpdate: this.props.selectAllOnIncrement });
+        }
+        // return value used in continuous change updates
+        return nextValue;
+    };
+    NumericInput.prototype.getIncrementDelta = function (direction, isShiftKeyPressed, isAltKeyPressed) {
+        var _a = this.props, majorStepSize = _a.majorStepSize, minorStepSize = _a.minorStepSize, stepSize = _a.stepSize;
+        if (isShiftKeyPressed && majorStepSize != null) {
+            return direction * majorStepSize;
+        }
+        else if (isAltKeyPressed && minorStepSize != null) {
+            return direction * minorStepSize;
+        }
+        else {
+            return direction * stepSize;
+        }
+    };
+    NumericInput.prototype.roundAndClampValue = function (value, delta) {
+        if (delta === void 0) { delta = 0; }
+        return NumericInput.roundAndClampValue(value, this.state.stepMaxPrecision, this.props.min, this.props.max, delta, this.props.locale);
+    };
+    NumericInput.prototype.updateDelta = function (direction, e) {
+        this.delta = this.getIncrementDelta(direction, e.shiftKey, e.altKey);
+        return this.delta;
+    };
+    NumericInput.displayName = "".concat(DISPLAYNAME_PREFIX, ".NumericInput");
+    NumericInput.VALUE_EMPTY = "";
+    NumericInput.VALUE_ZERO = "0";
+    NumericInput.defaultProps = {
+        allowNumericCharactersOnly: true,
+        buttonPosition: Position.RIGHT,
+        clampValueOnBlur: false,
+        defaultValue: NumericInput.VALUE_EMPTY,
+        large: false,
+        majorStepSize: 10,
+        minorStepSize: 0.1,
+        selectAllOnFocus: false,
+        selectAllOnIncrement: false,
+        size: "medium",
+        small: false,
+        stepSize: 1,
+    };
+    NumericInput.CONTINUOUS_CHANGE_DELAY = 300;
+    NumericInput.CONTINUOUS_CHANGE_INTERVAL = 100;
+    return NumericInput;
+}(AbstractPureComponent));
+
+
+;// ./app/components/PageNumInput.js
+
+
+
+const PageNumInput_css = {
+    label: {
+        display: 'inline-block',
+    },
+};
+class PageNumInput extends react.Component {
+    render() {
+        return react.createElement("div", { hidden: this.props.hidden },
+            react.createElement("label", { className: "bp5-label", style: PageNumInput_css.label },
+                this.props.label,
+                react.createElement(Help, { title: this.props.label, content: this.props.help }),
+                react.createElement(NumericInput, { allowNumericCharactersOnly: true, min: this.props.min, minorStepSize: this.props.minorStepSize, max: this.props.max, stepSize: this.props.stepSize, majorStepSize: this.props.majorStepSize, disabled: this.props.disabled, selectAllOnFocus: this.props.selectAllOnFocus, onValueChange: (val) => {
+                        if (this.props.max && val > this.props.max) {
+                            val = this.props.max;
+                        }
+                        this.props.onChange(val);
+                    }, value: this.props.value })));
+    }
+}
+
+;// ./app/components/Config.js
+
+
+
+
+
+
+const Config_css = {
+    message: {
+        margin: "0 0 6px 0",
+    },
+    header: {
+        margin: "0 0 5px 0",
+    },
+    card: {
+        position: "relative",
+        margin: "8px",
+    },
+    buttonsTop: {
+        position: "absolute",
+        top: "5px",
+        right: "5px",
+    },
+    footer: {
+        margin: 0,
+    },
+};
+class ConfigView extends react.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onChange = () => {
+            this.setState({
+                ...this.state,
+                config: stores_ConfigStore.config,
+            });
+        };
+        this.onCancel = () => {
+            this.setState({
+                ...this.state,
+                changed: false,
+                config: stores_ConfigStore.config,
+            });
+        };
+        this.onSave = () => {
+            this.setState({
+                ...this.state,
+                disabled: true,
+            });
+            if (this.state.safeStorage !== null) {
+                app_Config.save({
+                    safe_storage: this.state.safeStorage,
+                });
+            }
+            if (this.state.config) {
+                ConfigActions_commit(this.state.config).then(() => {
+                    this.setState({
+                        ...this.state,
+                        changed: false,
+                        disabled: false,
+                    });
+                });
+            }
+        };
+        this.state = {
+            config: stores_ConfigStore.config,
+            safeStorage: null,
+            changed: false,
+            disabled: false,
+        };
+    }
+    componentDidMount() {
+        stores_ConfigStore.addChangeListener(this.onChange);
+        ConfigActions_sync();
+    }
+    componentWillUnmount() {
+        stores_ConfigStore.removeChangeListener(this.onChange);
+    }
+    set(name, val) {
+        let config;
+        config = {
+            ...this.state.config,
+        };
+        config[name] = val;
+        this.setState({
+            ...this.state,
+            changed: true,
+            config: config,
+        });
+    }
+    render() {
+        let safeStorage = this.state.safeStorage;
+        if (safeStorage === null) {
+            safeStorage = app_Config.safe_storage;
+        }
+        return react.createElement("div", { className: "bp5-card layout vertical flex", style: Config_css.card },
+            react.createElement("div", { style: Config_css.buttonsTop },
+                react.createElement("button", { className: "bp5-button bp5-minimal bp5-icon-cross", onClick: this.props.onClose })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement("h3", { style: Config_css.header }, "Advanced Settings")),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Enable DNS refresh", help: "Automatically refresh DNS to fix issues with macOS DNS cache.", checked: !!this.state.config.enable_dns_refresh, onToggle: () => {
+                        this.set("enable_dns_refresh", !this.state.config.enable_dns_refresh);
+                    } })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable DNS watch", help: "Disable automatic correction of DNS changes if configuration is lost from system network change.", checked: !!this.state.config.disable_dns_watch, onToggle: () => {
+                        this.set("disable_dns_watch", !this.state.config.disable_dns_watch);
+                    } })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable WireGuard DNS watch", help: "Disable WireGuard DNS watch on macOS.", checked: !!this.state.config.disable_wg_dns, onToggle: () => {
+                        this.set("disable_wg_dns", !this.state.config.disable_wg_dns);
+                    } })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable device wake watch", help: "Disable wake watch used for faster reconnections when device is resumed from sleep.", checked: !!this.state.config.disable_wake_watch, onToggle: () => {
+                        this.set("disable_wake_watch", !this.state.config.disable_wake_watch);
+                    } })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable network clean", help: "Disable Windows VPN interface cleanup on startup.", checked: !!this.state.config.disable_net_clean, onToggle: () => {
+                        this.set("disable_net_clean", !this.state.config.disable_net_clean);
+                    } })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Disable browser open", help: "Disable automatic opening of browser for single sign-on authentication.", checked: !!this.state.config.disable_browser, onToggle: () => {
+                        this.set("disable_browser", !this.state.config.disable_browser);
+                    } })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageSwitch, { disabled: this.state.disabled, label: "Enable safe storage", help: "Enable encryption of profile keys with safe storage. May cause client to become unresponsive or connections to fail.", checked: !!safeStorage, onToggle: () => {
+                        this.setState({
+                            ...this.state,
+                            changed: true,
+                            safeStorage: !safeStorage,
+                        });
+                    } })),
+            react.createElement("div", { className: "layout horizontal" },
+                react.createElement(PageNumInput, { label: "Interface Metric", help: "Configure the VPN interfaces metric on Windows. Set to 0 to leave interfaces unmodified.", min: 0, max: 9999, stepSize: 1, disabled: this.state.disabled, selectAllOnFocus: true, value: this.state.config.interface_metric, onChange: (val) => {
+                        this.set('interface_metric', val);
+                    } })),
+            react.createElement("div", { className: "layout horizontal flex" }),
+            react.createElement("div", { className: "bp5-dialog-footer", style: Config_css.footer },
+                react.createElement("div", { className: "bp5-dialog-footer-actions" },
+                    react.createElement("button", { className: "bp5-button bp5-intent-danger bp5-icon-cross", type: "button", disabled: this.state.disabled || !this.state.changed, onClick: this.onCancel }, "Cancel"),
+                    react.createElement("button", { className: "bp5-button bp5-intent-success bp5-icon-tick", type: "button", disabled: this.state.disabled || !this.state.changed, onClick: this.onSave }, "Save"))));
+    }
+}
+
+;// ./node_modules/@blueprintjs/core/lib/esm/components/menu/menuDivider.js
+/*
+ * Copyright 2015 Palantir Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+/**
+ * Menu divider component.
+ *
+ * @see https://blueprintjs.com/docs/#core/components/menu.menu-divider
+ */
+var MenuDivider = function (_a) {
+    var className = _a.className, title = _a.title, titleId = _a.titleId;
+    var dividerClasses = classnames_default()(title ? MENU_HEADER : MENU_DIVIDER, className);
+    return (react.createElement("li", { className: dividerClasses, role: "separator" }, title && react.createElement(H6, { id: titleId }, title)));
+};
+MenuDivider.displayName = "".concat(DISPLAYNAME_PREFIX, ".MenuDivider");
 
 ;// ./app/components/Main.js
 

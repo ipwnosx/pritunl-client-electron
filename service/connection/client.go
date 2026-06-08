@@ -641,7 +641,9 @@ func (c *Client) authorize(host string, ssoToken string,
 			}
 			evt2.Init()
 
+			c.conn.Data.ResetAuthToken()
 			c.conn.State.NoReconnect("client_auth_error")
+			c.conn.State.SetStop()
 			c.conn.Data.SendProfileEvent("sso_interactive")
 
 			if c.conn.Profile.SystemProfile {

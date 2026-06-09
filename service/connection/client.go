@@ -530,7 +530,7 @@ func (c *Client) authorize(host string, ssoToken string,
 	evt *event.Event, err error) {
 
 	tokn, err := c.conn.Data.GetAuthToken()
-	if err != nil {
+	if err != nil || tokn == nil {
 		return
 	}
 

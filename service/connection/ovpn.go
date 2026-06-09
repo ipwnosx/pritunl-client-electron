@@ -566,8 +566,13 @@ func (o *Ovpn) writeAuth(authToken string) (pth string, err error) {
 		copy(serverPubKey[:], serverPubKeySlic)
 
 		tokn, e := o.conn.Data.GetAuthToken()
-		if e != nil {
+		if e != nil || tokn == nil {
 			err = e
+			return
+		}
+
+		if o.conn.State.IsStop() {
+			o.conn.State.Close()
 			return
 		}
 
@@ -614,7 +619,7 @@ func (o *Ovpn) writeAuth(authToken string) (pth string, err error) {
 		}
 
 		tokn, e := o.conn.Data.GetAuthToken()
-		if e != nil {
+		if e != nil || tokn == nil {
 			err = e
 			return
 		}

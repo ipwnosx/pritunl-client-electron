@@ -3,6 +3,7 @@ package connection
 import (
 	"fmt"
 	"net"
+	"net/netip"
 	"os/exec"
 	"os/user"
 	"regexp"
@@ -417,4 +418,18 @@ func IsOvpn27() bool {
 	}
 
 	return false
+}
+
+func getGatewayAddr(clientAddr string) string {
+	prefix, err := netip.ParsePrefix(clientAddr)
+	if err != nil {
+		return ""
+	}
+
+	gateway := prefix.Masked().Addr().Next()
+	if !gateway.IsValid() {
+		return ""
+	}
+
+	return gateway.String()
 }

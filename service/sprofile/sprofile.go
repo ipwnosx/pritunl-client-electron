@@ -582,6 +582,42 @@ func (s *Sprofile) syncProfile(host string) (updated bool, err error) {
 	return
 }
 
+func (s *Sprofile) SyncApply(body []byte) (updated bool, err error) {
+	syncData := &SyncData{}
+	err = json.Unmarshal(body, syncData)
+	if err != nil {
+		err = &errortypes.ParseError{
+			errors.Wrap(err, "sprofile: Failed to parse gateway sync body"),
+		}
+		return
+	}
+
+	if syncData.Conf == "" {
+		return
+	}
+
+	hashFuncSync := hmac.New(sha512.New, []byte(s.SyncSecret))
+	hashFuncSync.Write([]byte(syncData.Conf))
+	rawSignatureSync := hashFuncSync.Sum(nil)
+	sigSync := base64.StdEncoding.EncodeToString(rawSignatureSync)
+
+	if subtle.ConstantTimeCompare(
+		[]byte(sigSync), []byte(syncData.Signature)) != 1 {
+
+		err = &errortypes.ParseError{
+			errors.New("sprofile: Gateway sync signature invalid"),
+		}
+		return
+	}
+
+	updated, err = s.syncUpdate(syncData.Conf)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
 func (s *Sprofile) Sync() (updated bool, err error) {
 	for _, syncHost := range s.SyncHosts {
 		if syncHost == "" {

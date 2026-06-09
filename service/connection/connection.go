@@ -134,6 +134,20 @@ func (c *Connection) Start(opts Options) (err error) {
 		return
 	}
 
+	go func() {
+		defer func() {
+			panc := recover()
+			if panc != nil {
+				logrus.WithFields(c.Fields(logrus.Fields{
+					"trace": string(debug.Stack()),
+					"panic": panc,
+				})).Error("connection: Profile sync panic")
+			}
+		}()
+
+		c.SyncConn()
+	}()
+
 	return
 }
 

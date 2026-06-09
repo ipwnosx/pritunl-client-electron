@@ -18,6 +18,7 @@ type Profile struct {
 	SyncHosts          []string                    `json:"sync_hosts"`
 	SyncToken          string                      `json:"sync_token"`
 	SyncSecret         string                      `json:"sync_secret"`
+	SyncHash           string                      `json:"sync_hash"`
 	Data               string                      `json:"data"`
 	Username           string                      `json:"username"`
 	Password           string                      `json:"password"`
@@ -113,6 +114,7 @@ func (p *Profile) ImportSystemProfile(sprfl *sprofile.Sprofile) {
 	p.SyncHosts = sprfl.SyncHosts
 	p.SyncToken = sprfl.SyncToken
 	p.SyncSecret = sprfl.SyncSecret
+	p.SyncHash = sprfl.SyncHash
 	p.Data = sprfl.OvpnData
 	p.Username = "pritunl"
 	p.Password = sprfl.Password

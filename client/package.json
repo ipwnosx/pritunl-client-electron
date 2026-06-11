@@ -12,7 +12,6 @@
     "shortName": "pritunl"
   },
   "dependencies": {
-    "3": "2.1.0",
     "@blueprintjs/core": "5.19.0",
     "@blueprintjs/datetime2": "2.3.32",
     "@blueprintjs/icons": "5.22.0",

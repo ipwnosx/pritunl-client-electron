@@ -483,6 +483,22 @@ func (d *Data) GetAuthToken() (authToken *AuthToken, err error) {
 	return
 }
 
+type SyncEventData struct {
+	Id   string `json:"id"`
+	Data string `json:"data"`
+}
+
+func (d *Data) SendSyncEvent(body []byte) {
+	evt := &event.Event{
+		Type: "profile_sync",
+		Data: &SyncEventData{
+			Id:   d.conn.Profile.Id,
+			Data: string(body),
+		},
+	}
+	evt.Init()
+}
+
 func (d *Data) SendProfileEvent(evtType string) {
 	eventLock.Lock()
 	limit := eventLimits[evtType]

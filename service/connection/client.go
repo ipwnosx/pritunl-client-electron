@@ -290,6 +290,9 @@ func (c *Client) connectPreAuth() (err error) {
 
 		data, final, evt, err = c.authorize(remote.Host, "", time.Time{})
 		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"error": err,
+			}).Error("profile: Connection error")
 			connErrors = append(connErrors, ConnectionError{
 				Host:  remote.Host,
 				Error: err,

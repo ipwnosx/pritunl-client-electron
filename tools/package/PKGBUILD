@@ -82,7 +82,6 @@ build:pacman() {
     npm install
     ./node_modules/.bin/electron-rebuild
     ./node_modules/.bin/electron-packager ./ Pritunl --platform=linux --arch=x64 --out=../build/linux
-    chmod +x ../build/linux/Pritunl-linux-x64/libffmpeg.so
 }
 build:yum() {
     cd "${srcdir}"
@@ -99,7 +98,6 @@ build:yum() {
     npm install
     ./node_modules/.bin/electron-rebuild
     ./node_modules/.bin/electron-packager ./ Pritunl --platform=linux --arch=x64 --out=../build/linux
-    chmod +x ../build/linux/Pritunl-linux-x64/libffmpeg.so
     rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/info
     rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/travis-gh-pages
     rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/prepare-tests

@@ -1,6 +1,6 @@
 targets=(
     "archlinux"
-    "fedora-43"
+    "oraclelinux-10"
 )
 pkgname="pritunl-client-electron"
 pkgver="1.3.4554.60"

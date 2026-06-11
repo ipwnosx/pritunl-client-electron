@@ -34,22 +34,39 @@ depends:yum=(
     "iptables"
     "openvpn"
 )
+depends:apt=(
+    "libgtk2.0-0"
+    "libxss1"
+    "net-tools"
+    "iptables"
+    "openvpn"
+)
 makedepends:pacman=(
+    "nodejs-lts-jod"
+    "npm"
     "python3"
     "libxss"
     "net-tools"
     "iproute2"
     "openvpn"
-    "npm"
     "unzip"
     "icu"
 )
 makedepends:yum=(
+    "nodejs22"
+    "npm"
     "python3"
     "GConf2"
     "unzip"
+)
+makedepends:apt=(
     "nodejs"
     "npm"
+    "python3"
+    "ca-certificates"
+    "gnupg"
+    "curl"
+    "unzip"
 )
 provides=("${pkgname}")
 conflicts=(
@@ -98,19 +115,6 @@ build:yum() {
     npm install
     ./node_modules/.bin/electron-rebuild
     ./node_modules/.bin/electron-packager ./ Pritunl --platform=linux --arch=x64 --out=../build/linux
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/info
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/travis-gh-pages
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/prepare-tests
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/delayed-call.coffee
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/delayed-require.coffee
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/difference.coffee
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/initial-value.coffee
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/sshpk/bin/sshpk-verify
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/sshpk/bin/sshpk-sign
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/sshpk/bin/sshpk-conv
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/mustache/bin/mustache
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/uuid/bin/uuid
-    rm -f ../build/linux/Pritunl-linux-x64/resources/app/node_modules/mkdirp/bin/cmd.js
 }
 
 package:pacman() {

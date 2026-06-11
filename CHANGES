@@ -3,6 +3,7 @@ Pritunl Client Changelog
 
 <%= version %>
 
+Add post connection configuration sync
 Fix automatic reconnection issues
 Update bundled OpenVPN
 

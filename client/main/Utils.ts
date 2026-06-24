@@ -1,6 +1,128 @@
+import * as Errors from "./Errors"
 import electron from "electron"
 import process from "process";
-import childprocess from "child_process";
+import childProcess from "child_process";
+import fs from "fs";
+import path from "path";
+
+export interface ExecOutput {
+	stdout: string
+	stderr: string
+	error: Errors.ExecError
+}
+
+export function exec(path: string,
+	...args: string[]): Promise<ExecOutput> {
+
+	return new Promise<ExecOutput>((resolve): void => {
+		childProcess.execFile(path, args, (err, stdout, stderr) => {
+			if (err) {
+				err = new Errors.ExecError(err, "Utils: Exec error",
+					{path: path, args: args, stdout: stdout, stderr: stderr});
+			}
+
+			resolve({
+				stdout: stdout,
+				stderr: stderr,
+				error: err,
+			} as ExecOutput)
+		})
+	})
+}
+
+export function fileExists(path: string): Promise<boolean> {
+	return new Promise<boolean>((resolve): void => {
+		fs.stat(path, (err: Error, stat) => {
+			if (!err) {
+				resolve(true)
+			}	else {
+				resolve(false)
+			}
+		})
+	})
+}
+
+export function fileSize(path: string): Promise<number> {
+	return new Promise<number>((resolve): void => {
+		fs.stat(path, (err: Error, stat) => {
+			if (err || !stat) {
+				resolve(0)
+			}
+			resolve(stat.size || 0)
+		})
+	})
+}
+
+export function fileDelete(path: string): Promise<void> {
+	return new Promise<void>((resolve, reject): void => {
+		fs.exists(path, (exists: boolean): void => {
+			if (!exists) {
+				resolve()
+				return
+			}
+			fs.unlink(path, (err) => {
+				if (err) {
+					err = new Errors.WriteError(err, "Utils: Failed to delete file",
+						{path: path});
+					reject(err)
+					return
+				}
+				resolve()
+			})
+		})
+	})
+}
+
+export function fileRead(path: string): Promise<string> {
+	return new Promise<string>((resolve, reject): void => {
+		fs.readFile(
+			path, "utf-8",
+			(err: NodeJS.ErrnoException, data: string): void => {
+				if (err) {
+					err = new Errors.ReadError(err, "Utils: Failed to read file",
+						{path: path});
+					reject(err)
+					return
+				}
+
+				resolve(data)
+			},
+		)
+	})
+}
+
+export function fileWrite(path: string, data: string): Promise<void> {
+	return new Promise<void>((resolve, reject): void => {
+		fs.writeFile(
+			path, data,
+			(err: NodeJS.ErrnoException): void => {
+				if (err) {
+					err = new Errors.WriteError(err, "Utils: Failed to write file",
+						{path: path});
+					reject(err)
+					return
+				}
+				resolve()
+			},
+		)
+	})
+}
+
+export function encryptAvailable(): boolean {
+	try {
+		return electron.safeStorage.isEncryptionAvailable()
+	} catch (err) {
+		return false
+	}
+}
+
+export function encryptString(decData: string): string {
+	return electron.safeStorage.encryptString(decData).toString("base64")
+}
+
+export function decryptString(encData: string): string {
+	return electron.safeStorage.decryptString(Buffer.from(encData, "base64"))
+}
 
 export function uuid(): string {
 	return (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
@@ -45,7 +167,7 @@ export function openLink(url: string): boolean {
 	}
 
 	if (process.platform === "linux") {
-		childprocess.execFile(
+		childProcess.execFile(
 			"xdg-open", [urlParsed],
 			(err) => {
 				if (err) {

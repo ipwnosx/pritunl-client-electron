@@ -9,8 +9,10 @@ class ConfigData {
 	window_height = 0
 	disable_tray_icon = false
 	classic_interface = false
+	safe_storage = false
 	frameless: boolean = null
 	theme = "dark"
+	editor_theme = ""
 
 	_load(data: {[key: string]: any}): void {
 		if (data["disable_tray_icon"] !== undefined) {
@@ -19,8 +21,14 @@ class ConfigData {
 		if (data["classic_interface"] !== undefined) {
 			this.classic_interface = data["classic_interface"]
 		}
+		if (data["safe_storage"] !== undefined) {
+			this.safe_storage = data["safe_storage"]
+		}
 		if (data["theme"] !== undefined) {
 			this.theme = data["theme"]
+		}
+		if (data["editor_theme"] !== undefined) {
+			this.editor_theme = data["editor_theme"]
 		}
 		if (data["window_width"] !== undefined) {
 			this.window_width = data["window_width"]
@@ -76,10 +84,12 @@ class ConfigData {
 		let data = {
 			disable_tray_icon: opts["disable_tray_icon"],
 			classic_interface: opts["classic_interface"],
+			safe_storage: opts["safe_storage"],
 			window_width: opts["window_width"],
 			window_height: opts["window_height"],
 			frameless: opts["frameless"],
 			theme: opts["theme"],
+			editor_theme: opts["editor_theme"],
 		}
 
 		return new Promise<void>((resolve, reject): void => {
@@ -90,11 +100,17 @@ class ConfigData {
 				if (data.classic_interface === undefined) {
 					data.classic_interface = this.classic_interface
 				}
+				if (data.safe_storage === undefined) {
+					data.safe_storage = this.safe_storage
+				}
 				if (data.window_width === undefined) {
 					data.window_width = this.window_width
 				}
 				if (data.theme === undefined) {
 					data.theme = this.theme
+				}
+				if (data.editor_theme === undefined) {
+					data.editor_theme = this.editor_theme
 				}
 				if (data.frameless === undefined) {
 					data.frameless = this.frameless

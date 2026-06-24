@@ -143,6 +143,7 @@ export interface ProfileData {
 	sync_hosts?: string[]
 	sync_token?: string
 	sync_secret?: string
+	sync_hash?: string
 	username?: string
 	password?: string
 	remotes_data?: Record<string, RemoteData>

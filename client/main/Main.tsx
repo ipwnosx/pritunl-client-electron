@@ -8,6 +8,7 @@ import * as Constants from "./Constants"
 import Config from "./Config"
 import * as Errors from "../app/Errors";
 import * as Tpm from "./Tpm"
+import * as ProfileSync from "./ProfileSync"
 
 let tray: electron.Tray
 let awaken: boolean
@@ -448,6 +449,8 @@ function init() {
 					Tpm.sign(event.data.id, event.data.sign_data)
 				} else if (event.type === "tpm_close") {
 					Tpm.close(event.data.id)
+				} else if (event.type === "profile_sync") {
+					ProfileSync.handle(event.data.id, event.data.data)
 				}
 			})
 		})

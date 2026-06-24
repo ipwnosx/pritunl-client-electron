@@ -191,6 +191,15 @@ func RestartProfiles(clean bool) (err error) {
 		conn.StopWait()
 	}
 
+	if runtime.GOOS == "darwin" {
+		e := utils.RestoreScutilDns(false)
+		if e != nil {
+			logrus.WithFields(logrus.Fields{
+				"error": e,
+			}).Error("utils: Failed to restore scutil DNS")
+		}
+	}
+
 	if clean && runtime.GOOS == "windows" {
 		if config.Config.DisableNetClean {
 			logrus.Info("utils: Network clean disabled")

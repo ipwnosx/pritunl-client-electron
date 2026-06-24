@@ -262,6 +262,7 @@ export default class ProfileConnect extends React.Component<Props, State> {
 			sync_hosts: prfl.sync_hosts,
 			sync_token: prfl.sync_token,
 			sync_secret: prfl.sync_secret,
+			sync_hash: prfl.sync_hash,
 			username: username,
 			password: password,
 			remotes_data: prfl.remotes_data,

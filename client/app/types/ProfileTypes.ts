@@ -335,7 +335,6 @@ export function New(self: Profile): Profile {
 				eIndex + 13, data.length)
 		}
 
-
 		sIndex = data.indexOf("<key>")
 		eIndex = data.indexOf("</key>\n")
 		if (sIndex > 0 &&  eIndex > 0) {

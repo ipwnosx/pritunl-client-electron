@@ -36,6 +36,18 @@ cp "Pritunl Device Authentication" "../build/resources/Pritunl Device Authentica
 codesign --force --timestamp --options=runtime -s "Developer ID Application: Pritunl, Inc. (U22BLATN63)" "Pritunl Device Authentication"
 cd ..
 
+# Service Helper
+cd service_macos
+rm -f pritunl-service-helper
+swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -target arm64-apple-macos13 -framework ServiceManagement -framework Foundation service_helper.swift -o pritunl-service-helper_arm64
+swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -target x86_64-apple-macos13 -framework ServiceManagement -framework Foundation service_helper.swift -o pritunl-service-helper_x86_64
+lipo -create -output pritunl-service-helper pritunl-service-helper_arm64 pritunl-service-helper_x86_64
+rm -rf pritunl-service-helper_arm64
+rm -rf pritunl-service-helper_x86_64
+cp pritunl-service-helper ../build/resources/pritunl-service-helper
+codesign --force --timestamp --options=runtime -s "Developer ID Application: Pritunl, Inc. (U22BLATN63)" ../build/resources/pritunl-service-helper
+cd ..
+
 # CLI
 cd cli
 go get
@@ -93,6 +105,7 @@ mkdir -p build/macos/Library/LaunchDaemons
 cp service_macos/com.pritunl.service.plist build/macos/Library/LaunchDaemons
 
 # Package
+find build/macos -type f -exec xattr -c {} \;
 chmod +x resources_macos/scripts/postinstall
 chmod +x resources_macos/scripts/preinstall
 cd build

@@ -9,8 +9,8 @@ fi
 
 # Service
 kill -2 $(ps aux | grep Pritunl.app | awk '{print $2}') &> /dev/null || true
-sudo launchctl unload /Library/LaunchAgents/com.pritunl.client.plist &> /dev/null || true
-sudo launchctl unload /Library/LaunchDaemons/com.pritunl.service.plist &> /dev/null || true
+"/Applications/Pritunl.app/Contents/MacOS/pritunl-service-helper" unregister &> /dev/null || true
+sudo launchctl bootout system/com.pritunl.service &> /dev/null || true
 
 # Pritunl
 sudo rm -rf /Applications/Pritunl.app

@@ -40,6 +40,14 @@ cp service/service build/macos/Applications/Pritunl.app/Contents/Resources/pritu
 mkdir -p build/macos/Library/LaunchDaemons
 cp service_macos/com.pritunl.service.plist build/macos/Library/LaunchDaemons
 
+# Service Helper
+mkdir -p build/resources
+cd service_macos
+rm -f pritunl-service-helper
+swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -framework ServiceManagement -framework Foundation service_helper.swift -o pritunl-service-helper
+cp pritunl-service-helper ../build/resources/pritunl-service-helper
+cd ..
+
 # Device Authentication
 cd service_macos
 rm -f "Pritunl Device Authentication"
@@ -75,7 +83,8 @@ echo "Preinstall: Stopping pritunl service..."
 echo "###################################################"
 kill -2 $(ps aux | grep Pritunl.app | awk '{print $2}') &> /dev/null || true
 sudo launchctl unload /Library/LaunchAgents/com.pritunl.client.plist &> /dev/null || true
-sudo launchctl unload /Library/LaunchDaemons/com.pritunl.service.plist &> /dev/null || true
+sudo launchctl bootout system/com.pritunl.service &> /dev/null || true
+sudo rm -f /Library/LaunchDaemons/com.pritunl.service.plist
 
 # Install
 echo "###################################################"
@@ -89,8 +98,9 @@ sudo cp -f build/macos/Library/LaunchDaemons/com.pritunl.service.plist /Library/
 echo "###################################################"
 echo "Postinstall: Starting pritunl service..."
 echo "###################################################"
+sudo xattr -d com.apple.quarantine /Library/LaunchDaemons/com.pritunl.service.plist &> /dev/null || true
 sudo launchctl enable system/com.pritunl.service
-sudo launchctl load /Library/LaunchDaemons/com.pritunl.service.plist
+sudo launchctl bootstrap system /Library/LaunchDaemons/com.pritunl.service.plist
 
 cd ..
 rm -rf pritunl-client-$APP_VER

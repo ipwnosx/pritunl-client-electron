@@ -5,6 +5,7 @@ import * as tar from "tar";
 import childProcess from "child_process";
 import electron from "electron";
 import path from "path";
+import os from "os";
 
 export function uuid(): string {
 	return (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
@@ -493,6 +494,106 @@ export function fileWrite(path: string, data: string): Promise<void> {
 				resolve()
 			},
 		)
+	})
+}
+
+export function expandPath(pth: string): string {
+	if (!pth) {
+		return pth
+	}
+
+	if (pth === "~") {
+		return os.homedir()
+	}
+
+	if (pth.startsWith("~/") || pth.startsWith("~\\")) {
+		return path.join(os.homedir(), pth.substring(2))
+	}
+
+	return pth
+}
+
+export function collapsePath(pth: string): string {
+	if (!pth) {
+		return pth
+	}
+
+	let home = os.homedir()
+
+	if (pth === home) {
+		return "~"
+	}
+
+	if (pth.startsWith(home + path.sep) || pth.startsWith(home + "/")) {
+		let rel = pth.substring(home.length + 1)
+		return "~/" + rel.split(path.sep).join("/")
+	}
+
+	return pth
+}
+
+export function fileChmod(pth: string, mode: number): Promise<void> {
+	return new Promise<void>((resolve, reject): void => {
+		fs.chmod(pth, mode, (err: NodeJS.ErrnoException): void => {
+			if (err) {
+				err = new Errors.WriteError(err, "Utils: Failed to chmod file",
+					{path: pth});
+				reject(err)
+				return
+			}
+			resolve()
+		})
+	})
+}
+
+export function dirMake(pth: string): Promise<void> {
+	return new Promise<void>((resolve, reject): void => {
+		fs.mkdir(pth, {recursive: true},
+			(err: NodeJS.ErrnoException): void => {
+				if (err) {
+					err = new Errors.WriteError(err, "Utils: Failed to make directory",
+						{path: pth});
+					reject(err)
+					return
+				}
+				resolve()
+			},
+		)
+	})
+}
+
+export function fileReaddir(pth: string): Promise<string[]> {
+	return new Promise<string[]>((resolve, reject): void => {
+		fs.readdir(
+			pth,
+			(err: NodeJS.ErrnoException, filenames: string[]): void => {
+				if (err) {
+					err = new Errors.ReadError(err, "Utils: Failed to read directory",
+						{path: pth});
+					reject(err)
+					return
+				}
+				resolve(filenames)
+			},
+		)
+	})
+}
+
+export function fileStat(pth: string): Promise<fs.Stats> {
+	return new Promise<fs.Stats>((resolve): void => {
+		fs.stat(pth, (err: NodeJS.ErrnoException, stats: fs.Stats): void => {
+			if (err) {
+				resolve(null)
+				return
+			}
+			resolve(stats)
+		})
+	})
+}
+
+export function sleep(ms: number): Promise<void> {
+	return new Promise<void>((resolve): void => {
+		setTimeout(resolve, ms)
 	})
 }
 

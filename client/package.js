@@ -1,5 +1,6 @@
 const packager = require('@electron/packager');
 const path = require("path");
+const fs = require("fs");
 const fuses = require("@electron/fuses");
 
 let entitlementsPath = path.resolve(__dirname, '..',
@@ -65,6 +66,30 @@ async function packageApp() {
             [fuses.FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
             [fuses.FuseV1Options.OnlyLoadAppFromAsar]: true,
           });
+
+          let daemonsPath = path.resolve(buildPath,
+            'Pritunl.app/Contents/Library/LaunchDaemons');
+
+          console.log(`Copy service daemon plist to ${daemonsPath}`);
+
+          fs.mkdirSync(daemonsPath, {recursive: true});
+          fs.copyFileSync(
+            path.resolve(__dirname, '..', 'service_macos',
+              'com.pritunl.service.sma.plist'),
+            path.resolve(daemonsPath, 'com.pritunl.service.plist'),
+          );
+
+          let helperPath = path.resolve(buildPath,
+            'Pritunl.app/Contents/MacOS/pritunl-service-helper');
+
+          console.log(`Copy service helper to ${helperPath}`);
+
+          fs.copyFileSync(
+            path.resolve(__dirname, '..', 'build', 'resources',
+              'pritunl-service-helper'),
+            helperPath,
+          );
+          fs.chmodSync(helperPath, 0o755);
 
           callback();
         }

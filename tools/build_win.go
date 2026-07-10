@@ -1,12 +1,114 @@
 package main
 
 import (
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
-const signtool = "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64\\signtool.exe"
+const (
+	signtool = "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\" +
+		"10.0.26100.0\\x64\\signtool.exe"
+	certSha1      = "c088a20413edc0fdfe17f5905af624c68a33144c"
+	timestampUrl  = "http://timestamp.digicert.com"
+	innoSetupIscc = "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe"
+)
+
+var signArgs = []string{
+	"sign",
+	"/sha1", certSha1,
+	"/tr", timestampUrl,
+	"/td", "sha256",
+	"/fd", "sha256",
+}
+
+var fuseArgs = []string{
+	"RunAsNode=off",
+	"EnableNodeOptionsEnvironmentVariable=off",
+	"EnableNodeCliInspectArguments=off",
+	"EnableEmbeddedAsarIntegrityValidation=on",
+	"OnlyLoadAppFromAsar=on",
+}
+
+func run(name string, args ...string) {
+	cmd := exec.Command(name, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func runEnv(env []string, name string, args ...string) {
+	cmd := exec.Command(name, args...)
+	cmd.Env = append(os.Environ(), env...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func walkPeFiles(root string) (paths []string) {
+	err := filepath.WalkDir(root, func(path string,
+		d fs.DirEntry, err error) error {
+
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			return nil
+		}
+
+		switch strings.ToLower(filepath.Ext(path)) {
+		case ".exe", ".dll", ".node":
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	return
+}
+
+func signFiles(paths []string) {
+	if len(paths) == 0 {
+		return
+	}
+	run(signtool, append(signArgs, paths...)...)
+}
+
+func signDir(root string) {
+	signFiles(walkPeFiles(root))
+}
+
+func verifyDir(root string) {
+	paths := walkPeFiles(root)
+	if len(paths) == 0 {
+		return
+	}
+	run(signtool, append([]string{"verify", "/pa", "/all"}, paths...)...)
+}
+
+func signExe(path string) {
+	signFiles([]string{path})
+}
+
+func writeFuses(app string) {
+	for _, fuse := range fuseArgs {
+		run("npx",
+			"@electron/fuses",
+			"write", "--app", app,
+			fuse,
+		)
+	}
+}
 
 func main() {
 	err := os.RemoveAll("build")
@@ -19,67 +121,18 @@ func main() {
 		panic(err)
 	}
 
-	cmd := exec.Command("go", "get")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
+	run("go", "get")
 
-	cmd = exec.Command("go", "build", "-v", "-ldflags", "-H windowsgui")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command(signtool,
-		"sign",
-		"/sha1", "c088a20413edc0fdfe17f5905af624c68a33144c",
-		"/tr", "http://timestamp.digicert.com",
-		"/td", "sha256",
-		"/fd", "sha256",
-		"service.exe",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
+	run("go", "build", "-v", "-ldflags", "-H windowsgui")
+	signExe("service.exe")
 	err = os.Rename("service.exe", "service_amd64.exe")
 	if err != nil {
 		panic(err)
 	}
 
-	cmd = exec.Command("go", "build", "-v", "-ldflags", "-H windowsgui")
-	cmd.Env = append(os.Environ(), "GOOS=windows")
-	cmd.Env = append(os.Environ(), "GOARCH=arm64")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command(signtool,
-		"sign",
-		"/sha1", "c088a20413edc0fdfe17f5905af624c68a33144c",
-		"/tr", "http://timestamp.digicert.com",
-		"/td", "sha256",
-		"/fd", "sha256",
-		"service.exe",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
+	runEnv([]string{"GOOS=windows", "GOARCH=arm64"},
+		"go", "build", "-v", "-ldflags", "-H windowsgui")
+	signExe("service.exe")
 	err = os.Rename("service.exe", "service_arm64.exe")
 	if err != nil {
 		panic(err)
@@ -90,67 +143,18 @@ func main() {
 		panic(err)
 	}
 
-	cmd = exec.Command("go", "get")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
+	run("go", "get")
 
-	cmd = exec.Command("go", "build", "-v")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command(signtool,
-		"sign",
-		"/sha1", "c088a20413edc0fdfe17f5905af624c68a33144c",
-		"/tr", "http://timestamp.digicert.com",
-		"/td", "sha256",
-		"/fd", "sha256",
-		"cli.exe",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
+	run("go", "build", "-v")
+	signExe("cli.exe")
 	err = os.Rename("cli.exe", "cli_amd64.exe")
 	if err != nil {
 		panic(err)
 	}
 
-	cmd = exec.Command("go", "build", "-v")
-	cmd.Env = append(os.Environ(), "GOOS=windows")
-	cmd.Env = append(os.Environ(), "GOARCH=arm64")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command(signtool,
-		"sign",
-		"/sha1", "c088a20413edc0fdfe17f5905af624c68a33144c",
-		"/tr", "http://timestamp.digicert.com",
-		"/td", "sha256",
-		"/fd", "sha256",
-		"cli.exe",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
+	runEnv([]string{"GOOS=windows", "GOARCH=arm64"},
+		"go", "build", "-v")
+	signExe("cli.exe")
 	err = os.Rename("cli.exe", "cli_arm64.exe")
 	if err != nil {
 		panic(err)
@@ -161,23 +165,11 @@ func main() {
 		panic(err)
 	}
 
-	cmd = exec.Command("npm", "install")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
+	run("npm", "install")
 
-	cmd = exec.Command(".\\node_modules\\.bin\\electron-rebuild")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
+	run(".\\node_modules\\.bin\\electron-rebuild")
 
-	cmd = exec.Command(
+	run(
 		".\\node_modules\\.bin\\electron-packager",
 		".\\",
 		"pritunl",
@@ -187,15 +179,10 @@ func main() {
 		"--out=..\\build\\win",
 		"--prune",
 		"--asar",
+		"--asar.unpack=**/*.node",
 	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
 
-	cmd = exec.Command(
+	run(
 		".\\node_modules\\.bin\\electron-packager",
 		".\\",
 		"pritunl",
@@ -205,13 +192,8 @@ func main() {
 		"--out=..\\build\\win",
 		"--prune",
 		"--asar",
+		"--asar.unpack=**/*.node",
 	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
 
 	err = os.Chdir(filepath.Join("..", "build", "win",
 		"pritunl-win32-x64"))
@@ -219,160 +201,18 @@ func main() {
 		panic(err)
 	}
 
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"RunAsNode=off",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"EnableNodeOptionsEnvironmentVariable=off",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"EnableNodeCliInspectArguments=off",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"EnableEmbeddedAsarIntegrityValidation=on",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"OnlyLoadAppFromAsar=on",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command(signtool,
-		"sign",
-		"/sha1", "c088a20413edc0fdfe17f5905af624c68a33144c",
-		"/tr", "http://timestamp.digicert.com",
-		"/td", "sha256",
-		"/fd", "sha256",
-		"pritunl.exe",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
+	writeFuses("pritunl.exe")
+	signDir(".")
+	verifyDir(".")
 
 	err = os.Chdir(filepath.Join("..", "pritunl-win32-arm64"))
 	if err != nil {
 		panic(err)
 	}
 
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"RunAsNode=off",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"EnableNodeOptionsEnvironmentVariable=off",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"EnableNodeCliInspectArguments=off",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"EnableEmbeddedAsarIntegrityValidation=on",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command("npx",
-		"@electron/fuses",
-		"write", "--app", "pritunl.exe",
-		"OnlyLoadAppFromAsar=on",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-
-	cmd = exec.Command(signtool,
-		"sign",
-		"/sha1", "c088a20413edc0fdfe17f5905af624c68a33144c",
-		"/tr", "http://timestamp.digicert.com",
-		"/td", "sha256",
-		"/fd", "sha256",
-		"pritunl.exe",
-	)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
+	writeFuses("pritunl.exe")
+	signDir(".")
+	verifyDir(".")
 
 	err = os.Chdir(filepath.Join("..", "..", "..",
 		"resources_win"))
@@ -380,12 +220,8 @@ func main() {
 		panic(err)
 	}
 
-	cmd = exec.Command("C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe",
+	run(innoSetupIscc,
+		"/Ssigntool=$q"+signtool+"$q sign /sha1 "+certSha1+
+			" /tr "+timestampUrl+" /td sha256 /fd sha256 $q$f$q",
 		"setup.iss")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		panic(err)
-	}
 }

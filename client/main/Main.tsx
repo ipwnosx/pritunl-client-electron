@@ -125,6 +125,8 @@ electron.ipcMain.on(
 			}
 		} else if (msg === "download-update") {
 			Utils.openLink("https://client.pritunl.com/#install")
+		} else if (msg === "open-link") {
+			Utils.openLink(data)
 		}
 	},
 )

@@ -568,6 +568,13 @@ electron.app.on("ready", (): void => {
 		}
 	})
 
+	let zerosPth = path.join(electron.app.getPath("userData"), "zero")
+	fs.exists(zerosPth, function(exists) {
+		if (!exists) {
+			fs.mkdir(zerosPth, function() {})
+		}
+	})
+
 	try {
 		if (readyError) {
 			electron.dialog.showMessageBox(null, {

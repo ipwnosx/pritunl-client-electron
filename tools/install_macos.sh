@@ -19,6 +19,21 @@ trap clean EXIT
 curl -L https://github.com/pritunl/pritunl-client/archive/$APP_VER.tar.gz | tar x
 cd pritunl-client-$APP_VER
 
+# Service Helper
+mkdir -p build/resources
+cd service_macos
+rm -f pritunl-service-helper
+swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -framework ServiceManagement -framework Foundation service_helper.swift -o pritunl-service-helper
+cp pritunl-service-helper ../build/resources/pritunl-service-helper
+cd ..
+
+# Device Authentication
+cd service_macos
+rm -f "Pritunl Device Authentication"
+swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -framework CryptoKit -framework LocalAuthentication -framework Security -framework Foundation device_auth.swift -o "Pritunl Device Authentication"
+cp "./Pritunl Device Authentication" build/macos/Applications/Pritunl.app/Contents/Resources/
+cd ..
+
 # Pritunl
 mkdir -p build/macos/Applications
 cd client
@@ -39,21 +54,6 @@ cp service/service build/macos/Applications/Pritunl.app/Contents/Resources/pritu
 # Service Daemon
 mkdir -p build/macos/Library/LaunchDaemons
 cp service_macos/com.pritunl.service.plist build/macos/Library/LaunchDaemons
-
-# Service Helper
-mkdir -p build/resources
-cd service_macos
-rm -f pritunl-service-helper
-swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -framework ServiceManagement -framework Foundation service_helper.swift -o pritunl-service-helper
-cp pritunl-service-helper ../build/resources/pritunl-service-helper
-cd ..
-
-# Device Authentication
-cd service_macos
-rm -f "Pritunl Device Authentication"
-swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -framework CryptoKit -framework LocalAuthentication -framework Security -framework Foundation device_auth.swift -o "Pritunl Device Authentication"
-cp "./Pritunl Device Authentication" build/macos/Applications/Pritunl.app/Contents/Resources/
-cd ..
 
 # Openvpn
 cp openvpn_macos/openvpn build/macos/Applications/Pritunl.app/Contents/Resources/pritunl-openvpn

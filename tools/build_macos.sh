@@ -98,7 +98,9 @@ cp service_macos/com.pritunl.service.plist build/macos/Library/LaunchDaemons
 
 # Package
 find build/macos -type f -exec xattr -c {} \;
+xattr -c resources_macos/scripts/postinstall
 chmod +x resources_macos/scripts/postinstall
+xattr -c resources_macos/scripts/preinstall
 chmod +x resources_macos/scripts/preinstall
 cd build
 pkgbuild --root macos --scripts ../resources_macos/scripts --sign "Developer ID Installer: Pritunl, Inc. (U22BLATN63)" --identifier com.pritunl.pkg.Pritunl --version $APP_VER --ownership recommended --install-location / Build.pkg

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-APP_VER="$(curl -s https://api.github.com/repos/pritunl/pritunl-client/releases/latest | python -c 'import json,sys;print(json.load(sys.stdin)["tag_name"])')"
+APP_VER="$(curl -s https://api.github.com/repos/pritunl/pritunl-client/releases/latest | python3 -c 'import json,sys;print(json.load(sys.stdin)["tag_name"])')"
 
 read -r -p "Install Pritunl Client v$APP_VER? [y/N] " response
 if ! [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
@@ -19,20 +19,48 @@ trap clean EXIT
 curl -L https://github.com/pritunl/pritunl-client/archive/$APP_VER.tar.gz | tar x
 cd pritunl-client-$APP_VER
 
-# Service Helper
+rm -rf build
 mkdir -p build/resources
-cd service_macos
-rm -f pritunl-service-helper
-swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -framework ServiceManagement -framework Foundation service_helper.swift -o pritunl-service-helper
-cp pritunl-service-helper ../build/resources/pritunl-service-helper
+GOPATH="$(pwd)/go" go clean -cache
+
+node -e "fs=require('fs');f='client/package.json';c=fs.readFileSync(f,'utf8');fs.writeFileSync(f,c.replace(/,\s*\"scripts\": \{[^}]*\}/,''))"
+
+# Service
+cd service
+GOPATH="$(pwd)/go" go get -d
+GOPATH="$(pwd)/go" go build -v
 cd ..
+cp service/service build/resources/pritunl-service
+
+# CLI
+cd cli
+GOPATH="$(pwd)/go" go get -d
+GOPATH="$(pwd)/go" go build -v
+cd ..
+cp cli/cli build/resources/pritunl-client
 
 # Device Authentication
 cd service_macos
 rm -f "Pritunl Device Authentication"
-swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -framework CryptoKit -framework LocalAuthentication -framework Security -framework Foundation device_auth.swift -o "Pritunl Device Authentication"
-cp "./Pritunl Device Authentication" build/macos/Applications/Pritunl.app/Contents/Resources/
+swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -target arm64-apple-macos11 -framework CryptoKit -framework LocalAuthentication -framework Security -framework Foundation device_auth.swift -o "Pritunl Device Authentication"
+cp "Pritunl Device Authentication" "../build/resources/Pritunl Device Authentication"
 cd ..
+
+# Service Helper
+cd service_macos
+rm -f pritunl-service-helper
+swiftc -sdk $(xcrun --show-sdk-path --sdk macosx) -target arm64-apple-macos13 -framework ServiceManagement -framework Foundation service_helper.swift -o pritunl-service-helper
+cp pritunl-service-helper ../build/resources/pritunl-service-helper
+cd ..
+
+# Openvpn
+cp openvpn_macos/openvpn_arm64 build/resources/pritunl-openvpn
+
+# WireGuard
+cp wireguard_macos/bash build/resources/bash
+cp wireguard_macos/wg build/resources/wg
+cp wireguard_macos/wg-quick build/resources/wg-quick
+cp wireguard_macos/wireguard-go build/resources/wireguard-go
 
 # Pritunl
 mkdir -p build/macos/Applications
@@ -41,41 +69,12 @@ npm install
 ./node_modules/.bin/electron-rebuild
 node package.js
 cd ../
-mv build/macos/Applications/Pritunl-darwin-x64/Pritunl.app build/macos/Applications/
-rm -rf build/macos/Applications/Pritunl-darwin-x64
-
-# Service
-cd service
-GOPATH="$(pwd)/go" go get -d
-GOPATH="$(pwd)/go" go build -v
-cd ..
-cp service/service build/macos/Applications/Pritunl.app/Contents/Resources/pritunl-service
+mv build/macos/Applications/Pritunl-darwin-universal/Pritunl.app build/macos/Applications/
+rm -rf build/macos/Applications/Pritunl-darwin-universal
 
 # Service Daemon
 mkdir -p build/macos/Library/LaunchDaemons
 cp service_macos/com.pritunl.service.plist build/macos/Library/LaunchDaemons
-
-# Openvpn
-cp openvpn_macos/openvpn build/macos/Applications/Pritunl.app/Contents/Resources/pritunl-openvpn
-cp openvpn_macos/openvpn10 build/macos/Applications/Pritunl.app/Contents/Resources/pritunl-openvpn10
-
-# WireGuard
-cp wireguard_macos/bash build/macos/Applications/Pritunl.app/Contents/Resources/bash
-cp wireguard_macos/wg build/macos/Applications/Pritunl.app/Contents/Resources/wg
-cp wireguard_macos/wg-quick build/macos/Applications/Pritunl.app/Contents/Resources/wg-quick
-cp wireguard_macos/wireguard-go build/macos/Applications/Pritunl.app/Contents/Resources/wireguard-go
-
-# CLI
-cd cli
-GOPATH="$(pwd)/go" go get -d
-GOPATH="$(pwd)/go" go build -v
-cd ..
-cp cli/cli build/macos/Applications/Pritunl.app/Contents/Resources/pritunl-client
-
-# Files
-sudo touch /var/run/pritunl_auth
-sudo touch /var/log/pritunl.log
-sudo touch /var/log/pritunl.log.1
 
 # Preinstall
 echo "###################################################"

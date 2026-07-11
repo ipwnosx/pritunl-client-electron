@@ -5,13 +5,14 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 cd ../
 
 rm -rf build
+mkdir -p build/resources
+go clean -cache
 
 node -e "fs=require('fs');f='client/package.json';c=fs.readFileSync(f,'utf8');fs.writeFileSync(f,c.replace(/,\s*\"scripts\": \{[^}]*\}/,''))"
 
 export APP_VER="$(cat client/package.json | grep version | cut -d '"' -f 4)"
 
 # Service
-go clean -cache
 cd service
 go get
 GOOS=darwin GOARCH=amd64 go build -v -o service_x86_64
@@ -20,9 +21,21 @@ lipo -create -output service service_x86_64 service_arm64
 rm -rf service_x86_64
 rm -rf service_arm64
 cd ..
-mkdir -p build/resources
 cp service/service build/resources/pritunl-service
 codesign --force --timestamp --options=runtime -s "Developer ID Application: Pritunl, Inc. (U22BLATN63)" build/resources/pritunl-service
+
+# CLI
+cd cli
+go get
+GOOS=darwin GOARCH=amd64 go build -v -o cli_x86_64
+GOOS=darwin GOARCH=arm64 go build -v -o cli_arm64
+lipo -create -output cli cli_x86_64 cli_arm64
+rm -rf cli_x86_64
+rm -rf cli_arm64
+cd ..
+mkdir -p build/resources
+cp cli/cli build/resources/pritunl-client
+codesign --force --timestamp --options=runtime -s "Developer ID Application: Pritunl, Inc. (U22BLATN63)" build/resources/pritunl-client
 
 # Device Auth
 cd service_macos
@@ -47,19 +60,6 @@ rm -rf pritunl-service-helper_x86_64
 cp pritunl-service-helper ../build/resources/pritunl-service-helper
 codesign --force --timestamp --options=runtime -s "Developer ID Application: Pritunl, Inc. (U22BLATN63)" ../build/resources/pritunl-service-helper
 cd ..
-
-# CLI
-cd cli
-go get
-GOOS=darwin GOARCH=amd64 go build -v -o cli_x86_64
-GOOS=darwin GOARCH=arm64 go build -v -o cli_arm64
-lipo -create -output cli cli_x86_64 cli_arm64
-rm -rf cli_x86_64
-rm -rf cli_arm64
-cd ..
-mkdir -p build/resources
-cp cli/cli build/resources/pritunl-client
-codesign --force --timestamp --options=runtime -s "Developer ID Application: Pritunl, Inc. (U22BLATN63)" build/resources/pritunl-client
 
 # Openvpn
 cp openvpn_macos/openvpn10 build/resources/pritunl-openvpn10
@@ -91,14 +91,6 @@ mv build/macos/Applications/Pritunl-darwin-universal/Pritunl.app build/macos/App
 rm -rf build/macos/Applications/Pritunl-darwin-universal
 sleep 3
 npx @electron/fuses read --app build/macos/Applications/Pritunl.app
-#codesign --force --deep --timestamp --options=runtime --entitlements="./resources_macos/entitlements.plist" --sign "Developer ID Application: Pritunl, Inc. (U22BLATN63)" build/macos/Applications/Pritunl.app/Contents/MacOS/Pritunl
-
-# Files
-mkdir -p build/macos/var/run
-touch build/macos/var/run/pritunl_auth
-mkdir -p build/macos/var/log
-touch build/macos/var/log/pritunl-client.log
-touch build/macos/var/log/pritunl-client.log.1
 
 # Service Daemon
 mkdir -p build/macos/Library/LaunchDaemons

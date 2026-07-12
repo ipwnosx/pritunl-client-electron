@@ -13,3 +13,7 @@ export function config(): string {
 export function profiles(): string {
 	return path.join(Constants.dataPath, "profiles");
 }
+
+export function zeros(): string {
+	return path.join(Constants.dataPath, "zero");
+}

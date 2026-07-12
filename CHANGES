@@ -4,6 +4,7 @@ Pritunl Client Changelog
 <%= version %>
 
 Add support for Pritunl Zero
+Fix macOS 27 support
 
 Version 1.3.4655.98 2026-06-11
 ------------------------------

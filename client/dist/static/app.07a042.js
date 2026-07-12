@@ -19618,7 +19618,7 @@ class ProfileImport extends react.Component {
             react.createElement("button", { className: "bp5-button bp5-minimal bp5-icon-import", style: this.props.style, type: "button", disabled: this.state.disabled, onClick: this.openDialog }, "Import"),
             react.createElement(Dialog, { title: "Import Profile", style: ProfileImport_css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
                 react.createElement("div", { className: "bp5-dialog-body" },
-                    react.createElement("div", { className: "bp5-button-group bp5-fill", style: ProfileImport_css.group },
+                    react.createElement("div", { className: "bp5-button-group bp5-fill", style: ProfileImport_css.group, hidden: process.platform === 'win32' },
                         react.createElement("button", { className: "bp5-button bp5-icon-globe-network" +
                                 (!zeroMode ? " bp5-active" : ""), type: "button", disabled: this.state.disabled, onClick: () => {
                                 this.setMode("vpn");

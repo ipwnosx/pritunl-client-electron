@@ -7616,7 +7616,7 @@ class ProfileImport extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
             react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { className: "bp5-button bp5-minimal bp5-icon-import", style: this.props.style, type: "button", disabled: this.state.disabled, onClick: this.openDialog }, "Import"),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_blueprintjs_core__WEBPACK_IMPORTED_MODULE_4__.Dialog, { title: "Import Profile", style: css.dialog, isOpen: this.state.dialog, usePortal: true, portalContainer: document.body, onClose: this.closeDialog },
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "bp5-dialog-body" },
-                    react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "bp5-button-group bp5-fill", style: css.group },
+                    react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "bp5-button-group bp5-fill", style: css.group, hidden: process.platform === 'win32' },
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { className: "bp5-button bp5-icon-globe-network" +
                                 (!zeroMode ? " bp5-active" : ""), type: "button", disabled: this.state.disabled, onClick: () => {
                                 this.setMode("vpn");

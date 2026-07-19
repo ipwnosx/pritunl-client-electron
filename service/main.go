@@ -235,7 +235,7 @@ func main() {
 
 	if runtime.GOOS == "darwin" {
 		_ = utils.ClearScutilConnKeys()
-		_ = utils.RestoreScutilDns(true)
+		_ = connection.GlobalStore.RestoreDns(true)
 	}
 
 	time.Sleep(750 * time.Millisecond)

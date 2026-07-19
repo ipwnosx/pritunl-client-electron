@@ -145,6 +145,35 @@ func ReleaseTap(intf *Interface) {
 	lockedInterfaces.Remove(intf.Id)
 }
 
+type ScutilState struct {
+	PrimaryService string
+	Connections    []string
+}
+
+func GetScutilState() (state *ScutilState, err error) {
+	macDnsLock.Lock()
+	defer macDnsLock.Unlock()
+
+	primaryServiceId, err := getPrimaryService()
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"error": err,
+		}).Warning("utils: Failed to get primary service for DNS")
+		err = nil
+	}
+
+	connIds, err := getScutilConnIds()
+	if err != nil {
+		return
+	}
+
+	state = &ScutilState{
+		PrimaryService: primaryServiceId,
+		Connections:    connIds,
+	}
+	return
+}
+
 func GetScutilKey(typ, key string) (val string, err error) {
 	macDnsLock.Lock()
 	defer macDnsLock.Unlock()

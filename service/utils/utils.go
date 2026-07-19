@@ -620,6 +620,34 @@ func GetScutilConnIds() (ids []string, err error) {
 	return
 }
 
+func RemoveScutilConnKeys(connIds []string) (err error) {
+	macDnsLock.Lock()
+	defer macDnsLock.Unlock()
+
+	remove := ""
+	for _, connId := range connIds {
+		remove += fmt.Sprintf(
+			"remove State:/Network/Pritunl/Connection/%s\n", connId)
+	}
+
+	if remove == "" {
+		return
+	}
+
+	cmd := command.Command("/usr/sbin/scutil")
+	cmd.Stdin = strings.NewReader("open\n" + remove + "quit\n")
+
+	err = cmd.Run()
+	if err != nil {
+		err = &CommandError{
+			errors.Wrap(err, "utils: Failed to exec scutil"),
+		}
+		return
+	}
+
+	return
+}
+
 func ClearScutilConnKeys() (err error) {
 	macDnsLock.Lock()
 	defer macDnsLock.Unlock()

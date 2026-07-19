@@ -133,7 +133,7 @@ func profilePost(c *gin.Context) {
 		Dco:                data.Dco,
 		DebugOutput:        data.DebugOutput,
 		RestrictClient:     data.RestrictClient,
-		ForceDns:           data.ForceDns,
+		ForceDns:           false, // TODO
 		SsoAuth:            data.SsoAuth,
 		ServerPublicKey:    data.ServerPublicKey,
 		ServerBoxPublicKey: data.ServerBoxPublicKey,

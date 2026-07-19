@@ -166,7 +166,7 @@ func dnsWatch() {
 					utils.ClearDns()
 				}
 
-				err := utils.RestoreScutilDns(false)
+				err := connection.GlobalStore.RestoreDns(false)
 				if err != nil {
 					errorCount += 1
 
@@ -306,7 +306,7 @@ func dnsWatch() {
 
 			restartLock.Lock()
 
-			err = utils.RestoreScutilDns(false)
+			err = connection.GlobalStore.RestoreDns(false)
 			if err != nil {
 				logrus.WithFields(logrus.Fields{
 					"error": err,

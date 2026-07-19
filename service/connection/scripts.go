@@ -8,7 +8,7 @@ const (
 [ -n "${ifconfig_local}" ] && echo "ifconfig_local=${ifconfig_local}${ifconfig_netmask:+ ifconfig_netmask=${ifconfig_netmask}}"
 [ -n "${ifconfig_remote}" ] && echo "ifconfig_remote=${ifconfig_remote}"
 
-CONN_ID="$(echo ${config} | /sbin/md5)"
+CONN_ID="%s"
 
 for optionname in ${!foreign_option_*} ; do
   option="${!optionname}"
@@ -40,7 +40,6 @@ d.add SupplementalMatchDomains * ""
 remove State:/Network/Service/Pritunl/DNS
 remove Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Service/Pritunl/DNS
-set Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Pritunl/Connection/${CONN_ID}
 quit
 EOF
@@ -53,7 +52,6 @@ d.add SupplementalMatchDomains * ""
 remove State:/Network/Service/Pritunl/DNS
 remove Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Service/Pritunl/DNS
-set Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Pritunl/Connection/${CONN_ID}
 quit
 EOF
@@ -66,7 +64,6 @@ d.add SupplementalMatchDomains * ""
 remove State:/Network/Service/Pritunl/DNS
 remove Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Service/Pritunl/DNS
-set Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Pritunl/Connection/${CONN_ID}
 quit
 EOF
@@ -87,7 +84,6 @@ get State:/Network/Service/${SERVICE_ID}/DNS
 set State:/Network/Pritunl/Backup/${SERVICE_ID}/DNS
 d.add SearchDomains * ${DNS_SEARCH}
 set State:/Network/Service/${SERVICE_ID}/DNS
-set Setup:/Network/Service/${SERVICE_ID}/DNS
 quit
 EOF
 fi
@@ -103,7 +99,7 @@ exit 0
 [ -n "${ifconfig_local}" ] && echo "ifconfig_local=${ifconfig_local}${ifconfig_netmask:+ ifconfig_netmask=${ifconfig_netmask}}"
 [ -n "${ifconfig_remote}" ] && echo "ifconfig_remote=${ifconfig_remote}"
 
-CONN_ID="$(echo ${config} | /sbin/md5)"
+CONN_ID="%s"
 
 for optionname in ${!foreign_option_*} ; do
   option="${!optionname}"
@@ -135,7 +131,6 @@ d.add SupplementalMatchDomains * ""
 remove State:/Network/Service/Pritunl/DNS
 remove Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Service/Pritunl/DNS
-set Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Pritunl/Connection/${CONN_ID}
 quit
 EOF
@@ -148,7 +143,6 @@ d.add SupplementalMatchDomains * ""
 remove State:/Network/Service/Pritunl/DNS
 remove Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Service/Pritunl/DNS
-set Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Pritunl/Connection/${CONN_ID}
 quit
 EOF
@@ -161,7 +155,6 @@ d.add SupplementalMatchDomains * ""
 remove State:/Network/Service/Pritunl/DNS
 remove Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Service/Pritunl/DNS
-set Setup:/Network/Service/Pritunl/DNS
 set State:/Network/Pritunl/Connection/${CONN_ID}
 quit
 EOF
@@ -182,7 +175,6 @@ get State:/Network/Service/${SERVICE_ID}/DNS
 set State:/Network/Pritunl/Backup/${SERVICE_ID}/DNS
 d.add SearchDomains * ${DNS_SEARCH}
 set State:/Network/Service/${SERVICE_ID}/DNS
-set Setup:/Network/Service/${SERVICE_ID}/DNS
 quit
 EOF
 fi
@@ -200,7 +192,7 @@ exit 0
 `
 	downScriptDarwin = `#!/bin/bash -e
 
-CONN_ID="$(echo ${config} | /sbin/md5)"
+CONN_ID="%s"
 
 /usr/sbin/scutil <<-EOF > /dev/null
 open

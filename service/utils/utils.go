@@ -281,22 +281,19 @@ func SetScutilDns(connId string, addresses, domains []string) (err error) {
 			"remove State:%s\n"+
 			"remove Setup:%s\n"+
 			"set State:%s\n"+
-			"set Setup:%s\n"+
 			"set State:/Network/Pritunl/Connection/%s\n"+
 			"quit\n",
 			strings.Join(addresses, " "), strings.Join(domains, " "),
-			PritunlScutilKey, PritunlScutilKey, PritunlScutilKey,
-			PritunlScutilKey, connId)
+			PritunlScutilKey, PritunlScutilKey, PritunlScutilKey, connId)
 		if primaryServiceId != "" {
 			inputPrimary = fmt.Sprintf("open\n"+
 				"get State:/Network/Service/%s/DNS\n"+
 				"%s"+
 				"d.add SearchDomains * %s\n"+
 				"set State:/Network/Service/%s/DNS\n"+
-				"set Setup:/Network/Service/%s/DNS\n"+
 				"quit\n",
 				primaryServiceId, inputBackup, strings.Join(domains, " "),
-				primaryServiceId, primaryServiceId)
+				primaryServiceId)
 		}
 	} else if len(addresses) > 0 {
 		input = fmt.Sprintf("open\n"+
@@ -306,12 +303,10 @@ func SetScutilDns(connId string, addresses, domains []string) (err error) {
 			"remove State:%s\n"+
 			"remove Setup:%s\n"+
 			"set State:%s\n"+
-			"set Setup:%s\n"+
 			"set State:/Network/Pritunl/Connection/%s\n"+
 			"quit\n",
 			strings.Join(addresses, " "),
-			PritunlScutilKey, PritunlScutilKey, PritunlScutilKey,
-			PritunlScutilKey, connId)
+			PritunlScutilKey, PritunlScutilKey, PritunlScutilKey, connId)
 	} else if len(domains) > 0 {
 		input = fmt.Sprintf("open\n"+
 			"d.init\n"+
@@ -320,22 +315,19 @@ func SetScutilDns(connId string, addresses, domains []string) (err error) {
 			"remove State:%s\n"+
 			"remove Setup:%s\n"+
 			"set State:%s\n"+
-			"set Setup:%s\n"+
 			"set State:/Network/Pritunl/Connection/%s\n"+
 			"quit\n",
 			strings.Join(domains, " "),
-			PritunlScutilKey, PritunlScutilKey, PritunlScutilKey,
-			PritunlScutilKey, connId)
+			PritunlScutilKey, PritunlScutilKey, PritunlScutilKey, connId)
 		if primaryServiceId != "" {
 			inputPrimary = fmt.Sprintf("open\n"+
 				"get State:/Network/Service/%s/DNS\n"+
 				"%s"+
 				"d.add SearchDomains * %s\n"+
 				"set State:/Network/Service/%s/DNS\n"+
-				"set Setup:/Network/Service/%s/DNS\n"+
 				"quit\n",
 				primaryServiceId, inputBackup, strings.Join(domains, " "),
-				primaryServiceId, primaryServiceId)
+				primaryServiceId)
 		}
 	}
 
@@ -460,10 +452,9 @@ func RestoreSearchDomains(primaryServiceId string) (err error) {
 
 	input += fmt.Sprintf(
 		"set State:/Network/Service/%s/DNS\n"+
-			"set Setup:/Network/Service/%s/DNS\n"+
 			"remove %s\n"+
 			"quit\n",
-		primaryServiceId, primaryServiceId, backupKey,
+		primaryServiceId, backupKey,
 	)
 
 	cmd = command.Command("/usr/sbin/scutil")
@@ -664,10 +655,6 @@ func RefreshScutilDns() (err error) {
 		"State", PritunlScutilKey,
 		&ScutilKey{
 			Type: "State",
-			Key:  PritunlScutilKey,
-		},
-		&ScutilKey{
-			Type: "Setup",
 			Key:  PritunlScutilKey,
 		},
 	)

@@ -192,7 +192,7 @@ func RestartProfiles(clean bool) (err error) {
 	}
 
 	if runtime.GOOS == "darwin" {
-		e := utils.RestoreScutilDns(false)
+		e := GlobalStore.RestoreDns(false)
 		if e != nil {
 			logrus.WithFields(logrus.Fields{
 				"error": e,

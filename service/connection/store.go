@@ -1,6 +1,7 @@
 package connection
 
 import (
+	"fmt"
 	"runtime"
 	"runtime/debug"
 	"sync"
@@ -171,6 +172,18 @@ func (s *Store) Remove(prflId string, conn *Connection) {
 	return
 }
 
+func (s *Store) GetIds() (ids []string) {
+	s.lock.RLock()
+	defer s.lock.RUnlock()
+
+	ids = []string{}
+	for connId := range s.conns {
+		ids = append(ids, connId)
+	}
+
+	return
+}
+
 func (s *Store) Get(prflId string) (conn *Connection) {
 	prflId = utils.FilterStrN(prflId, 128)
 
@@ -285,4 +298,97 @@ func (s *Store) SetDnsForced() {
 	s.lock.Lock()
 	s.dnsForced = true
 	s.lock.Unlock()
+}
+
+func (s *Store) RestoreDns(force bool) (err error) {
+	if runtime.GOOS != "darwin" {
+		return
+	}
+
+	logrus.Info("connection: Restore DNS")
+
+	state, err := utils.GetScutilState()
+	if err != nil {
+		return
+	}
+
+	activeIds := set.NewSet()
+	for _, connId := range s.GetIds() {
+		activeIds.Add(connId)
+	}
+
+	activeConnIds := []string{}
+	staleConnIds := []string{}
+	for _, connId := range state.Connections {
+		if activeIds.Contains(connId) {
+			activeConnIds = append(activeConnIds, connId)
+		} else {
+			staleConnIds = append(staleConnIds, connId)
+		}
+	}
+
+	if len(staleConnIds) > 0 {
+		logrus.WithFields(logrus.Fields{
+			"conn_ids": staleConnIds,
+		}).Warning("connection: Removing stale DNS connection keys")
+
+		err = utils.RemoveScutilConnKeys(staleConnIds)
+		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"error": err,
+			}).Error("connection: Failed to remove stale DNS connection keys")
+		}
+	}
+
+	connected := len(activeConnIds) != 0
+
+	restoreKey := ""
+	if connected && !force {
+		restoreKey = fmt.Sprintf(
+			"/Network/Pritunl/Connection/%s", activeConnIds[0])
+	}
+
+	if restoreKey != "" {
+		err = utils.CopyClearScutilMultiKey(
+			"State", restoreKey,
+			&utils.ScutilKey{
+				Type: "State",
+				Key:  utils.PritunlScutilKey,
+			},
+		)
+		if err != nil {
+			return
+		}
+	} else {
+		err = utils.RemoveScutilKey("State", utils.PritunlScutilKey)
+		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"type": "State",
+				"key":  utils.PritunlScutilKey,
+			}).Error("connection: Failed to clear DNS service")
+			return
+		}
+		err = utils.RemoveScutilKey("Setup", utils.PritunlScutilKey)
+		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"type": "Setup",
+				"key":  utils.PritunlScutilKey,
+			}).Error("connection: Failed to clear DNS service")
+			return
+		}
+	}
+
+	if !connected {
+		err = utils.RestoreSearchDomains(state.PrimaryService)
+		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"error": err,
+			}).Error("connection: Failed to restore primary DNS")
+			err = nil
+		}
+	}
+
+	utils.ClearDNSCache()
+
+	return
 }

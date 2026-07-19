@@ -9,6 +9,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dropbox/godropbox/container/set"
 	"github.com/pritunl/pritunl-client/service/autoclean"
 	"github.com/pritunl/pritunl-client/service/config"
 	"github.com/pritunl/pritunl-client/service/connection"
@@ -213,6 +214,35 @@ func dnsWatch() {
 				"error": err,
 			}).Error("watch: Failed to get DNS connection IDs")
 			continue
+		}
+
+		activeIdsSet := set.NewSet()
+		for _, connId := range connection.GlobalStore.GetIds() {
+			activeIdsSet.Add(connId)
+		}
+
+		staleConnIds := []string{}
+		activeConnIds := []string{}
+		for _, connId := range connIds {
+			if activeIdsSet.Contains(connId) {
+				activeConnIds = append(activeConnIds, connId)
+			} else {
+				staleConnIds = append(staleConnIds, connId)
+			}
+		}
+		connIds = activeConnIds
+
+		if len(staleConnIds) > 0 {
+			logrus.WithFields(logrus.Fields{
+				"conn_ids": staleConnIds,
+			}).Warn("watch: Removing stale DNS connection keys")
+
+			err = utils.RemoveScutilConnKeys(staleConnIds)
+			if err != nil {
+				logrus.WithFields(logrus.Fields{
+					"error": err,
+				}).Error("watch: Failed to remove stale DNS connection keys")
+			}
 		}
 
 		connStates := []*ConnState{}

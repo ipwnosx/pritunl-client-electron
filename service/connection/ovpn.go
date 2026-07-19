@@ -692,9 +692,9 @@ func (o *Ovpn) writeUp(ovpn27 bool) (pth string, err error) {
 			script = blockScript
 		} else if o.conn.Profile.ForceDns {
 			DnsForced = true
-			script = upDnsScriptDarwin
+			script = fmt.Sprintf(upDnsScriptDarwin, o.conn.Id)
 		} else {
-			script = upScriptDarwin
+			script = fmt.Sprintf(upScriptDarwin, o.conn.Id)
 		}
 		break
 	case "linux":
@@ -760,7 +760,7 @@ func (o *Ovpn) writeDown() (pth string, err error) {
 		if o.conn.Profile.DisableDns {
 			script = blockScript
 		} else {
-			script = downScriptDarwin
+			script = fmt.Sprintf(downScriptDarwin, o.conn.Id)
 		}
 		break
 	case "linux":
@@ -1392,7 +1392,7 @@ func (o *Ovpn) waitExit() {
 	o.running = -1
 
 	if runtime.GOOS == "darwin" {
-		err := utils.RestoreScutilDns(false)
+		err := GlobalStore.RestoreDns(false)
 		if err != nil {
 			logrus.WithFields(o.conn.Fields(logrus.Fields{
 				"error": err,

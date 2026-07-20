@@ -140,7 +140,7 @@ export function New(self: Zero): Zero {
 
 	self.baseCertPath = function(): string {
 		if (this.ssh_card_serial) {
-			return "~/.ssh/pritunl-cert.pub"
+			return "~/.ssh/pritunl-" + this.id + "-cert.pub"
 		}
 
 		let pubKeyPath: string = this.public_key_path || ""
@@ -148,7 +148,7 @@ export function New(self: Zero): Zero {
 			pubKeyPath = pubKeyPath.substring(0, pubKeyPath.length - 4)
 		}
 
-		return pubKeyPath + "-cert.pub"
+		return pubKeyPath + "-" + this.id + "-cert.pub"
 	}
 
 	self.exportConf = function(): string {

@@ -21,6 +21,7 @@ const css = {
 
 let syncId: string;
 let renewing: Set<string> = new Set();
+let renewControllers: {[key: string]: ZeroUtils.RenewController} = {};
 
 function loadZero(zeroId: string,
 	zeroPath: string): Promise<ZeroTypes.Zero> {
@@ -201,6 +202,13 @@ function openLinkAlert(url: string, message: string): string {
 	return Alert.info(linkElm, 30)
 }
 
+export function cancelRenew(zero: ZeroTypes.ZeroRo): void {
+	let controller = renewControllers[zero.id]
+	if (controller) {
+		controller.cancel()
+	}
+}
+
 export async function renew(zero: ZeroTypes.ZeroRo,
 	onStatus?: (message: string) => void): Promise<void> {
 
@@ -209,24 +217,37 @@ export async function renew(zero: ZeroTypes.ZeroRo,
 	}
 	renewing.add(zero.id)
 
+	let controller = new ZeroUtils.RenewController()
+	renewControllers[zero.id] = controller
+
 	let alertId: string
 	try {
-		await ZeroUtils.renew(zero, onStatus, (url: string): void => {
-			alertId = openLinkAlert(url, "Complete SSH certificate verification in " +
-				"web browser. Copy the link below if the web browser " +
-				"did not open.")
-		})
+		let renewed = await ZeroUtils.renew(zero, onStatus,
+			(url: string): void => {
+				alertId = openLinkAlert(url, "Complete SSH certificate " +
+					"verification in web browser. Copy the link below if " +
+					"the web browser did not open.")
+			}, controller)
 		Alert.dismiss(alertId)
 
-		let zeros = await loadZerosModels()
-		await ZeroUtils.syncSshState(zeros)
+		if (renewed) {
+			let zeros = await loadZerosModels()
+			await ZeroUtils.syncSshState(zeros)
 
-		Alert.success("Successfully renewed SSH certificate", 3)
+			Alert.success("Successfully renewed SSH certificate", 3)
+		} else if (controller.cancelled) {
+			Alert.info("SSH certificate renewal cancelled", 3)
+		}
 	} catch (err) {
 		Alert.dismiss(alertId)
-		Logger.errorAlert(err, 10)
+		if (controller.cancelled) {
+			Alert.info("SSH certificate renewal cancelled", 3)
+		} else {
+			Logger.errorAlert(err, 10)
+		}
 	}
 
+	delete renewControllers[zero.id]
 	renewing.delete(zero.id)
 
 	await sync(true)

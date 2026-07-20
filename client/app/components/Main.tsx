@@ -83,9 +83,14 @@ const css = {
 		overflowY: 'auto',
 		marginRight: '1px',
 	} as React.CSSProperties,
+	menuHeader: {
+		margin: '7px 0',
+		paddingLeft: '0',
+	} as React.CSSProperties,
 	menuLabel: {
 		fontSize: '15px',
 		textAlign: 'center',
+		padding: '0',
 	} as React.CSSProperties,
 	updateButton: {
 		marginTop: "7px",
@@ -346,7 +351,7 @@ export default class Main extends React.Component<{}, State> {
 			css.controlButtonDarwin : css.controlButton
 
 		let menu: JSX.Element = <Blueprint.Menu>
-			<li className="bp5-menu-header">
+			<li className="bp5-menu-header" style={css.menuHeader}>
 				<h6
 					className="bp5-heading"
 					style={css.menuLabel}

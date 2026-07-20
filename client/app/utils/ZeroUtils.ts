@@ -14,6 +14,27 @@ export interface SmartCard {
 	pubKey: string
 }
 
+export class RenewController {
+	cancelled = false
+	private cancelResolve: () => void
+
+	cancelWait: Promise<Request.Response> = new Promise<Request.Response>(
+		(resolve): void => {
+			this.cancelResolve = (): void => {
+				resolve(null)
+			}
+		}
+	)
+
+	cancel(): void {
+		if (this.cancelled) {
+			return
+		}
+		this.cancelled = true
+		this.cancelResolve()
+	}
+}
+
 export interface CertState {
 	certPaths: string[]
 	validTo: number
@@ -361,7 +382,7 @@ export async function listSshKeys(): Promise<string[]> {
 
 	for (let filename of filenames) {
 		if (filename.indexOf(".pub") === -1 ||
-			filename.indexOf("-cert.pub") !== -1) {
+			/-cert\d{0,2}\.pub$/.test(filename)) {
 
 			continue
 		}
@@ -546,7 +567,8 @@ async function loadPubKey(zero: ZeroTypes.ZeroRo): Promise<string> {
 
 export async function renew(zero: ZeroTypes.ZeroRo,
 	onStatus?: (message: string) => void,
-	onApproval?: (url: string) => void): Promise<void> {
+	onApproval?: (url: string) => void,
+	controller?: RenewController): Promise<boolean> {
 
 	let pubKeyData = await loadPubKey(zero)
 	let secure = strictSsl(zero.server)
@@ -557,7 +579,7 @@ export async function renew(zero: ZeroTypes.ZeroRo,
 
 	let resp: Request.Response
 	try {
-		resp = await new Request.Request()
+		let attempt = new Request.Request()
 			.tcp(zero.server)
 			.post("/ssh/challenge")
 			.set("User-Agent", "pritunl")
@@ -568,9 +590,19 @@ export async function renew(zero: ZeroTypes.ZeroRo,
 				public_key: pubKeyData,
 			})
 			.end()
+
+		if (controller) {
+			resp = await Promise.race([attempt, controller.cancelWait])
+		} else {
+			resp = await attempt
+		}
 	} catch (err) {
 		throw new Errors.RequestError(err,
 			"Zeros: SSH challenge request failed")
+	}
+
+	if (!resp || (controller && controller.cancelled)) {
+		return false
 	}
 
 	if (resp.status !== 200) {
@@ -609,9 +641,13 @@ export async function renew(zero: ZeroTypes.ZeroRo,
 
 	resp = null
 	for (let i = 0; i < 10; i++) {
+		if (controller && controller.cancelled) {
+			return false
+		}
+
 		let attempt: Request.Response
 		try {
-			attempt = await new Request.Request()
+			let attemptReq = new Request.Request()
 				.tcp(zero.server)
 				.put("/ssh/challenge")
 				.set("User-Agent", "pritunl")
@@ -623,8 +659,18 @@ export async function renew(zero: ZeroTypes.ZeroRo,
 					token: token,
 				})
 				.end()
+
+			if (controller) {
+				attempt = await Promise.race([attemptReq, controller.cancelWait])
+			} else {
+				attempt = await attemptReq
+			}
 		} catch (err) {
 			continue
+		}
+
+		if (!attempt || (controller && controller.cancelled)) {
+			return false
 		}
 
 		resp = attempt
@@ -669,12 +715,16 @@ export async function renew(zero: ZeroTypes.ZeroRo,
 
 	let certificates = validData.certificates
 
+	if (controller && controller.cancelled) {
+		return false
+	}
+
 	if (onStatus) {
 		onStatus("Writing certificates")
 	}
 
 	if (!await MiscUtils.fileExists(zero.confPath())) {
-		return
+		return false
 	}
 
 	await clearCerts(zero)
@@ -696,6 +746,8 @@ export async function renew(zero: ZeroTypes.ZeroRo,
 	zero.certificate_authorities = validData.certificateAuthorities
 	zero.hosts = validData.hosts
 	await zero.writeConf()
+
+	return true
 }
 
 function stripSshConfig(data: string): {data: string, modified: boolean} {
@@ -801,13 +853,9 @@ async function syncSshConfig(zeros: ZeroTypes.Zeros,
 	let data = stripped.data
 	let modified = stripped.modified
 
-	if (data && !data.endsWith("\n\n")) {
-		if (data.endsWith("\n")) {
-			data += "\n"
-		} else {
-			data += "\n\n"
-		}
-	}
+	let seenBlocks: Set<string> = new Set()
+	let certLines = ""
+	let hostBlocks = ""
 
 	for (let zero of zeros) {
 		if ((zero.ssh_config_path || ZeroTypes.DEF_SSH_CONF_PATH) !==
@@ -817,12 +865,16 @@ async function syncSshConfig(zeros: ZeroTypes.Zeros,
 		}
 
 		let certPths = await certFilePaths(zero)
-		if (certPths.length) {
-			modified = true
-			for (let certPth of certPths) {
-				data += "# pritunl-zero\nCertificateFile " +
-					MiscUtils.collapsePath(certPth) + "\n"
+		for (let certPth of certPths) {
+			let block = "# pritunl-zero\nCertificateFile " +
+				MiscUtils.collapsePath(certPth) + "\n"
+			if (seenBlocks.has(block)) {
+				continue
 			}
+			seenBlocks.add(block)
+
+			modified = true
+			certLines += block
 		}
 
 		for (let certHostData of zero.hosts || []) {
@@ -838,8 +890,6 @@ async function syncSshConfig(zeros: ZeroTypes.Zeros,
 				continue
 			}
 
-			modified = true
-
 			let matches: string[] = []
 			if (certHost.matches && certHost.matches.length) {
 				matches = certHost.matches
@@ -848,15 +898,23 @@ async function syncSshConfig(zeros: ZeroTypes.Zeros,
 			}
 
 			for (let match of matches) {
-				data += "# pritunl-zero\nHost " + match + "\n"
+				let block = "# pritunl-zero\nHost " + match + "\n"
 
 				if (certHost.strict_host_checking) {
-					data += "\tStrictHostKeyChecking yes\n"
+					block += "\tStrictHostKeyChecking yes\n"
 				}
 
 				if (certHost.proxy_host) {
-					data += "\tProxyJump " + certHost.proxy_host + "\n"
+					block += "\tProxyJump " + certHost.proxy_host + "\n"
 				}
+
+				if (seenBlocks.has(block)) {
+					continue
+				}
+				seenBlocks.add(block)
+
+				modified = true
+				hostBlocks += block
 			}
 
 			if (certHost.proxy_host && (certHost.strict_host_checking ||
@@ -869,15 +927,45 @@ async function syncSshConfig(zeros: ZeroTypes.Zeros,
 				}
 				proxyHost = proxyHost.split(":")[0]
 
-				data += "# pritunl-zero\nHost " + proxyHost + "\n"
-				data += "\tStrictHostKeyChecking yes\n"
+				let block = "# pritunl-zero\nHost " + proxyHost + "\n" +
+					"\tStrictHostKeyChecking yes\n"
+
+				if (!seenBlocks.has(block)) {
+					seenBlocks.add(block)
+
+					modified = true
+					hostBlocks += block
+				}
 			}
 		}
 	}
 
+	if (certLines) {
+		while (data.startsWith("\n")) {
+			data = data.substring(1)
+		}
+	}
+
+	let newData = certLines
+	if (newData && data) {
+		newData += "\n"
+	}
+	newData += data
+
+	if (hostBlocks) {
+		if (newData && !newData.endsWith("\n\n")) {
+			if (newData.endsWith("\n")) {
+				newData += "\n"
+			} else {
+				newData += "\n\n"
+			}
+		}
+		newData += hostBlocks
+	}
+
 	if (modified) {
 		await MiscUtils.dirMake(path.dirname(fullPth))
-		await MiscUtils.fileWrite(fullPth, data)
+		await MiscUtils.fileWrite(fullPth, newData)
 		await chmodSafe(fullPth)
 	}
 }

@@ -3,11 +3,13 @@ import path from "path"
 import fs from "fs"
 import electron from "electron"
 import * as Utils from "./Utils";
+import * as Logger from "./Logger"
 import * as Service from "./Service"
 import * as Constants from "./Constants"
 import Config from "./Config"
 import * as Errors from "../app/Errors";
 import * as Tpm from "./Tpm"
+import * as Daemon from "./Daemon"
 import * as ProfileSync from "./ProfileSync"
 
 let tray: electron.Tray
@@ -406,54 +408,62 @@ function init() {
 	}
 
 	Config.load().then(() => {
-		Service.connect().then(() => {
-			if (process.argv.indexOf("--no-main") !== -1) {
-				if (Config.disable_tray_icon) {
-					electron.app.quit()
-					return
-				}
-			} else {
-				let main = new Main()
-				main.run()
-			}
-
-			initAppMenu()
-
-			if (!Config.disable_tray_icon) {
-				initTray()
-			}
-
-			Service.subscribe((event: Service.Event): void => {
-				if (event.type === "connected") {
-					if (tray) {
-						tray.setImage(getTrayIcon(true))
+		Daemon.ensure().catch((err) => {
+			Logger.error(err)
+		}).then(() => {
+			Service.connect().then(() => {
+				if (process.argv.indexOf("--no-main") !== -1) {
+					if (Config.disable_tray_icon) {
+						electron.app.quit()
+						return
 					}
-				} else if (event.type === "disconnected") {
-					if (tray) {
-						tray.setImage(getTrayIcon(false))
-					}
-				} else if (event.type === "wakeup") {
-					Service.send("awake")
-
+				} else {
 					let main = new Main()
 					main.run()
-				} else if (event.type === "shutdown") {
-					if (process.argv.indexOf("--no-shutdown") === -1) {
-						electron.app.quit()
-					}
-				} else if (event.type === "sso_auth") {
-					if (event.data.open !== false) {
-						Utils.openLink(event.data.url)
-					}
-				} else if (event.type === "tpm_open") {
-					Tpm.open(event.data.id, event.data.private_key)
-				} else if (event.type === "tpm_sign") {
-					Tpm.sign(event.data.id, event.data.sign_data)
-				} else if (event.type === "tpm_close") {
-					Tpm.close(event.data.id)
-				} else if (event.type === "profile_sync") {
-					ProfileSync.handle(event.data.id, event.data.data)
 				}
+
+				initAppMenu()
+
+				if (!Config.disable_tray_icon) {
+					initTray()
+				}
+
+				Daemon.checkUpgrade().catch((err) => {
+					Logger.error(err)
+				})
+
+				Service.subscribe((event: Service.Event): void => {
+					if (event.type === "connected") {
+						if (tray) {
+							tray.setImage(getTrayIcon(true))
+						}
+					} else if (event.type === "disconnected") {
+						if (tray) {
+							tray.setImage(getTrayIcon(false))
+						}
+					} else if (event.type === "wakeup") {
+						Service.send("awake")
+
+						let main = new Main()
+						main.run()
+					} else if (event.type === "shutdown") {
+						if (process.argv.indexOf("--no-shutdown") === -1) {
+							electron.app.quit()
+						}
+					} else if (event.type === "sso_auth") {
+						if (event.data.open !== false) {
+							Utils.openLink(event.data.url)
+						}
+					} else if (event.type === "tpm_open") {
+						Tpm.open(event.data.id, event.data.private_key)
+					} else if (event.type === "tpm_sign") {
+						Tpm.sign(event.data.id, event.data.sign_data)
+					} else if (event.type === "tpm_close") {
+						Tpm.close(event.data.id)
+					} else if (event.type === "profile_sync") {
+						ProfileSync.handle(event.data.id, event.data.data)
+					}
+				})
 			})
 		})
 	})

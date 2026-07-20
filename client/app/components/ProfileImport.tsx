@@ -53,6 +53,7 @@ const css = {
 		width: "100%",
 	} as React.CSSProperties,
 	select: {
+		marginTop: "5px",
 		width: "100%",
 	} as React.CSSProperties,
 	selectBox: {
@@ -283,7 +284,11 @@ export default class ProfileImport extends React.Component<Props, State> {
 				onClose={this.closeDialog}
 			>
 				<div className="bp5-dialog-body">
-					<div className="bp5-button-group bp5-fill" style={css.group}>
+					<div
+						className="bp5-button-group bp5-fill"
+						style={css.group}
+						hidden={process.platform === 'win32'}
+					>
 						<button
 							className={"bp5-button bp5-icon-globe-network" +
 								(!zeroMode ? " bp5-active" : "")}

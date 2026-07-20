@@ -16,6 +16,7 @@ interface State {
 	open: boolean;
 	message: string;
 	disabled: boolean;
+	renewing: boolean;
 }
 
 const css = {
@@ -112,6 +113,7 @@ export default class Zero extends React.Component<Props, State> {
 			open: false,
 			message: '',
 			disabled: false,
+			renewing: false,
 		};
 	}
 
@@ -137,6 +139,7 @@ export default class Zero extends React.Component<Props, State> {
 		this.setState({
 			...this.state,
 			disabled: true,
+			renewing: true,
 			message: 'Requesting certificate',
 		})
 
@@ -149,9 +152,19 @@ export default class Zero extends React.Component<Props, State> {
 			this.setState({
 				...this.state,
 				disabled: false,
+				renewing: false,
 				message: '',
 			})
 		})
+	}
+
+	onCancelRenew = (): void => {
+		this.setState({
+			...this.state,
+			message: 'Cancelling renewal',
+		})
+
+		ZeroActions.cancelRenew(this.props.zero)
 	}
 
 	onRegister = (): void => {
@@ -331,10 +344,20 @@ export default class Zero extends React.Component<Props, State> {
 							className="bp5-button bp5-intent-primary bp5-icon-refresh"
 							style={css.button}
 							type="button"
+							hidden={this.state.renewing}
 							disabled={this.state.disabled}
 							onClick={this.onRenew}
 						>
 							Renew Certificate
+						</button>
+						<button
+							className="bp5-button bp5-intent-danger bp5-icon-cross"
+							style={css.button}
+							type="button"
+							hidden={!this.state.renewing}
+							onClick={this.onCancelRenew}
+						>
+							Cancel
 						</button>
 						<button
 							className="bp5-button bp5-minimal bp5-icon-id-number"

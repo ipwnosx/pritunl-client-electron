@@ -11,6 +11,7 @@ export const unixWsHost = "ws+unix://" + path.join(
 export const webWsHost = "ws://127.0.0.1:9770"
 export const platform = os.platform()
 export const hostname = os.hostname()
+export const smAppService = false
 export const logPath = path.join(electron.app.getPath("userData"),
 	"pritunl.log");
 export let mainWindow: electron.BrowserWindow

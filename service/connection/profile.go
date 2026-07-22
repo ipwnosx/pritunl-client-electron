@@ -129,7 +129,7 @@ func (p *Profile) ImportSystemProfile(sprfl *sprofile.Sprofile) {
 	p.Dco = sprfl.Dco
 	p.DebugOutput = sprfl.DebugOutput
 	p.RestrictClient = sprfl.RestrictClient
-	p.ForceDns = false // TODO
+	p.ForceDns = sprfl.ForceDns
 	p.SsoAuth = sprfl.SsoAuth
 	p.ServerPublicKey = serverPublicKey
 	p.ServerBoxPublicKey = sprfl.ServerBoxPublicKey

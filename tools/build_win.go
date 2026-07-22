@@ -179,7 +179,6 @@ func main() {
 		"--out=..\\build\\win",
 		"--prune",
 		"--asar",
-		"--asar.unpack=**/*.node",
 	)
 
 	run(
@@ -192,7 +191,6 @@ func main() {
 		"--out=..\\build\\win",
 		"--prune",
 		"--asar",
-		"--asar.unpack=**/*.node",
 	)
 
 	err = os.Chdir(filepath.Join("..", "build", "win",
